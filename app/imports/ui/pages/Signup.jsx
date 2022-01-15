@@ -10,6 +10,8 @@ import { COMPONENT_IDS } from '../utilities/ComponentIDs';
  * Signup component is similar to signin component, but we create a new user instead.
  */
 const Signup = ({ location }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,6 +20,12 @@ const Signup = ({ location }) => {
   // Update the form controls each time the user interacts with them.
   const handleChange = (e, { name, value }) => {
     switch (name) {
+    case 'firstName':
+      setFirstName(value);
+      break;
+    case 'lastName':
+      setLastName(value);
+      break;
     case 'email':
       setEmail(value);
       break;
@@ -62,6 +70,10 @@ const Signup = ({ location }) => {
               WELCOME TO MINERVA MEDICAL, REGISTER FOR AN ACCOUNT BELOW!
             </Header>
             <Form onSubmit={submit}>
+              <Form.Group widths="equal">
+                <Form.Input label="First Name" name="firstName" placeholder="First name" onChange={handleChange} />
+                <Form.Input label="Last Name" name="lastName" placeholder="Last name" onChange={handleChange} />
+              </Form.Group>
               <Form.Input
                 label="Email"
                 id={COMPONENT_IDS.SIGN_UP_FORM_EMAIL}
