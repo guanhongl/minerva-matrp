@@ -38,22 +38,6 @@ body{
 background-color: #C1D9B1 !important;
 }
 
-.landingPage{
-  background-image: url('../images/logout.png');
-  /* Full height */
-  min-height: 500px;
-
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  top: 0px !important;
-  width: 100% !important;
-  margin-bottom:0%;
-}
-
 .landing-center{
   text-shadow: 2px 2px 4px #000000;
   position: relative;
