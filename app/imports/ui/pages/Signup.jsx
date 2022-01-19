@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Redirect, NavLink } from 'react-router-dom';
 import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
 import { Accounts } from 'meteor/accounts-base';
+import { PendingUsers } from '../../api/PendingUserCollection';
+import { defineMethod } from '../../api/PendingUserCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
@@ -39,14 +41,22 @@ const Signup = ({ location }) => {
 
   /* Handle Signup submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = () => {
-    Accounts.createUser({ email, username: email, password }, (err) => {
-      if (err) {
-        setError(err.reason);
-      } else {
-        setError('');
-        setRedirectToReferer(true);
-      }
-    });
+    // Accounts.createUser({ email, username: email, password }, (err) => {
+    //   if (err) {
+    //     setError(err.reason);
+    //   } else {
+    //     setError('');
+    //     setRedirectToReferer(true);
+    //   }
+    // });
+
+    const collectionName = PendingUsers.getCollectionName();
+    const definitionData = { firstName, lastName, email };
+    defineMethod.callPromise({ collectionName, definitionData })
+      .catch(error => swal('Error', error.message, 'error'))
+      .then(() => {
+        swal('Success', 'Item added successfully', 'success');
+      });
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
@@ -84,7 +94,7 @@ const Signup = ({ location }) => {
                 placeholder="E-mail address"
                 onChange={handleChange}
               />
-              <Form.Input
+              {/* <Form.Input
                 label="Password"
                 id={COMPONENT_IDS.SIGN_UP_FORM_PASSWORD}
                 icon="lock"
@@ -93,7 +103,7 @@ const Signup = ({ location }) => {
                 placeholder="Password"
                 type="password"
                 onChange={handleChange}
-              />
+              /> */}
               <Form.Button id={COMPONENT_IDS.SIGN_UP_FORM_SUBMIT} content="Submit"/>
             </Form>
             <div className='signin-message'>

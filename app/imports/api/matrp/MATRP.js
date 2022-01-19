@@ -10,6 +10,7 @@ import { Vaccinations } from '../vaccination/VaccinationCollection';
 import { Historicals } from '../historical/HistoricalCollection';
 import { Supplys } from '../supply/SupplyCollection';
 import { SupplyTypes } from '../supplyType/SupplyTypeCollection';
+import { PendingUsers } from '../PendingUserCollection';
 
 class MATRPClass {
   collections;
@@ -32,6 +33,7 @@ class MATRPClass {
       Historicals,
       Supplys,
       SupplyTypes,
+      PendingUsers,
     ];
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.
@@ -48,6 +50,7 @@ class MATRPClass {
       Historicals,
       Supplys,
       SupplyTypes,
+      PendingUsers,
     ];
 
     /*
