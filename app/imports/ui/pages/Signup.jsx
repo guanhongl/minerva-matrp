@@ -57,6 +57,8 @@ const Signup = ({ location }) => {
       .then(() => {
         swal('Success', 'Item added successfully', 'success');
       });
+
+    // TODO: clear form
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
