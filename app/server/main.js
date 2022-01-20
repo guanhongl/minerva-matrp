@@ -4,3 +4,4 @@ import '/imports/startup/server/Mongo';
 // be sure to import the methods.
 import '../imports/api/base/BaseCollection.methods';
 import '../imports/api/PendingUserCollection.methods';
+import '../imports/api/ManageUser.methods';

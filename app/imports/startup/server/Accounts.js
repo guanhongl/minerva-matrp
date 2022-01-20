@@ -5,6 +5,9 @@ import { UserProfiles } from '../../api/user/UserProfileCollection';
 
 /* eslint-disable no-console */
 
+// see https://docs.meteor.com/api/email.html
+process.env.MAIL_URL = 'smtps://minervapostmaster@gmail.com:m!nervA22@smtp.gmail.com:465';
+
 function createUser(email, role, firstName, lastName, password) {
   console.log(`  Creating user ${email} with role ${role}.`);
   if (role === ROLE.ADMIN) {

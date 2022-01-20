@@ -5,10 +5,16 @@ import PropTypes from 'prop-types';
 // import { Accounts } from 'meteor/accounts-base';
 import { PendingUsers } from '../../api/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
+import { acceptMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
-const acceptUser = ({ firstName, lastName, email }) => {
-
+const acceptUser = (user) => {
+  acceptMethod.callPromise(user)
+    .then(() => {
+      // TODO: remove user from PendingUsers
+      swal('Success', `${user.email} accepted successfully`, 'success', { buttons: false, timer: 3000 });
+    })
+    .catch(error => swal('Error', error.message, 'error'));
 };
 
 const rejectUser = (email, id) => {
