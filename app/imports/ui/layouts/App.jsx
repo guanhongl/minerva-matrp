@@ -18,6 +18,7 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import Password from '../pages/Password';
 import Dispense from '../pages/Dispense';
 import Status from '../pages/Status';
 import ManageDropdowns from '../pages/ManageDropdowns';
@@ -43,6 +44,7 @@ const App = () => {
         <UnprotectedRoute exact path="/" component={Landing}/>
         <UnprotectedRoute path="/signin" component={Signin}/>
         <UnprotectedRoute path="/signup" component={Signup}/>
+        <Route path="/enroll-account/:token" component={Password} />
         <Route path="/signout" component={Signout}/>
         <ProtectedRoute path="/about" component={About}/>
         <ProtectedRoute path="/dispense" component={Dispense}/>
