@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, Redirect } from 'react-router';
 // import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
@@ -13,6 +13,7 @@ const Password = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
   const { token } = useParams();
 
   // Update the form controls each time the user interacts with them.
@@ -40,12 +41,18 @@ const Password = () => {
           setError(err.reason);
         } else {
           setError('');
+          setRedirectToReferer(true);
         }
       });
     }
   };
 
-  // Render the password form.
+  /* Display the password form. Redirect to about page after successful login. */
+  const { from } = location.state || { from: { pathname: '/about' } };
+  // if correct authentication, redirect to from: page instead of password screen
+  if (redirectToReferer) {
+    return <Redirect to={from} />;
+  }
   return (
     <div id='signin-div'>
       <Container>
