@@ -24,6 +24,7 @@ import { MATRP } from './matrp/MATRP';
 //   },
 // });
 
+// TODO: edit email format
 export const acceptMethod = new ValidatedMethod({
   name: 'acceptMethod',
   mixins: [CallPromiseMixin],

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useParams, Redirect } from 'react-router';
 // import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
@@ -9,7 +10,7 @@ import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react'
 /**
  * Password page
  */
-const Password = () => {
+const Password = ({ location }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -104,6 +105,11 @@ const Password = () => {
       </Container>
     </div>
   );
+};
+
+/* Ensure that the React Router location object is available in case we need to redirect. */
+Password.propTypes = {
+  location: PropTypes.object,
 };
 
 export default Password;

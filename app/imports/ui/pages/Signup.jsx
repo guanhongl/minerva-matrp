@@ -8,6 +8,8 @@ import { defineMethod } from '../../api/PendingUserCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
+// TODO: cleanup code
+
 /**
  * Signup component is similar to signin component, but we create a new user instead.
  */

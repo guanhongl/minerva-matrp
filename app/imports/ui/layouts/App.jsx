@@ -44,7 +44,7 @@ const App = () => {
         <UnprotectedRoute exact path="/" component={Landing}/>
         <UnprotectedRoute path="/signin" component={Signin}/>
         <UnprotectedRoute path="/signup" component={Signup}/>
-        <Route path="/enroll-account/:token" component={Password} />
+        <Route path="/enroll-acct/:token" component={Password} />
         <Route path="/signout" component={Signout}/>
         <ProtectedRoute path="/about" component={About}/>
         <ProtectedRoute path="/dispense" component={Dispense}/>

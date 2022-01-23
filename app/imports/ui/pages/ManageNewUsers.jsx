@@ -8,6 +8,8 @@ import { removeItMethod } from '../../api/base/BaseCollection.methods';
 import { acceptMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
+// TODO: assign roles dropdown
+
 const acceptUser = (user) => {
   acceptMethod.callPromise(user)
     .then(() => {
