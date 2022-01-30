@@ -1,7 +1,9 @@
 import { CallPromiseMixin } from 'meteor/didericis:callpromise-mixin';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Accounts } from 'meteor/accounts-base';
-import { MATRP } from './matrp/MATRP';
+import { Roles } from 'meteor/alanning:roles';
+import { ROLE } from './role/Role';
+import { UserProfiles } from './user/UserProfileCollection';
 
 /**
  * Meteor method used to define new instances of the given collection name.
@@ -32,9 +34,14 @@ export const acceptMethod = new ValidatedMethod({
   run({ firstName, lastName, email }) {
     if (Meteor.isServer) {
       console.log(firstName, lastName, email)
-      const userId = Accounts.createUser({ username: email, email: email });
-      Accounts.sendEnrollmentEmail(userId);
-      return userId;
+      const userID = Accounts.createUser({ username: email, email: email });
+      Accounts.sendEnrollmentEmail(userID);
+
+      const role = ROLE.USER; // default to USER for now
+      UserProfiles._collection.insert({ email, firstName, lastName, userID, role });
+      Roles.addUsersToRoles(userID, [role]);
+
+      return userID;
     }
     return '';
   },

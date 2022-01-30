@@ -10,6 +10,7 @@ import { UserProfiles } from '../../api/user/UserProfileCollection';
 process.env.MAIL_URL = 'smtps://minervapostmaster@gmail.com:m!nervA22@smtp.gmail.com:465';
 
 // see https://github.com/iron-meteor/iron-router/issues/3 and https://github.com/meteor/meteor/blob/devel/packages/accounts-base/accounts_server.js
+// TODO: edit email template instead
 Accounts.urls.enrollAccount = (token) => {
   const url = new URL(Meteor.absoluteUrl(`#/enroll-acct/${token}`));
   return url.toString();
