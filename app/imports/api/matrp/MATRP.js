@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../stuff/StuffCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
+import { SuperUserProfiles } from '../user/SuperUserProfileCollection';
 import { DrugTypes } from '../drugType/DrugTypeCollection';
 import { Locations } from '../location/LocationCollection';
 import { Sites } from '../site/SiteCollection';
@@ -25,6 +26,7 @@ class MATRPClass {
       AdminProfiles,
       Stuffs,
       UserProfiles,
+      SuperUserProfiles,
       DrugTypes,
       Locations,
       Sites,
@@ -41,6 +43,7 @@ class MATRPClass {
     this.collectionLoadSequence = [
       AdminProfiles,
       UserProfiles,
+      SuperUserProfiles,
       Stuffs,
       DrugTypes,
       Locations,

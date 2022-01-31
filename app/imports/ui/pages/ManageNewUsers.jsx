@@ -47,7 +47,7 @@ const rejectUser = (email, id) => {
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageNewUsers = ({ ready, users }) => ((ready) ? (
   <Container>
-    <Header as="h2" textAlign="center">New Users</Header>
+    <Header as="h2" textAlign="center">Manage New Users</Header>
     <Table celled>
       <Table.Header>
         <Table.Row>
