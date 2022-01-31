@@ -1,0 +1,21 @@
+#manage-new-users .user-controls {
+    position: absolute;
+    right: 20px;
+    top: calc(50% - 18px);
+}
+
+#manage-new-users .accept-button {
+    min-width: 120px;
+    border-radius: 500rem;
+    border: 2px solid rgb(29, 62, 102);
+    background-color: white;
+    color:rgb(29, 62, 102);
+}
+
+#manage-new-users .reject-button {
+    min-width: 120px;
+    border-radius: 500rem;
+    border: 2px solid #db2828;
+    background-color: white;
+    color: #db2828;
+}

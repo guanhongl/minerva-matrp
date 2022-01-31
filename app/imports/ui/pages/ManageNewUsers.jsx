@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Table, Header, Loader, Button } from 'semantic-ui-react';
+import { Container, Header, Loader, Button, Segment, Card } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 // import { Accounts } from 'meteor/accounts-base';
@@ -46,34 +46,27 @@ const rejectUser = (email, id) => {
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageNewUsers = ({ ready, users }) => ((ready) ? (
-  <Container>
+  <Container id='manage-new-users'>
     <Header as="h2" textAlign="center">Manage New Users</Header>
-    <Table celled>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>First Name</Table.HeaderCell>
-          <Table.HeaderCell>Last Name</Table.HeaderCell>
-          <Table.HeaderCell>Email</Table.HeaderCell>
-          <Table.HeaderCell>Edit</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {/* {stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} />)} */}
+    <Segment>
+      <Card.Group>
         {
           users.map(user =>
-            <Table.Row key={user._id}>
-              <Table.Cell>{user.firstName}</Table.Cell>
-              <Table.Cell>{user.lastName}</Table.Cell>
-              <Table.Cell>{user.email}</Table.Cell>
-              <Table.Cell>
-                <Button positive onClick={() => acceptUser(user)}>Accept</Button>
-                <Button negative onClick={() => rejectUser(user.email, user._id)}>Reject</Button>
-              </Table.Cell>
-            </Table.Row>
+            <Card fluid key={user._id}>
+              <Card.Content>
+                <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
+                <Card.Meta>{`Email: ${user.email}`}</Card.Meta>
+                <Card.Description>{`${user.firstName} wants to register.`}</Card.Description>
+                <div className='user-controls'>
+                  <Button className='accept-button' compact onClick={() => acceptUser(user)}>Accept</Button>
+                  <Button className='reject-button' compact onClick={() => rejectUser(user.email, user._id)}>Reject</Button>
+                </div>
+              </Card.Content>
+            </Card>
           )
         }
-      </Table.Body>
-    </Table>
+      </Card.Group>
+    </Segment>
   </Container>
 ) : <Loader active>Getting data</Loader>);
 

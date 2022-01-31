@@ -5,3 +5,4 @@ import './dispense.css';
 import './inventory.css';
 import './status.css';
 import './manage.css';
+import './manage-users.css';
