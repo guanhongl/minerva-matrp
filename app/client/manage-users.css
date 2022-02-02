@@ -33,3 +33,25 @@
 #manage-new-users .ui.input {
     height: 30px;
 }
+
+/* Manage Users css */
+
+#manage-users .manage-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#manage-users h2 {
+    margin: 0;
+}
+
+#manage-users .ui.input {
+    height: 30px;
+}
+
+#manage-users .delete-user {
+    float: right;
+    cursor: pointer;
+    text-decoration: underline;
+}
