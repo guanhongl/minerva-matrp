@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Header, Loader, Button, Segment, Card } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Container, Header, Loader, Button, Segment, Card, Input } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 // import { Accounts } from 'meteor/accounts-base';
@@ -8,13 +8,16 @@ import { removeItMethod } from '../../api/base/BaseCollection.methods';
 import { acceptMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
-// TODO: assign roles dropdown
+// TODO: assign roles dropdown?
 
 const acceptUser = (user) => {
   acceptMethod.callPromise(user)
     .then(() => {
-      // TODO: remove user from PendingUsers
       swal('Success', `${user.email} accepted successfully`, 'success', { buttons: false, timer: 3000 });
+
+      const collectionName = PendingUsers.getCollectionName();
+      removeItMethod.callPromise({ collectionName, instance: user._id }) // assume delete works
+        .then(response => console.log(response));
     })
     .catch(error => swal('Error', error.message, 'error'));
 };
@@ -36,39 +39,51 @@ const rejectUser = (email, id) => {
         const collectionName = PendingUsers.getCollectionName();
 
         removeItMethod.callPromise({ collectionName, instance: id })
-          .catch(error => swal('Error', error.message, 'error'))
           .then(() => {
             swal('Success', `${email} rejected successfully`, 'success', { buttons: false, timer: 3000 });
-          });
+          })
+          .catch(error => swal('Error', error.message, 'error'));
       }
     });
 };
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ManageNewUsers = ({ ready, users }) => ((ready) ? (
-  <Container id='manage-new-users'>
-    <Header as="h2" textAlign="center">Manage New Users</Header>
-    <Segment>
-      <Card.Group>
-        {
-          users.map(user =>
-            <Card fluid key={user._id}>
-              <Card.Content>
-                <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
-                <Card.Meta>{`Email: ${user.email}`}</Card.Meta>
-                <Card.Description>{`${user.firstName} wants to register.`}</Card.Description>
-                <div className='user-controls'>
-                  <Button className='accept-button' compact onClick={() => acceptUser(user)}>Accept</Button>
-                  <Button className='reject-button' compact onClick={() => rejectUser(user.email, user._id)}>Reject</Button>
-                </div>
-              </Card.Content>
-            </Card>
-          )
-        }
-      </Card.Group>
-    </Segment>
-  </Container>
-) : <Loader active>Getting data</Loader>);
+const ManageNewUsers = ({ ready, users }) => {
+  const [userFilter, setUserFilter] = useState('');
+
+  return (
+    (ready) ? (
+      <Container id='manage-new-users'>
+        <Segment.Group>
+          <Segment className='manage-user-header'>
+            <Header as="h2">Manage New Users</Header>
+            <Input placeholder='Search users...' value={userFilter} onChange={(event, {value}) => setUserFilter(value)} />
+          </Segment>
+          <Segment>
+            <Card.Group>
+              {
+                users.filter(({firstName, lastName}) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
+                     .map(user =>
+                  <Card fluid key={user._id}>
+                    <Card.Content>
+                      <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
+                      <Card.Meta>{`Email: ${user.email}`}</Card.Meta>
+                      <Card.Description>{`${user.firstName} wants to register.`}</Card.Description>
+                      <div className='user-controls'>
+                        <Button className='accept-button' compact onClick={() => acceptUser(user)}>Accept</Button>
+                        <Button className='reject-button' compact onClick={() => rejectUser(user.email, user._id)}>Reject</Button>
+                      </div>
+                    </Card.Content>
+                  </Card>
+                )
+              }
+            </Card.Group>
+          </Segment>
+        </Segment.Group>
+      </Container>
+    ) : <Loader active>Getting data</Loader>
+  );
+};
 
 // Require an array of Stuff documents in the props.
 ManageNewUsers.propTypes = {
@@ -83,7 +98,7 @@ export default withTracker(() => {
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the Stuff documents and sort them by name.
-  const users = PendingUsers.find({}, { sort: { lastName: 1 } }).fetch();
+  const users = PendingUsers.find({}, { sort: { createdAt: -1 } }).fetch();
   return {
     users,
     ready,

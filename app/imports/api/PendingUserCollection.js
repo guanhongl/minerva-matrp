@@ -13,6 +13,7 @@ class PendingUserCollection extends BaseCollection {
       firstName: String,
       lastName: String,
       email: String,
+      createdAt: Date,
     }));
   }
 
@@ -20,12 +21,12 @@ class PendingUserCollection extends BaseCollection {
    * Defines a new PendingUser item.
    * @return {String} the docID of the new document.
    */
-  define({ firstName, lastName, email }) {
+  define({ firstName, lastName, email, createdAt }) {
     if (this._collection.findOne({ email }) || Accounts.findUserByEmail(email)) {
       throw new Meteor.Error('Email is already registered.');
     }
     const docID = this._collection.insert({
-      firstName, lastName, email,
+      firstName, lastName, email, createdAt,
     });
     return docID;
   }

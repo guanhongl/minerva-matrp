@@ -19,3 +19,17 @@
     background-color: white;
     color: #db2828;
 }
+
+#manage-new-users .manage-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#manage-new-users h2 {
+    margin: 0;
+}
+
+#manage-new-users .ui.input {
+    height: 30px;
+}
