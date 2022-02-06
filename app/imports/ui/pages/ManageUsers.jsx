@@ -2,15 +2,34 @@ import React, { useState } from 'react';
 import { Container, Header, Loader, Icon, Segment, Card, Input, Dropdown } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Meteor } from 'meteor/meteor';
 // import { Accounts } from 'meteor/accounts-base';
 import { UserProfiles } from '../../api/user/UserProfileCollection';
 import { SuperUserProfiles } from '../../api/user/SuperUserProfileCollection';
 import { AdminProfiles } from '../../api/user/AdminProfileCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
+import { removeUserMethod, updateRoleMethod, defineMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
-const deleteUser = (userID, profileID, role) => {
+const updateRole = ({ email, firstName, lastName, userID, _id: profileID, role }, newRole) => {
+  // console.log(userID, profileID, role, newRole)
+  let collectionName = getUserCollectionName(role);
+
+  removeItMethod.callPromise({ collectionName, instance: profileID })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
+
+  collectionName = getUserCollectionName(newRole);
+
+  defineMethod.callPromise({ collectionName, definitionData: { email, firstName, lastName, userID, role: newRole } })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
+
+  updateRoleMethod.callPromise({ userID, role: newRole })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
+};
+
+const deleteUser = ({ userID, _id: profileID, role }) => {
   swal({
     title: 'Are you sure?',
     text: `Do you really want to delete this user?`,
@@ -24,25 +43,28 @@ const deleteUser = (userID, profileID, role) => {
     .then((isConfirm) => {
       // if 'yes'
       if (isConfirm) {
-        Meteor.users.remove({ _id: userID });
-
-        Meteor.roleAssignment.remove({ 'user._id': userID }); // maybe there's a better way?
-
-        let collectionName;
-        if (role === 'USER') {
-          collectionName = UserProfiles.getCollectionName();
-        } else if (role === 'SUPERUSER') {
-          collectionName = SuperUserProfiles.getCollectionName();
-        } else {
-          collectionName = AdminProfiles.getCollectionName();
-        }
+        const collectionName = getUserCollectionName(role);
         removeItMethod.callPromise({ collectionName, instance: profileID })
           .then(() => {
             swal('Success', `User deleted successfully`, 'success', { buttons: false, timer: 3000 });
           })
           .catch(error => swal('Error', error.message, 'error'));
+
+        removeUserMethod.callPromise(userID)
+          .then((response) => console.log(response))
+          .catch((error) => console.log(error));
       }
     });
+};
+
+const getUserCollectionName = (role) => {
+  if (role === 'USER') {
+    return UserProfiles.getCollectionName();
+  } else if (role === 'SUPERUSER') {
+    return SuperUserProfiles.getCollectionName();
+  } else {
+    return AdminProfiles.getCollectionName();
+  }
 };
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
@@ -72,8 +94,9 @@ const ManageUsers = ({ ready, userList, roles }) => {
                           inline
                           options={roles}
                           value={user.role}
+                          onChange={(event, { value }) => updateRole(user, value)}
                         />
-                        <span className='delete-user' onClick={() => deleteUser(user.userID, user._id, user.role)}>
+                        <span className='delete-user' onClick={() => deleteUser(user)}>
                           <Icon name='trash alternate' />
                           Delete User
                         </span>

@@ -119,7 +119,7 @@ class BaseProfileCollection extends BaseCollection {
 
   /**
    * Removes this profile, given its profile ID.
-   * Also removes this user from Meteor Accounts.
+   * Also removes this user from Meteor Accounts. <-- don't want this
    * @param profileID The ID for this profile object.
    */
   removeIt(profileID) {
@@ -127,12 +127,18 @@ class BaseProfileCollection extends BaseCollection {
     const profile = this._collection.findOne({ _id: profileID });
     const userID = profile.userID;
     if (!Users.isReferenced(userID)) {
-      Meteor.users.remove({ _id: userID });
+      // Meteor.users.remove({ _id: userID }); <-- don't want this
       return super.removeIt(profileID);
     }
     throw new Meteor.Error(`User ${profile.email} owns Stuff.`);
   }
 
+  defineProfile({ email, firstName, lastName, userID, role }) {
+    const docID = this._collection.insert({
+      email, firstName, lastName, userID, role,
+    });
+    return docID;
+  }
 }
 
 export default BaseProfileCollection;

@@ -1,30 +1,11 @@
+import { Meteor } from 'meteor/meteor';
 import { CallPromiseMixin } from 'meteor/didericis:callpromise-mixin';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from './role/Role';
+import { MATRP } from './matrp/MATRP';
 import { UserProfiles } from './user/UserProfileCollection';
-
-/**
- * Meteor method used to define new instances of the given collection name.
- * @param collectionName the name of the collection.
- * @param definitionDate the object used in the collection.define method.
- * @memberOf api/base
- */
-// export const defineMethod = new ValidatedMethod({
-//   name: 'PendingUserCollection.define',
-//   mixins: [CallPromiseMixin],
-//   validate: null,
-//   run({ collectionName, definitionData }) {
-//     if (Meteor.isServer) {
-//       // console.log(collectionName, this.userId, definitionData);
-//       const collection = MATRP.getCollection(collectionName);
-//       // collection.assertValidRoleForMethod(this.userId);
-//       return collection.define(definitionData);
-//     }
-//     return '';
-//   },
-// });
 
 // TODO: edit email format
 export const acceptMethod = new ValidatedMethod({
@@ -42,6 +23,52 @@ export const acceptMethod = new ValidatedMethod({
       Roles.addUsersToRoles(userID, [role]);
 
       return userID;
+    }
+    return '';
+  },
+});
+
+export const removeUserMethod = new ValidatedMethod({
+  name: 'removeUserMethod',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run(userID) {
+    if (Meteor.isServer) {
+      // Meteor.roleAssignment.remove({ 'user._id': userID });
+      Roles.setUserRoles(userID, []);
+      Meteor.users.remove({ _id: userID });
+    }
+    return '';
+  },
+});
+
+export const updateRoleMethod = new ValidatedMethod({
+  name: 'updateRoleMethod',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run({ userID, role }) {
+    if (Meteor.isServer) {
+      const loggedInUser = Meteor.user();
+
+      if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ROLE.ADMIN)) {
+        throw new Meteor.Error('access-denied', "Access denied");
+      }
+
+      Roles.setUserRoles(userID, [role]);
+    }
+    return '';
+  },
+});
+
+export const defineMethod = new ValidatedMethod({
+  name: 'BaseProfileCollection.define',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run({ collectionName, definitionData }) {
+    if (Meteor.isServer) {
+      const collection = MATRP.getCollection(collectionName);
+      // collection.assertValidRoleForMethod(this.userId);
+      return collection.defineProfile(definitionData);
     }
     return '';
   },
