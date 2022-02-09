@@ -1,0 +1,30 @@
+#landing {
+    height: 100vh;
+    min-height: 500px;
+    overflow: auto;
+
+    background: url('../images/logout.png') no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#landing .landing-header{
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 8rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px darkolivegreen;
+    color: white;
+    text-align: center;
+    margin-top: calc(50vh - 72px);
+}
+
+#landing .button-group {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#landing .button-group >* {
+    width: 200px;
+}

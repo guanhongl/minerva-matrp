@@ -1,6 +1,6 @@
 #signin-div {
   background-color: #c2d9b2;
-  padding: 200px 0;
+  padding-top: 200px;
 }
 
 #signin-div h1 {
@@ -60,7 +60,7 @@
 
 #signup-div {
   background-color: #c2d9b2;
-  padding: 200px 0;
+  padding-top: 200px;
 }
 
 #signup-div h1 {
