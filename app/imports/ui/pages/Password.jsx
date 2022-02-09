@@ -4,6 +4,7 @@ import { useParams, Redirect } from 'react-router';
 // import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
+import swal from 'sweetalert';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 // import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
@@ -35,8 +36,7 @@ const Password = ({ location }) => {
   const submit = () => {
     if (password !== confirmPassword) {
       swal('Error', 'Passwords do not match.', 'error');
-    }
-    else {
+    } else {
       Accounts.resetPassword(token, password, (err) => {
         if (err) {
           setError(err.reason);

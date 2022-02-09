@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
+import { Container, Form, Grid, Header, Icon } from 'semantic-ui-react';
+import swal from 'sweetalert';
 import { PendingUsers } from '../../api/PendingUserCollection';
 import { defineMethod } from '../../api/PendingUserCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
@@ -13,7 +14,7 @@ const Signup = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
 
   // Update the form controls each time the user interacts with them.
   const handleChange = (e, { name, value }) => {

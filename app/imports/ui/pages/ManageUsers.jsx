@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Header, Loader, Icon, Segment, Card, Input, Dropdown } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 // import { Accounts } from 'meteor/accounts-base';
 import { UserProfiles } from '../../api/user/UserProfileCollection';
 import { SuperUserProfiles } from '../../api/user/SuperUserProfileCollection';
@@ -9,6 +10,16 @@ import { AdminProfiles } from '../../api/user/AdminProfileCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
 import { removeUserMethod, updateRoleMethod, defineMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
+
+const getUserCollectionName = (role) => {
+  if (role === 'USER') {
+    return UserProfiles.getCollectionName();
+  }
+  if (role === 'SUPERUSER') {
+    return SuperUserProfiles.getCollectionName();
+  }
+  return AdminProfiles.getCollectionName();
+};
 
 const updateRole = ({ email, firstName, lastName, userID, _id: profileID, role }, newRole) => {
   // console.log(userID, profileID, role, newRole)
@@ -27,12 +38,14 @@ const updateRole = ({ email, firstName, lastName, userID, _id: profileID, role }
   updateRoleMethod.callPromise({ userID, role: newRole })
     .then((response) => console.log(response))
     .catch((error) => console.log(error));
+
+  swal('Success', 'User updated successfully', 'success', { buttons: false, timer: 3000 }); // assume no errors
 };
 
 const deleteUser = ({ userID, _id: profileID, role }) => {
   swal({
     title: 'Are you sure?',
-    text: `Do you really want to delete this user?`,
+    text: 'Do you really want to delete this user?',
     icon: 'warning',
     buttons: [
       'No, cancel it!',
@@ -46,7 +59,7 @@ const deleteUser = ({ userID, _id: profileID, role }) => {
         const collectionName = getUserCollectionName(role);
         removeItMethod.callPromise({ collectionName, instance: profileID })
           .then(() => {
-            swal('Success', `User deleted successfully`, 'success', { buttons: false, timer: 3000 });
+            swal('Success', 'User deleted successfully', 'success', { buttons: false, timer: 3000 });
           })
           .catch(error => swal('Error', error.message, 'error'));
 
@@ -55,16 +68,6 @@ const deleteUser = ({ userID, _id: profileID, role }) => {
           .catch((error) => console.log(error));
       }
     });
-};
-
-const getUserCollectionName = (role) => {
-  if (role === 'USER') {
-    return UserProfiles.getCollectionName();
-  } else if (role === 'SUPERUSER') {
-    return SuperUserProfiles.getCollectionName();
-  } else {
-    return AdminProfiles.getCollectionName();
-  }
 };
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
@@ -77,14 +80,13 @@ const ManageUsers = ({ ready, userList, roles }) => {
         <Segment.Group>
           <Segment className='manage-user-header'>
             <Header as="h2">Manage Users</Header>
-            <Input placeholder='Search users...' value={userFilter} onChange={(event, {value}) => setUserFilter(value)} />
+            <Input placeholder='Search users...' value={userFilter} onChange={(event, { value }) => setUserFilter(value)} />
           </Segment>
           <Segment>
             <Card.Group>
               {
-                userList.filter(({firstName, lastName}) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
-                        .map(user =>
-                  <Card fluid key={user._id}>
+                userList.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
+                  .map(user => <Card fluid key={user._id}>
                     <Card.Content>
                       <Card.Header>{`${user.lastName}, ${user.firstName}`}</Card.Header>
                       <Card.Meta>{`Email: ${user.email}`}</Card.Meta>
@@ -102,8 +104,7 @@ const ManageUsers = ({ ready, userList, roles }) => {
                         </span>
                       </Card.Description>
                     </Card.Content>
-                  </Card>
-                )
+                  </Card>)
               }
             </Card.Group>
           </Segment>
@@ -133,10 +134,10 @@ export default withTracker(() => {
   const admins = AdminProfiles.find({}, { sort: { lastName: 1 } }).fetch();
 
   function compare(a, b) {
-    if ( a.lastName < b.lastName ){
+    if (a.lastName < b.lastName) {
       return -1;
     }
-    if ( a.lastName > b.lastName ){
+    if (a.lastName > b.lastName) {
       return 1;
     }
     return 0;
@@ -147,7 +148,7 @@ export default withTracker(() => {
   const roles = [
     { key: 'USER', text: 'Volunteer', value: 'USER' },
     { key: 'SUPERUSER', text: 'Doctor', value: 'SUPERUSER' },
-    { key: 'ADMIN', text: 'Administrator', value: 'ADMIN' }
+    { key: 'ADMIN', text: 'Administrator', value: 'ADMIN' },
   ];
 
   return {

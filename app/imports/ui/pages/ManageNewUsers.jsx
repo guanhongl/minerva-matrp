@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Header, Loader, Button, Segment, Card, Input } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 // import { Accounts } from 'meteor/accounts-base';
 import { PendingUsers } from '../../api/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
@@ -57,14 +58,13 @@ const ManageNewUsers = ({ ready, users }) => {
         <Segment.Group>
           <Segment className='manage-user-header'>
             <Header as="h2">Manage New Users</Header>
-            <Input placeholder='Search users...' value={userFilter} onChange={(event, {value}) => setUserFilter(value)} />
+            <Input placeholder='Search users...' value={userFilter} onChange={(event, { value }) => setUserFilter(value)} />
           </Segment>
           <Segment>
             <Card.Group>
               {
-                users.filter(({firstName, lastName}) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
-                     .map(user =>
-                  <Card fluid key={user._id}>
+                users.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
+                  .map(user => <Card fluid key={user._id}>
                     <Card.Content>
                       <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
                       <Card.Meta>{`Email: ${user.email}`}</Card.Meta>
@@ -74,8 +74,7 @@ const ManageNewUsers = ({ ready, users }) => {
                         <Button className='reject-button' compact onClick={() => rejectUser(user.email, user._id)}>Reject</Button>
                       </div>
                     </Card.Content>
-                  </Card>
-                )
+                  </Card>)
               }
             </Card.Group>
           </Segment>

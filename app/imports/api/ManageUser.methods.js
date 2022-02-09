@@ -7,14 +7,13 @@ import { ROLE } from './role/Role';
 import { MATRP } from './matrp/MATRP';
 import { UserProfiles } from './user/UserProfileCollection';
 
-// TODO: edit email format
 export const acceptMethod = new ValidatedMethod({
   name: 'acceptMethod',
   mixins: [CallPromiseMixin],
   validate: null,
   run({ firstName, lastName, email }) {
     if (Meteor.isServer) {
-      console.log(firstName, lastName, email)
+      console.log(firstName, lastName, email);
       const userID = Accounts.createUser({ username: email, email: email });
       Accounts.sendEnrollmentEmail(userID);
 
@@ -51,7 +50,7 @@ export const updateRoleMethod = new ValidatedMethod({
       const loggedInUser = Meteor.user();
 
       if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ROLE.ADMIN)) {
-        throw new Meteor.Error('access-denied', "Access denied");
+        throw new Meteor.Error('access-denied', 'Access denied');
       }
 
       Roles.setUserRoles(userID, [role]);
