@@ -124,7 +124,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
 
   if (ready) {
     return (
-      <Tab.Pane id={PAGE_IDS.MED_STATUS}>
+      <Tab.Pane id={PAGE_IDS.MED_STATUS} className='status-tab'>
         <Header as="h2">
           <Header.Content>
               Medication Inventory Status
