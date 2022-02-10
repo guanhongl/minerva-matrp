@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Header, Form, Button, Tab, Loader, Input } from 'semantic-ui-react';
+import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Supplys } from '../../api/supply/SupplyCollection';
-import { SupplyTypes } from '../../api/supplyType/SupplyTypeCollection';
+import { Supplys, supplyTypes } from '../../api/supply/SupplyCollection';
 import { Locations } from '../../api/location/LocationCollection';
 import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
@@ -22,21 +21,28 @@ const submit = (data, callback) => {
     const newStock = { quantity, location, donated, donatedBy, note };
     const definitionData = { supply, supplyType, minQuantity, stock: [newStock] };
     defineMethod.callPromise({ collectionName, definitionData })
-      .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
         swal('Success', `${supply} added successfully`, 'success', { buttons: false, timer: 3000 });
         callback(); // resets the form
-      });
+      })
+      .catch(error => swal('Error', error.message, 'error'));
   } else {
-    // console.log('I don\'t think it should ever get here so this can probably be deleted');
     const { stock } = exists;
+    const target = stock.find(obj => obj.location === location);
+    // if location exists, increment the quantity:
+    if (target) {
+      target.quantity += quantity;
+    } else {
+      // else append the new location
+      stock.push({ location, quantity, donated, donatedBy, note });
+    }
     const updateData = { id: exists._id, stock };
     updateMethod.callPromise({ collectionName, updateData })
-      .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
         swal('Success', `${supply} updated successfully`, 'success', { buttons: false, timer: 3000 });
         callback(); // resets the form
-      });
+      })
+      .catch(error => swal('Error', error.message, 'error'));
   }
 };
 
@@ -64,10 +70,11 @@ const validateForm = (data, callback) => {
 };
 
 /** Renders the Page for Add Supplies. */
-const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
+// fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note
+const AddSupplies = ({ supplys, locations, ready }) => {
   const [fields, setFields] = useState({
     supply: '',
-    supplyType: [],
+    supplyType: '',
     minQuantity: '',
     quantity: '',
     location: '',
@@ -75,6 +82,8 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
     donated: false,
     donatedBy: '',
   });
+  const isDisabled = supplys.includes(fields.supply);
+
   // a copy of supplies and filtered supplies and their respective filters
   const [newSupplys, setNewSupplys] = useState([]);
   useEffect(() => {
@@ -84,6 +93,29 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
   useEffect(() => {
     setFilteredSupplys(newSupplys);
   }, [newSupplys]);
+
+  // handles adding a new supply; IS case sensitive
+  const onAddSupply = (event, { value }) => {
+    if (!newSupplys.map(supply => supply.toLowerCase()).includes(value.toLowerCase())) {
+      setNewSupplys([...newSupplys, value]);
+    }
+  };
+
+  // handles supply select
+  const onSupplySelect = (event, { value: supply }) => {
+    const target = Supplys.findOne({ supply });
+    // if the supply exists:
+    if (target) {
+      // autofill the form with specific supply info
+      const { supplyType, minQuantity } = target;
+      setFields({ ...fields, supply, supplyType, minQuantity });
+    } else {
+      // else reset specific supply info
+      setFields({ ...fields, supply, supplyType: '', minQuantity: '' });
+      // reset the filters
+      setFilteredSupplys(newSupplys);
+    }
+  };
 
   const handleChange = (event, { name, value }) => {
     setFields({ ...fields, [name]: value });
@@ -98,9 +130,8 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
   };
 
   const clearForm = () => {
-    setFields({ supply: '', supplyType: [], minQuantity: '', quantity: '', location: '', donated: false, donatedBy: '', note: '' });
-    setFilteredSupplys(filteredSupplys);
-    setNewSupplys(newSupplys);
+    setFields({ supply: '', supplyType: '', minQuantity: '', quantity: '', location: '', donated: false, donatedBy: '', note: '' });
+    setFilteredSupplys(newSupplys);
   };
 
   if (ready) {
@@ -108,9 +139,9 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
       <Tab.Pane id={COMPONENT_IDS.ADD_FORM}>
         <Header as="h2">
           <Header.Content>
-            Add Patient Supplies to Inventory Form
+            Add Supplies to Inventory Form
             <Header.Subheader>
-              <i>Please input all relative fields to add patient supplies to the inventory</i>
+              <i>Please input the following information to add to the inventory, to the best of your abilities.</i>
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -118,43 +149,34 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
           <Grid columns='equal' stackable>
             <Grid.Row>
               <Grid.Column>
-                <Form.Select clearable search label='Supply Name' options={getOptions(filteredSupplys)}
-                  placeholder="Example supply" name='supply' onChange={handleChange} value={fields.supply}
-                  id={COMPONENT_IDS.ADD_SUPPLY_NAME} />
+                <Form.Select clearable search label='Supply Name' options={getOptions(newSupplys)}
+                  placeholder="Hot Packs" name='supply' onChange={onSupplySelect} value={fields.supply}
+                  allowAdditions onAddItem={onAddSupply} id={COMPONENT_IDS.ADD_SUPPLY_NAME} />
               </Grid.Column>
               <Grid.Column className='filler-column' />
               <Grid.Column className='filler-column' />
             </Grid.Row>
+
             <Grid.Row>
               <Grid.Column>
-                <Form.Select clearable search label='Supply Type'
-                  options={getOptions(supplyTypes)} placeholder="Supply type"
-                  name='supplyType' onChange={handleChange} value={fields.supplyType} id={COMPONENT_IDS.ADD_SUPPLY_TYPE}/>
+                <Form.Select clearable label='Supply Type' options={getOptions(supplyTypes)} placeholder="Patient"
+                  name='supplyType' onChange={handleChange} value={fields.supplyType} id={COMPONENT_IDS.ADD_SUPPLY_TYPE} disabled={isDisabled}/>
               </Grid.Column>
               <Grid.Column>
-
                 <Form.Input label='Minimum Quantity' type='number' min={1} name='minQuantity' className='quantity'
-                  onChange={handleChange} value={fields.minQuantity} placeholder="100"
-                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} />
+                  onChange={handleChange} value={fields.minQuantity} placeholder="50"
+                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} disabled={isDisabled} />
               </Grid.Column>
-              <Grid.Column className='checkbox-column'>
-              </Grid.Column>
+              <Grid.Column className='filler-column' />
+            </Grid.Row>
 
-            </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <Form.Field>
-                  <label>Quantity</label>
-                  <Input
-                    type='number' min={1} onChange={handleChange} value={fields.quantity} name='quantity' id={COMPONENT_IDS.ADD_SUPPLY_QUANTITY} />
-                </Form.Field>
+                <Form.Input label='Quantity' type='number' min={1} name='quantity' placeholder='10'
+                  onChange={handleChange} value={fields.quantity} id={COMPONENT_IDS.ADD_SUPPLY_QUANTITY} />
               </Grid.Column>
               <Grid.Column>
-                <Form.Select clearable search label='Location' options={getOptions(locations, 'location')}
+                <Form.Select clearable search label='Location' options={getOptions(locations)} placeholder='Cabinet 1'
                   name='location' onChange={handleChange} value={fields.location} id={COMPONENT_IDS.ADD_SUPPLY_LOCATION}/>
               </Grid.Column>
               <Grid.Column>
@@ -173,6 +195,7 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
             <Grid.Row>
               <Grid.Column>
                 <Form.TextArea label='Additional Notes' name='note' onChange={handleChange} value={fields.note}
+                  placeholder="Please add any additional notes, special instructions, or information that should be known here."
                   id={COMPONENT_IDS.ADD_SUPPLY_NOTES}/>
               </Grid.Column>
             </Grid.Row>
@@ -180,7 +203,7 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
         </Form>
         <div className='buttons-div'>
           <Button className='clear-button' id={COMPONENT_IDS.ADD_SUPPLY_CLEAR} onClick={clearForm}>Clear Fields</Button>
-          <Button className='submit-button' floated='right' onClick={() => validateForm(fields)} id={COMPONENT_IDS.ADD_SUPPLY_SUBMIT}>Submit</Button>
+          <Button className='submit-button' floated='right' onClick={() => validateForm(fields, clearForm)} id={COMPONENT_IDS.ADD_SUPPLY_SUBMIT}>Submit</Button>
         </div>
       </Tab.Pane>
     );
@@ -188,22 +211,19 @@ const AddSupplies = ({ supplys, supplyTypes, locations, ready }) => {
   return (<Loader active>Getting data</Loader>);
 };
 
-/** Require an array of Stuff documents in the props. */
 AddSupplies.propTypes = {
   supplys: PropTypes.array.isRequired,
-  supplyTypes: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const typeSub = SupplyTypes.subscribeSupplyType();
+  const supplySub = Supplys.subscribeSupply();
   const locationSub = Locations.subscribeLocation();
   return {
     supplys: distinct('supply', Supplys),
-    supplyTypes: distinct('supplyType', SupplyTypes),
     locations: distinct('location', Locations),
-    ready: typeSub.ready() && locationSub.ready(),
+    ready: supplySub.ready() && locationSub.ready(),
   };
 })(AddSupplies);
