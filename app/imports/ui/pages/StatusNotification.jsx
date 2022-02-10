@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Loader, Label, Menu, Icon } from 'semantic-ui-react';
+import { Loader, Label, Icon, Popup } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -8,10 +8,6 @@ import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 // Render the form.
 const StatusNotification = ({ ready, medications }) => {
-
-  const menuStyle = {
-    marginRight: '10px',
-  };
 
   const filter = JSON.parse(JSON.stringify(medications));
 
@@ -29,28 +25,50 @@ const StatusNotification = ({ ready, medications }) => {
 
   if (ready) {
     return (
-      <Menu.Menu style={menuStyle} id={COMPONENT_IDS.STATUS_NOTIFICATION}>
-        <Menu.Item fitted>
-          <Icon name='announcement'/>
-          <Dropdown button floating labeled simple pointing="top right">
-            <Dropdown.Menu>
-              <Dropdown.Header content='NOTIFICATIONS' />
-              <Dropdown.Divider />
-              <Dropdown.Item>
-                <Icon color='yellow' name='warning circle'/>
-                {lowFilter.length} Low Stock
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <Icon color='red' name='warning circle'/>
-                {outFilter.length} Out of Stock
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Label color='red' floating>
-            {lowFilter.length + outFilter.length}
-          </Label>
-        </Menu.Item>
-      </Menu.Menu>
+      // <Menu.Menu style={menuStyle} id={COMPONENT_IDS.STATUS_NOTIFICATION}>
+      //   <Menu.Item fitted>
+      //     <Icon name='announcement'/>
+      //     <Dropdown button floating labeled simple pointing="top right">
+      //       <Dropdown.Menu>
+      //         <Dropdown.Header content='NOTIFICATIONS' />
+      //         <Dropdown.Divider />
+      //         <Dropdown.Item>
+      //           <Icon color='yellow' name='warning circle'/>
+      //           {lowFilter.length} Low Stock
+      //         </Dropdown.Item>
+      //         <Dropdown.Item>
+      //           <Icon color='red' name='warning circle'/>
+      //           {outFilter.length} Out of Stock
+      //         </Dropdown.Item>
+      //       </Dropdown.Menu>
+      //     </Dropdown>
+      //     <Label color='red' floating>
+      //       {lowFilter.length + outFilter.length}
+      //     </Label>
+      //   </Menu.Item>
+      // </Menu.Menu>
+      <Popup
+        trigger={
+          <div id={COMPONENT_IDS.STATUS_NOTIFICATION}>
+            <Icon name='announcement'/>
+            <Label color='red' floating>
+              {lowFilter.length + outFilter.length}
+            </Label>
+          </div>
+        } 
+      >
+        <Popup.Header>Notifications</Popup.Header>
+        <Popup.Content>
+          <div>
+            <Icon color='yellow' name='warning circle'/>
+            <span>{lowFilter.length} Low Stock</span>
+          </div>
+          <div>
+            <Icon color='red' name='warning circle'/>
+            <span>{outFilter.length} Out of Stock</span>
+          </div>
+        </Popup.Content>
+      </Popup>
     );
   }
   return (<Loader active>Getting data</Loader>);

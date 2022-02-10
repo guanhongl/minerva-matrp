@@ -14,6 +14,7 @@ const NavBar = ({ currentUser }) => {
   const menuStyle = { marginBottom: '30px', backgroundColor: '#1D3E66', backgroundSize: 'content' };
   const [mobile, setMobile] = useState(false);
 
+  // TODO: fix event listener
   const handleMobile = () => {
     if (window.innerWidth < 720) {
       setMobile(true);
@@ -69,8 +70,8 @@ const NavBar = ({ currentUser }) => {
               <Dropdown.Menu>
                 <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LIST_STUFF_ADMIN} as={NavLink} activeClassName="active" exact
                   to="/admin" key='admin' content='Admin'/>
-                <Dropdown.Item id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN_DATABASE} key="manage-database"
-                  as={NavLink} exact to="/manage-database" content="Database"/>
+                {/* <Dropdown.Item id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN_DATABASE} key="manage-database"
+                  as={NavLink} exact to="/manage-database" content="Database"/> */}
                 <Dropdown.Item id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN_USERS} key="manage-users"
                   as={NavLink} exact to="/manage-users" content="Users"/>
                 <Dropdown.Item key="manage-new-users" as={NavLink} exact to="/manage-new-users" content="New Users"/>
@@ -154,7 +155,7 @@ const NavBar = ({ currentUser }) => {
           [
             <Dropdown id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN} item text="Manage" key="manage-dropdown">
               <Dropdown.Menu>
-                <Dropdown.Item id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN_DATABASE} key="manage-database" as={NavLink} exact to="/manage-database" content="Database" />
+                {/* <Dropdown.Item id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN_DATABASE} key="manage-database" as={NavLink} exact to="/manage-database" content="Database" /> */}
                 <Dropdown.Item id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN_USERS} key="manage-users"
                   as={NavLink} exact to="/manage-users" content="Users"/>
                 <Dropdown.Item key="manage-new-users" as={NavLink} exact to="/manage-new-users" content="New Users"/>
