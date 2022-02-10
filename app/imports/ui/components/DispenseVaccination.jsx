@@ -211,7 +211,8 @@ const DispenseVaccination = ({ ready, brands, sites }) => {
         </Form>
         <div className='buttons-div'>
           <Button className='clear-button' onClick={clearForm}>Clear Fields</Button>
-          <Button className='submit-button' floated='right' onClick={() => validateForm(fields, clearForm)}>Submit</Button>
+          {/* <Button className='submit-button' floated='right' onClick={() => validateForm(fields, clearForm)}>Submit</Button> */}
+          <Button className='submit-button' floated='right' onClick={() => alert('Under Maintenance...')}>Submit</Button>
         </div>
       </Tab.Pane>
     );

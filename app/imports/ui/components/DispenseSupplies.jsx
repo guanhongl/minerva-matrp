@@ -236,7 +236,8 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
         </Form>
         <div className='buttons-div'>
           <Button className='clear-button' onClick={clearForm} id={COMPONENT_IDS.DISPENSE_SUP_CLEAR}>Clear Fields</Button>
-          <Button className='submit-button' floated='right' onClick={() => validateForm(fields, clearForm)}>Submit</Button>
+          {/* <Button className='submit-button' floated='right' onClick={() => validateForm(fields, clearForm)}>Submit</Button> */}
+          <Button className='submit-button' floated='right' onClick={() => alert('Under Maintenance...')}>Submit</Button>
         </div>
       </Tab.Pane>
     );
