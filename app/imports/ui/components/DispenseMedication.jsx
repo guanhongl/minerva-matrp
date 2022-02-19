@@ -169,7 +169,7 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
     }
   };
 
-  // handle add new drug
+  // handle add new drug to dispense
   const onAddDrug = () => {
     const newInnerFields = [...innerFields];
     newInnerFields.push({ lotId: '', drug: '', brand: '', expire: '', quantity: '', unit: 'tab(s)', donated: false,
@@ -177,7 +177,7 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
     setInnerFields(newInnerFields);
   };
 
-  // handle remove drug
+  // handle remove drug to dispense
   const onRemoveDrug = () => {
     const newInnerFields = [...innerFields];
     newInnerFields.pop();

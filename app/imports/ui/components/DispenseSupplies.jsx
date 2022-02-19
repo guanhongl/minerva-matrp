@@ -154,7 +154,7 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
   };
 
   const clearForm = () => {
-    setFields({ ...fields, site: '', supply: '', supplyType: '', quantity: '',
+    setFields({ ...fields, dispenseType: 'Patient Use', site: '', supply: '', supplyType: '', quantity: '',
       dispensedTo: '', location: '', donated: false, donatedBy: '', note: '' });
     setMaxQuantity(0);
     setFilteredLocations(locations);
