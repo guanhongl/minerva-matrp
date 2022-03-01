@@ -36,8 +36,8 @@ const submit = (data, callback) => {
       stock.splice(targetIndex, 1); // remove the stock
     }
     const updateData = { id: _id, stock };
-    const element = { supplyType, quantity, donated, donatedBy };
-    const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, name: supply, note, element };
+    const element = [{ name: supply, supplyType, quantity, donated, donatedBy }];
+    const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element };
     const promises = [
       updateMethod.callPromise({ collectionName, updateData }),
       defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData })

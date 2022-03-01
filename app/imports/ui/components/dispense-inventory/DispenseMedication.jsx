@@ -19,6 +19,7 @@ const submit = (fields, innerFields, callback) => {
   // const { lotId, drug, brand, expire, quantity, unit, donated, donatedBy, maxQuantity } = innerFields;
   // TODO: historical record should allow multiple drugs?
   const collectionName = Medications.getCollectionName();
+  const element = []; // the historical record elements
 
   innerFields.forEach(innerField => {
     const { lotId, drug, brand, expire, quantity, unit, donated, donatedBy } = innerField;
@@ -39,13 +40,10 @@ const submit = (fields, innerFields, callback) => {
         lotIds.splice(targetIndex, 1); // remove the lotId
       }
       const updateData = { id: _id, lotIds };
-      const element = { unit, lotId, brand, expire, quantity, donated, donatedBy };
-      const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
-        name: drug, note, element };
+      element.push({ name: drug, unit, lotId, brand, expire, quantity, donated, donatedBy });
       // TODO: fix promises, fix swal
       const promises = [
         updateMethod.callPromise({ collectionName, updateData }),
-        defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData }),
       ];
       Promise.all(promises)
         .catch(error => swal('Error', error.message, 'error'))
@@ -55,6 +53,10 @@ const submit = (fields, innerFields, callback) => {
         });
     }
   });
+
+  const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
+    note, element };
+  defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData });
 };
 
 /** validates the dispense medication form */

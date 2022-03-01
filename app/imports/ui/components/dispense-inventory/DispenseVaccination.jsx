@@ -30,9 +30,9 @@ const submit = (data, callback) => {
     lotIds.splice(targetIndex, 1); // remove the lotId
   }
   const updateData = { id: _id, lotIds };
-  const element = { lotId, brand, expire, dose, visDate };
+  const element = [{ name: vaccine, lotId, brand, expire, dose, visDate }];
   const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
-    name: vaccine, note, element };
+    note, element };
   // TODO: fix promises
   const promises = [
     updateMethod.callPromise({ collectionName, updateData }),
