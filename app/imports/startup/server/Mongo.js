@@ -40,7 +40,7 @@ if (Meteor.settings.loadAssetsFile && Medications.count() === 0) {
 if (Meteor.settings.loadAssetsFile && Historicals.count() === 0) {
   // Historicals._collection.remove({}); // clear collection (temporary)
   console.log('Loading history from private/historicals.json');
-  sampleHistorical.map(historical => Historicals.define(historical));
+  sampleHistorical.slice(0, 500).map(historical => Historicals.define(historical));
 }
 
 if (Meteor.settings.loadAssetsFile && DrugTypes.count() === 0) {
