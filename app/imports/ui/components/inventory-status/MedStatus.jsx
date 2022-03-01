@@ -15,13 +15,13 @@ import {
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { Medications } from '../../api/medication/MedicationCollection';
-import { DrugTypes } from '../../api/drugType/DrugTypeCollection';
-import { Locations } from '../../api/location/LocationCollection';
-import { PAGE_IDS } from '../utilities/PageIDs';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import MedStatusRow from '../components/MedStatusRow';
-import { distinct, getOptions, nestedDistinct } from '../utilities/Functions';
+import { Medications } from '../../../api/medication/MedicationCollection';
+import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
+import { Locations } from '../../../api/location/LocationCollection';
+import { PAGE_IDS } from '../../utilities/PageIDs';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import MedStatusRow from './MedStatusRow';
+import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];

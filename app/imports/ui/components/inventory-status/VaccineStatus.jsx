@@ -3,12 +3,12 @@ import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { Vaccinations } from '../../api/vaccination/VaccinationCollection';
-import { Locations } from '../../api/location/LocationCollection';
-import { PAGE_IDS } from '../utilities/PageIDs';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { Locations } from '../../../api/location/LocationCollection';
+import { PAGE_IDS } from '../../utilities/PageIDs';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineStatusRow from './VaccineStatusRow';
-import { distinct, getOptions } from '../utilities/Functions';
+import { distinct, getOptions } from '../../utilities/Functions';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];

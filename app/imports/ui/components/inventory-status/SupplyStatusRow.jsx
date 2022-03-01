@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Icon, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import SupplyInfoPage from './SupplyInfoPage';
 
 const SupplyStatusRow = ({ supply }) => {

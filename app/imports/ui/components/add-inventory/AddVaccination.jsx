@@ -4,11 +4,11 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
-import { Locations } from '../../api/location/LocationCollection';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { Vaccinations } from '../../api/vaccination/VaccinationCollection';
-import { distinct, getOptions, nestedDistinct } from '../utilities/Functions';
-import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
+import { Locations } from '../../../api/location/LocationCollection';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
 /** On submit, insert the data. */
 const submit = (data, callback) => {

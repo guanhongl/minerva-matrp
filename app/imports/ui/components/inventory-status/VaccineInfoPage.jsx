@@ -6,9 +6,9 @@ import {
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { Vaccinations } from '../../api/vaccination/VaccinationCollection';
-import { updateMethod } from '../../api/base/BaseCollection.methods';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { updateMethod } from '../../../api/base/BaseCollection.methods';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const VaccineInfoPage = ({ info, lotId, expire, locate, quantity, note, brand }) => {

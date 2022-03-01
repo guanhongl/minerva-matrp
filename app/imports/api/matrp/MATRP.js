@@ -10,7 +10,6 @@ import { Medications } from '../medication/MedicationCollection';
 import { Vaccinations } from '../vaccination/VaccinationCollection';
 import { Historicals } from '../historical/HistoricalCollection';
 import { Supplys } from '../supply/SupplyCollection';
-import { SupplyTypes } from '../supplyType/SupplyTypeCollection';
 import { PendingUsers } from '../PendingUserCollection';
 
 class MATRPClass {
@@ -34,7 +33,6 @@ class MATRPClass {
       Vaccinations,
       Historicals,
       Supplys,
-      SupplyTypes,
       PendingUsers,
     ];
     /*
@@ -52,7 +50,6 @@ class MATRPClass {
       Vaccinations,
       Historicals,
       Supplys,
-      SupplyTypes,
       PendingUsers,
     ];
 

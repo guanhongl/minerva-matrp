@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Tab, Segment } from 'semantic-ui-react';
 import { PAGE_IDS } from '../utilities/PageIDs';
-import ManageDrugTypes from '../components/ManageDrugTypes';
-import ManageLocations from '../components/ManageLocations';
-import ManageSites from '../components/ManageSites';
+import ManageDrugTypes from '../components/manage-dropdowns/ManageDrugTypes';
+import ManageLocations from '../components/manage-dropdowns/ManageLocations';
+import ManageSites from '../components/manage-dropdowns/ManageSites';
 
 const drugTypesTab = () => <ManageDrugTypes />;
 const locationsTab = () => <ManageLocations />;

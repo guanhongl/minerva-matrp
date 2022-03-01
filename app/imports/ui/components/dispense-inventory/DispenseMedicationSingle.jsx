@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { getOptions } from '../utilities/Functions';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { getOptions } from '../../utilities/Functions';
 
 const DispenseMedicationSingle = ({ lotIds, drugs, brands, fields, handleChange, handleCheck, onLotIdSelect,
   allowedUnits, index }) => (

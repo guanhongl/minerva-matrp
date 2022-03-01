@@ -6,8 +6,7 @@ import {
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-// import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const DispenseInfoPage = ({ record }) => {

@@ -6,9 +6,9 @@ import {
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { Supplys } from '../../api/supply/SupplyCollection';
-import { updateMethod } from '../../api/base/BaseCollection.methods';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Supplys } from '../../../api/supply/SupplyCollection';
+import { updateMethod } from '../../../api/base/BaseCollection.methods';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const SupplyInfoPage = ({ info, locate, quantity, note, donatedBy }) => {

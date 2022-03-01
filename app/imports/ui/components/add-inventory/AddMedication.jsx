@@ -4,12 +4,12 @@ import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { Medications, allowedUnits } from '../../api/medication/MedicationCollection';
-import { Locations } from '../../api/location/LocationCollection';
-import { DrugTypes } from '../../api/drugType/DrugTypeCollection';
-import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { distinct, getOptions, nestedDistinct } from '../utilities/Functions';
+import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
+import { Locations } from '../../../api/location/LocationCollection';
+import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
+import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
 
 /** handles submit for add medication. */
 const submit = (data, callback) => {

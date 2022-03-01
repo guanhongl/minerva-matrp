@@ -3,12 +3,12 @@ import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { Locations } from '../../api/location/LocationCollection';
-import { PAGE_IDS } from '../utilities/PageIDs';
-import { distinct, getOptions } from '../utilities/Functions';
-import { Supplys } from '../../api/supply/SupplyCollection';
+import { Locations } from '../../../api/location/LocationCollection';
+import { PAGE_IDS } from '../../utilities/PageIDs';
+import { distinct, getOptions } from '../../utilities/Functions';
+import { Supplys } from '../../../api/supply/SupplyCollection';
 import SupplyStatusRow from './SupplyStatusRow';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];

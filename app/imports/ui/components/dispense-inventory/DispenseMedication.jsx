@@ -5,12 +5,12 @@ import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Sites } from '../../api/site/SiteCollection';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { Medications, allowedUnits } from '../../api/medication/MedicationCollection';
-import { dispenseTypes } from '../../api/historical/HistoricalCollection';
-import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
-import { distinct, getOptions, nestedDistinct } from '../utilities/Functions';
+import { Sites } from '../../../api/site/SiteCollection';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
+import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
+import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
+import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
 import DispenseMedicationSingle from './DispenseMedicationSingle';
 
 /** handle submit for Dispense Medication. */

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Historicals, dispenseTypes, inventoryTypes } from '../../api/historical/HistoricalCollection';
 import { Sites } from '../../api/site/SiteCollection';
-import DispenseLogRow from '../components/DispenseLogRow';
+import DispenseLogRow from '../components/dispense-log/DispenseLogRow';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { distinct, getOptions } from '../utilities/Functions';

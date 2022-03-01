@@ -5,11 +5,11 @@ import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Vaccinations } from '../../api/vaccination/VaccinationCollection';
-import { Sites } from '../../api/site/SiteCollection';
-import { dispenseTypes } from '../../api/historical/HistoricalCollection';
-import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
-import { distinct, getOptions, nestedDistinct } from '../utilities/Functions';
+import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { Sites } from '../../../api/site/SiteCollection';
+import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
+import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
+import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
 
 /** handle submit for Dispense Vaccine. */
 const submit = (data, callback) => {

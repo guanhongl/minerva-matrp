@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Icon, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import DrugPage from '../components/DrugPage';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import MedInfoPage from './MedInfoPage';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
 const MedStatusRow = ({ med }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,7 +85,7 @@ const MedStatusRow = ({ med }) => {
                         <Icon name='check' color='green'/>
                       }
                     </Table.Cell>
-                    <Table.Cell><DrugPage key={med.lotIds._id} info={med} lotId={lotId} brand={brand} expire={expire} quantity={quantity} note={note} donated={donated} locate={location} /></Table.Cell>
+                    <Table.Cell><MedInfoPage key={med.lotIds._id} info={med} lotId={lotId} brand={brand} expire={expire} quantity={quantity} note={note} donated={donated} locate={location} /></Table.Cell>
                   </Table.Row>
                 ))
               }

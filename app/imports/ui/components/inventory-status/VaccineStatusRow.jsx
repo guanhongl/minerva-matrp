@@ -3,7 +3,7 @@ import { Icon, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineInfoPage from './VaccineInfoPage';
 
 const VaccineStatusRow = ({ vaccine }) => {

@@ -4,27 +4,27 @@ import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { SupplyTypes } from '../../api/supplyType/SupplyTypeCollection';
-import { Medications } from '../../api/medication/MedicationCollection';
-import { defineMethod, removeItMethod } from '../../api/base/BaseCollection.methods';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
+import { Medications } from '../../../api/medication/MedicationCollection';
+import { defineMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 
 /**
- * inserts the supply type option
+ * inserts the drug type option
  */
-const insertOption = (option, supplyTypes, callback) => {
-  const existing = _.pluck(supplyTypes, 'supplyType').map(supplyType => supplyType.toLowerCase());
+const insertOption = (option, drugTypes, callback) => {
+  const existing = _.pluck(drugTypes, 'drugType').map(drugType => drugType.toLowerCase());
   // validation:
   if (!option) {
     // if option is empty
-    swal('Error', 'Supply Type cannot be empty.', 'error');
+    swal('Error', 'Drug Type cannot be empty.', 'error');
   } else if (existing.includes(option.toLowerCase())) {
     // if option exists
     swal('Error', `${option} already exists!`, 'error');
   } else {
     // else add option
-    const collectionName = SupplyTypes.getCollectionName();
-    const definitionData = { supplyType: option };
+    const collectionName = DrugTypes.getCollectionName();
+    const definitionData = { drugType: option };
     defineMethod.callPromise({ collectionName, definitionData })
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
@@ -35,7 +35,7 @@ const insertOption = (option, supplyTypes, callback) => {
 };
 
 /**
- * deletes the supply type option
+ * deletes the drug type option
  */
 const deleteOption = (option, id) => {
   swal({
@@ -51,9 +51,9 @@ const deleteOption = (option, id) => {
     .then((isConfirm) => {
       // if 'yes'
       if (isConfirm) {
-        const inUse = Medications.findOne({ supplyType: option });
-        const collectionName = SupplyTypes.getCollectionName();
-        // if an existing medication uses the supply type
+        const inUse = Medications.findOne({ drugType: option });
+        const collectionName = DrugTypes.getCollectionName();
+        // if an existing medication uses the drug type
         if (inUse) {
           swal('Error', `${option} is in use.`, 'error');
         } else {
@@ -67,7 +67,7 @@ const deleteOption = (option, id) => {
     });
 };
 
-const ManageSupplyTypes = ({ supplyTypes, ready }) => {
+const ManageDrugTypes = ({ drugTypes, ready }) => {
   const [newOption, setNewOption] = useState('');
 
   const clearField = () => setNewOption('');
@@ -75,18 +75,18 @@ const ManageSupplyTypes = ({ supplyTypes, ready }) => {
   if (ready) {
     return (
       <div id={COMPONENT_IDS.MANAGE_DRUG_TYPES} className='manage-tab'>
-        <Header as='h2'>{`Manage Supply Types (${supplyTypes.length})`}</Header>
+        <Header as='h2'>{`Manage Drug Types (${drugTypes.length})`}</Header>
         <div className='controls'>
           <Input onChange={(event, { value }) => setNewOption(value)} value={newOption}
-            placeholder='Add new supply type...' />
-          <Button content='Add' onClick={() => insertOption(newOption, supplyTypes, clearField)} />
+            placeholder='Add new drug type...' />
+          <Button content='Add' onClick={() => insertOption(newOption, drugTypes, clearField)} />
         </div>
         <List divided relaxed>
           {
-            supplyTypes.map(({ supplyType, _id }) => (
+            drugTypes.map(({ drugType, _id }) => (
               <List.Item key={_id}>
-                <List.Icon name='trash alternate' onClick={() => deleteOption(supplyType, _id)} />
-                <List.Content>{supplyType}</List.Content>
+                <List.Icon name='trash alternate' onClick={() => deleteOption(drugType, _id)} />
+                <List.Content>{drugType}</List.Content>
               </List.Item>
             ))
           }
@@ -97,18 +97,18 @@ const ManageSupplyTypes = ({ supplyTypes, ready }) => {
   return (<Loader active>Getting data</Loader>);
 };
 
-ManageSupplyTypes.propTypes = {
-  supplyTypes: PropTypes.array.isRequired,
+ManageDrugTypes.propTypes = {
+  drugTypes: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
   const medicationSub = Medications.subscribeMedication();
-  const supplyTypeSub = SupplyTypes.subscribeSupplyType();
-  const supplyTypes = SupplyTypes.find({}, { sort: { supplyType: 1 } }).fetch();
-  const ready = supplyTypeSub.ready() && medicationSub.ready();
+  const drugTypeSub = DrugTypes.subscribeDrugType();
+  const drugTypes = DrugTypes.find({}, { sort: { drugType: 1 } }).fetch();
+  const ready = drugTypeSub.ready() && medicationSub.ready();
   return {
-    supplyTypes,
+    drugTypes,
     ready,
   };
-})(ManageSupplyTypes);
+})(ManageDrugTypes);

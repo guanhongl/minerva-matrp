@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Menu, Tab } from 'semantic-ui-react';
-import DispenseMedication from '../components/DispenseMedication';
-import DispenseVaccination from '../components/DispenseVaccination';
-import DispenseSupplies from '../components/DispenseSupplies';
+import DispenseMedication from '../components/dispense-inventory/DispenseMedication';
+import DispenseVaccination from '../components/dispense-inventory/DispenseVaccination';
+import DispenseSupplies from '../components/dispense-inventory/DispenseSupplies';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 

@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import moment from 'moment';
-import { Sites } from '../../api/site/SiteCollection';
-import { Supplys, supplyTypes } from '../../api/supply/SupplyCollection';
-import { dispenseTypes } from '../../api/historical/HistoricalCollection';
-import { distinct, getOptions } from '../utilities/Functions';
-import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { Locations } from '../../api/location/LocationCollection';
+import { Sites } from '../../../api/site/SiteCollection';
+import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
+import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
+import { distinct, getOptions } from '../../utilities/Functions';
+import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Locations } from '../../../api/location/LocationCollection';
 
 /** handle submit for Dispense Supply. */
 const submit = (data, callback) => {

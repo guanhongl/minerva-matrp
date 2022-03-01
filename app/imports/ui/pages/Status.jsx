@@ -2,9 +2,9 @@ import React from 'react';
 import { Container, Tab, Menu } from 'semantic-ui-react';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import MedStatus from '../components/MedStatus';
-import SupplyStatus from '../components/SupplyStatus';
-import VaccineStatus from '../components/VaccineStatus';
+import MedStatus from '../components/inventory-status/MedStatus';
+import SupplyStatus from '../components/inventory-status/SupplyStatus';
+import VaccineStatus from '../components/inventory-status/VaccineStatus';
 
 const medicationTab = () => <MedStatus />;
 const vaccinesTab = () => <VaccineStatus />;

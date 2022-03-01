@@ -6,13 +6,13 @@ import {
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { Medications } from '../../api/medication/MedicationCollection';
-import { updateMethod } from '../../api/base/BaseCollection.methods';
-import { PAGE_IDS } from '../utilities/PageIDs';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Medications } from '../../../api/medication/MedicationCollection';
+import { updateMethod } from '../../../api/base/BaseCollection.methods';
+import { PAGE_IDS } from '../../utilities/PageIDs';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const DrugPage = ({ info, lotId, brand, expire, quantity, note, donated, locate }) => {
+const MedInfoPage = ({ info, lotId, brand, expire, quantity, note, donated, locate }) => {
 
   // useState for note field when editing notes.
   const [noteField, setNoteField] = useState(note);
@@ -198,7 +198,7 @@ const DrugPage = ({ info, lotId, brand, expire, quantity, note, donated, locate 
 };
 
 // Require a document to be passed to this component.
-DrugPage.propTypes = {
+MedInfoPage.propTypes = {
   info: PropTypes.object.isRequired,
   lotId: PropTypes.string,
   brand: PropTypes.string,
@@ -210,4 +210,4 @@ DrugPage.propTypes = {
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
-export default withRouter(DrugPage);
+export default withRouter(MedInfoPage);

@@ -4,9 +4,9 @@ import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { Sites } from '../../api/site/SiteCollection';
-import { defineMethod, removeItMethod } from '../../api/base/BaseCollection.methods';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Sites } from '../../../api/site/SiteCollection';
+import { defineMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 
 /**
  * inserts the site option

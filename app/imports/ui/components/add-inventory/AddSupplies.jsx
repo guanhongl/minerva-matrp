@@ -3,11 +3,11 @@ import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Supplys, supplyTypes } from '../../api/supply/SupplyCollection';
-import { Locations } from '../../api/location/LocationCollection';
-import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { distinct, getOptions } from '../utilities/Functions';
+import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
+import { Locations } from '../../../api/location/LocationCollection';
+import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
+import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { distinct, getOptions } from '../../utilities/Functions';
 
 /** handles submit for add medication. */
 const submit = (data, callback) => {
