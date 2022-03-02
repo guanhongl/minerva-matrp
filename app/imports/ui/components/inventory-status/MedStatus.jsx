@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Header,
-  Table,
-  Divider,
-  Dropdown,
-  Pagination,
-  Grid,
-  Input,
-  Loader,
-  Icon,
-  Popup,
-  Tab,
-} from 'semantic-ui-react';
+import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';

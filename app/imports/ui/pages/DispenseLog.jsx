@@ -20,22 +20,11 @@ const logPerPage = [
   { key: 4, value: 100, text: '100' },
 ];
 
-// Used for sorting the table in accordance to the type of dispense
-const reason = [{ key: 'All', value: 0, text: 'All' }, ...getOptions(dispenseTypes)];
-
-// Used for sorting the table in accordance to the type of inventory
-const inventory = [{ key: 'All', value: 0, text: 'All' }, ...getOptions(inventoryTypes)];
-
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
 
-/** Renders the Page for Dispensing History. */
+/** Renders the Dispense Log Page. */
 const DispenseLog = ({ ready, historicals, sites }) => {
   if (ready) {
-    const gridAlign = {
-      textAlign: 'center',
-    };
-
-    // const [searchHistoricals, setSearchHistoricals] = useState('');
     const [filterHistoricals, setFilterHistoricals] = useState([]);
     useEffect(() => {
       setFilterHistoricals(historicals);
@@ -52,30 +41,30 @@ const DispenseLog = ({ ready, historicals, sites }) => {
 
     // handles filtering
     useEffect(() => {
-      let filter = JSON.parse(JSON.stringify(historicals));
+      let filter = JSON.parse(JSON.stringify(historicals)); // deep clone
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
-        filter = filter.filter((historical) => (
-          historical.name.toLowerCase().includes(query) ||
-            historical.dispensedTo.toLowerCase().includes(query)
+        filter = filter.filter(({ dispensedTo, element }) => (
+          element.findIndex(({ name }) => name.toLowerCase().includes(query)) !== -1 ||
+          dispensedTo.toLowerCase().includes(query)
         ));
       }
       if (inventoryFilter) {
-        filter = filter.filter((historical) => historical.inventoryType === inventoryFilter);
+        filter = filter.filter(({ inventoryType }) => inventoryType === inventoryFilter);
       }
       if (dispenseTypeFilter) {
-        filter = filter.filter((historical) => historical.dispenseType === dispenseTypeFilter);
+        filter = filter.filter(({ dispenseType }) => dispenseType === dispenseTypeFilter);
       }
       if (siteFilter) {
-        filter = filter.filter((historical) => historical.site === siteFilter);
+        filter = filter.filter(({ site }) => site === siteFilter);
       }
       if (minDateFilter) {
         const minDate = moment(minDateFilter).utc().format();
-        filter = filter.filter((historical) => historical.dateDispensed >= minDate);
+        filter = filter.filter(({ dateDispensed }) => dateDispensed >= minDate);
       }
       if (maxDateFilter) {
         const maxDate = moment(maxDateFilter).utc().format();
-        filter = filter.filter((historical) => historical.dateDispensed <= maxDate);
+        filter = filter.filter(({ dateDispensed }) => dateDispensed <= maxDate);
       }
       setFilterHistoricals(filter);
     }, [searchQuery, inventoryFilter, dispenseTypeFilter, siteFilter, minDateFilter, maxDateFilter]);
@@ -126,12 +115,12 @@ const DispenseLog = ({ ready, historicals, sites }) => {
             </Grid>
             <Divider/>
             <Grid divided columns="equal" stackable>
-              <Grid.Row style={gridAlign}>
+              <Grid.Row textAlign='center'>
                 <Grid.Column>
                   Inventory Type: {' '}
                   <Dropdown
                     inline
-                    options={inventory}
+                    options={getFilters(inventoryTypes)}
                     search
                     value={inventoryFilter}
                     onChange={handleInventoryFilter}
@@ -140,7 +129,7 @@ const DispenseLog = ({ ready, historicals, sites }) => {
                 </Grid.Column>
                 <Grid.Column>
                   Dispense Type: {' '}
-                  <Dropdown inline={true} options={reason} search value={dispenseTypeFilter}
+                  <Dropdown inline={true} options={getFilters(dispenseTypes)} search value={dispenseTypeFilter}
                     onChange={handleDispenseTypeFilter} id={COMPONENT_IDS.DISPENSE_TYPE}/>
                 </Grid.Column>
                 <Grid.Column>
@@ -154,22 +143,27 @@ const DispenseLog = ({ ready, historicals, sites }) => {
             Records per page:{' '}
             <Dropdown inline={true} options={logPerPage} value={maxLog} onChange={handleMaxLog}/>
             Total count: {filterHistoricals.length}
-            <Table striped singleLine columns={9} color='blue' compact collapsing unstackable>
+            <Table striped singleLine columns={7} color='blue' compact collapsing unstackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Date & Time</Table.HeaderCell>
                   <Table.HeaderCell>Inventory Type</Table.HeaderCell>
                   <Table.HeaderCell>Dispense Type</Table.HeaderCell>
                   <Table.HeaderCell>Patient Number</Table.HeaderCell>
-                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Site</Table.HeaderCell>
                   <Table.HeaderCell>Dispensed By</Table.HeaderCell>
                   <Table.HeaderCell>Information</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
                 {
-                  filterHistoricals.slice((pageNo - 1) * maxLog, pageNo * maxLog)
-                    .map(history => <DispenseLogRow key={history._id} history={history}/>)
+                  filterHistoricals.length ?
+                    filterHistoricals.slice((pageNo - 1) * maxLog, pageNo * maxLog)
+                      .map(history => <DispenseLogRow key={history._id} history={history}/>)
+                    :
+                    <Table.Row>
+                      <Table.Cell as='td' colSpan='7' textAlign='center' content={'No records to display.'} />
+                    </Table.Row>
                 }
               </Table.Body>
               <Table.Footer>
