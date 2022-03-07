@@ -3,6 +3,8 @@ import { Icon, Popup, Table, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import DrugRecord from './DrugRecord';
+import SupplyRecord from './SupplyRecord';
+import VaccineRecord from './VaccineRecord';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
 const DispenseLogRow = ({ history }) => {
@@ -31,6 +33,14 @@ const DispenseLogRow = ({ history }) => {
       {
         history.inventoryType === 'Medication' &&
         <DrugRecord open={open} setOpen={setOpen} record={history} />
+      }
+      {
+        history.inventoryType === 'Supply' &&
+        <SupplyRecord open={open} setOpen={setOpen} record={history} />
+      }
+      {
+        history.inventoryType === 'Vaccine' &&
+        <VaccineRecord open={open} setOpen={setOpen} record={history} />
       }
     </>
   );

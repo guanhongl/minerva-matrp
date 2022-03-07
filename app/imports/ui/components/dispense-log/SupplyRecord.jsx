@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
-const DrugRecord = ({ open, setOpen, record }) => {
+const SupplyRecord = ({ open, setOpen, record }) => {
 
   const { dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element } = record;
 
@@ -16,7 +16,7 @@ const DrugRecord = ({ open, setOpen, record }) => {
       dimmer='blurring'
       id={COMPONENT_IDS.DISPENSE_INFO}
     >
-      <Modal.Header>Drug Historical Record</Modal.Header>
+      <Modal.Header>Supply Historical Record</Modal.Header>
       <Modal.Content scrolling>
         <div>
           <span className='header'>Dispense Type:</span>
@@ -40,27 +40,19 @@ const DrugRecord = ({ open, setOpen, record }) => {
         </div>
         <hr />
         {
-          element.map(({ unit, lotId, brand, expire, quantity, donated, donatedBy, name }, index) => 
+          element.map(({ supplyType, quantity, donated, donatedBy, name }, index) => 
             <>
               <div>
-                <span className='header'>{`Drug ${index+1}:`}</span>
+                <span className='header'>{`Supply ${index+1}:`}</span>
                 {name}
               </div>
               <div>
-                <span className='header'>Lot Number:</span>
-                {lotId}
-              </div>
-              <div>
-                <span className='header'>Brand:</span>
-                {brand}
-              </div>
-              <div>
-                <span className='header'>Expiration Date:</span>
-                {moment(expire).format('LL')}
+                <span className='header'>Supply Type:</span>
+                {supplyType}
               </div>
               <div>
                 <span className='header'>Quantity Dispensed:</span>
-                {`${quantity} ${unit}`}
+                {quantity}
               </div>
               <div>
                 <span className='header'>Donated:</span>
@@ -90,8 +82,8 @@ const DrugRecord = ({ open, setOpen, record }) => {
   );
 };
 
-DrugRecord.propTypes = {
+SupplyRecord.propTypes = {
   record: PropTypes.object.isRequired,
 };
 
-export default DrugRecord;
+export default SupplyRecord;

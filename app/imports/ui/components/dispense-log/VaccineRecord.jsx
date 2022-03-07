@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
-const DrugRecord = ({ open, setOpen, record }) => {
+const VaccineRecord = ({ open, setOpen, record }) => {
 
   const { dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element } = record;
 
@@ -16,7 +16,7 @@ const DrugRecord = ({ open, setOpen, record }) => {
       dimmer='blurring'
       id={COMPONENT_IDS.DISPENSE_INFO}
     >
-      <Modal.Header>Drug Historical Record</Modal.Header>
+      <Modal.Header>Vaccine Historical Record</Modal.Header>
       <Modal.Content scrolling>
         <div>
           <span className='header'>Dispense Type:</span>
@@ -40,10 +40,10 @@ const DrugRecord = ({ open, setOpen, record }) => {
         </div>
         <hr />
         {
-          element.map(({ unit, lotId, brand, expire, quantity, donated, donatedBy, name }, index) => 
+          element.map(({ lotId, brand, expire, dose, visDate, name }, index) => 
             <>
               <div>
-                <span className='header'>{`Drug ${index+1}:`}</span>
+                <span className='header'>{`Vaccine ${index+1}:`}</span>
                 {name}
               </div>
               <div>
@@ -59,20 +59,13 @@ const DrugRecord = ({ open, setOpen, record }) => {
                 {moment(expire).format('LL')}
               </div>
               <div>
-                <span className='header'>Quantity Dispensed:</span>
-                {`${quantity} ${unit}`}
+                <span className='header'>Dose Number:</span>
+                {dose}
               </div>
               <div>
-                <span className='header'>Donated:</span>
-                {donated ? 'Yes': 'No'}
+                <span className='header'>VIS Date:</span>
+                {moment(visDate).format('LL')}
               </div>
-              {
-                donated &&
-                <div>
-                  <span className='header'>Donated By:</span>
-                  {donatedBy}
-                </div>
-              }
               <hr />
             </>
           )
@@ -90,8 +83,8 @@ const DrugRecord = ({ open, setOpen, record }) => {
   );
 };
 
-DrugRecord.propTypes = {
+VaccineRecord.propTypes = {
   record: PropTypes.object.isRequired,
 };
 
-export default DrugRecord;
+export default VaccineRecord;
