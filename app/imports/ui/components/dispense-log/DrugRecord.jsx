@@ -5,65 +5,83 @@ import moment from 'moment';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const DrugRecord = ({ open, setOpen, drugs, note }) => {
+const DrugRecord = ({ open, setOpen, record }) => {
+
+  const { dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element } = record;
+
   return (
     <Modal
       onClose={() => setOpen(false)}
       open={open}
-      size='small'
+      size='tiny'
       dimmer='blurring'
       id={COMPONENT_IDS.DISPENSE_INFO}
     >
       <Modal.Header>Drug Historical Record</Modal.Header>
-      <Modal.Content>
-        <Modal.Description>
-          <Card.Group>
-            {
-              drugs.map(drug => 
-                <Card key={drug.lotId} fluid>
-                  <Card.Content>
-                    <Card.Header>{drug.name}</Card.Header>
-                    <Card.Description>
-                      {/* TODO: better HTML */}
-                      <Grid divided='vertically'>
-                        <Grid.Row columns={2}>
-                          <Grid.Column>
-                            Lot Number: {drug.lotId}
-                          </Grid.Column>
-                          <Grid.Column>
-                            Brand: {drug.brand}
-                          </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row columns={2}>
-                          <Grid.Column>
-                            Expiration Date: {moment(drug.expire).format('LL')}
-                          </Grid.Column>
-                          <Grid.Column>
-                            Quantity Dispensed: {drug.quantity} {drug.unit}
-                          </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row columns={2}>
-                          <Grid.Column>
-                            Donated: {drug.donated ? 'Yes' : 'No'}
-                          </Grid.Column>
-                          <Grid.Column>
-                            Donated By: {drug.donatedBy}
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              )
-            }
-          </Card.Group>
-          <Card fluid>
-            <Card.Content>
-              <Card.Header>Note:</Card.Header>
-              <Card.Description>{note}</Card.Description>
-            </Card.Content>
-          </Card>
-        </Modal.Description>
+      <Modal.Content scrolling>
+        <div>
+          <span className='header'>Dispense Type:</span>
+          {dispenseType}
+        </div>
+        <div>
+          <span className='header'>Date:</span>
+          {moment(dateDispensed).format('LLLL')}
+        </div>
+        <div>
+          <span className='header'>Dispensed By:</span>
+          {dispensedFrom}
+        </div>
+        <div>
+          <span className='header'>Patient Number:</span>
+          {dispensedTo}
+        </div>
+        <div>
+          <span className='header'>Site:</span>
+          {site}
+        </div>
+        <hr />
+        {
+          element.map(({ unit, lotId, brand, expire, quantity, donated, donatedBy, name }, index) => 
+            <>
+              <div>
+                <span className='header'>{`Drug ${index+1}:`}</span>
+                {name}
+              </div>
+              <div>
+                <span className='header'>Lot Number:</span>
+                {lotId}
+              </div>
+              <div>
+                <span className='header'>Brand:</span>
+                {brand}
+              </div>
+              <div>
+                <span className='header'>Expiration Date:</span>
+                {moment(expire).format('LL')}
+              </div>
+              <div>
+                <span className='header'>Quantity Dispensed:</span>
+                {`${quantity} ${unit}`}
+              </div>
+              <div>
+                <span className='header'>Donated:</span>
+                {donated ? 'Yes': 'No'}
+              </div>
+              {
+                donated &&
+                <div>
+                  <span className='header'>Donated By:</span>
+                  {donatedBy}
+                </div>
+              }
+              <hr />
+            </>
+          )
+        }
+        <div>
+          <div><b>Note:</b></div>
+          {note}
+        </div>
       </Modal.Content>
       <Modal.Actions>
         <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DISPENSE_INFO_CLOSE}> Close</Button>
@@ -71,11 +89,10 @@ const DrugRecord = ({ open, setOpen, drugs, note }) => {
     </Modal>
 
   );
-
 };
 
 DrugRecord.propTypes = {
-  drugs: PropTypes.array.isRequired,
+  record: PropTypes.object.isRequired,
 };
 
 export default DrugRecord;

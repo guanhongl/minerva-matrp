@@ -30,7 +30,7 @@ const DispenseLogRow = ({ history }) => {
       </Table.Row>
       {
         history.inventoryType === 'Medication' &&
-        <DrugRecord open={open} setOpen={setOpen} drugs={history.element} note={history.note} />
+        <DrugRecord open={open} setOpen={setOpen} record={history} />
       }
     </>
   );
