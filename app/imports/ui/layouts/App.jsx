@@ -13,7 +13,6 @@ import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddInventory from '../pages/AddInventory';
 import DispenseLog from '../pages/DispenseLog';
-import EditNotes from '../pages/EditNotes';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
@@ -50,7 +49,6 @@ const App = () => {
         <ProtectedRoute path="/add" component={AddInventory}/>
         <ProtectedRoute path="/dispense-log" component={DispenseLog}/>
         <ProtectedRoute path="/list" component={ListStuff}/>
-        <ProtectedRoute path="/edit/:_id" component={EditNotes}/>
         <ProtectedRoute exact path="/manage-dropdowns" component={ManageDropdowns}/>
         <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
         <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
