@@ -128,30 +128,38 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
     const target = Supplys.findOne({ supply });
     // if supply is not empty:
     if (target) {
-      // autofill the form with specific supply info
-      const { supplyType, minQuantity, stock } = target;
-      const autoFields = { ...fields, supply, supplyType, minQuantity };
-      setFields(autoFields);
-
-      setFilteredLocations(_.pluck(stock, 'location'));
+      setFields({ ...fields, supply });
+      setFilteredLocations(_.pluck(target.stock, 'location'));
     } else {
       // else reset specific supply info
-      setFields({ ...fields, supply, supplyType: '', minQuantity: '' });
-
+      setFields({ ...fields, supply });
       setFilteredLocations(locations);
     }
   };
 
-  // autofill form on location select (assuming supply is already selected)
-  const onLocationSelect = (event, { value: location }) => {
-    const target = Supplys.findOne({ supply: fields.supply });
-    targetLocation = target.stock.find(obj => obj.location === location);
-    const { quantity, donated, donatedBy } = targetLocation;
+  // autofill form if supply and location are selected
+  useEffect(() => {
+    if (fields.supply && fields.location) {
+      const target = Supplys.findOne({ supply: fields.supply, stock: { $elemMatch: { location: fields.location } } });
 
-    setFields({ ...fields, location, donated, donatedBy });
+      // if supply w/ name and location exists:
+      if (target) {
+        // autofill the form with specific supply info
+        const { supplyType } = target;
 
-    setMaxQuantity(quantity);
-  };
+        targetLocation = target.stock.find(obj => obj.location === fields.location);
+        const { quantity, donated, donatedBy } = targetLocation;
+
+        const autoFields = { ...fields, supplyType, donated, donatedBy };
+        setFields(autoFields);
+
+        setMaxQuantity(quantity);
+      }
+    } else {
+      setFields({ ...fields, supplyType: '', donated: false, donatedBy: '' });
+      setMaxQuantity(0);
+    }
+  }, [fields.supply, fields.location]);
 
   const clearForm = () => {
     setFields({ ...fields, dispenseType: 'Patient Use', site: '', supply: '', supplyType: '', quantity: '',
@@ -208,7 +216,7 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
               <Grid.Column>
                 <Form.Select clearable search label='Location' options={getOptions(filteredLocations)}
                   placeholder="Case 2" name='location'
-                  onChange={onLocationSelect} value={fields.location} id={COMPONENT_IDS.DISPENSE_SUP_LOCATION}/>
+                  onChange={handleChange} value={fields.location} id={COMPONENT_IDS.DISPENSE_SUP_LOCATION}/>
               </Grid.Column>
               <Grid.Column>
                 <Form.Group>
