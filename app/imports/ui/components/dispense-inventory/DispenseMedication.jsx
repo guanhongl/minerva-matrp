@@ -255,9 +255,9 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
               <Grid.Column style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {
                   innerFields.length !== 1 &&
-                  <Button negative compact icon='minus' content='Remove Drug' size='mini' onClick={onRemoveDrug}/>
+                  <Button className='remove-item' compact icon='minus' content='Remove Drug' size='mini' onClick={onRemoveDrug}/>
                 }
-                <Button positive compact icon='add' content='Add New Drug' size='mini' onClick={onAddDrug} />
+                <Button className='add-item' compact icon='add' content='Add New Drug' size='mini' onClick={onAddDrug} />
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>

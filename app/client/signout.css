@@ -39,11 +39,6 @@
   text-shadow: 1px 1px 2px #738169;
 }
 
-#color-overlay {
-  background: rgb(115,129,105);
-  background: linear-gradient(0deg, rgba(115,129,105,1) 0%, rgba(158,177,145,1) 7%, rgba(196,218,180,1) 31%, rgba(194,217,178,1) 42%, rgba(200,221,185,1) 100%);
-}
-
 #signOutPage h1 {
   font-size: 5rem;
   color: white;

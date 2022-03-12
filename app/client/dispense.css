@@ -104,6 +104,15 @@
   width: 0;
 }
 
+#dispense-form .add-item {
+  background-color: rgb(29, 62, 102);
+  color: white;
+}
+#dispense-form .remove-item {
+  background-color: #db2828;
+  color: white;
+}
+
 @media only screen and (max-width: 767px) {
   #dispense-form .filler-column {
     display: none;

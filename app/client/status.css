@@ -21,6 +21,10 @@
   border-radius: 50%;
 }
 
+.status-tab span {
+  font-size: 12px;
+}
+
 #status .ui.tabular.menu {
   padding-right: 25%;
 }
