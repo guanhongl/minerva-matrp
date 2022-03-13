@@ -13,6 +13,7 @@ import { distinct, getOptions } from '../../utilities/Functions';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Locations } from '../../../api/location/LocationCollection';
+import { cloneDeep } from 'lodash';
 
 /** handle submit for Dispense Supply. */
 const submit = (data, callback) => {
@@ -21,6 +22,7 @@ const submit = (data, callback) => {
   const collectionName = Supplys.getCollectionName();
   const supplyItem = Supplys.findOne({ supply }); // find the existing supply
   const { _id, stock } = supplyItem;
+  const copy = cloneDeep({ id: _id, stock }); // the copy of the record to update
   const targetIndex = stock.findIndex((obj => obj.location === location)); // find the index of existing the supply
   const { quantity: targetQuantity } = stock[targetIndex];
 
@@ -38,16 +40,20 @@ const submit = (data, callback) => {
     const updateData = { id: _id, stock };
     const element = [{ name: supply, supplyType, quantity, donated, donatedBy }];
     const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element };
-    const promises = [
-      updateMethod.callPromise({ collectionName, updateData }),
-      defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData })
-    ];
-    Promise.allSettled(promises)
+
+    updateMethod.callPromise({ collectionName, updateData })
+      .then(() => {
+        return defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData });
+      })
       .then(() => {
         swal('Success', `${supply} updated successfully`, 'success', { buttons: false, timer: 3000 });
         callback(); // resets the form
       })
-      .catch(error => swal('Error', error.message, 'error'));
+      // if update or define fail, restore the copy
+      .catch(error => {
+        updateMethod.call({ collectionName, updateData: copy });
+        swal('Error', error.message, 'error');
+      });
   }
 };
 

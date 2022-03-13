@@ -10,18 +10,20 @@ import { Sites } from '../../../api/site/SiteCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { cloneDeep } from 'lodash';
 
+// TODO: think about what happens when multiple ppl dispense at a time
 /** handle submit for Dispense Vaccine. */
 const submit = (data, callback) => {
   const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, vaccine, lotId, brand, expire, dose, visDate, note } = data;
   const collectionName = Vaccinations.getCollectionName();
   const targetVaccine = Vaccinations.findOne({ vaccine, brand }); // find the existing vaccine; vaccines are uniquely identified by (vaccine, brand)
   const { _id, lotIds } = targetVaccine;
+  const copy = cloneDeep({ id: _id, lotIds }); // the copy of the record to update
   const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId)); // find the index of existing the lotId
   const { quantity } = lotIds[targetIndex];
 
   // assume dispense only dispenses 1 at a time
-  // TODO: think about what happens when multiple ppl dispense at a time
   // if quantity > 1
   if (quantity > 1) {
     lotIds[targetIndex].quantity -= 1; // decrement the quantity
@@ -33,17 +35,20 @@ const submit = (data, callback) => {
   const element = [{ name: vaccine, lotId, brand, expire, dose, visDate }];
   const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
     note, element };
-  // TODO: fix promises
-  const promises = [
-    updateMethod.callPromise({ collectionName, updateData }),
-    defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData }),
-  ];
-  Promise.allSettled(promises)
+
+  updateMethod.callPromise({ collectionName, updateData })
+    .then(() => {
+      return defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData });
+    })
     .then(() => {
       swal('Success', `${vaccine}, ${lotId} updated successfully`, 'success', { buttons: false, timer: 3000 });
       callback(); // resets the form
     })
-    .catch(error => swal('Error', error.message, 'error'));
+    // if update or define fail, restore the copy
+    .catch(error => {
+      updateMethod.call({ collectionName, updateData: copy });
+      swal('Error', error.message, 'error');
+    });
 };
 
 /** validates the dispense vaccine form */
