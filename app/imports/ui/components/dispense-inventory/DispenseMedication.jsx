@@ -9,28 +9,32 @@ import { Sites } from '../../../api/site/SiteCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
-import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
+import { defineMethod, updateManyMethod } from '../../../api/base/BaseCollection.methods';
 import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
 import DispenseMedicationSingle from './DispenseMedicationSingle';
 
 /** handle submit for Dispense Medication. */
 const submit = (fields, innerFields, callback) => {
   const { site, dateDispensed, dispensedTo, dispensedFrom, inventoryType, dispenseType, note } = fields;
-  // const { lotId, drug, brand, expire, quantity, unit, donated, donatedBy, maxQuantity } = innerFields;
-  // TODO: historical record should allow multiple drugs?
   const collectionName = Medications.getCollectionName();
-  const element = []; // the historical record elements
 
-  innerFields.forEach(innerField => {
+  const copy = []; // the copy of records to update
+  const updateObjects = []; // the records to update
+  const element = []; // the historical record elements
+  let successMsg = '';
+
+  const error = innerFields.some(innerField => {
     const { lotId, drug, brand, expire, quantity, unit, donated, donatedBy } = innerField;
-    const medication = Medications.findOne({ drug }); // find the existing medication
+    const medication = Medications.findOne({ drug }); // find the existing medication (assume the medication exists)
     const { _id, lotIds } = medication;
+    copy.push({ id: _id, lotIds });
     const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId)); // find the index of existing the lotId
     const { quantity: targetQuantity } = lotIds[targetIndex];
 
     // if dispense quantity > lotId quantity:
     if (quantity > targetQuantity) {
       swal('Error', `${drug}, ${lotId} only has ${targetQuantity} ${unit} remaining.`, 'error');
+      return true; // break from loop
     } else {
       // if dispense quantity < lotId quantity:
       if (quantity < targetQuantity) {
@@ -39,24 +43,29 @@ const submit = (fields, innerFields, callback) => {
         // else if dispense quantity === lotId quantity:
         lotIds.splice(targetIndex, 1); // remove the lotId
       }
-      const updateData = { id: _id, lotIds };
+      updateObjects.push({ id: _id, lotIds });
       element.push({ name: drug, unit, lotId, brand, expire, quantity, donated, donatedBy });
-      // TODO: fix promises, fix swal
-      const promises = [
-        updateMethod.callPromise({ collectionName, updateData }),
-      ];
-      Promise.all(promises)
-        .catch(error => swal('Error', error.message, 'error'))
-        .then(() => {
-          swal('Success', `${drug}, ${lotId} updated successfully`, 'success', { buttons: false, timer: 3000 });
-          callback(); // resets the form
-        });
+      successMsg += `${drug}, ${lotId} updated successfully.\n`;
     }
   });
 
-  const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
-    note, element };
-  defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData });
+  if (!error) {
+    updateManyMethod.callPromise({ collectionName, updateObjects })
+      .then(() => {
+        const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
+          note, element };
+        return defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData });
+      })
+      .then(() => {
+        swal('Success', `${successMsg}`, 'success', { buttons: false, timer: 3000 });
+        callback(); // resets the form
+      })
+      // if update or define fail, restore the copy
+      .catch(error => {
+        updateManyMethod.call({ collectionName, copy });
+        swal('Error', error.message, 'error');
+      });
+  }
 };
 
 /** validates the dispense medication form */

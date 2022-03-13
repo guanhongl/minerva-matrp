@@ -41,7 +41,7 @@ const VaccineRecord = ({ open, setOpen, record }) => {
         <hr />
         {
           element.map(({ lotId, brand, expire, dose, visDate, name }, index) => 
-            <>
+            <React.Fragment key={lotId}>
               <div>
                 <span className='header'>{`Vaccine ${index+1}:`}</span>
                 {name}
@@ -67,7 +67,7 @@ const VaccineRecord = ({ open, setOpen, record }) => {
                 {moment(visDate).format('LL')}
               </div>
               <hr />
-            </>
+            </React.Fragment>
           )
         }
         <div>

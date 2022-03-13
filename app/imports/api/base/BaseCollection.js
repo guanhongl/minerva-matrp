@@ -270,6 +270,10 @@ class BaseCollection {
     dumpObjects.forEach((dumpObject) => this.restoreOne(dumpObject));
   }
 
+  updateMany(updateObjects) {
+    updateObjects.forEach((updateObject) => this.update(updateObject.id, updateObject));
+  }
+
 }
 
 export default BaseCollection;

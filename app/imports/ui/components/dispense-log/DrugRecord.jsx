@@ -41,7 +41,7 @@ const DrugRecord = ({ open, setOpen, record }) => {
         <hr />
         {
           element.map(({ unit, lotId, brand, expire, quantity, donated, donatedBy, name }, index) => 
-            <>
+            <React.Fragment key={lotId}>
               <div>
                 <span className='header'>{`Drug ${index+1}:`}</span>
                 {name}
@@ -74,7 +74,7 @@ const DrugRecord = ({ open, setOpen, record }) => {
                 </div>
               }
               <hr />
-            </>
+            </React.Fragment>
           )
         }
         <div>

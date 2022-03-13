@@ -41,7 +41,7 @@ const SupplyRecord = ({ open, setOpen, record }) => {
         <hr />
         {
           element.map(({ supplyType, quantity, donated, donatedBy, name }, index) => 
-            <>
+            <React.Fragment key={index}>
               <div>
                 <span className='header'>{`Supply ${index+1}:`}</span>
                 {name}
@@ -66,7 +66,7 @@ const SupplyRecord = ({ open, setOpen, record }) => {
                 </div>
               }
               <hr />
-            </>
+            </React.Fragment>
           )
         }
         <div>
