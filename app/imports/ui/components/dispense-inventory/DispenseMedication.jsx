@@ -12,6 +12,7 @@ import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
 import { defineMethod, updateManyMethod } from '../../../api/base/BaseCollection.methods';
 import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
 import DispenseMedicationSingle from './DispenseMedicationSingle';
+import { cloneDeep } from 'lodash';
 
 /** handle submit for Dispense Medication. */
 const submit = (fields, innerFields, callback) => {
@@ -27,7 +28,7 @@ const submit = (fields, innerFields, callback) => {
     const { lotId, drug, brand, expire, quantity, unit, donated, donatedBy } = innerField;
     const medication = Medications.findOne({ drug }); // find the existing medication (assume the medication exists)
     const { _id, lotIds } = medication;
-    copy.push({ id: _id, lotIds });
+    copy.push(cloneDeep({ id: _id, lotIds }));
     const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId)); // find the index of existing the lotId
     const { quantity: targetQuantity } = lotIds[targetIndex];
 
@@ -62,7 +63,7 @@ const submit = (fields, innerFields, callback) => {
       })
       // if update or define fail, restore the copy
       .catch(error => {
-        updateManyMethod.call({ collectionName, copy });
+        updateManyMethod.call({ collectionName, updateObjects: copy });
         swal('Error', error.message, 'error');
       });
   }

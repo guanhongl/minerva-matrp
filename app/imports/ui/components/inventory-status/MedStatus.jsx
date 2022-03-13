@@ -10,6 +10,7 @@ import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import MedStatusRow from './MedStatusRow';
 import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { cloneDeep } from 'lodash';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
@@ -44,7 +45,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
 
   // handles filtering
   useEffect(() => {
-    let filter = JSON.parse(JSON.stringify(medications));
+    let filter = cloneDeep(medications);
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ drug, lotIds }) => (

@@ -11,6 +11,7 @@ import DispenseLogRow from '../components/dispense-log/DispenseLogRow';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { distinct, getOptions } from '../utilities/Functions';
+import { cloneDeep } from 'lodash';
 
 // Used for the amount of history log rows that appear in each page.
 const logPerPage = [
@@ -41,7 +42,7 @@ const DispenseLog = ({ ready, historicals, sites }) => {
 
     // handles filtering
     useEffect(() => {
-      let filter = JSON.parse(JSON.stringify(historicals)); // deep clone
+      let filter = cloneDeep(historicals); // deep clone
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
         filter = filter.filter(({ dispensedTo, element }) => (

@@ -9,6 +9,7 @@ import { distinct, getOptions } from '../../utilities/Functions';
 import { Supplys } from '../../../api/supply/SupplyCollection';
 import SupplyStatusRow from './SupplyStatusRow';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { cloneDeep } from 'lodash';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
@@ -41,7 +42,7 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
 
   // handles filtering
   useEffect(() => {
-    let filter = JSON.parse(JSON.stringify(supplies)); // deep clone supplies
+    let filter = cloneDeep(supplies); // deep clone supplies
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ supply, stock }) => (

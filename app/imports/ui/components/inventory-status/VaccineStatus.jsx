@@ -9,6 +9,7 @@ import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineStatusRow from './VaccineStatusRow';
 import { distinct, getOptions } from '../../utilities/Functions';
+import { cloneDeep } from 'lodash';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
@@ -42,7 +43,7 @@ const VaccineStatus = ({ ready, vaccines, locations, brands }) => {
 
   // handles filtering
   useEffect(() => {
-    let filter = JSON.parse(JSON.stringify(vaccines));
+    let filter = cloneDeep(vaccines);
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ vaccine, brand, lotIds }) => (
