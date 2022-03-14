@@ -12,68 +12,78 @@ const VaccineRecord = ({ open, setOpen, record }) => {
     <Modal
       onClose={() => setOpen(false)}
       open={open}
-      size='tiny'
+      size='small'
       dimmer='blurring'
       id={COMPONENT_IDS.DISPENSE_INFO}
     >
       <Modal.Header>Vaccine Historical Record</Modal.Header>
       <Modal.Content scrolling>
-        <div>
-          <span className='header'>Dispense Type:</span>
-          {dispenseType}
-        </div>
-        <div>
-          <span className='header'>Date:</span>
-          {moment(dateDispensed).format('LLLL')}
-        </div>
-        <div>
-          <span className='header'>Dispensed By:</span>
-          {dispensedFrom}
-        </div>
-        <div>
-          <span className='header'>Patient Number:</span>
-          {dispensedTo}
-        </div>
-        <div>
-          <span className='header'>Site:</span>
-          {site}
-        </div>
-        <hr />
-        {
-          element.map(({ lotId, brand, expire, dose, visDate, name }, index) => 
-            <React.Fragment key={lotId}>
-              <div>
-                <span className='header'>{`Vaccine ${index+1}:`}</span>
-                {name}
-              </div>
-              <div>
-                <span className='header'>Lot Number:</span>
-                {lotId}
-              </div>
-              <div>
-                <span className='header'>Brand:</span>
-                {brand}
-              </div>
-              <div>
-                <span className='header'>Expiration Date:</span>
-                {moment(expire).format('LL')}
-              </div>
-              <div>
-                <span className='header'>Dose Number:</span>
-                {dose}
-              </div>
-              <div>
-                <span className='header'>VIS Date:</span>
-                {moment(visDate).format('LL')}
-              </div>
-              <hr />
-            </React.Fragment>
-          )
-        }
-        <div>
-          <div><b>Note:</b></div>
-          {note}
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td style={{ width: '150px' }}>General Info</td>
+              <td>
+                <div>
+                  <span className='header'>Dispense Type:</span>
+                  {dispenseType}
+                </div>
+                <div>
+                  <span className='header'>Date:</span>
+                  {moment(dateDispensed).format('LLLL')}
+                </div>
+                <div>
+                  <span className='header'>Dispensed By:</span>
+                  {dispensedFrom}
+                </div>
+                <div>
+                  <span className='header'>Patient Number:</span>
+                  {dispensedTo}
+                </div>
+                <div>
+                  <span className='header'>Site:</span>
+                  {site}
+                </div>
+              </td>
+            </tr>
+            {
+              element.map(({ lotId, brand, expire, dose, visDate, name }, index) => 
+                <tr key={lotId}>
+                  <td>{`Vaccine ${index+1}`}</td>
+                  <td>
+                    <div>
+                      <span className='header'>Name:</span>
+                      {name}
+                    </div>
+                    <div>
+                      <span className='header'>Lot Number:</span>
+                      {lotId}
+                    </div>
+                    <div>
+                      <span className='header'>Brand:</span>
+                      {brand}
+                    </div>
+                    <div>
+                      <span className='header'>Expiration Date:</span>
+                      {moment(expire).format('LL')}
+                    </div>
+                    <div>
+                      <span className='header'>Dose Number:</span>
+                      {dose}
+                    </div>
+                    <div>
+                      <span className='header'>VIS Date:</span>
+                      {moment(visDate).format('LL')}
+                    </div>
+                  </td>
+                </tr>
+              )
+            }
+            <tr>
+              <td>Note</td>
+              <td><textarea rows='3' readOnly>{note}</textarea></td>
+            </tr>
+          </tbody>
+        </table>
       </Modal.Content>
       <Modal.Actions>
         <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DISPENSE_INFO_CLOSE}> Close</Button>

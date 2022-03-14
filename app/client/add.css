@@ -47,7 +47,7 @@
   color: rgb(29, 62, 102);
 }
 
-#add-form input, .ui.selection.dropdown, textarea {
+#add-form input, #add-form .ui.selection.dropdown, #add-form textarea {
   font-family: Lato;
   background-color: #dde0e8 !important;
 }
@@ -56,7 +56,7 @@
   color: grey;
 }
 
-#add-form .ui.dropdown:not(.button) > .default.text, .ui.default.dropdown:not(.button) > .text {
+#add-form .ui.dropdown:not(.button) > .default.text, #add-form .ui.default.dropdown:not(.button) > .text {
   color: grey
 }
 

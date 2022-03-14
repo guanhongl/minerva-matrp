@@ -1,0 +1,22 @@
+.info-modal span.header {
+    display: inline-block;
+    width: 200px;
+}
+
+.info-modal textarea {
+    width: 100%;
+}
+
+.info-modal table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-modal table tr {
+    vertical-align: top;
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+.info-modal table td {
+    padding: 10px 0;
+}

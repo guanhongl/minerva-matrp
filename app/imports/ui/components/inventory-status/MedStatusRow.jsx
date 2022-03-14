@@ -6,8 +6,9 @@ import MedInfoPage from './MedInfoPage';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
 const MedStatusRow = ({ med }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => setIsOpen(!isOpen);
+  const [expand, setExpand] = useState(false);
+  
+  const handleOpen = () => setExpand(!expand);
 
   const currentDate = new Date();
   const expirations = med.lotIds.map(({ expire }) => (expire && expire.split('-')));
@@ -41,7 +42,7 @@ const MedStatusRow = ({ med }) => {
       {/* the drug row */}
       <Table.Row onClick={handleOpen} negative={isExpired.includes(true)} id={COMPONENT_IDS.MED_STATUS_ROW}>
         <Table.Cell>
-          <Icon name={`caret ${isOpen ? 'down' : 'up'}`} />
+          <Icon name={`caret ${expand ? 'down' : 'up'}`} />
         </Table.Cell>
         <Table.Cell>{med.drug}</Table.Cell>
         <Table.Cell>{med.drugType.join(', ')}</Table.Cell>
@@ -56,7 +57,7 @@ const MedStatusRow = ({ med }) => {
       </Table.Row>
 
       {/* the lotId row */}
-      <Table.Row style={{ display: isOpen ? 'table-row' : 'none' }}>
+      <Table.Row style={{ display: expand ? 'table-row' : 'none' }}>
         <Table.Cell colSpan={6} className='lot-row'>
           <Table color='blue' unstackable>
             <Table.Header>
@@ -72,7 +73,7 @@ const MedStatusRow = ({ med }) => {
             </Table.Header>
             <Table.Body>
               {
-                med.lotIds.map(({ lotId, brand, expire, location, quantity, donated, note }, index) => (
+                med.lotIds.map(({ lotId, brand, expire, location, quantity, donated }, index) => (
                   <Table.Row key={lotId} negative={isExpired[index]}>
                     <Table.Cell>{lotId}</Table.Cell>
                     <Table.Cell>{brand}</Table.Cell>
@@ -85,7 +86,11 @@ const MedStatusRow = ({ med }) => {
                         <Icon name='check' color='green'/>
                       }
                     </Table.Cell>
-                    <Table.Cell><MedInfoPage key={med.lotIds._id} info={med} lotId={lotId} brand={brand} expire={expire} quantity={quantity} note={note} donated={donated} locate={location} /></Table.Cell>
+                    <Table.Cell>
+                      {/* <Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DRUG_PAGE_BUTTON}
+                        onClick={() => setOpen(true)} /> */}
+                      <MedInfoPage info={med} detail={med.lotIds[index]} />
+                    </Table.Cell>
                   </Table.Row>
                 ))
               }

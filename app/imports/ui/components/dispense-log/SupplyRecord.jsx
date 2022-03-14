@@ -12,67 +12,77 @@ const SupplyRecord = ({ open, setOpen, record }) => {
     <Modal
       onClose={() => setOpen(false)}
       open={open}
-      size='tiny'
+      size='small'
       dimmer='blurring'
       id={COMPONENT_IDS.DISPENSE_INFO}
     >
       <Modal.Header>Supply Historical Record</Modal.Header>
       <Modal.Content scrolling>
-        <div>
-          <span className='header'>Dispense Type:</span>
-          {dispenseType}
-        </div>
-        <div>
-          <span className='header'>Date:</span>
-          {moment(dateDispensed).format('LLLL')}
-        </div>
-        <div>
-          <span className='header'>Dispensed By:</span>
-          {dispensedFrom}
-        </div>
-        <div>
-          <span className='header'>Patient Number:</span>
-          {dispensedTo}
-        </div>
-        <div>
-          <span className='header'>Site:</span>
-          {site}
-        </div>
-        <hr />
-        {
-          element.map(({ supplyType, quantity, donated, donatedBy, name }, index) => 
-            <React.Fragment key={index}>
-              <div>
-                <span className='header'>{`Supply ${index+1}:`}</span>
-                {name}
-              </div>
-              <div>
-                <span className='header'>Supply Type:</span>
-                {supplyType}
-              </div>
-              <div>
-                <span className='header'>Quantity Dispensed:</span>
-                {quantity}
-              </div>
-              <div>
-                <span className='header'>Donated:</span>
-                {donated ? 'Yes': 'No'}
-              </div>
-              {
-                donated &&
+        <table>
+          <tbody>
+            <tr>
+              <td style={{ width: '150px' }}>General Info</td>
+              <td>
                 <div>
-                  <span className='header'>Donated By:</span>
-                  {donatedBy}
+                  <span className='header'>Dispense Type:</span>
+                  {dispenseType}
                 </div>
-              }
-              <hr />
-            </React.Fragment>
-          )
-        }
-        <div>
-          <div><b>Note:</b></div>
-          {note}
-        </div>
+                <div>
+                  <span className='header'>Date:</span>
+                  {moment(dateDispensed).format('LLLL')}
+                </div>
+                <div>
+                  <span className='header'>Dispensed By:</span>
+                  {dispensedFrom}
+                </div>
+                <div>
+                  <span className='header'>Patient Number:</span>
+                  {dispensedTo}
+                </div>
+                <div>
+                  <span className='header'>Site:</span>
+                  {site}
+                </div>
+              </td>
+            </tr>
+            {
+              element.map(({ supplyType, quantity, donated, donatedBy, name }, index) => 
+                <tr key={index}>
+                  <td>{`Supply ${index+1}`}</td>
+                  <td>
+                    <div>
+                      <span className='header'>Name:</span>
+                      {name}
+                    </div>
+                    <div>
+                      <span className='header'>Supply Type:</span>
+                      {supplyType}
+                    </div>
+                    <div>
+                      <span className='header'>Quantity Dispensed:</span>
+                      {quantity}
+                    </div>
+                    <div>
+                      <span className='header'>Donated:</span>
+                      {donated ? 'Yes': 'No'}
+                    </div>
+                    {
+                      donated &&
+                      <div>
+                        <span className='header'>Donated By:</span>
+                        {donatedBy}
+                      </div>
+                    }
+                  </td>
+                </tr>
+              )
+            }
+            <tr>
+              <td>Note</td>
+              <td><textarea rows='3' readOnly>{note}</textarea></td>
+            </tr>
+          </tbody>
+        </table>
       </Modal.Content>
       <Modal.Actions>
         <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DISPENSE_INFO_CLOSE}> Close</Button>

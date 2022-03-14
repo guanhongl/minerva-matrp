@@ -19,7 +19,7 @@
   font-size: 1em;
 }
 
-#dispense-form input[type="date"], input[type="datetime-local"] {
+#dispense-form input[type="date"], #dispense-form input[type="datetime-local"] {
   height: 2.71428571em;
 }
 
@@ -47,7 +47,7 @@
   color: rgb(29, 62, 102);
 }
 
-#dispense-form input, .ui.selection.dropdown, textarea {
+#dispense-form input, #dispense-form .ui.selection.dropdown, #dispense-form textarea {
   background-color: #dde0e8 !important;
 }
 
@@ -55,7 +55,7 @@
   color: grey;
 }
 
-#dispense-form .ui.dropdown:not(.button) > .default.text, .ui.default.dropdown:not(.button) > .text {
+#dispense-form .ui.dropdown:not(.button) > .default.text, #dispense-form .ui.default.dropdown:not(.button) > .text {
   color: grey
 }
 
