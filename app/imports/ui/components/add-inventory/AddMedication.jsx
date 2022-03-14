@@ -4,18 +4,27 @@ import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
+import QRCode from 'qrcode';
 import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { distinct, getOptions, nestedDistinct, printQRCode } from '../../utilities/Functions';
 
 /** handles submit for add medication. */
 const submit = (data, callback) => {
   const { drug, drugType, minQuantity, quantity, unit, brand, lotId, expire, location, donated, donatedBy, note } = data;
   const collectionName = Medications.getCollectionName();
   const exists = Medications.findOne({ drug }); // returns the existing medication or undefined
+  let png;
+
+  // generate the QRCode for the lotId
+  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=0&lotId=${lotId}`)
+    .then(url => {
+      png = url;
+    })
+    .catch(error => swal('Error', error, 'error'));
 
   // if the medication does not exist:
   if (!exists) {
@@ -23,11 +32,16 @@ const submit = (data, callback) => {
     const newLot = { lotId, brand, expire, location, quantity, donated, donatedBy, note };
     const definitionData = { drug, drugType, minQuantity, unit, lotIds: [newLot] };
     defineMethod.callPromise({ collectionName, definitionData })
-      .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
-        swal('Success', `${drug}, ${lotId} added successfully`, 'success', { buttons: false, timer: 3000 });
+        swal('Success', `${drug}, ${lotId} added successfully`, png, { buttons: ['OK', 'Print'] })
+          .then(isPrint => {
+            if (isPrint) {
+              printQRCode(png);
+            }
+          });
         callback(); // resets the form
-      });
+      })
+      .catch(error => swal('Error', error.message, 'error'));
   } else {
     const { lotIds } = exists;
     // const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId));
@@ -41,11 +55,16 @@ const submit = (data, callback) => {
     }
     const updateData = { id: exists._id, lotIds };
     updateMethod.callPromise({ collectionName, updateData })
-      .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
-        swal('Success', `${drug} updated successfully`, 'success', { buttons: false, timer: 3000 });
+        swal('Success', `${drug} updated successfully`, png, { buttons: ['OK', 'Print'] })
+          .then(isPrint => {
+            if (isPrint) {
+              printQRCode(png);
+            }
+          });
         callback(); // resets the form
-      });
+      })
+      .catch(error => swal('Error', error.message, 'error'));
   }
 };
 

@@ -57,3 +57,12 @@ export function useQuery() {
 
   return useMemo(() => new URLSearchParams(search), [search]);
 }
+
+// see https://stackoverflow.com/questions/2909033/using-javascript-to-print-images
+export function printQRCode(png) {
+  popup = window.open();
+  popup.document.open();
+  popup.document.write(`<img src="${png}">`);
+  popup.document.close();
+  popup.print();
+}
