@@ -9,7 +9,7 @@ import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
 import { Sites } from '../../../api/site/SiteCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
-import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { distinct, getOptions, nestedDistinct, useQuery } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 
 // TODO: think about what happens when multiple ppl dispense at a time
@@ -81,6 +81,8 @@ const validateForm = (data, callback) => {
 
 /** Renders the Page for Dispensing Vaccine. */
 const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
+  const query = useQuery();
+  
   const [fields, setFields] = useState({
     inventoryType: 'Vaccine',
     dispenseType: 'Patient Use',

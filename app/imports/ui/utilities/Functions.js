@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
 
 /**
@@ -47,4 +49,11 @@ export function nestedDistinct(field, collection, selector = {}) {
 /** convert array to dropdown options */
 export function getOptions(arr) {
   return arr.map(name => ({ key: name, text: name, value: name }));
+}
+
+// A custom hook that builds on useLocation to parse the query string for you.
+export function useQuery() {
+  const { search } = useLocation();
+
+  return useMemo(() => new URLSearchParams(search), [search]);
 }

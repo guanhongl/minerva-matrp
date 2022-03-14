@@ -38,22 +38,22 @@ const App = () => {
       }
       <Switch>
         <UnprotectedRoute exact path="/" component={Landing}/>
-        <UnprotectedRoute path="/signin" component={Signin}/>
-        <UnprotectedRoute path="/signup" component={Signup}/>
+        <UnprotectedRoute exact path="/signin" component={Signin}/>
+        <UnprotectedRoute exact path="/signup" component={Signup}/>
         {/* TODO: fix bug where new user is logged out */}
-        <Route path="/enroll-acct/:token" component={Password} />
-        <Route path="/signout" component={Signout}/>
-        <ProtectedRoute path="/about" component={About}/>
-        <ProtectedRoute path="/dispense" component={Dispense}/>
-        <ProtectedRoute path="/status" component={Status}/>
-        <ProtectedRoute path="/add" component={AddInventory}/>
-        <ProtectedRoute path="/dispense-log" component={DispenseLog}/>
+        <Route exact path="/enroll-acct/:token" component={Password} />
+        <Route exact path="/signout" component={Signout}/>
+        <ProtectedRoute exact path="/about" component={About}/>
+        <ProtectedRoute exact path="/dispense" component={Dispense}/>
+        <ProtectedRoute exact path="/status" component={Status}/>
+        <ProtectedRoute exact path="/add" component={AddInventory}/>
+        <ProtectedRoute exact path="/dispense-log" component={DispenseLog}/>
         <ProtectedRoute path="/list" component={ListStuff}/>
         <ProtectedRoute exact path="/manage-dropdowns" component={ManageDropdowns}/>
         <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
         <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
-        <AdminProtectedRoute path="/manage-users" component={ManageUsers}/>
-        <AdminProtectedRoute path="/manage-new-users" component={ManageNewUsers}/>
+        <AdminProtectedRoute exact path="/manage-users" component={ManageUsers}/>
+        <AdminProtectedRoute exact path="/manage-new-users" component={ManageNewUsers}/>
         <Route component={NotFound}/>
       </Switch>
       {

@@ -10,7 +10,7 @@ import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
 import { defineMethod, updateManyMethod } from '../../../api/base/BaseCollection.methods';
-import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { distinct, getOptions, nestedDistinct, useQuery } from '../../utilities/Functions';
 import DispenseMedicationSingle from './DispenseMedicationSingle';
 import { cloneDeep } from 'lodash';
 
@@ -109,6 +109,8 @@ const validateForm = (fields, innerFields, callback) => {
 
 /** Renders the Page for Dispensing Medication. */
 const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
+  const query = useQuery();
+
   const [fields, setFields] = useState({
     site: '',
     dateDispensed: moment().format('YYYY-MM-DDTHH:mm'),

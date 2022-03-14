@@ -5,6 +5,7 @@ import DispenseVaccination from '../components/dispense-inventory/DispenseVaccin
 import DispenseSupplies from '../components/dispense-inventory/DispenseSupplies';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { useQuery } from '../utilities/Functions';
 
 const medicationTab = () => <DispenseMedication/>;
 const vaccinesTab = () => <DispenseVaccination/>;
@@ -16,10 +17,19 @@ const panes = [
   { menuItem: <Menu.Item key={COMPONENT_IDS.DISPENSE_TAB_THREE} id={COMPONENT_IDS.DISPENSE_TAB_THREE}>Supplies</Menu.Item>, render: suppliesTab },
 ];
 
-const Dispense = () => (
-  <Container id={PAGE_IDS.DISPENSE}>
-    <Tab panes={panes} />
-  </Container>
-);
+const Dispense = () => {
+  const query = useQuery();
+
+  return (
+    <Container id={PAGE_IDS.DISPENSE}>
+      {
+        query.get("tab") ?
+          <Tab panes={panes} activeIndex={query.get("tab")} />
+          :
+          <Tab panes={panes} />
+      }
+    </Container>
+  );
+};
 
 export default Dispense;

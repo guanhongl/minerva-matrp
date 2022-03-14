@@ -9,7 +9,7 @@ import moment from 'moment';
 import { Sites } from '../../../api/site/SiteCollection';
 import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
-import { distinct, getOptions } from '../../utilities/Functions';
+import { distinct, getOptions, useQuery } from '../../utilities/Functions';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Locations } from '../../../api/location/LocationCollection';
@@ -87,6 +87,8 @@ const validateForm = (data, callback) => {
 
 /** Renders the Page for Dispensing Supply. */
 const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
+  const query = useQuery();
+  
   const [fields, setFields] = useState({
     inventoryType: 'Supply',
     dispenseType: 'Patient Use',
