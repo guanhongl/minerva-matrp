@@ -17,6 +17,7 @@ const panes = [
   { menuItem: <Menu.Item key={COMPONENT_IDS.DISPENSE_TAB_THREE} id={COMPONENT_IDS.DISPENSE_TAB_THREE}>Supplies</Menu.Item>, render: suppliesTab },
 ];
 
+// TODO: find a better solution to tab change from query
 const Dispense = () => {
   const query = useQuery();
 
@@ -24,7 +25,7 @@ const Dispense = () => {
     <Container id={PAGE_IDS.DISPENSE}>
       {
         query.get("tab") ?
-          <Tab panes={panes} activeIndex={query.get("tab")} />
+          <Tab panes={panes} activeIndex={query.get("tab")} onTabChange={() => window.location.hash="/dispense"} />
           :
           <Tab panes={panes} />
       }
