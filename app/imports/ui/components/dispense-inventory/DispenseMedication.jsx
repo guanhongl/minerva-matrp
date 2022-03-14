@@ -134,6 +134,22 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
   ]);
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
+  // TODO find a better way?
+  useEffect(() => {
+    const lotId = query.get("lotId");
+    if (lotId && ready) {
+      const newInnerFields = [...innerFields];
+      const target = Medications.findOne({ lotIds: { $elemMatch: { lotId } } });
+      // autofill the form with specific lotId info
+      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
+      const { drug, unit } = target;
+      const { brand, expire, quantity, donated, donatedBy } = targetLotId;
+      newInnerFields[0] = { ...innerFields[0], lotId, drug, expire, brand, unit, donated, donatedBy,
+        maxQuantity: quantity };
+      setInnerFields(newInnerFields);
+    }
+  }, [ready]);
+
   // update date dispensed every minute
   useEffect(() => {
     const interval = setInterval(() => {
