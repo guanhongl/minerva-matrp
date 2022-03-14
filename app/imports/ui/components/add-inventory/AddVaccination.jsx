@@ -24,7 +24,7 @@ const submit = (data, callback) => {
       // if the vaccine does not exist:
       if (!exists) {
         // insert the new vaccine and lotId
-        const newLot = { lotId, expire, location, quantity, note };
+        const newLot = { lotId, expire, location, quantity, note, QRCode: url };
         const definitionData = { vaccine, brand, minQuantity, visDate, lotIds: [newLot] };
         defineMethod.callPromise({ collectionName, definitionData })
           .then(() => {
@@ -45,7 +45,7 @@ const submit = (data, callback) => {
           target.quantity += quantity;
         } else {
           // else append the new lotId
-          lotIds.push({ lotId, expire, location, quantity, note });
+          lotIds.push({ lotId, expire, location, quantity, note, QRCode: url });
         }
         const updateData = { id: exists._id, lotIds };
         updateMethod.callPromise({ collectionName, updateData })

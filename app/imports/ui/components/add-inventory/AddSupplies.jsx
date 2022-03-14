@@ -23,7 +23,7 @@ const submit = (data, callback) => {
       // if the supply does not exist:
       if (!exists) {
         // insert the new supply and stock
-        const newStock = { quantity, location, donated, donatedBy, note };
+        const newStock = { quantity, location, donated, donatedBy, note, QRCode: url };
         const definitionData = { supply, supplyType, minQuantity, stock: [newStock] };
         defineMethod.callPromise({ collectionName, definitionData })
           .then(() => {
@@ -44,7 +44,7 @@ const submit = (data, callback) => {
           target.quantity += quantity;
         } else {
           // else append the new location
-          stock.push({ location, quantity, donated, donatedBy, note });
+          stock.push({ location, quantity, donated, donatedBy, note, QRCode: url });
         }
         const updateData = { id: exists._id, stock };
         updateMethod.callPromise({ collectionName, updateData })

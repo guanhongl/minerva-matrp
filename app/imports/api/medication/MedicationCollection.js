@@ -42,6 +42,10 @@ class MedicationCollection extends BaseCollection {
         type: String,
         optional: true,
       },
+      'lotIds.$.QRCode' : {
+        type: String,
+        optional: true,
+      },
     }));
   }
 

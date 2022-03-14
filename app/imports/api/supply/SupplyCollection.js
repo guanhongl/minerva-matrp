@@ -37,6 +37,10 @@ class SupplyCollection extends BaseCollection {
         type: String,
         optional: true,
       },
+      'stock.$.QRCode' : {
+        type: String,
+        optional: true,
+      },
     }));
   }
 

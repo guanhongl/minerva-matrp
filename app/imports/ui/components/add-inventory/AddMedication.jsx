@@ -24,7 +24,7 @@ const submit = (data, callback) => {
       // if the medication does not exist:
       if (!exists) {
         // insert the new medication and lotId
-        const newLot = { lotId, brand, expire, location, quantity, donated, donatedBy, note };
+        const newLot = { lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode: url };
         const definitionData = { drug, drugType, minQuantity, unit, lotIds: [newLot] };
         defineMethod.callPromise({ collectionName, definitionData })
           .then(() => {
@@ -46,7 +46,7 @@ const submit = (data, callback) => {
           target.quantity += quantity;
         } else {
           // else append the new lotId
-          lotIds.push({ lotId, brand, expire, location, quantity, donated, donatedBy, note });
+          lotIds.push({ lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode: url });
         }
         const updateData = { id: exists._id, lotIds };
         updateMethod.callPromise({ collectionName, updateData })
