@@ -88,7 +88,7 @@ const validateForm = (data, callback) => {
 /** Renders the Page for Dispensing Supply. */
 const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
   const query = useQuery();
-  
+
   const [fields, setFields] = useState({
     inventoryType: 'Supply',
     dispenseType: 'Patient Use',
@@ -110,6 +110,24 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
   }, [locations]);
 
   const isDisabled = fields.dispenseType !== 'Patient Use';
+
+  useEffect(() => {
+    const supply = query.get("supply");
+    const location = query.get("location");
+    if (supply && location && ready) {
+      const target = Supplys.findOne({ supply, stock: { $elemMatch: { location } } });
+      // autofill the form with specific supply info
+      const { supplyType } = target;
+
+      targetLocation = target.stock.find(obj => obj.location === location);
+      const { quantity, donated, donatedBy } = targetLocation;
+
+      const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
+      setFields(autoFields);
+
+      setMaxQuantity(quantity);
+    }
+  }, [ready]);
 
   // update date dispensed every minute
   useEffect(() => {

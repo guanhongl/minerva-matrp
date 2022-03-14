@@ -4,10 +4,11 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
+import QRCode from 'qrcode';
 import { Locations } from '../../../api/location/LocationCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
-import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { distinct, getOptions, nestedDistinct, printQRCode } from '../../utilities/Functions';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
 /** On submit, insert the data. */
@@ -16,35 +17,51 @@ const submit = (data, callback) => {
   const collectionName = Vaccinations.getCollectionName();
   const exists = Vaccinations.findOne({ vaccine }); // returns the existing vaccine or undefined
 
-  // if the vaccine does not exist:
-  if (!exists) {
-    // insert the new vaccine and lotId
-    const newLot = { lotId, expire, location, quantity, note };
-    const definitionData = { vaccine, brand, minQuantity, visDate, lotIds: [newLot] };
-    defineMethod.callPromise({ collectionName, definitionData })
-      .then(() => {
-        swal('Success', `${vaccine}, ${lotId} added successfully`, 'success', { buttons: false, timer: 3000 });
-        callback(); // resets the form
-      })
-      .catch(error => swal('Error', error.message, 'error'));
-  } else {
-    const { lotIds } = exists;
-    const target = lotIds.find(obj => obj.lotId === lotId);
-    // if lotId exists, increment the quantity:
-    if (target) {
-      target.quantity += quantity;
-    } else {
-      // else append the new lotId
-      lotIds.push({ lotId, expire, location, quantity, note });
-    }
-    const updateData = { id: exists._id, lotIds };
-    updateMethod.callPromise({ collectionName, updateData })
-      .then(() => {
-        swal('Success', `${vaccine} updated successfully`, 'success', { buttons: false, timer: 3000 });
-        callback(); // resets the form
-      })
-      .catch(error => swal('Error', error.message, 'error'));
-  }
+  console.log(`${window.location.origin}/#/dispense?tab=1&lotId=${lotId}`)
+  // generate the QRCode for the lotId
+  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=1&lotId=${lotId}`)
+    .then(url => {
+      // if the vaccine does not exist:
+      if (!exists) {
+        // insert the new vaccine and lotId
+        const newLot = { lotId, expire, location, quantity, note };
+        const definitionData = { vaccine, brand, minQuantity, visDate, lotIds: [newLot] };
+        defineMethod.callPromise({ collectionName, definitionData })
+          .then(() => {
+            swal('Success', `${vaccine}, ${lotId} added successfully`, url, { buttons: ['OK', 'Print'] })
+              .then(isPrint => {
+                if (isPrint) {
+                  printQRCode(url);
+                }
+              });
+            callback(); // resets the form
+          })
+          .catch(error => swal('Error', error.message, 'error'));
+      } else {
+        const { lotIds } = exists;
+        const target = lotIds.find(obj => obj.lotId === lotId);
+        // if lotId exists, increment the quantity:
+        if (target) {
+          target.quantity += quantity;
+        } else {
+          // else append the new lotId
+          lotIds.push({ lotId, expire, location, quantity, note });
+        }
+        const updateData = { id: exists._id, lotIds };
+        updateMethod.callPromise({ collectionName, updateData })
+          .then(() => {
+            swal('Success', `${vaccine} updated successfully`, url, { buttons: ['OK', 'Print'] })
+              .then(isPrint => {
+                if (isPrint) {
+                  printQRCode(url);
+                }
+              });
+            callback(); // resets the form
+          })
+          .catch(error => swal('Error', error.message, 'error'));
+      }
+    })
+    .catch(error => swal('Error', error, 'error'));
 };
 
 /** validates the add vaccination form */

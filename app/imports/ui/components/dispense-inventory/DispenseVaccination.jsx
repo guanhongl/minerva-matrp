@@ -82,7 +82,7 @@ const validateForm = (data, callback) => {
 /** Renders the Page for Dispensing Vaccine. */
 const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
   const query = useQuery();
-  
+
   const [fields, setFields] = useState({
     inventoryType: 'Vaccine',
     dispenseType: 'Patient Use',
@@ -100,6 +100,19 @@ const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
   // const [maxQuantity, setMaxQuantity] = useState(0);
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
+  useEffect(() => {
+    const lotId = query.get("lotId");
+    if (lotId && ready) {
+      const target = Vaccinations.findOne({ lotIds: { $elemMatch: { lotId } } });
+      // autofill the form with specific lotId info
+      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
+      const { vaccine, brand, minQuantity, visDate } = target;
+      const { expire } = targetLotId;
+      const autoFields = { ...fields, lotId, vaccine, brand, minQuantity, visDate, expire };
+      setFields(autoFields);
+    }
+  }, [ready]);
+
   // update date dispensed every minute
   useEffect(() => {
     const interval = setInterval(() => {
@@ -114,7 +127,7 @@ const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
 
   // handle lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
-     const target = Vaccinations.findOne({ lotIds: { $elemMatch: { lotId } } });
+    const target = Vaccinations.findOne({ lotIds: { $elemMatch: { lotId } } });
     // if lotId is not empty:
     if (target) {
       // autofill the form with specific lotId info

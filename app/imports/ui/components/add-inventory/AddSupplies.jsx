@@ -3,11 +3,12 @@ import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import QRCode from 'qrcode';
 import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { distinct, getOptions } from '../../utilities/Functions';
+import { distinct, getOptions, printQRCode } from '../../utilities/Functions';
 
 /** handles submit for add medication. */
 const submit = (data, callback) => {
@@ -15,35 +16,51 @@ const submit = (data, callback) => {
   const collectionName = Supplys.getCollectionName();
   const exists = Supplys.findOne({ supply }); // returns the existing supply or undefined
 
-  // if the supply does not exist:
-  if (!exists) {
-    // insert the new supply and stock
-    const newStock = { quantity, location, donated, donatedBy, note };
-    const definitionData = { supply, supplyType, minQuantity, stock: [newStock] };
-    defineMethod.callPromise({ collectionName, definitionData })
-      .then(() => {
-        swal('Success', `${supply} added successfully`, 'success', { buttons: false, timer: 3000 });
-        callback(); // resets the form
-      })
-      .catch(error => swal('Error', error.message, 'error'));
-  } else {
-    const { stock } = exists;
-    const target = stock.find(obj => obj.location === location);
-    // if location exists, increment the quantity:
-    if (target) {
-      target.quantity += quantity;
-    } else {
-      // else append the new location
-      stock.push({ location, quantity, donated, donatedBy, note });
-    }
-    const updateData = { id: exists._id, stock };
-    updateMethod.callPromise({ collectionName, updateData })
-      .then(() => {
-        swal('Success', `${supply} updated successfully`, 'success', { buttons: false, timer: 3000 });
-        callback(); // resets the form
-      })
-      .catch(error => swal('Error', error.message, 'error'));
-  }
+  console.log(`${window.location.origin}/#/dispense?tab=2&supply=${supply}&location=${location}`)
+  // generate the QRCode for the lotId
+  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=2&supply=${supply}&location=${location}`)
+    .then(url => {
+      // if the supply does not exist:
+      if (!exists) {
+        // insert the new supply and stock
+        const newStock = { quantity, location, donated, donatedBy, note };
+        const definitionData = { supply, supplyType, minQuantity, stock: [newStock] };
+        defineMethod.callPromise({ collectionName, definitionData })
+          .then(() => {
+            swal('Success', `${supply} added successfully`, url, { buttons: ['OK', 'Print'] })
+              .then(isPrint => {
+                if (isPrint) {
+                  printQRCode(url);
+                }
+              });
+            callback(); // resets the form
+          })
+          .catch(error => swal('Error', error.message, 'error'));
+      } else {
+        const { stock } = exists;
+        const target = stock.find(obj => obj.location === location);
+        // if location exists, increment the quantity:
+        if (target) {
+          target.quantity += quantity;
+        } else {
+          // else append the new location
+          stock.push({ location, quantity, donated, donatedBy, note });
+        }
+        const updateData = { id: exists._id, stock };
+        updateMethod.callPromise({ collectionName, updateData })
+          .then(() => {
+            swal('Success', `${supply} updated successfully`, url, { buttons: ['OK', 'Print'] })
+              .then(isPrint => {
+                if (isPrint) {
+                  printQRCode(url);
+                }
+              });
+            callback(); // resets the form
+          })
+          .catch(error => swal('Error', error.message, 'error'));
+      }
+    })
+    .catch(error => swal('Error', error, 'error'));
 };
 
 /** validates the add supply form */
