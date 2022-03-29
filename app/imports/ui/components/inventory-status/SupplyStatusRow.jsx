@@ -56,7 +56,7 @@ const SupplyStatusRow = ({ supply }) => {
             </Table.Header>
             <Table.Body>
               {
-                supply.stock.map(({ location, quantity, donated, donatedBy, note }, index) => (
+                supply.stock.map(({ location, quantity, donated, donatedBy }, index) => (
                   <Table.Row key={index}>
                     <Table.Cell>{location}</Table.Cell>
                     <Table.Cell>{quantity}</Table.Cell>
@@ -66,7 +66,9 @@ const SupplyStatusRow = ({ supply }) => {
                         <Icon name='check' color='green'/>
                       }
                     </Table.Cell>
-                    <Table.Cell><SupplyInfoPage info={supply} locate={location} quantity={quantity} note={note} donatedBy={donatedBy}/></Table.Cell>
+                    <Table.Cell>
+                      <SupplyInfoPage info={supply} detail={supply.stock[index]} />
+                    </Table.Cell>
                   </Table.Row>
                 ))
               }
