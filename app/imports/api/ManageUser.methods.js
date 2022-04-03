@@ -15,7 +15,7 @@ export const acceptMethod = new ValidatedMethod({
     if (Meteor.isServer) {
       console.log(firstName, lastName, email);
       const userID = Accounts.createUser({ username: email, email: email });
-      Accounts.sendEnrollmentEmail(userID);
+      // Accounts.sendEnrollmentEmail(userID);
 
       const role = ROLE.USER; // default to USER for now
       UserProfiles._collection.insert({ email, firstName, lastName, userID, role });
