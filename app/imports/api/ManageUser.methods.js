@@ -9,9 +9,8 @@ import { MATRP } from './matrp/MATRP';
 import { UserProfiles } from './user/UserProfileCollection';
 import nodemailer from 'nodemailer';
 
-// TODO: handle error(s)
 // sendEnrollmentEmail
-function sendEnrollmentEmail(to) {
+function sendEnrollmentEmail(to, enrollToken) {
   const credentials = JSON.parse(Assets.getText('settings.production.json'));
   const body = {
     client_id: credentials.clientId,
@@ -20,6 +19,7 @@ function sendEnrollmentEmail(to) {
     grant_type: "refresh_token",
   };
 
+  // get the access token
   fetch("https://www.googleapis.com/oauth2/v4/token", {
     method: 'POST',
     headers: new Headers({
@@ -30,59 +30,45 @@ function sendEnrollmentEmail(to) {
   .then(response => response.json())
   .then(data => {
     console.log('access token: ', data.access_token)
+    const accessToken = data.access_token;
+
+    // set up SMTP
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: credentials.user,
+        clientId: credentials.clientId,
+        clientSecret: credentials.clientSecret,
+        refreshToken: credentials.refreshToken,
+        accessToken,
+      }
+    });
+
+    const enrollURL = new URL(Meteor.absoluteUrl(`#/enroll-acct/${enrollToken}`));
+
+    const mailOptions = {
+      from: `Minerva Alert <${credentials.user}>`,
+      to,
+      subject: "Welcome to Minerva!",
+      // generateTextFromHTML: true,
+      html: "<p>Congratulations. Your account has been successfully created.</p>"
+          + "<br>"
+          + "<p>To activate your account, simply click the link below:</p>"
+          + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
+      text: "Congratulations. Your account has been successfully created. "
+          + "To activate your account, simply click the link below: "
+          + enrollURL,
+    };
+
+    return transport.sendMail(mailOptions);
+  })
+  .then(result => {
+    console.log(result)
   })
   .catch(error => {
     console.log(error)
-  });
-
-  HTTP.post("https://www.googleapis.com/oauth2/v4/token", {
-    data: {
-      client_id: credentials.clientId,
-      client_secret: credentials.clientSecret,
-      refresh_token: credentials.refreshToken,
-      grant_type: "refresh_token",
-    }
-  }, function (error, response) {
-    if (error) {
-      console.log(error);
-    } else {
-      // console.log(response);
-      console.log(response.data.access_token)
-
-      // const accessToken = getAccessToken();
-      const accessToken = response.data.access_token;
-
-      // SMTP
-      const transport = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          type: "OAuth2",
-          user: credentials.user,
-          clientId: credentials.clientId,
-          clientSecret: credentials.clientSecret,
-          refreshToken: credentials.refreshToken,
-          accessToken,
-        }
-      });
-
-      const mailOptions = {
-        from: `Minerva Alert <${credentials.user}>`,
-        to,
-        subject: "Welcome to Minerva!",
-        // generateTextFromHTML: true,
-        html: "<h1>Hello!</h1>",
-        text: "Hello!"
-      };
-
-      transport.sendMail(mailOptions, function (error, result) {
-        if (error) {
-          console.log('Error: ', error);
-        } else {
-          console.log('Success: ', result);
-        }
-        transport.close();
-      });
-    }
+    throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
   });
 };
 
@@ -95,9 +81,10 @@ export const acceptMethod = new ValidatedMethod({
       console.log(firstName, lastName, email);
       const userID = Accounts.createUser({ username: email, email: email });
 
-      const username = Meteor.users.findOne({ _id: userID }).username; // the user email
-      // TODO: format email
-      sendEnrollmentEmail(username);
+      Accounts.sendEnrollmentEmail(userID); // used solely to set the enroll token
+      const enrollToken = Meteor.users.findOne({ _id: userID }).services.password.enroll.token;
+      // console.log(enrollToken)
+      sendEnrollmentEmail(email, enrollToken);
 
       const role = ROLE.USER; // default to USER for now
       UserProfiles._collection.insert({ email, firstName, lastName, userID, role });

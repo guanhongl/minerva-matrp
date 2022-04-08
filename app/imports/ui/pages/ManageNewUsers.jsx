@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 import { Container, Header, Loader, Button, Segment, Card, Input } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -6,7 +7,7 @@ import swal from 'sweetalert';
 // import { Accounts } from 'meteor/accounts-base';
 import { PendingUsers } from '../../api/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
-import { acceptMethod } from '../../api/ManageUser.methods';
+import { acceptMethod, removeUserMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
 // TODO: assign roles dropdown?
@@ -20,7 +21,14 @@ const acceptUser = (user) => {
       // removeItMethod.callPromise({ collectionName, instance: user._id }) // assume delete works
       //   .then(response => console.log(response));
     })
-    .catch(error => swal('Error', error.message, 'error'));
+    .catch(error => {
+      swal('Error', error.message, 'error');
+
+      // TODO: maybe func can return userId on error
+      // does not catch email error... may need to split send email and create user
+      const userId = Meteor.users.findOne({ username: user.email })._id;
+      removeUserMethod.call(userId);
+    });
 };
 
 const rejectUser = (email, id) => {
