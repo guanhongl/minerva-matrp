@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { fetch, Headers } from 'meteor/fetch';
 import { CallPromiseMixin } from 'meteor/didericis:callpromise-mixin';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Accounts } from 'meteor/accounts-base';
@@ -11,12 +12,34 @@ import nodemailer from 'nodemailer';
 // TODO: handle error(s)
 // sendEnrollmentEmail
 function sendEnrollmentEmail(to) {
-  // is deprecated...
+  const credentials = JSON.parse(Assets.getText('settings.production.json'));
+  const body = {
+    client_id: credentials.clientId,
+    client_secret: credentials.clientSecret,
+    refresh_token: credentials.refreshToken,
+    grant_type: "refresh_token",
+  };
+
+  fetch("https://www.googleapis.com/oauth2/v4/token", {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(body),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('access token: ', data.access_token)
+  })
+  .catch(error => {
+    console.log(error)
+  });
+
   HTTP.post("https://www.googleapis.com/oauth2/v4/token", {
     data: {
-      client_id: Meteor.settings.clientId,
-      client_secret: Meteor.settings.clientSecret,
-      refresh_token: Meteor.settings.refreshToken,
+      client_id: credentials.clientId,
+      client_secret: credentials.clientSecret,
+      refresh_token: credentials.refreshToken,
       grant_type: "refresh_token",
     }
   }, function (error, response) {
@@ -34,16 +57,16 @@ function sendEnrollmentEmail(to) {
         service: "gmail",
         auth: {
           type: "OAuth2",
-          user: Meteor.settings.user,
-          clientId: Meteor.settings.clientId,
-          clientSecret: Meteor.settings.clientSecret,
-          refreshToken: Meteor.settings.refreshToken,
+          user: credentials.user,
+          clientId: credentials.clientId,
+          clientSecret: credentials.clientSecret,
+          refreshToken: credentials.refreshToken,
           accessToken,
         }
       });
 
       const mailOptions = {
-        from: `Minerva Alert <${Meteor.settings.user}>`,
+        from: `Minerva Alert <${credentials.user}>`,
         to,
         subject: "Welcome to Minerva!",
         // generateTextFromHTML: true,

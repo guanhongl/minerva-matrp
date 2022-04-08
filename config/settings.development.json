@@ -16,10 +16,5 @@
     "development": true
   },
 
-  "loadAssetsFile": true,
-
-  "user": "minervapostmaster@gmail.com",
-  "clientId": "205889205891-oc2lg3v1f6nk493ekcv0b1ja1plrg9sq.apps.googleusercontent.com",
-  "clientSecret": "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",
-  "refreshToken": "1//04IX2mLpWcw6wCgYIARAAGAQSNwF-L9IrB7lnoqIINE1iFUIMNf51XfkvawsQIsvfF6f3PAtm8V67xYhxrYsKz6GaW4EwSvY8WOc"
+  "loadAssetsFile": true
 }
