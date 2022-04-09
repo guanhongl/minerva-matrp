@@ -63,7 +63,7 @@ const deleteUser = ({ userID, _id: profileID, role }) => {
           })
           .catch(error => swal('Error', error.message, 'error'));
 
-        removeUserMethod.callPromise(userID)
+        removeUserMethod.callPromise({ userID, username: '' })
           .then((response) => console.log(response))
           .catch((error) => console.log(error));
       }

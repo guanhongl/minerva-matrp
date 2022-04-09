@@ -20,7 +20,7 @@ function sendEnrollmentEmail(to, enrollToken) {
   };
 
   // get the access token
-  fetch("https://www.googleapis.com/oauth2/v4/token", {
+  return fetch("https://www.googleapis.com/oauth2/v4/token", {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/json'
@@ -62,14 +62,14 @@ function sendEnrollmentEmail(to, enrollToken) {
     };
 
     return transport.sendMail(mailOptions);
-  })
-  .then(result => {
-    console.log(result)
-  })
-  .catch(error => {
-    console.log(error)
-    throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
   });
+  // .then(result => {
+  //   console.log(result)
+  // })
+  // .catch(error => {
+  //   console.log(error)
+  //   throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
+  // });
 };
 
 export const acceptMethod = new ValidatedMethod({
@@ -84,13 +84,23 @@ export const acceptMethod = new ValidatedMethod({
       Accounts.sendEnrollmentEmail(userID); // used solely to set the enroll token
       const enrollToken = Meteor.users.findOne({ _id: userID }).services.password.enroll.token;
       // console.log(enrollToken)
-      sendEnrollmentEmail(email, enrollToken);
+      return sendEnrollmentEmail(email, enrollToken)
+      .then(result => {
+        console.log(result)
 
-      const role = ROLE.USER; // default to USER for now
-      UserProfiles._collection.insert({ email, firstName, lastName, userID, role });
-      Roles.addUsersToRoles(userID, [role]);
+        const role = ROLE.USER; // default to USER for now
+        UserProfiles._collection.insert({ email, firstName, lastName, userID, role });
+        Roles.addUsersToRoles(userID, [role]);
 
-      return userID;
+        return userID;
+      })
+      .catch(error => {
+        console.log('error: ', error)
+
+        throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
+      })
+      
+      // return userID;
     }
     return '';
   },
@@ -100,11 +110,13 @@ export const removeUserMethod = new ValidatedMethod({
   name: 'removeUserMethod',
   mixins: [CallPromiseMixin],
   validate: null,
-  run(userID) {
+  run({ userID, username }) {
     if (Meteor.isServer) {
       // Meteor.roleAssignment.remove({ 'user._id': userID });
-      Roles.setUserRoles(userID, []);
-      Meteor.users.remove({ _id: userID });
+      const USER_ID = userID || Meteor.users.findOne({ username })._id;
+
+      Roles.setUserRoles(USER_ID, []);
+      Meteor.users.remove({ _id: USER_ID });
     }
     return '';
   },
