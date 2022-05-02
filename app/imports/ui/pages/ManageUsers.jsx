@@ -138,7 +138,7 @@ export default withTracker(() => {
   const userList = users.concat(superusers, admins).sort(compare);
 
   const roles = [
-    { key: 'USER', text: 'Volunteer', value: 'USER' },
+    { key: 'USER', text: 'Student', value: 'USER' },
     { key: 'SUPERUSER', text: 'Doctor', value: 'SUPERUSER' },
     { key: 'ADMIN', text: 'Administrator', value: 'ADMIN' },
   ];
