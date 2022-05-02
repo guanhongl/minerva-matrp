@@ -23,23 +23,17 @@ const getUserCollectionName = (role) => {
 
 const updateRole = ({ email, firstName, lastName, userID, _id: profileID, role }, newRole) => {
   // console.log(userID, profileID, role, newRole)
-  let collectionName = getUserCollectionName(role);
-
-  removeItMethod.callPromise({ collectionName, instance: profileID })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
-
-  collectionName = getUserCollectionName(newRole);
-
-  defineMethod.callPromise({ collectionName, definitionData: { email, firstName, lastName, userID, role: newRole } })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
-
-  updateRoleMethod.callPromise({ userID, role: newRole })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
-
-  swal('Success', 'User updated successfully', 'success', { buttons: false, timer: 3000 }); // assume no errors
+  removeItMethod.callPromise({ collectionName: getUserCollectionName(role), instance: profileID })
+    .then(() => {
+      return defineMethod.callPromise({ collectionName: getUserCollectionName(newRole), definitionData: { email, firstName, lastName, userID, role: newRole } });
+    })
+    .then(() => {
+      return updateRoleMethod.callPromise({ userID, role: newRole });
+    })
+    .then(() => {
+      swal('Success', 'User updated successfully', 'success', { buttons: false, timer: 3000 });
+    })
+    .catch((error) => swal('Error', error.message, 'error'));
 };
 
 const deleteUser = ({ userID, _id: profileID, role }) => {
@@ -63,9 +57,7 @@ const deleteUser = ({ userID, _id: profileID, role }) => {
           })
           .catch(error => swal('Error', error.message, 'error'));
 
-        removeUserMethod.callPromise({ userID, username: '' })
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error));
+        removeUserMethod.call({ userID, username: '' });
       }
     });
 };

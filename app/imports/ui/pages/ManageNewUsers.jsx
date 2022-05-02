@@ -15,8 +15,7 @@ const acceptUser = (user) => {
       swal('Success', `${user.email} accepted successfully`, 'success', { buttons: false, timer: 3000 });
 
       const collectionName = PendingUsers.getCollectionName();
-      removeItMethod.callPromise({ collectionName, instance: user._id }) // assume delete works
-        .then(response => console.log(response));
+      removeItMethod.call({ collectionName, instance: user._id }) // assume delete works
     })
     .catch(error => {
       swal('Error', error.message, 'error');
