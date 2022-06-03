@@ -10,67 +10,67 @@ import { UserProfiles } from './user/UserProfileCollection';
 import nodemailer from 'nodemailer';
 
 // sendEnrollmentEmail
-function sendEnrollmentEmail(to, enrollToken) {
-  const credentials = JSON.parse(Assets.getText('settings.production.json'));
-  const body = {
-    client_id: credentials.clientId,
-    client_secret: credentials.clientSecret,
-    refresh_token: credentials.refreshToken,
-    grant_type: "refresh_token",
-  };
+// function sendEnrollmentEmail(to, enrollToken) {
+//   const credentials = JSON.parse(Assets.getText('settings.production.json'));
+//   const body = {
+//     client_id: credentials.clientId,
+//     client_secret: credentials.clientSecret,
+//     refresh_token: credentials.refreshToken,
+//     grant_type: "refresh_token",
+//   };
 
-  // get the access token
-  return fetch("https://www.googleapis.com/oauth2/v4/token", {
-    method: 'POST',
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
-    body: JSON.stringify(body),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('access token: ', data.access_token)
-    const accessToken = data.access_token;
+//   // get the access token
+//   return fetch("https://www.googleapis.com/oauth2/v4/token", {
+//     method: 'POST',
+//     headers: new Headers({
+//       'Content-Type': 'application/json'
+//     }),
+//     body: JSON.stringify(body),
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     console.log('access token: ', data.access_token)
+//     const accessToken = data.access_token;
 
-    // set up SMTP
-    const transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: credentials.user,
-        clientId: credentials.clientId,
-        clientSecret: credentials.clientSecret,
-        refreshToken: credentials.refreshToken,
-        accessToken,
-      }
-    });
+//     // set up SMTP
+//     const transport = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         type: "OAuth2",
+//         user: credentials.user,
+//         clientId: credentials.clientId,
+//         clientSecret: credentials.clientSecret,
+//         refreshToken: credentials.refreshToken,
+//         accessToken,
+//       }
+//     });
 
-    const enrollURL = new URL(Meteor.absoluteUrl(`#/enroll-acct/${enrollToken}`));
+//     const enrollURL = new URL(Meteor.absoluteUrl(`#/enroll-acct/${enrollToken}`));
 
-    const mailOptions = {
-      from: `Minerva Alert <${credentials.user}>`,
-      to,
-      subject: "Welcome to Minerva!",
-      // generateTextFromHTML: true,
-      html: "<p>Congratulations. Your account has been successfully created.</p>"
-          + "<br>"
-          + "<p>To activate your account, simply click the link below:</p>"
-          + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
-      text: "Congratulations. Your account has been successfully created. "
-          + "To activate your account, simply click the link below: "
-          + enrollURL,
-    };
+//     const mailOptions = {
+//       from: `Minerva Alert <${credentials.user}>`,
+//       to,
+//       subject: "Welcome to Minerva!",
+//       // generateTextFromHTML: true,
+//       html: "<p>Congratulations. Your account has been successfully created.</p>"
+//           + "<br>"
+//           + "<p>To activate your account, simply click the link below:</p>"
+//           + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
+//       text: "Congratulations. Your account has been successfully created. "
+//           + "To activate your account, simply click the link below: "
+//           + enrollURL,
+//     };
 
-    return transport.sendMail(mailOptions);
-  });
-  // .then(result => {
-  //   console.log(result)
-  // })
-  // .catch(error => {
-  //   console.log(error)
-  //   throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
-  // });
-};
+//     return transport.sendMail(mailOptions);
+//   });
+//   // .then(result => {
+//   //   console.log(result)
+//   // })
+//   // .catch(error => {
+//   //   console.log(error)
+//   //   throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
+//   // });
+// };
 
 export const acceptMethod = new ValidatedMethod({
   name: 'acceptMethod',
@@ -84,23 +84,132 @@ export const acceptMethod = new ValidatedMethod({
       Accounts.sendEnrollmentEmail(userID); // used solely to set the enroll token
       const enrollToken = Meteor.users.findOne({ _id: userID }).services.password.enroll.token;
       // console.log(enrollToken)
-      return sendEnrollmentEmail(email, enrollToken)
-      .then(result => {
-        console.log(result)
+
+      // sendEnrollmentEmail
+      const credentials = JSON.parse(Assets.getText('settings.production.json'));
+
+      // get the auth code for refresh token and access token (if needed)
+      let code = '';
+      const payload = {
+        scope: "https://www.googleapis.com/auth/gmail.send",
+        redirect_uri: "https://developers.google.com/oauthplayground",
+        response_type: "code",
+        access_type: "offline",
+        client_id: credentials.clientId,
+      };
+
+      fetch("https://accounts.google.com/o/oauth2/v2/auth", {
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(payload),
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log('auth code: ', response)
+        code = response.code;
+      });
+      fetch("https://www.googleapis.com/oauth2/v4/token", {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({
+          code,
+          client_id: credentials.clientId,
+          client_secret: credentials.clientSecret,
+          redirect_uri: "https://developers.google.com/oauthplayground",
+          grant_type: "authorization_code",
+        }),
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log('refresh token: ', response.refresh_token)
+        console.log('access token: ', response.access_token)
+      });
+
+      // get the access token
+      const body = {
+        client_id: credentials.clientId,
+        client_secret: credentials.clientSecret,
+        refresh_token: credentials.refreshToken,
+        grant_type: "refresh_token",
+      };
+
+      fetch("https://www.googleapis.com/oauth2/v4/token", {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(body),
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log('access token: ', response.access_token)
+        const accessToken = response.access_token;
+
+        // set up SMTP
+        const transport = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            type: "OAuth2",
+            user: credentials.user,
+            clientId: credentials.clientId,
+            clientSecret: credentials.clientSecret,
+            refreshToken: credentials.refreshToken,
+            accessToken,
+          }
+        });
+
+        const enrollURL = new URL(Meteor.absoluteUrl(`#/enroll-acct/${enrollToken}`));
+
+        const mailOptions = {
+          from: `Minerva Alert <${credentials.user}>`,
+          to: email,
+          subject: "Welcome to Minerva!",
+          // generateTextFromHTML: true,
+          html: "<p>Congratulations. Your account has been successfully created.</p>"
+              + "<br>"
+              + "<p>To activate your account, simply click the link below:</p>"
+              + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
+          text: "Congratulations. Your account has been successfully created. "
+              + "To activate your account, simply click the link below: "
+              + enrollURL,
+        };
+
+        return transport.sendMail(mailOptions);
+      })
+      .then(response => {
+        console.log(response)
 
         const role = ROLE.USER; // default to USER for now
         UserProfiles._collection.insert({ email, firstName, lastName, userID, role });
         Roles.addUsersToRoles(userID, [role]);
-
-        return userID;
       })
       .catch(error => {
         console.log('error: ', error)
 
         throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
-      })
+      });
+
+      // return sendEnrollmentEmail(email, enrollToken)
+      // .then(result => {
+      //   console.log(result)
+
+      //   const role = ROLE.USER; // default to USER for now
+      //   UserProfiles._collection.insert({ email, firstName, lastName, userID, role });
+      //   Roles.addUsersToRoles(userID, [role]);
+
+      //   return userID;
+      // })
+      // .catch(error => {
+      //   console.log('error: ', error)
+
+      //   throw new Meteor.Error('email-error', 'Failed to send the enrollment email.');
+      // })
       
-      // return userID;
+      return userID;
     }
     return '';
   },
