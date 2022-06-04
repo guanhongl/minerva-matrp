@@ -101,13 +101,13 @@ const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
   useEffect(() => {
-    const lotId = query.get("lotId");
-    if (lotId && ready) {
-      const target = Vaccinations.findOne({ lotIds: { $elemMatch: { lotId } } });
+    const _id = query.get("_id");
+    if (_id && ready) {
+      const target = Vaccinations.findOne({ lotIds: { $elemMatch: { _id } } });
       // autofill the form with specific lotId info
-      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
+      const targetLotId = target.lotIds.find(obj => obj._id === _id);
       const { vaccine, brand, minQuantity, visDate } = target;
-      const { expire } = targetLotId;
+      const { expire, lotId } = targetLotId;
       const autoFields = { ...fields, lotId, vaccine, brand, minQuantity, visDate, expire };
       setFields(autoFields);
     }

@@ -136,14 +136,14 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
 
   // TODO find a better way?
   useEffect(() => {
-    const lotId = query.get("lotId");
-    if (lotId && ready) {
+    const _id = query.get("_id");
+    if (_id && ready) {
       const newInnerFields = [...innerFields];
-      const target = Medications.findOne({ lotIds: { $elemMatch: { lotId } } });
+      const target = Medications.findOne({ lotIds: { $elemMatch: { _id } } });
       // autofill the form with specific lotId info
-      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
+      const targetLotId = target.lotIds.find(obj => obj._id === _id);
       const { drug, unit } = target;
-      const { brand, expire, quantity, donated, donatedBy } = targetLotId;
+      const { brand, expire, quantity, donated, donatedBy, lotId } = targetLotId;
       newInnerFields[0] = { ...innerFields[0], lotId, drug, expire, brand, unit, donated, donatedBy,
         maxQuantity: quantity };
       setInnerFields(newInnerFields);

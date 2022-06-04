@@ -23,7 +23,7 @@ const submit = (data, callback) => {
   const supplyItem = Supplys.findOne({ supply }); // find the existing supply
   const { _id, stock } = supplyItem;
   const copy = cloneDeep({ id: _id, stock }); // the copy of the record to update
-  const targetIndex = stock.findIndex((obj => obj.location === location)); // find the index of existing the supply
+  const targetIndex = stock.findIndex((obj => obj.location === location && obj.donated === donated)); // find the index of existing the supply
   const { quantity: targetQuantity } = stock[targetIndex];
 
   // if dispense quantity > supply quantity:
@@ -112,15 +112,14 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
   useEffect(() => {
-    const supply = query.get("supply");
-    const location = query.get("location");
-    if (supply && location && ready) {
-      const target = Supplys.findOne({ supply, stock: { $elemMatch: { location } } });
+    const _id = query.get("_id");
+    if (_id && ready) {
+      const target = Supplys.findOne({ stock: { $elemMatch: { _id } } });
       // autofill the form with specific supply info
-      const { supplyType } = target;
+      const { supplyType, supply } = target;
 
-      targetLocation = target.stock.find(obj => obj.location === location);
-      const { quantity, donated, donatedBy } = targetLocation;
+      targetSupply = target.stock.find(obj => obj._id === _id);
+      const { quantity, donated, donatedBy, location } = targetSupply;
 
       const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
       setFields(autoFields);
@@ -155,7 +154,7 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
     // if supply is not empty:
     if (target) {
       setFields({ ...fields, supply });
-      setFilteredLocations(_.pluck(target.stock, 'location'));
+      setFilteredLocations(_.uniq(_.pluck(target.stock, 'location')));
     } else {
       // else reset specific supply info
       setFields({ ...fields, supply });
@@ -163,29 +162,29 @@ const DispenseSupplies = ({ ready, sites, supplys, locations }) => {
     }
   };
 
-  // autofill form if supply and location are selected
+  // autofill form if supply, location, donated are selected
   useEffect(() => {
     if (fields.supply && fields.location) {
-      const target = Supplys.findOne({ supply: fields.supply, stock: { $elemMatch: { location: fields.location } } });
+      const target = Supplys.findOne({ supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } });
 
-      // if supply w/ name and location exists:
+      // if supply w/ name, location, donated exists:
       if (target) {
         // autofill the form with specific supply info
         const { supplyType } = target;
 
-        targetLocation = target.stock.find(obj => obj.location === fields.location);
-        const { quantity, donated, donatedBy } = targetLocation;
+        targetSupply = target.stock.find(obj => obj.location === fields.location && obj.donated === fields.donated);
+        const { quantity, donatedBy } = targetSupply;
 
-        const autoFields = { ...fields, supplyType, donated, donatedBy };
+        const autoFields = { ...fields, supplyType, donatedBy };
         setFields(autoFields);
 
         setMaxQuantity(quantity);
       }
     } else {
-      setFields({ ...fields, supplyType: '', donated: false, donatedBy: '' });
+      setFields({ ...fields, supplyType: '', donatedBy: '' });
       setMaxQuantity(0);
     }
-  }, [fields.supply, fields.location]);
+  }, [fields.supply, fields.location, fields.donated]);
 
   const clearForm = () => {
     setFields({ ...fields, dispenseType: 'Patient Use', site: '', supply: '', supplyType: '', quantity: '',
