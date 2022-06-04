@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import QRCode from 'qrcode';
+import { v4 as uuidv4 } from 'uuid';
 import { Locations } from '../../../api/location/LocationCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
@@ -17,14 +18,17 @@ const submit = (data, callback) => {
   const collectionName = Vaccinations.getCollectionName();
   const exists = Vaccinations.findOne({ vaccine }); // returns the existing vaccine or undefined
 
-  console.log(`${window.location.origin}/#/dispense?tab=1&lotId=${lotId}`)
-  // generate the QRCode for the lotId
-  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=1&lotId=${lotId}`)
+  // attempts to find an existing _id
+  const exists_id = exists?.lotIds?.find(obj => obj.lotId === lotId)?._id;
+
+  // generate the QRCode and the uuid for the lotId
+  const _id = exists_id ?? uuidv4();
+  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=1&_id=${_id}`)
     .then(url => {
       // if the vaccine does not exist:
       if (!exists) {
         // insert the new vaccine and lotId
-        const newLot = { lotId, expire, location, quantity, note, QRCode: url };
+        const newLot = { _id, lotId, expire, location, quantity, note, QRCode: url };
         const definitionData = { vaccine, brand, minQuantity, visDate, lotIds: [newLot] };
         defineMethod.callPromise({ collectionName, definitionData })
           .then(() => {
@@ -45,7 +49,7 @@ const submit = (data, callback) => {
           target.quantity += quantity;
         } else {
           // else append the new lotId
-          lotIds.push({ lotId, expire, location, quantity, note, QRCode: url });
+          lotIds.push({ _id, lotId, expire, location, quantity, note, QRCode: url });
         }
         const updateData = { id: exists._id, lotIds };
         updateMethod.callPromise({ collectionName, updateData })

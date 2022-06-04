@@ -4,6 +4,7 @@ import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import QRCode from 'qrcode';
+import { v4 as uuidv4 } from 'uuid';
 import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
@@ -16,14 +17,17 @@ const submit = (data, callback) => {
   const collectionName = Supplys.getCollectionName();
   const exists = Supplys.findOne({ supply }); // returns the existing supply or undefined
 
-  console.log(`${window.location.origin}/#/dispense?tab=2&supply=${supply}&location=${location}`)
-  // generate the QRCode for the lotId
-  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=2&supply=${supply}&location=${location}`)
+  // attempts to find an existing _id
+  const exists_id = exists?.stock?.find(obj => obj.location === location && obj.donated === donated)?._id;
+
+  // generate the QRCode and the uuid for the location + donated
+  const _id = exists_id ?? uuidv4();
+  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=2&_id=${_id}`)
     .then(url => {
       // if the supply does not exist:
       if (!exists) {
         // insert the new supply and stock
-        const newStock = { quantity, location, donated, donatedBy, note, QRCode: url };
+        const newStock = { _id, quantity, location, donated, donatedBy, note, QRCode: url };
         const definitionData = { supply, supplyType, minQuantity, stock: [newStock] };
         defineMethod.callPromise({ collectionName, definitionData })
           .then(() => {
@@ -38,13 +42,13 @@ const submit = (data, callback) => {
           .catch(error => swal('Error', error.message, 'error'));
       } else {
         const { stock } = exists;
-        const target = stock.find(obj => obj.location === location);
-        // if location exists, increment the quantity:
+        const target = stock.find(obj => obj.location === location && obj.donated === donated);
+        // if location + donated exists, increment the quantity:
         if (target) {
           target.quantity += quantity;
         } else {
-          // else append the new location
-          stock.push({ location, quantity, donated, donatedBy, note, QRCode: url });
+          // else append the new location + donated
+          stock.push({ _id, location, quantity, donated, donatedBy, note, QRCode: url });
         }
         const updateData = { id: exists._id, stock };
         updateMethod.callPromise({ collectionName, updateData })

@@ -5,6 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import QRCode from 'qrcode';
+import { v4 as uuidv4 } from 'uuid';
 import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
@@ -17,14 +18,18 @@ const submit = (data, callback) => {
   const { drug, drugType, minQuantity, quantity, unit, brand, lotId, expire, location, donated, donatedBy, note } = data;
   const collectionName = Medications.getCollectionName();
   const exists = Medications.findOne({ drug }); // returns the existing medication or undefined
+  
+  // attempts to find an existing _id
+  const exists_id = exists?.lotIds?.find(obj => obj.lotId === lotId)?._id;
 
-  // generate the QRCode for the lotId
-  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=0&lotId=${lotId}`)
+  // generate the QRCode and the uuid for the lotId
+  const _id = exists_id ?? uuidv4();
+  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=0&_id=${_id}`)
     .then(url => {
       // if the medication does not exist:
       if (!exists) {
         // insert the new medication and lotId
-        const newLot = { lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode: url };
+        const newLot = { _id, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode: url };
         const definitionData = { drug, drugType, minQuantity, unit, lotIds: [newLot] };
         defineMethod.callPromise({ collectionName, definitionData })
           .then(() => {
@@ -39,14 +44,13 @@ const submit = (data, callback) => {
           .catch(error => swal('Error', error.message, 'error'));
       } else {
         const { lotIds } = exists;
-        // const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId));
         const target = lotIds.find(obj => obj.lotId === lotId);
         // if lotId exists, increment the quantity:
         if (target) {
           target.quantity += quantity;
         } else {
           // else append the new lotId
-          lotIds.push({ lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode: url });
+          lotIds.push({ _id, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode: url });
         }
         const updateData = { id: exists._id, lotIds };
         updateMethod.callPromise({ collectionName, updateData })
