@@ -25,6 +25,7 @@ class MedicationCollection extends BaseCollection {
       },
       lotIds: Array,
       'lotIds.$': Object,
+      'lotIds.$._id': String,
       'lotIds.$.lotId': String,
       'lotIds.$.brand': String,
       'lotIds.$.expire': { // date string "YYYY-MM-DD"
@@ -96,6 +97,7 @@ class MedicationCollection extends BaseCollection {
     addString('unit');
     if (data.lotIds && data.lotIds.every(lotId => (
       _.isObject(lotId) &&
+      lotId._id &&
       lotId.lotId &&
       lotId.brand &&
       _.isNumber(lotId.quantity) &&

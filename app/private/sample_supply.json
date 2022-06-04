@@ -8,13 +8,15 @@
         "location": "Cabinet 1",
         "quantity": 50,
         "donated": false,
-        "note": "Example note for Theraband - Green."
+        "note": "Example note for Theraband - Green.",
+        "_id": "13672a9f-0da9-4501-9f9c-0d4fc2d4f6c8"
       },
       {
         "location": "Cabinet 2",
         "quantity": 50,
         "donated": false,
-        "note": "Example note for Theraband - Green."
+        "note": "Example note for Theraband - Green.",
+        "_id": "86b885d4-516c-4378-befb-51015969cb07"
       }
     ]
   },
@@ -27,13 +29,15 @@
         "location": "Cabinet 1",
         "quantity": 27,
         "donated": false,
-        "note": "Example note for Theraband - Yellow."
+        "note": "Example note for Theraband - Yellow.",
+        "_id": "29565dc8-dc83-48fb-b381-2390c5596364"
       },
       {
         "location": "Cabinet 2",
         "quantity": 27,
         "donated": false,
-        "note": "Example note for Theraband - Yellow."
+        "note": "Example note for Theraband - Yellow.",
+        "_id": "adba9a42-be4c-4236-980f-0843e62d9bdb"
       }
     ]
   },
@@ -46,13 +50,15 @@
         "location": "Cabinet 1",
         "quantity": 45,
         "donated": false,
-        "note": "Example note for Theraband - Red."
+        "note": "Example note for Theraband - Red.",
+        "_id": "7a817ba2-1a94-4e32-9080-fe42cf292609"
       },
       {
         "location": "Cabinet 2",
         "quantity": 45,
         "donated": false,
-        "note": "Example note for Theraband - Red."
+        "note": "Example note for Theraband - Red.",
+        "_id": "986105c2-da24-4f6d-a09b-b3738191ad7c"
       }
     ]
   },
@@ -65,13 +71,15 @@
         "location": "Cabinet 1",
         "quantity": 24,
         "donated": true,
-        "note": "Example note for Theraband - Beige."
+        "note": "Example note for Theraband - Beige.",
+        "_id": "0b0851b6-317f-421c-b048-fce953fa3330"
       },
       {
         "location": "Cabinet 2",
         "quantity": 24,
         "donated": true,
-        "note": "Example note for Theraband - Beige."
+        "note": "Example note for Theraband - Beige.",
+        "_id": "5f99c3f5-9b1f-4cfa-8944-24a41030107e"
       }
     ]
   },
@@ -84,13 +92,15 @@
         "location": "Cabinet 1",
         "quantity": 3,
         "donated": false,
-        "note": "Example note for Hot Packs."
+        "note": "Example note for Hot Packs.",
+        "_id": "d5f9ad5b-2277-45ad-9595-9ed9799adae8"
       },
       {
         "location": "Cabinet 2",
         "quantity": 3,
         "donated": true,
-        "note": "Example note for Hot Packs."
+        "note": "Example note for Hot Packs.",
+        "_id": "1bbf481e-afae-430c-90a7-0f8abf66ac03"
       }
     ]
   },
@@ -103,13 +113,15 @@
         "location": "Cabinet 1",
         "quantity": 27,
         "donated": false,
-        "note": "Example note for Cold Packs."
+        "note": "Example note for Cold Packs.",
+        "_id": "2530deaf-1215-4cd1-bbae-c60520472fa7"
       },
       {
         "location": "Cabinet 2",
         "quantity": 27,
         "donated": false,
-        "note": "Example note for Cold Packs."
+        "note": "Example note for Cold Packs.",
+        "_id": "e47a6431-d248-4942-a9ff-6989652c4ef0"
       }
     ]
   },
@@ -120,15 +132,17 @@
     "stock": [
       {
         "location": "Cabinet 1",
-        "quantity": 26,
+        "quantity": 25,
         "donated": false,
-        "note": "Example note for ACE wrap 2\"."
+        "note": "Example note for ACE wrap 2\".",
+        "_id": "4d9238fc-143a-4b65-bb95-69c79392dea3"
       },
       {
         "location": "Cabinet 3",
         "quantity": 26,
         "donated": true,
-        "note": "Example note for ACE wrap 2\"."
+        "note": "Example note for ACE wrap 2\".",
+        "_id": "4de30b71-a76a-477c-a505-e64bfc6104ec"
       }
     ]
   },
@@ -141,13 +155,15 @@
         "location": "Cabinet 1",
         "quantity": 65,
         "donated": false,
-        "note": "Example note for ACE wrap 3\"."
+        "note": "Example note for ACE wrap 3\".",
+        "_id": "566754a7-189e-4400-b495-c64fb6c1fa83"
       },
       {
         "location": "Cabinet 3",
         "quantity": 65,
         "donated": false,
-        "note": "Example note for ACE wrap 3\"."
+        "note": "Example note for ACE wrap 3\".",
+        "_id": "0b282a12-8ec4-42ac-9875-f86f4a7689ef"
       }
     ]
   },
@@ -160,13 +176,15 @@
         "location": "Cabinet 1",
         "quantity": 10,
         "donated": false,
-        "note": "Example note for ACE wrap 4\"."
+        "note": "Example note for ACE wrap 4\".",
+        "_id": "5efb8134-353c-490c-b257-2c524e8f32d5"
       },
       {
         "location": "Cabinet 3",
         "quantity": 10,
         "donated": false,
-        "note": "Example note for ACE wrap 4\"."
+        "note": "Example note for ACE wrap 4\".",
+        "_id": "ac913fa1-11ec-4088-9f26-1d6baef364dc"
       }
     ]
   },
@@ -179,13 +197,15 @@
         "location": "Cabinet 1",
         "quantity": 39,
         "donated": false,
-        "note": "Example note for ACE wrap 6\"."
+        "note": "Example note for ACE wrap 6\".",
+        "_id": "48466c85-59a3-4bca-9439-62820063900d"
       },
       {
         "location": "Cabinet 3",
         "quantity": 39,
         "donated": false,
-        "note": "Example note for ACE wrap 6\"."
+        "note": "Example note for ACE wrap 6\".",
+        "_id": "f4a26860-00dd-4cde-8d95-33338256efd4"
       }
     ]
   },
@@ -198,13 +218,15 @@
         "location": "Cabinet 1",
         "quantity": 51,
         "donated": false,
-        "note": "Example note for Blood Pressure Monitors - Patient."
+        "note": "Example note for Blood Pressure Monitors - Patient.",
+        "_id": "fdaff8b9-62a3-49eb-a7fe-734dfdb77ecf"
       },
       {
         "location": "Back Cabinet",
         "quantity": 51,
         "donated": false,
-        "note": "Example note for Blood Pressure Monitors - Patient."
+        "note": "Example note for Blood Pressure Monitors - Patient.",
+        "_id": "265e9065-1b81-4ea1-8348-38e3e30a76db"
       }
     ]
   },
@@ -217,13 +239,15 @@
         "location": "Cabinet 1",
         "quantity": 37,
         "donated": false,
-        "note": "Example note for Cavicide."
+        "note": "Example note for Cavicide.",
+        "_id": "13a7113e-c26a-41e7-8896-e92ad09079a8"
       },
       {
         "location": "Shower Closet",
         "quantity": 37,
         "donated": false,
-        "note": "Example note for Cavicide."
+        "note": "Example note for Cavicide.",
+        "_id": "e96c816b-66e2-4142-b571-5e38b4454608"
       }
     ]
   },
@@ -236,13 +260,15 @@
         "location": "Cabinet 1",
         "quantity": 16,
         "donated": false,
-        "note": "Example note for Rapid Strep Strips."
+        "note": "Example note for Rapid Strep Strips.",
+        "_id": "a293b066-8722-4612-b828-0d246df74061"
       },
       {
         "location": "Refrigerator Closet",
         "quantity": 16,
         "donated": false,
-        "note": "Example note for Rapid Strep Strips."
+        "note": "Example note for Rapid Strep Strips.",
+        "_id": "2691a43e-79be-4841-8188-0e206ea7e495"
       }
     ]
   },
@@ -255,13 +281,15 @@
         "location": "Cabinet 1",
         "quantity": 48,
         "donated": false,
-        "note": "Example note for Emesis Basin."
+        "note": "Example note for Emesis Basin.",
+        "_id": "3043716d-56e9-4dcc-af06-314f32acfecf"
       },
       {
         "location": "Drawer 9",
         "quantity": 48,
         "donated": false,
-        "note": "Example note for Emesis Basin."
+        "note": "Example note for Emesis Basin.",
+        "_id": "79faf568-6d67-40e3-886b-e778a5c6a0a0"
       }
     ]
   },
@@ -274,13 +302,15 @@
         "location": "Cabinet 1",
         "quantity": 15,
         "donated": false,
-        "note": "Example note for Hand Sanitizer - Large."
+        "note": "Example note for Hand Sanitizer - Large.",
+        "_id": "32addc61-3574-4b16-ac80-00b0fbd3e0f9"
       },
       {
         "location": "Cabinet 3",
         "quantity": 15,
         "donated": false,
-        "note": "Example note for Hand Sanitizer - Large."
+        "note": "Example note for Hand Sanitizer - Large.",
+        "_id": "0adbd63a-5d99-473e-8e4c-fe4a5056b8d0"
       }
     ]
   },
@@ -293,13 +323,15 @@
         "location": "Cabinet 1",
         "quantity": 87,
         "donated": false,
-        "note": "Example note for Hand Sanitizer - Small for Patients."
+        "note": "Example note for Hand Sanitizer - Small for Patients.",
+        "_id": "135cb730-9710-4b14-8d17-d8147c73573f"
       },
       {
         "location": "Cabinet 3",
         "quantity": 87,
         "donated": false,
-        "note": "Example note for Hand Sanitizer - Small for Patients."
+        "note": "Example note for Hand Sanitizer - Small for Patients.",
+        "_id": "0aa3a9d2-d932-43eb-81f8-e59eef180108"
       }
     ]
   },
@@ -312,13 +344,15 @@
         "location": "Cabinet 1",
         "quantity": 50,
         "donated": false,
-        "note": "Example note for Pregnancy Tests."
+        "note": "Example note for Pregnancy Tests.",
+        "_id": "4b181abe-4e25-46fe-9c80-81dfd7172015"
       },
       {
         "location": "Refrigerator",
         "quantity": 50,
         "donated": false,
-        "note": "Example note for Pregnancy Tests."
+        "note": "Example note for Pregnancy Tests.",
+        "_id": "758528da-3230-4f10-a762-2bcb455f7a9a"
       }
     ]
   },
@@ -331,13 +365,15 @@
         "location": "Cabinet 1",
         "quantity": 27,
         "donated": false,
-        "note": "Example note for Urine Dip Sticks."
+        "note": "Example note for Urine Dip Sticks.",
+        "_id": "8a242169-e653-4fe9-9c30-83712da1a07e"
       },
       {
         "location": "Cabinet 3",
         "quantity": 27,
         "donated": true,
-        "note": "Example note for Urine Dip Sticks."
+        "note": "Example note for Urine Dip Sticks.",
+        "_id": "3625d7bc-5e86-4c7f-82d8-de43225e7e72"
       }
     ]
   },
@@ -350,13 +386,15 @@
         "location": "Cabinet 1",
         "quantity": 6,
         "donated": false,
-        "note": "Example note for Sensi Wrap 2\"."
+        "note": "Example note for Sensi Wrap 2\".",
+        "_id": "490d501d-b89f-4812-9cd1-a8ab8ab47ab6"
       },
       {
         "location": "Drawer 6",
         "quantity": 6,
         "donated": false,
-        "note": "Example note for Sensi Wrap 2\"."
+        "note": "Example note for Sensi Wrap 2\".",
+        "_id": "51b97777-aab7-43c4-be1b-ac8c2fc874bf"
       }
     ]
   },
@@ -369,13 +407,15 @@
         "location": "Cabinet 1",
         "quantity": 8,
         "donated": false,
-        "note": "Example note for UnaBoot."
+        "note": "Example note for UnaBoot.",
+        "_id": "8fbbbc45-c3d9-4c89-9a1d-57f79d3f8f49"
       },
       {
         "location": "Cabinet 3",
         "quantity": 8,
         "donated": false,
-        "note": "Example note for UnaBoot."
+        "note": "Example note for UnaBoot.",
+        "_id": "730b52cf-f9d5-47eb-a1d8-fcc176df9ec3"
       }
     ]
   },
@@ -388,13 +428,15 @@
         "location": "Cabinet 1",
         "quantity": 3,
         "donated": false,
-        "note": "Example note for Thermometers - Patient Supplies."
+        "note": "Example note for Thermometers - Patient Supplies.",
+        "_id": "649691cb-288a-421c-aa28-9cdaf9029923"
       },
       {
         "location": "Case 4",
         "quantity": 3,
         "donated": true,
-        "note": "Example note for Thermometers - Patient Supplies."
+        "note": "Example note for Thermometers - Patient Supplies.",
+        "_id": "d51e2681-35bb-4fb8-aa59-ec818642dee1"
       }
     ]
   },
@@ -407,13 +449,15 @@
         "location": "Cabinet 1",
         "quantity": 7,
         "donated": false,
-        "note": "Example note for Thermometer Sheaths."
+        "note": "Example note for Thermometer Sheaths.",
+        "_id": "5ad76458-b19a-48c2-924d-d3c62e89487d"
       },
       {
         "location": "Case 4",
         "quantity": 7,
         "donated": false,
-        "note": "Example note for Thermometer Sheaths."
+        "note": "Example note for Thermometer Sheaths.",
+        "_id": "0014376b-6f12-4b37-aa8f-7ab3cc1d3f1b"
       }
     ]
   }

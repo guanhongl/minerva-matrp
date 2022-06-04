@@ -20,6 +20,7 @@ class VaccinationCollection extends BaseCollection {
       visDate: String, // the latest vaccine information statement date
       lotIds: Array,
       'lotIds.$': Object,
+      'lotIds.$._id': String,
       'lotIds.$.lotId': String,
       'lotIds.$.expire': { // date string "YYYY-MM-DD"
         type: String,
@@ -74,6 +75,7 @@ class VaccinationCollection extends BaseCollection {
     addString('visDate');
     if (data.lotIds && data.lotIds.every(lotId => (
       _.isObject(lotId) &&
+      lotId._id &&
       lotId.lotId &&
       _.isNumber(lotId.quantity) &&
       lotId.location

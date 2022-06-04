@@ -26,6 +26,7 @@ class SupplyCollection extends BaseCollection {
       },
       stock: Array,
       'stock.$': Object,
+      'stock.$._id': String,
       'stock.$.quantity': Number,
       'stock.$.location': String,
       'stock.$.donated': Boolean,
@@ -79,6 +80,7 @@ class SupplyCollection extends BaseCollection {
     addNumber('minQuantity');
     if (data.stock && data.stock.every(elem => (
       _.isObject(elem) &&
+      elem._id &&
       _.isNumber(elem.quantity) &&
       elem.location &&
       _.isBoolean(elem.donated)

@@ -9,15 +9,17 @@
         "lotId": "MEUa19",
         "expire": "2023-03-21",
         "location": "Refrigerator",
-        "quantity": 65,
-        "note": "Example note for Barr Labs Inc. Adenovirus."
+        "quantity": 128,
+        "note": "Example note for Barr Labs Inc. Adenovirus.",
+        "_id": "375c0f89-62e2-4342-8b01-e4f8e252386f"
       },
       {
         "lotId": "We9ERy",
         "expire": "2022-08-25",
         "location": "Refrigerator",
         "quantity": 65,
-        "note": "Example note for Barr Labs Inc. Adenovirus."
+        "note": "Example note for Barr Labs Inc. Adenovirus.",
+        "_id": "9cbae67c-e159-450b-a95c-1da93aeb6619"
       }
     ]
   },
@@ -32,14 +34,16 @@
         "expire": "2023-07-22",
         "location": "Refrigerator",
         "quantity": 11,
-        "note": "Example note for Emergent Anthrax."
+        "note": "Example note for Emergent Anthrax.",
+        "_id": "57f6f38c-7d3e-4985-a267-a9d03031c986"
       },
       {
         "lotId": "RNLipN",
         "expire": "2023-02-03",
         "location": "Refrigerator",
         "quantity": 11,
-        "note": "Example note for Emergent Anthrax."
+        "note": "Example note for Emergent Anthrax.",
+        "_id": "53b65a4b-8421-4292-8cd1-76c2b3e5da9a"
       }
     ]
   },
@@ -54,14 +58,16 @@
         "expire": "2024-07-31",
         "location": "Refrigerator",
         "quantity": 9,
-        "note": "Example note for BioSolutions Anthrax."
+        "note": "Example note for BioSolutions Anthrax.",
+        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
       },
       {
         "lotId": "U8pt40",
         "expire": "2025-03-17",
         "location": "Refrigerator",
         "quantity": 9,
-        "note": "Example note for BioSolutions Anthrax."
+        "note": "Example note for BioSolutions Anthrax.",
+        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
       }
     ]
   },
@@ -76,14 +82,16 @@
         "expire": "2024-04-20",
         "location": "Refrigerator",
         "quantity": 3,
-        "note": "Example note for PaxVax Cholera."
+        "note": "Example note for PaxVax Cholera.",
+        "_id": "14ddb2fa-6b9e-46b9-ae53-21cc892f6b7d"
       },
       {
         "lotId": "Sb1zCP",
         "expire": "2022-08-29",
         "location": "Refrigerator",
         "quantity": 3,
-        "note": "Example note for PaxVax Cholera."
+        "note": "Example note for PaxVax Cholera.",
+        "_id": "266e82b0-3a81-4a16-ba6e-763487e7c061"
       }
     ]
   },
@@ -98,14 +106,16 @@
         "expire": "2022-08-10",
         "location": "Refrigerator",
         "quantity": 10,
-        "note": "Example note for sanofi DTaP."
+        "note": "Example note for sanofi DTaP.",
+        "_id": "e3162cc9-33c4-4d62-8458-3b4f9915a170"
       },
       {
         "lotId": "w5tYJx",
         "expire": "2022-08-29",
         "location": "Refrigerator",
         "quantity": 10,
-        "note": "Example note for sanofi DTaP."
+        "note": "Example note for sanofi DTaP.",
+        "_id": "a0a63763-13c1-4219-852b-be8887c1e758"
       }
     ]
   },
@@ -120,14 +130,16 @@
         "expire": "2023-09-29",
         "location": "Refrigerator",
         "quantity": 17,
-        "note": "Example note for GlaxoSmithKline DTaP."
+        "note": "Example note for GlaxoSmithKline DTaP.",
+        "_id": "c7dcf997-74ad-4946-bc73-4e21ccb16e42"
       },
       {
         "lotId": "JyjrNj",
         "expire": "2023-06-05",
         "location": "Refrigerator",
         "quantity": 17,
-        "note": "Example note for GlaxoSmithKline DTaP."
+        "note": "Example note for GlaxoSmithKline DTaP.",
+        "_id": "fdd45a19-76f1-45b3-8a82-bde91004ecf3"
       }
     ]
   },
@@ -142,14 +154,16 @@
         "expire": "2022-06-01",
         "location": "Refrigerator",
         "quantity": 39,
-        "note": "Example note for sanofi DT."
+        "note": "Example note for sanofi DT.",
+        "_id": "01898cd5-6b4a-44c8-8c36-566efde1f8e8"
       },
       {
         "lotId": "uwaS7O",
         "expire": "2023-06-01",
         "location": "Refrigerator",
         "quantity": 39,
-        "note": "Example note for sanofi DT."
+        "note": "Example note for sanofi DT.",
+        "_id": "43699d17-5da4-449f-a7d5-7f24004e6f9b"
       }
     ]
   },
@@ -164,14 +178,16 @@
         "expire": "2025-03-04",
         "location": "Refrigerator",
         "quantity": 29,
-        "note": "Example note for sanofi Hib."
+        "note": "Example note for sanofi Hib.",
+        "_id": "bc1fd220-be51-40b7-8db7-bd7920365507"
       },
       {
         "lotId": "pxNNoH",
         "expire": "2022-11-16",
         "location": "Refrigerator",
         "quantity": 29,
-        "note": "Example note for sanofi Hib."
+        "note": "Example note for sanofi Hib.",
+        "_id": "51adb25a-433d-46ec-a595-bbfd32911d6b"
       }
     ]
   },
@@ -186,14 +202,16 @@
         "expire": "2023-07-09",
         "location": "Refrigerator",
         "quantity": 31,
-        "note": "Example note for GlaxoSmithKline Hib."
+        "note": "Example note for GlaxoSmithKline Hib.",
+        "_id": "aed6f851-bffe-4eec-9d77-ba497e7684ca"
       },
       {
         "lotId": "mCMXnt",
         "expire": "2023-09-25",
         "location": "Refrigerator",
         "quantity": 31,
-        "note": "Example note for GlaxoSmithKline Hib."
+        "note": "Example note for GlaxoSmithKline Hib.",
+        "_id": "f1064b83-9a0d-4419-9413-dbf5b5734160"
       }
     ]
   },
@@ -208,14 +226,16 @@
         "expire": "2022-09-01",
         "location": "Refrigerator",
         "quantity": 4,
-        "note": "Example note for Merck Hib."
+        "note": "Example note for Merck Hib.",
+        "_id": "5e1b3a88-d3ec-462d-a3fb-119f8e127c55"
       },
       {
         "lotId": "TkehZo",
         "expire": "2022-06-05",
         "location": "Refrigerator",
         "quantity": 4,
-        "note": "Example note for Merck Hib."
+        "note": "Example note for Merck Hib.",
+        "_id": "029474d8-c025-48b3-a4ea-58580022e87b"
       }
     ]
   },
@@ -230,14 +250,16 @@
         "expire": "2023-06-24",
         "location": "Refrigerator",
         "quantity": 6,
-        "note": "Example note for GlaxoSmithKline Hepatitis A."
+        "note": "Example note for GlaxoSmithKline Hepatitis A.",
+        "_id": "ebaf309e-a6d6-4918-a3c9-a1e87e78d363"
       },
       {
         "lotId": "nyHez1",
         "expire": "2024-11-25",
         "location": "Refrigerator",
         "quantity": 6,
-        "note": "Example note for GlaxoSmithKline Hepatitis A."
+        "note": "Example note for GlaxoSmithKline Hepatitis A.",
+        "_id": "a01b9336-1b22-4d2d-9f71-f6a8da8dd589"
       }
     ]
   },
@@ -252,14 +274,16 @@
         "expire": "2022-04-02",
         "location": "Refrigerator",
         "quantity": 26,
-        "note": "Example note for Merck Hepatitis A."
+        "note": "Example note for Merck Hepatitis A.",
+        "_id": "b84f7d85-cc21-43bf-a161-56061123bcbb"
       },
       {
         "lotId": "zKuc2W",
         "expire": "2024-06-09",
         "location": "Refrigerator",
         "quantity": 26,
-        "note": "Example note for Merck Hepatitis A."
+        "note": "Example note for Merck Hepatitis A.",
+        "_id": "5974eebf-9953-43d6-b2c6-21d3bb983783"
       }
     ]
   },
@@ -274,14 +298,16 @@
         "expire": "2024-07-21",
         "location": "Refrigerator",
         "quantity": 86,
-        "note": "Example note for GlaxoSmithKline Hepatitis B."
+        "note": "Example note for GlaxoSmithKline Hepatitis B.",
+        "_id": "65377995-6d8c-4e13-8ca6-7193cd299464"
       },
       {
         "lotId": "InwJ9q",
         "expire": "2022-06-25",
         "location": "Refrigerator",
         "quantity": 86,
-        "note": "Example note for GlaxoSmithKline Hepatitis B."
+        "note": "Example note for GlaxoSmithKline Hepatitis B.",
+        "_id": "80fb501a-f460-466c-9cc8-1cab51ca9a91"
       }
     ]
   },
@@ -296,14 +322,16 @@
         "expire": "2023-09-06",
         "location": "Refrigerator",
         "quantity": 19,
-        "note": "Example note for Merck Hepatitis B."
+        "note": "Example note for Merck Hepatitis B.",
+        "_id": "199cfc6e-3110-4663-9847-281749d2ecdb"
       },
       {
         "lotId": "UZ8IPr",
         "expire": "2025-08-05",
         "location": "Refrigerator",
         "quantity": 19,
-        "note": "Example note for Merck Hepatitis B."
+        "note": "Example note for Merck Hepatitis B.",
+        "_id": "70260638-a9f6-4375-a5ab-aaa894afacfc"
       }
     ]
   },
@@ -318,14 +346,16 @@
         "expire": "2024-01-18",
         "location": "Refrigerator",
         "quantity": 37,
-        "note": "Example note for Dynavax Technologies Hepatitis B."
+        "note": "Example note for Dynavax Technologies Hepatitis B.",
+        "_id": "b0ac5723-829f-4842-969b-25e7ffd1bdef"
       },
       {
         "lotId": "sIji1Q",
         "expire": "2022-02-15",
         "location": "Refrigerator",
         "quantity": 37,
-        "note": "Example note for Dynavax Technologies Hepatitis B."
+        "note": "Example note for Dynavax Technologies Hepatitis B.",
+        "_id": "57be0564-e607-415d-bbc8-e172599d54cc"
       }
     ]
   },
@@ -340,14 +370,16 @@
         "expire": "2024-11-02",
         "location": "Refrigerator",
         "quantity": 37,
-        "note": "Example note for GlaxoSmithKline Shingles."
+        "note": "Example note for GlaxoSmithKline Shingles.",
+        "_id": "de5c4647-0c44-4640-ba81-3dbedaa07499"
       },
       {
         "lotId": "Y6moOS",
         "expire": "2023-12-07",
         "location": "Refrigerator",
         "quantity": 37,
-        "note": "Example note for GlaxoSmithKline Shingles."
+        "note": "Example note for GlaxoSmithKline Shingles.",
+        "_id": "8e241e8e-41aa-40e2-9bad-7081c1fadc84"
       }
     ]
   },
@@ -362,14 +394,16 @@
         "expire": "2023-03-03",
         "location": "Refrigerator",
         "quantity": 18,
-        "note": "Example note for Merck HPV."
+        "note": "Example note for Merck HPV.",
+        "_id": "1c767781-2580-4ff3-9fb9-463c87e12a2b"
       },
       {
         "lotId": "RyqpEZ",
         "expire": "2022-12-18",
         "location": "Refrigerator",
         "quantity": 18,
-        "note": "Example note for Merck HPV."
+        "note": "Example note for Merck HPV.",
+        "_id": "f6cc0ed9-352b-4800-9368-69964708af41"
       }
     ]
   },
@@ -384,14 +418,16 @@
         "expire": "2023-05-29",
         "location": "Refrigerator",
         "quantity": 7,
-        "note": "Example note for Seqirus Influenza."
+        "note": "Example note for Seqirus Influenza.",
+        "_id": "7b5ecacf-2afe-4a00-b9ef-568623482132"
       },
       {
         "lotId": "PdpK3o",
         "expire": "2024-05-22",
         "location": "Refrigerator",
         "quantity": 7,
-        "note": "Example note for Seqirus Influenza."
+        "note": "Example note for Seqirus Influenza.",
+        "_id": "c8a96516-54ac-4623-8c07-9aa9d34311cf"
       }
     ]
   },
@@ -406,14 +442,16 @@
         "expire": "2025-09-13",
         "location": "Refrigerator",
         "quantity": 0,
-        "note": "Example note for GlaxoSmithKline Influenza."
+        "note": "Example note for GlaxoSmithKline Influenza.",
+        "_id": "2eb300df-5cc2-4545-922c-7a766c989f70"
       },
       {
         "lotId": "9hLgdy",
         "expire": "2022-07-30",
         "location": "Refrigerator",
         "quantity": 0,
-        "note": "Example note for GlaxoSmithKline Influenza."
+        "note": "Example note for GlaxoSmithKline Influenza.",
+        "_id": "d5485180-f027-49b6-9063-aa574cf74dd9"
       }
     ]
   },
@@ -428,14 +466,16 @@
         "expire": "2021-12-06",
         "location": "Refrigerator",
         "quantity": 73,
-        "note": "Example note for sanofi Influenza."
+        "note": "Example note for sanofi Influenza.",
+        "_id": "364ac407-0476-4798-ba30-98e0373237e2"
       },
       {
         "lotId": "wPe0lc",
         "expire": "2025-01-15",
         "location": "Refrigerator",
         "quantity": 73,
-        "note": "Example note for sanofi Influenza."
+        "note": "Example note for sanofi Influenza.",
+        "_id": "3f89bb3c-8c8f-4dc2-bb16-9fa61611f0a2"
       }
     ]
   },
@@ -450,14 +490,16 @@
         "expire": "2023-01-01",
         "location": "Refrigerator",
         "quantity": 73,
-        "note": "Example note for Medimmune Influenza."
+        "note": "Example note for Medimmune Influenza.",
+        "_id": "ae82dc96-a936-4888-a844-28cf42e2cad7"
       },
       {
         "lotId": "KWHE0D",
         "expire": "2023-04-19",
         "location": "Refrigerator",
         "quantity": 73,
-        "note": "Example note for Medimmune Influenza."
+        "note": "Example note for Medimmune Influenza.",
+        "_id": "393c0b86-4cee-458a-97b4-3751a0904e4f"
       }
     ]
   }
