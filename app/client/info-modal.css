@@ -1,6 +1,7 @@
 .info-modal span.header {
     display: inline-block;
     width: 200px;
+    vertical-align: top;
 }
 
 .info-modal textarea {
@@ -28,5 +29,5 @@
 }
 
 .info-modal table td div {
-    margin-bottom: 4px;
+    margin-bottom: 1px;
 }

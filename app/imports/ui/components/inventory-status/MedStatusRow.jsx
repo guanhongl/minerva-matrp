@@ -5,6 +5,8 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import MedInfoPage from './MedInfoPage';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import { Medications } from '../../../api/medication/MedicationCollection';
+import { removeItMethod } from '../../../api/base/BaseCollection.methods';
 
 const MedStatusRow = ({ med, drugTypes, locations, units }) => {
   const [expand, setExpand] = useState(false);
@@ -46,6 +48,28 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
     return color;
   };
 
+  const deleteDrug = () => {
+    swal({
+      title: 'Are you sure?',
+      text: `Do you really want to delete ${med.drug}?`,
+      icon: 'warning',
+      buttons: [
+        'No, cancel it!',
+        'Yes, I am sure!',
+      ],
+      dangerMode: true,
+    })
+      .then((isConfirm) => {
+        // if 'yes'
+        if (isConfirm) {
+          const collectionName = Medications.getCollectionName();
+          removeItMethod.callPromise({ collectionName, instance: med._id })
+            .then(() => swal('Success', `${med.drug} deleted successfully`, 'success', { buttons: false, timer: 3000 }))
+            .catch(error => swal('Error', error.message, 'error'));
+        }
+      });
+  };
+
   return (
     <>
       {/* the drug row */}
@@ -63,11 +87,14 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
             <span>{status}%</span>
           </>
         </Table.Cell>
+        <Table.Cell>
+          <Icon name='trash alternate' onClick={deleteDrug} />
+        </Table.Cell>
       </Table.Row>
 
       {/* the lotId row */}
       <Table.Row style={{ display: expand ? 'table-row' : 'none' }}>
-        <Table.Cell colSpan={6} className='lot-row'>
+        <Table.Cell colSpan={7} className='lot-row'>
           <Table color='blue' unstackable>
             <Table.Header>
               <Table.Row>

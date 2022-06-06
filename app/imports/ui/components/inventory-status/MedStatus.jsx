@@ -175,6 +175,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
               <Table.HeaderCell>Total Quantity</Table.HeaderCell>
               <Table.HeaderCell>Unit</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -187,7 +188,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
 
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan="6">
+              <Table.HeaderCell colSpan="7">
                 { mobile === false &&
                     <div>
                       <Pagination

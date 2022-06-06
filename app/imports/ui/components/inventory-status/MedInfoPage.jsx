@@ -60,7 +60,7 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
     target.note = fields.newNote;
     const updateData = { id: _id, drug: fields.newDrug, drugType: fields.newDrugType, minQuantity: fields.newMinQuantity, unit: fields.newUnit, lotIds };
     updateMethod.callPromise({ collectionName, updateData })
-      .then(() => swal('Success', 'Note updated successfully', 'success', { buttons: false, timer: 3000 }))
+      .then(() => swal('Success', 'Drug updated successfully', 'success', { buttons: false, timer: 3000 }))
       .catch(error => swal('Error', error.message, 'error'));
   };
 
@@ -79,9 +79,9 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
         // if 'yes'
         if (isConfirm) {
           const collectionName = Medications.getCollectionName();
-          const exists = Medications.findOne({ drug });
+          const exists = Medications.findOne({ _id });
           const { lotIds } = exists;
-          const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId));
+          const targetIndex = lotIds.findIndex((obj => obj._id === uuid));
           lotIds.splice(targetIndex, 1);
           const updateData = { id: _id, lotIds };
           updateMethod.callPromise({ collectionName, updateData })
