@@ -1,27 +1,57 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Input, Checkbox, TextArea, Select } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Medications } from '../../../api/medication/MedicationCollection';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
-import { printQRCode } from '../../utilities/Functions';
+import { printQRCode, getOptions } from '../../utilities/Functions';
 
-const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, detail: { lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode } }) => {
+const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, 
+                       detail: { _id: uuid, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode },
+                       drugTypes, locations, units }) => {
   const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  // useState for note field when editing notes.
-  const [newNote, setNewNote] = useState(note);
+  // form fields
+  const [fields, setFields] = useState({
+    newDrug: drug,
+    newDrugType: drugType,
+    newMinQuantity: minQuantity,
+    newUnit: unit,
+    newLotId: lotId,
+    newBrand: brand,
+    newExpire: expire,
+    newLocation: location,
+    newQuantity: quantity,
+    newDonated: donated,
+    newDonatedBy: donatedBy,
+    newNote: note,
+  });
+
+  const handleChange = (event, { name, value, checked }) => {
+    setFields({ ...fields, [name]: value ?? checked });
+  };
 
   // TODO fix bug where submit re-renders
   const submit = () => {
+    fields.newMinQuantity = parseInt(fields.newMinQuantity, 10);
+    fields.newQuantity = parseInt(fields.newQuantity, 10);
+
     const collectionName = Medications.getCollectionName();
-    const exists = Medications.findOne({ drug });
+    const exists = Medications.findOne({ _id });
     const { lotIds } = exists;
-    const target = lotIds.find(obj => obj.lotId === lotId);
-    target.note = newNote;
-    const updateData = { id: _id, lotIds };
+    const target = lotIds.find(obj => obj._id === uuid);
+    target.lotId = fields.newLotId;
+    target.brand = fields.newBrand;
+    target.expire = fields.newExpire;
+    target.location = fields.newLocation;
+    target.quantity = fields.newQuantity;
+    target.donated = fields.newDonated;
+    target.donatedBy = fields.newDonated ? fields.newDonatedBy : '';
+    target.note = fields.newNote;
+    const updateData = { id: _id, drug: fields.newDrug, drugType: fields.newDrugType, minQuantity: fields.newMinQuantity, unit: fields.newUnit, lotIds };
     updateMethod.callPromise({ collectionName, updateData })
       .then(() => swal('Success', 'Note updated successfully', 'success', { buttons: false, timer: 3000 }))
       .catch(error => swal('Error', error.message, 'error'));
@@ -56,6 +86,7 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, detail:
 
   return (
     <Modal
+      closeIcon
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
@@ -73,19 +104,23 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, detail:
               <td>
                 <div>
                   <span className='header'>Drug:</span>
-                  {drug}
+                  {/* {drug} */}
+                  <Input name='newDrug' value={fields.newDrug} onChange={handleChange} />
                 </div>
                 <div>
                   <span className='header'>Drug Type(s):</span>
-                  {drugType.join(', ')}
+                  {/* {drugType.join(', ')} */}
+                  <Select name='newDrugType' value={fields.newDrugType} options={getOptions(drugTypes)} multiple onChange={handleChange} />
                 </div>
                 <div>
                   <span className='header'>Minimum Quantity:</span>
-                  {minQuantity}
+                  {/* {minQuantity} */}
+                  <Input name='newMinQuantity' value={fields.newMinQuantity} type='number' min={1} onChange={handleChange} />
                 </div>
                 <div>
                   <span className='header'>Unit:</span>
-                  {unit}
+                  {/* {unit} */}
+                  <Select name='newUnit' value={fields.newUnit} options={getOptions(units)} onChange={handleChange} />
                 </div>
               </td>
             </tr>
@@ -94,36 +129,40 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, detail:
               <td>
                 <div>
                   <span className='header'>Lot Number:</span>
-                  {lotId}
+                  {/* {lotId} */}
+                  <Input name='newLotId' value={fields.newLotId} onChange={handleChange} />
                 </div>
                 <div>
                   <span className='header'>Brand:</span>
-                  {brand}
+                  {/* {brand} */}
+                  <Input name='newBrand' value={fields.newBrand} onChange={handleChange} />
                 </div>
-                {
-                  expire &&
-                  <div>
-                    <span className='header'>Expiration Date:</span>
-                    {moment(expire).format('LL')}
-                  </div>
-                }
+                <div>
+                  <span className='header'>Expiration Date:</span>
+                  {/* {moment(expire).format('LL')} */}
+                  <Input name='newExpire' value={fields.newExpire} type='date' onChange={handleChange} />
+                </div>
                 <div>
                   <span className='header'>Location:</span>
-                  {location}
+                  {/* {location} */}
+                  <Select name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
                 </div>
                 <div>
                   <span className='header'>Quantity:</span>
-                  {quantity}
+                  {/* {quantity} */}
+                  <Input name='newQuantity' value={fields.newQuantity} type='number' min={1} onChange={handleChange} />
                 </div>
                 <div>
                   <span className='header'>Donated:</span>
-                  {donated ? 'Yes' : 'No'}
+                  {/* {donated ? 'Yes' : 'No'} */}
+                  <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
                 </div>
                 {
-                  donated &&
+                  fields.newDonated &&
                   <div>
                     <span className='header'>Donated By:</span>
-                    {donatedBy}
+                    {/* {donatedBy} */}
+                    <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
                   </div>
                 }
               </td>
@@ -131,41 +170,50 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, detail:
             <tr>
               <td>Note</td>
               <td>
-                <Form.TextArea rows={3} value={newNote} onChange={(event, { value }) => setNewNote(value)} />
+                <TextArea rows={3} name='newNote' value={fields.newNote} onChange={handleChange} />
               </td>
             </tr>
           </tbody>
         </table>
       </Modal.Content>
       <Modal.Actions>
-        <Button
-          // id={COMPONENT_IDS.DRUG_EDIT}
-          content="Save Changes"
-          labelPosition='right'
-          icon='check'
-          onClick={() => submit()}
-          color='linkedin'
-        />
         {
           QRCode &&
           <Button
-            content="Print QR Code"
-            labelPosition='right'
+            circular
+            // content="Print QR Code"
+            // labelPosition='right'
             icon='qrcode'
             onClick={() => printQRCode(QRCode)}
-            color='teal'
+            color='black'
           />
         }
         <Button
-          content="Delete"
-          labelPosition='right'
+          circular
+          icon={edit ? 'ban' : 'pencil'}
+          color='linkedin'
+          onClick={() => setEdit(!edit)}
+        />
+        <Button
+          // id={COMPONENT_IDS.DRUG_EDIT}
+          circular
+          // content="Save Changes"
+          // labelPosition='right'
+          icon='check'
+          onClick={() => submit()}
+          color='green'
+        />
+        <Button
+          circular
+          // content="Delete"
+          // labelPosition='right'
           icon='trash alternate'
           color='red'
           onClick={() => deleteOption()}
         />
-        <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DRUG_CLOSE}>
+        {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DRUG_CLOSE}>
           Close
-        </Button>
+        </Button> */}
       </Modal.Actions>
     </Modal>
   );

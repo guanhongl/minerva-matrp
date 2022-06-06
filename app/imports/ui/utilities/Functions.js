@@ -25,6 +25,7 @@ import { _ } from 'meteor/underscore';
 //   );
 // }
 
+// TODO: fix
 export function distinct(field, collection, selector = {}) {
   const fields = _.pluck(
     collection.find(selector, { sort: { [field]: 1 }, fields: { [field]: 1 } }).fetch(),

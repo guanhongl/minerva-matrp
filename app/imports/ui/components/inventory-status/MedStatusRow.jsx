@@ -2,23 +2,32 @@ import React, { useState } from 'react';
 import { Icon, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
 import MedInfoPage from './MedInfoPage';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 
-const MedStatusRow = ({ med }) => {
+const MedStatusRow = ({ med, drugTypes, locations, units }) => {
   const [expand, setExpand] = useState(false);
   
   const handleOpen = () => setExpand(!expand);
 
-  const currentDate = new Date();
-  const expirations = med.lotIds.map(({ expire }) => (expire && expire.split('-')));
-  const expiredDates = expirations.map((expiration) => {
-    const expiredDate = new Date();
-    return expiration ?
-      expiredDate.setFullYear(parseInt(expiration[0], 10), parseInt(expiration[1], 10) - 1, parseInt(expiration[2], 10))
-      : expiredDate;
+  // const currentDate = new Date();
+  // const expirations = med.lotIds.map(({ expire }) => (expire && expire.split('-')));
+  // const expiredDates = expirations.map((expiration) => {
+  //   const expiredDate = new Date();
+  //   return expiration ?
+  //     expiredDate.setFullYear(parseInt(expiration[0], 10), parseInt(expiration[1], 10) - 1, parseInt(expiration[2], 10))
+  //     : expiredDate;
+  // });
+  // const isExpired = expiredDates.map((expiredDate) => expiredDate < currentDate);
+
+  const currentDate = moment();
+  const isExpired = med.lotIds.map(({ expire }) => {
+    if (expire) {
+      return currentDate > moment(expire);
+    }
+    return false;
   });
-  const isExpired = expiredDates.map((expiredDate) => expiredDate < currentDate);
 
   const totalQuantity = med.lotIds.length ?
     _.pluck(med.lotIds, 'quantity')
@@ -89,7 +98,7 @@ const MedStatusRow = ({ med }) => {
                     <Table.Cell>
                       {/* <Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DRUG_PAGE_BUTTON}
                         onClick={() => setOpen(true)} /> */}
-                      <MedInfoPage info={med} detail={med.lotIds[index]} />
+                      <MedInfoPage info={med} detail={med.lotIds[index]} drugTypes={drugTypes} locations={locations} units={units} />
                     </Table.Cell>
                   </Table.Row>
                 ))

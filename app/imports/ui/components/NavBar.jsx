@@ -15,17 +15,17 @@ const NavBar = ({ currentUser }) => {
   const [mobile, setMobile] = useState(false);
 
   // TODO: fix event listener
-  const handleMobile = () => {
-    if (window.innerWidth < 720) {
-      setMobile(true);
-    } else {
-      setMobile(true);
-    }
-  };
+  // const handleMobile = () => {
+  //   if (window.innerWidth < 720) {
+  //     setMobile(true);
+  //   } else {
+  //     setMobile(true);
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener('resize', handleMobile);
-  });
+  // useEffect(() => {
+  //   window.addEventListener('resize', handleMobile);
+  // });
 
   if (mobile) {
     return (

@@ -3,7 +3,7 @@ import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { Medications } from '../../../api/medication/MedicationCollection';
+import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
@@ -181,7 +181,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
           <Table.Body>
             {
               filteredMedications.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(med => <MedStatusRow key={med._id} med={med}/>)
+                .map(med => <MedStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={allowedUnits} />)
             }
           </Table.Body>
 
