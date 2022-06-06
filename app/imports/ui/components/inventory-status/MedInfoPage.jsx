@@ -15,7 +15,7 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
   const [edit, setEdit] = useState(false);
 
   // form fields
-  const [fields, setFields] = useState({
+  const initialState = {
     newDrug: drug,
     newDrugType: drugType,
     newMinQuantity: minQuantity,
@@ -28,7 +28,14 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
     newDonated: donated,
     newDonatedBy: donatedBy,
     newNote: note,
-  });
+  };
+
+  const [fields, setFields] = useState(initialState);
+
+  const handleEdit = () => {
+    setEdit(!edit);
+    setFields(initialState);
+  }
 
   const handleChange = (event, { name, value, checked }) => {
     setFields({ ...fields, [name]: value ?? checked });
@@ -104,23 +111,39 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
               <td>
                 <div>
                   <span className='header'>Drug:</span>
-                  {/* {drug} */}
-                  <Input name='newDrug' value={fields.newDrug} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Input name='newDrug' value={fields.newDrug} onChange={handleChange} />
+                      :
+                      <>{drug}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Drug Type(s):</span>
-                  {/* {drugType.join(', ')} */}
-                  <Select name='newDrugType' value={fields.newDrugType} options={getOptions(drugTypes)} multiple onChange={handleChange} />
+                  {
+                    edit ?
+                      <Select name='newDrugType' value={fields.newDrugType} options={getOptions(drugTypes)} multiple onChange={handleChange} />
+                      :
+                      <>{drugType.join(', ')}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Minimum Quantity:</span>
-                  {/* {minQuantity} */}
-                  <Input name='newMinQuantity' value={fields.newMinQuantity} type='number' min={1} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Input name='newMinQuantity' value={fields.newMinQuantity} type='number' min={1} onChange={handleChange} />
+                      :
+                      <>{minQuantity}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Unit:</span>
-                  {/* {unit} */}
-                  <Select name='newUnit' value={fields.newUnit} options={getOptions(units)} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Select name='newUnit' value={fields.newUnit} options={getOptions(units)} onChange={handleChange} />
+                      :
+                      <>{unit}</>
+                  }
                 </div>
               </td>
             </tr>
@@ -129,40 +152,68 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
               <td>
                 <div>
                   <span className='header'>Lot Number:</span>
-                  {/* {lotId} */}
-                  <Input name='newLotId' value={fields.newLotId} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Input name='newLotId' value={fields.newLotId} onChange={handleChange} />
+                      :
+                      <>{lotId}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Brand:</span>
-                  {/* {brand} */}
-                  <Input name='newBrand' value={fields.newBrand} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Input name='newBrand' value={fields.newBrand} onChange={handleChange} />
+                      :
+                      <>{brand}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Expiration Date:</span>
-                  {/* {moment(expire).format('LL')} */}
-                  <Input name='newExpire' value={fields.newExpire} type='date' onChange={handleChange} />
+                  {
+                    edit ?
+                      <Input name='newExpire' value={fields.newExpire} type='date' onChange={handleChange} />
+                      :
+                      <>{expire ? moment(expire).format('LL') : 'N/A'}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Location:</span>
-                  {/* {location} */}
-                  <Select name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Select name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
+                      :
+                      <>{location}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Quantity:</span>
-                  {/* {quantity} */}
-                  <Input name='newQuantity' value={fields.newQuantity} type='number' min={1} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Input name='newQuantity' value={fields.newQuantity} type='number' min={1} onChange={handleChange} />
+                      :
+                      <>{quantity}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Donated:</span>
-                  {/* {donated ? 'Yes' : 'No'} */}
-                  <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
+                  {
+                    edit ?
+                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
+                      :
+                      <>{donated ? 'Yes' : 'No'}</>
+                  }
                 </div>
                 {
                   fields.newDonated &&
                   <div>
                     <span className='header'>Donated By:</span>
-                    {/* {donatedBy} */}
-                    <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
+                    {
+                      edit ?
+                        <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
+                        :
+                        <>{donatedBy}</>
+                    }
                   </div>
                 }
               </td>
@@ -192,7 +243,7 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
           circular
           icon={edit ? 'ban' : 'pencil'}
           color='linkedin'
-          onClick={() => setEdit(!edit)}
+          onClick={handleEdit}
         />
         <Button
           // id={COMPONENT_IDS.DRUG_EDIT}
