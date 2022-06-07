@@ -157,19 +157,20 @@ const VaccineStatus = ({ ready, vaccines, locations, brands }) => {
               <Table.HeaderCell>Total Quantity</Table.HeaderCell>
               <Table.HeaderCell>VIS Date</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
             {
               filteredVaccines.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine}/>)
+                .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine} locations={locations} />)
             }
           </Table.Body>
 
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan="6">
+              <Table.HeaderCell colSpan="7">
                 <Pagination
                   totalPages={Math.ceil(filteredVaccines.length / maxRecords)}
                   activePage={pageNo}
