@@ -6,22 +6,12 @@ import moment from 'moment';
 import MedInfoPage from './MedInfoPage';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Medications } from '../../../api/medication/MedicationCollection';
-import { removeItMethod } from '../../../api/base/BaseCollection.methods';
+import { removeItMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
 const MedStatusRow = ({ med, drugTypes, locations, units }) => {
   const [expand, setExpand] = useState(false);
   
   const handleOpen = () => setExpand(!expand);
-
-  // const currentDate = new Date();
-  // const expirations = med.lotIds.map(({ expire }) => (expire && expire.split('-')));
-  // const expiredDates = expirations.map((expiration) => {
-  //   const expiredDate = new Date();
-  //   return expiration ?
-  //     expiredDate.setFullYear(parseInt(expiration[0], 10), parseInt(expiration[1], 10) - 1, parseInt(expiration[2], 10))
-  //     : expiredDate;
-  // });
-  // const isExpired = expiredDates.map((expiredDate) => expiredDate < currentDate);
 
   const currentDate = moment();
   const isExpired = med.lotIds.map(({ expire }) => {
@@ -70,11 +60,38 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
       });
   };
 
+  const deleteLot = (uuid, lotId) => {
+    swal({
+      title: 'Are you sure?',
+      text: `Do you really want to delete ${lotId}?`,
+      icon: 'warning',
+      buttons: [
+        'No, cancel it!',
+        'Yes, I am sure!',
+      ],
+      dangerMode: true,
+    })
+      .then((isConfirm) => {
+        // if 'yes'
+        if (isConfirm) {
+          const collectionName = Medications.getCollectionName();
+          const exists = Medications.findOne({ _id: med._id });
+          const { lotIds } = exists;
+          const targetIndex = lotIds.findIndex((obj => obj._id === uuid));
+          lotIds.splice(targetIndex, 1);
+          const updateData = { id: med._id, lotIds };
+          updateMethod.callPromise({ collectionName, updateData })
+            .then(() => swal('Success', `${med.drug} updated successfully`, 'success', { buttons: false, timer: 3000 }))
+            .catch(error => swal('Error', error.message, 'error'));
+        }
+      });
+  };
+
   return (
     <>
       {/* the drug row */}
-      <Table.Row onClick={handleOpen} negative={isExpired.includes(true)} id={COMPONENT_IDS.MED_STATUS_ROW}>
-        <Table.Cell>
+      <Table.Row negative={isExpired.includes(true)} id={COMPONENT_IDS.MED_STATUS_ROW}>
+        <Table.Cell className='caret' onClick={handleOpen}>
           <Icon name={`caret ${expand ? 'down' : 'up'}`} />
         </Table.Cell>
         <Table.Cell>{med.drug}</Table.Cell>
@@ -104,12 +121,12 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
                 <Table.HeaderCell>Location</Table.HeaderCell>
                 <Table.HeaderCell>Quantity</Table.HeaderCell>
                 <Table.HeaderCell>Donated</Table.HeaderCell>
-                <Table.HeaderCell>Information</Table.HeaderCell>
+                <Table.HeaderCell/>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {
-                med.lotIds.map(({ lotId, brand, expire, location, quantity, donated }, index) => (
+                med.lotIds.map(({ _id: uuid, lotId, brand, expire, location, quantity, donated }, index) => (
                   <Table.Row key={lotId} negative={isExpired[index]}>
                     <Table.Cell>{lotId}</Table.Cell>
                     <Table.Cell>{brand}</Table.Cell>
@@ -122,10 +139,11 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
                         <Icon name='check' color='green'/>
                       }
                     </Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell className='icons'>
                       {/* <Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DRUG_PAGE_BUTTON}
                         onClick={() => setOpen(true)} /> */}
                       <MedInfoPage info={med} detail={med.lotIds[index]} drugTypes={drugTypes} locations={locations} units={units} />
+                      <Icon name='trash alternate' onClick={() => deleteLot(uuid, lotId)} />
                     </Table.Cell>
                   </Table.Row>
                 ))

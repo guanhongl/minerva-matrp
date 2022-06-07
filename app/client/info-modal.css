@@ -24,8 +24,6 @@
 
 .info-modal .ui.input, .ui.selection {
     width: calc(100% - 200px);
-    /* height: 20px;
-    min-height: 20px; */
 }
 
 .info-modal table td div {

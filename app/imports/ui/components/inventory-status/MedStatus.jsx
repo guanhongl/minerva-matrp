@@ -3,6 +3,7 @@ import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
 import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { Locations } from '../../../api/location/LocationCollection';
@@ -28,6 +29,8 @@ const statusOptions = [
   { key: 2, value: 'Low Stock', text: 'Low Stock' },
   { key: 3, value: 'Out of Stock', text: 'Out of stock' },
 ];
+
+const currentDate = moment();
 
 // Render the form.
 const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
@@ -73,8 +76,17 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
     }
     if (statusFilter) {
       filter = filter.filter((medication) => {
+        const isExpired = medication.lotIds.map(({ expire }) => {
+          if (expire) {
+            return currentDate > moment(expire);
+          }
+          return false;
+        });
+
         const totalQuantity = medication.lotIds.length ?
-          _.pluck(medication.lotIds, 'quantity').reduce((prev, current) => prev + current) : 0;
+          _.pluck(medication.lotIds, 'quantity')
+            .reduce((prev, current, index) => (isExpired[index] ? prev : prev + current), 0) 
+          : 0;
         if (statusFilter === 'In Stock') {
           return totalQuantity >= medication.minQuantity;
         }
@@ -175,7 +187,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
               <Table.HeaderCell>Total Quantity</Table.HeaderCell>
               <Table.HeaderCell>Unit</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell></Table.HeaderCell>
+              <Table.HeaderCell/>
             </Table.Row>
           </Table.Header>
 
@@ -194,7 +206,10 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
                       <Pagination
                         totalPages={Math.ceil(filteredMedications.length / maxRecords)}
                         activePage={pageNo}
-                        onPageChange={(event, data) => setPageNo(data.activePage)}
+                        onPageChange={(event, data) => {
+                          setPageNo(data.activePage);
+                          window.scrollTo(0, 0);
+                        }}
                         ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}
                         firstItem={{ content: <Icon name='angle double left'/>, icon: true }}
                         lastItem={{ content: <Icon name='angle double right'/>, icon: true }}

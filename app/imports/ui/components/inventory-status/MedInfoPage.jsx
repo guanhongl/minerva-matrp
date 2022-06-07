@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Input, Checkbox, TextArea, Select } from 'semantic-ui-react';
+import { Button, Modal, Input, Checkbox, TextArea, Select, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
@@ -64,33 +64,6 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
       .catch(error => swal('Error', error.message, 'error'));
   };
 
-  const deleteOption = () => {
-    swal({
-      title: 'Are you sure?',
-      text: `Do you really want to delete ${lotId}?`,
-      icon: 'warning',
-      buttons: [
-        'No, cancel it!',
-        'Yes, I am sure!',
-      ],
-      dangerMode: true,
-    })
-      .then((isConfirm) => {
-        // if 'yes'
-        if (isConfirm) {
-          const collectionName = Medications.getCollectionName();
-          const exists = Medications.findOne({ _id });
-          const { lotIds } = exists;
-          const targetIndex = lotIds.findIndex((obj => obj._id === uuid));
-          lotIds.splice(targetIndex, 1);
-          const updateData = { id: _id, lotIds };
-          updateMethod.callPromise({ collectionName, updateData })
-            .then(() => swal('Success', `${drug} updated successfully`, 'success', { buttons: false, timer: 3000 }))
-            .catch(error => swal('Error', error.message, 'error'));
-        }
-      });
-  };
-
   return (
     <Modal
       closeIcon
@@ -100,7 +73,7 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
       size='small'
       id={COMPONENT_IDS.DRUG_PAGE}
       className='info-modal'
-      trigger={<Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DRUG_PAGE_BUTTON} />}
+      trigger={<Icon name='info' id={COMPONENT_IDS.DRUG_PAGE_BUTTON} />}
     >
       <Modal.Header>Drug Information</Modal.Header>
       <Modal.Content scrolling>
@@ -253,14 +226,6 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
           icon='check'
           onClick={() => submit()}
           color='green'
-        />
-        <Button
-          circular
-          // content="Delete"
-          // labelPosition='right'
-          icon='trash alternate'
-          color='red'
-          onClick={() => deleteOption()}
         />
         {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DRUG_CLOSE}>
           Close

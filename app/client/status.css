@@ -25,6 +25,14 @@
   font-size: 12px;
 }
 
+.status-tab i.trash.alternate, td.caret, i.info {
+  cursor: pointer;
+}
+
+.status-tab table table td.icons {
+  text-align: right;
+}
+
 #status .ui.tabular.menu {
   padding-right: 25%;
 }
