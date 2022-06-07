@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { distinct, getOptions } from '../../utilities/Functions';
-import { Supplys } from '../../../api/supply/SupplyCollection';
+import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import SupplyStatusRow from './SupplyStatusRow';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { cloneDeep } from 'lodash';
@@ -130,19 +130,20 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
               <Table.HeaderCell>Type</Table.HeaderCell>
               <Table.HeaderCell>Total Quantity</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
             {
               filteredSupplies.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(supply => <SupplyStatusRow key={supply._id} supply={supply}/>)
+                .map(supply => <SupplyStatusRow key={supply._id} supply={supply} locations={locations} supplyTypes={supplyTypes} />)
             }
           </Table.Body>
 
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan="5">
+              <Table.HeaderCell colSpan="6">
                 <Pagination
                   totalPages={Math.ceil(filteredSupplies.length / maxRecords)}
                   activePage={pageNo}

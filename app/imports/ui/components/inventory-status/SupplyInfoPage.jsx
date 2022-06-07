@@ -1,63 +1,67 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Input, TextArea, Select, Icon, Checkbox } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Supplys } from '../../../api/supply/SupplyCollection';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
-import { printQRCode } from '../../utilities/Functions';
+import { printQRCode, getOptions } from '../../utilities/Functions';
 
-const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, detail: { location, quantity, donated, donatedBy, note, QRCode } }) => {
+const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, 
+                          detail: { _id: uuid, location, quantity, donated, donatedBy, note, QRCode }, 
+                          locations, supplyTypes }) => {
   const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  // useState for note field when editing notes.
-  const [newNote, setNewNote] = useState(note);
+  // form fields
+  const initialState = {
+    newSupply: supply,
+    newSupplyType: supplyType,
+    newMinQuantity: minQuantity,
+    newLocation: location,
+    newQuantity: quantity,
+    newDonated: donated,
+    newDonatedBy: donatedBy,
+    newNote: note,
+  };
+
+  const [fields, setFields] = useState(initialState);
+
+  const handleEdit = () => {
+    setEdit(!edit);
+    setFields(initialState);
+  }
+
+  const handleChange = (event, { name, value, checked }) => {
+    setFields({ ...fields, [name]: value ?? checked });
+  };
 
   const submit = () => {
+    fields.newMinQuantity = parseInt(fields.newMinQuantity, 10);
+    fields.newQuantity = parseInt(fields.newQuantity, 10);
+
     const collectionName = Supplys.getCollectionName();
     const exists = Supplys.findOne({ _id });
     const { stock } = exists;
-    const target = stock.find(obj => obj.location === location);
-    target.note = newNote;
-    const updateData = { id: _id, stock };
+    const target = stock.find(obj => obj._id === uuid);
+    target.location = fields.newLocation;
+    target.quantity = fields.newQuantity;
+    target.donated = fields.newDonated;
+    target.donatedBy = fields.newDonated ? fields.newDonatedBy : '';
+    target.note = fields.newNote;
+    const updateData = { id: _id, supply: fields.newSupply, supplyType: fields.newSupplyType, minQuantity: fields.newMinQuantity, stock };
     updateMethod.callPromise({ collectionName, updateData })
-      .then(() => swal('Success', 'Note updated successfully', 'success', { buttons: false, timer: 3000 }))
+      .then(() => swal('Success', 'Supply updated successfully', 'success', { buttons: false, timer: 3000 }))
       .catch(error => swal('Error', error.message, 'error'));
-  };
-
-  const deleteOption = () => {
-    swal({
-      title: 'Are you sure?',
-      text: `Do you really want to delete ${supply}?`,
-      icon: 'warning',
-      buttons: [
-        'No, cancel it!',
-        'Yes, I am sure!',
-      ],
-      dangerMode: true,
-    })
-      .then((isConfirm) => {
-        // if 'yes'
-        if (isConfirm) {
-          const collectionName = Supplys.getCollectionName();
-          const exists = Supplys.findOne({ supply });
-          const { stock } = exists;
-          const targetIndex = stock.findIndex((obj => obj.location === location));
-          stock.splice(targetIndex, 1);
-          const updateData = { id: _id, stock };
-          updateMethod.callPromise({ collectionName, updateData })
-            .then(() => swal('Success', `${supply} updated successfully`, 'success', { buttons: false, timer: 3000 }))
-            .catch(error => swal('Error', error.message, 'error'));
-        }
-      });
   };
 
   return (
     <Modal
+      closeIcon
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.SUPPLY_INFO_BUTTON}/>}
+      trigger={<Icon name='info' id={COMPONENT_IDS.SUPPLY_INFO_BUTTON}/>}
       size='small'
       id={COMPONENT_IDS.SUPPLY_INFO}
       className='info-modal'
@@ -71,15 +75,32 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, detail
               <td>
                 <div>
                   <span className='header'>Supply:</span>
-                  {supply}
+                  {
+                    edit ?
+                      <Input name='newSupply' value={fields.newSupply} onChange={handleChange} />
+                      :
+                      <>{supply}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Supply Type:</span>
-                  {supplyType}
+                  {
+                    edit ?
+                      <Select name='newSupplyType' options={getOptions(supplyTypes)}
+                        value={fields.newSupplyType} onChange={handleChange} />
+                      :
+                      <>{supplyType}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Minimum Quantity:</span>
-                  {minQuantity}
+                  {
+                    edit ?
+                      <Input name='newMinQuantity' type='number' min={1}
+                        value={fields.newMinQuantity} onChange={handleChange} />
+                      :
+                      <>{minQuantity}</>
+                  }
                 </div>
               </td>
             </tr>
@@ -88,21 +109,43 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, detail
               <td>
                 <div>
                   <span className='header'>Location:</span>
-                  {location}
+                  {
+                    edit ?
+                      <Select name='newLocation' options={getOptions(locations)}
+                        value={fields.newLocation} onChange={handleChange} />
+                      :
+                      <>{location}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Quantity:</span>
-                  {quantity}
+                  {
+                    edit ?
+                      <Input name='newQuantity' type='number' min={1}
+                        value={fields.newQuantity} onChange={handleChange} />
+                      :
+                      <>{quantity}</>
+                  }
                 </div>
                 <div>
                   <span className='header'>Donated:</span>
-                  {donated ? 'Yes' : 'No'}
+                  {
+                    edit ?
+                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
+                      :
+                      <>{donated ? 'Yes' : 'No'}</>
+                  }
                 </div>
                 {
-                  donated &&
+                  fields.newDonated &&
                   <div>
                     <span className='header'>Donated By:</span>
-                    {donatedBy}
+                    {
+                      edit ?
+                        <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
+                        :
+                        <>{donatedBy}</>
+                    }
                   </div>
                 }
               </td>
@@ -110,41 +153,42 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, detail
             <tr>
               <td>Note</td>
               <td>
-                <Form.TextArea rows={3} value={newNote} onChange={(event, { value }) => setNewNote(value)} />
+                <TextArea rows={3} name='newNote' value={fields.newNote} onChange={handleChange} />
               </td>
             </tr>
           </tbody>
         </table>
       </Modal.Content>
       <Modal.Actions>
-        <Button
-          // id={COMPONENT_IDS.SUPPLY_INFO_EDIT}
-          content="Save Changes"
-          labelPosition='right'
-          icon='edit'
-          onClick={() => submit()}
-          color='linkedin'
-        />
         {
           QRCode &&
           <Button
-            content="Print QR Code"
-            labelPosition='right'
+            circular
+            // content="Print QR Code"
+            // labelPosition='right'
             icon='qrcode'
             onClick={() => printQRCode(QRCode)}
-            color='teal'
+            color='black'
           />
         }
         <Button
-          content="Delete"
-          labelPosition='right'
-          icon='trash alternate'
-          color='red'
-          onClick={() => deleteOption()}
+          circular
+          icon={edit ? 'ban' : 'pencil'}
+          onClick={handleEdit}
+          color='linkedin'
         />
-        <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.SUPPLY_INFO_CLOSE}>
+        <Button
+          circular
+          // id={COMPONENT_IDS.SUPPLY_INFO_EDIT}
+          // content="Save Changes"
+          // labelPosition='right'
+          icon='check'
+          onClick={submit}
+          color='green'
+        />
+        {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.SUPPLY_INFO_CLOSE}>
           Close
-        </Button>
+        </Button> */}
       </Modal.Actions>
     </Modal>
   );

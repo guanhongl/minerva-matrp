@@ -224,7 +224,7 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
           // content="Save Changes"
           // labelPosition='right'
           icon='check'
-          onClick={() => submit()}
+          onClick={submit}
           color='green'
         />
         {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DRUG_CLOSE}>
