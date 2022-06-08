@@ -17,11 +17,46 @@ const DumpDbFixture = () => {
     dumpDatabaseMethod.callPromise(db)
       .then(result => {
         setResults(result);
+
+        // flatten
+        const json = [];
+        result.forEach(obj => {
+          // wrap strings in quotes to escape commas
+          // use additional quote to escape double quotes
+          obj.name = `"${obj.name.replace('"', '""')}"`;
+          obj.type = `"${obj.type.join(', ')}"`;
+          obj.unit = `"${obj.unit}"`
+
+          const { lotIds, ...inner } =  obj;
+
+          lotIds.forEach(outer => {
+            json.push({ 
+              ...inner, 
+              // custom ordering
+              lotId: `"${outer.lotId}"`,
+              brand: `"${outer.brand}"`,
+              expire: outer.hasOwnProperty('expire') ? `"${outer.expire}"` : "",
+              location: `"${outer.location}"`,
+              quantity: outer.quantity,
+              donated: outer.donated,
+              donatedBy: outer.hasOwnProperty('donatedBy') ? `"${outer.donatedBy}"` : "",
+              note: outer.hasOwnProperty('note') ? `"${outer.note}"` : "",
+              _id: outer._id,
+              QRCode: outer.hasOwnProperty('QRCode') ? `"${outer.QRCode}"` : "",
+            });
+          });
+        });
+
+        const csv = json.map(row => Object.values(row));
+        csv.unshift(Object.keys(json[0]));
+        csv_string = csv.join('\n');
+
         const zip = new ZipZap();
         const dir = 'matrp-db';
         // const fileName = `${dir}/${moment(result.timestamp).format(databaseFileDateFormat)}.json`;
-        const fileName = `${dir}/${db}.json`;
-        zip.file(fileName, JSON.stringify(result, null, 2));
+        const fileName = `${dir}/${db}.csv`;
+        // zip.file(fileName, JSON.stringify(json, null, 2));
+        zip.file(fileName, csv_string);
         zip.saveAs(`${dir}.zip`);
       })
       .catch(() => setError(true))
