@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { dumpDatabaseMethod } from '../../api/base/BaseCollection.methods';
 import AdminDatabaseAccordion from './AdminDatabaseAccordion';
+import { Parser, transforms } from 'json2csv';
 
 export const databaseFileDateFormat = 'YYYY-MM-DD-HH-mm-ss';
 
@@ -18,45 +19,18 @@ const DumpDbFixture = () => {
       .then(result => {
         setResults(result);
 
-        // flatten
-        const json = [];
-        result.forEach(obj => {
-          // wrap strings in quotes to escape commas
-          // use additional quote to escape double quotes
-          obj.name = `"${obj.name.replace('"', '""')}"`;
-          obj.type = `"${obj.type.join(', ')}"`;
-          obj.unit = `"${obj.unit}"`
-
-          const { lotIds, ...inner } =  obj;
-
-          lotIds.forEach(outer => {
-            json.push({ 
-              ...inner, 
-              // custom ordering
-              lotId: `"${outer.lotId}"`,
-              brand: `"${outer.brand}"`,
-              expire: outer.hasOwnProperty('expire') ? `"${outer.expire}"` : "",
-              location: `"${outer.location}"`,
-              quantity: outer.quantity,
-              donated: outer.donated,
-              donatedBy: outer.hasOwnProperty('donatedBy') ? `"${outer.donatedBy}"` : "",
-              note: outer.hasOwnProperty('note') ? `"${outer.note}"` : "",
-              _id: outer._id,
-              QRCode: outer.hasOwnProperty('QRCode') ? `"${outer.QRCode}"` : "",
-            });
-          });
-        });
-
-        const csv = json.map(row => Object.values(row));
-        csv.unshift(Object.keys(json[0]));
-        csv_string = csv.join('\n');
+        const fields = ['name', 'type', 'minimum', 'unit', 
+          'lotIds.lotId', 'lotIds.brand', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 'lotIds.donated', 'lotIds.donatedBy', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
+        const transforms_ = [transforms.unwind({ paths: ['lotIds'] })];
+        const json2csvParser = new Parser({ fields, transforms: transforms_ });
+        const csv = json2csvParser.parse(result);
 
         const zip = new ZipZap();
         const dir = 'matrp-db';
         // const fileName = `${dir}/${moment(result.timestamp).format(databaseFileDateFormat)}.json`;
         const fileName = `${dir}/${db}.csv`;
         // zip.file(fileName, JSON.stringify(json, null, 2));
-        zip.file(fileName, csv_string);
+        zip.file(fileName, csv);
         zip.saveAs(`${dir}.zip`);
       })
       .catch(() => setError(true))
