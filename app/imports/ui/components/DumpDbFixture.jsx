@@ -12,18 +12,19 @@ const DumpDbFixture = () => {
   const [results, setResults] = useState([]);
   const [inProgress, setInProgress] = useState(false);
 
-  const onClick = () => {
+  const onClick = (db) => {
     setInProgress(true);
-    dumpDatabaseMethod.callPromise(null)
-      .catch(() => setError(true))
+    dumpDatabaseMethod.callPromise(db)
       .then(result => {
-        setResults(result.collections);
+        setResults(result);
         const zip = new ZipZap();
         const dir = 'matrp-db';
-        const fileName = `${dir}/${moment(result.timestamp).format(databaseFileDateFormat)}.json`;
+        // const fileName = `${dir}/${moment(result.timestamp).format(databaseFileDateFormat)}.json`;
+        const fileName = `${dir}/${db}.json`;
         zip.file(fileName, JSON.stringify(result, null, 2));
         zip.saveAs(`${dir}.zip`);
       })
+      .catch(() => setError(true))
       .finally(() => setInProgress(false));
   };
 
@@ -31,10 +32,10 @@ const DumpDbFixture = () => {
     <Segment>
       <Header dividing>Dump DB Fixture</Header>
       <Form>
-        <Button color="green" loading={inProgress} basic type="submit" onClick={onClick}>
+        <Button color="green" loading={inProgress} basic type="submit" onClick={() => onClick("drugs")}>
           Dump Database
         </Button>
-        {results.length > 0 ? (
+        {/* {results.length > 0 ? (
           <Grid stackable style={{ paddingTop: 20 }}>
             <Message positive={!error} error={error}>
               {results.map((item, index) => (
@@ -44,7 +45,7 @@ const DumpDbFixture = () => {
           </Grid>
         ) : (
           ''
-        )}
+        )} */}
       </Form>
     </Segment>
   );

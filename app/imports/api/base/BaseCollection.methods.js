@@ -60,7 +60,7 @@ export const dumpDatabaseMethod = new ValidatedMethod({
   name: 'base.dumpDatabase',
   mixins: [CallPromiseMixin],
   validate: null,
-  run() {
+  run(db) {
     if (!this.userId) {
       throw new Meteor.Error('unauthorized', 'You must be logged in to dump the database..');
     } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
@@ -69,10 +69,12 @@ export const dumpDatabaseMethod = new ValidatedMethod({
     // Don't do the dump except on server side (disable client-side simulation).
     // Return an object with fields timestamp and collections.
     if (Meteor.isServer) {
-      const collections = _.sortBy(MATRP.collectionLoadSequence.map((collection) => collection.dumpAll()),
-        (entry) => entry.name);
-      const timestamp = new Date();
-      return { timestamp, collections };
+      // const collections = _.sortBy(MATRP.collectionLoadSequence.map((collection) => collection.dumpAll()),
+      //   (entry) => entry.name);
+      // const timestamp = new Date();
+      // return { timestamp, collections };
+      const collection = _.sortBy(MATRP[db].dumpAll(), (entry) => entry.name);
+      return collection;
     }
     return null;
   },

@@ -35,23 +35,34 @@ class MATRPClass {
       Supplys,
       PendingUsers,
     ];
+
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.
      */
+    // this.collectionLoadSequence = [
+    //   AdminProfiles,
+    //   UserProfiles,
+    //   SuperUserProfiles,
+    //   Stuffs,
+    //   DrugTypes,
+    //   Locations,
+    //   Sites,
+    //   Medications,
+    //   Vaccinations,
+    //   Historicals,
+    //   Supplys,
+    //   PendingUsers,
+    // ];
+
     this.collectionLoadSequence = [
-      AdminProfiles,
-      UserProfiles,
-      SuperUserProfiles,
-      Stuffs,
-      DrugTypes,
-      Locations,
-      Sites,
       Medications,
       Vaccinations,
-      Historicals,
       Supplys,
-      PendingUsers,
     ];
+
+    this.drugs = Medications;
+    this.vaccines = Vaccinations;
+    this.supplies = Supplys;
 
     /*
      * An object with keys equal to the collection name and values the associated collection instance.
