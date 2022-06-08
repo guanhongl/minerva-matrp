@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Header, Segment } from 'semantic-ui-react';
 import { loadFixtureMethod } from '../../api/base/BaseCollection.methods';
 import UploadFixtureResult from './UploadFixtureResult';
+import csv from 'csvtojson';
 
 const UploadFixture = () => {
   const [fileDataState, setFileData] = useState('');
@@ -19,11 +20,27 @@ const UploadFixture = () => {
     };
   };
 
-  const onSubmit = () => {
-    const jsonData = fileDataState ? JSON.parse(fileDataState) : false;
-    if (jsonData) {
+  const onSubmit = (db) => {
+    // const jsonData = fileDataState ? JSON.parse(fileDataState) : false;
+    // if (jsonData) {
+    //   setUploadFixtureWorking(true);
+    //   loadFixtureMethod.callPromise(jsonData)
+    //     .then(result => { setUploadResult(result); })
+    //     .catch(err => { setError(true); setUploadResult(err.message); })
+    //     .finally(() => { console.log('finally'); setUploadFixtureWorking(false); });
+    // } else {
+    //   setError(true);
+    //   setUploadResult('No file specified');
+    // }
+
+    if (fileDataState) {
       setUploadFixtureWorking(true);
-      loadFixtureMethod.callPromise(jsonData)
+
+      csv().fromString(fileDataState)
+        .then((fixtureData) => {
+          // console.log(json)
+          return loadFixtureMethod.callPromise({ fixtureData, db });
+        })
         .then(result => { setUploadResult(result); })
         .catch(err => { setError(true); setUploadResult(err.message); })
         .finally(() => { console.log('finally'); setUploadFixtureWorking(false); });
@@ -32,10 +49,11 @@ const UploadFixture = () => {
       setUploadResult('No file specified');
     }
   };
+
   return (
     <Segment>
       <Header dividing>Upload DB Fixture</Header>
-      <Form widths="equal" onSubmit={onSubmit}>
+      <Form widths="equal" onSubmit={() => onSubmit("drugs")}>
         <Form.Field>
           <Form.Input type="file" onChange={readFile} label="Fixture File" />
           <Form.Button basic color="green" loading={uploadFixtureWorking} type="Submit">

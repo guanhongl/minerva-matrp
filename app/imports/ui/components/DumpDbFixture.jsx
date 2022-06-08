@@ -17,6 +17,9 @@ const DumpDbFixture = () => {
     setInProgress(true);
     dumpDatabaseMethod.callPromise(db)
       .then(result => {
+        result.forEach(obj => {
+          obj.type = obj.type.join();
+        });
         setResults(result);
 
         const fields = ['name', 'type', 'minimum', 'unit', 

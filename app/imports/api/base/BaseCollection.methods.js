@@ -84,8 +84,7 @@ export const loadFixtureMethod = new ValidatedMethod({
   name: 'base.loadFixture',
   mixins: [CallPromiseMixin],
   validate: null,
-  run(fixtureData) {
-    // console.log('loadFixtureMethod', fixtureData);
+  run({ fixtureData, db }) {
     if (!this.userId) {
       throw new Meteor.Error('unauthorized', 'You must be logged in to load a fixture.', '');
     } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
@@ -93,15 +92,16 @@ export const loadFixtureMethod = new ValidatedMethod({
     }
     if (Meteor.isServer) {
       let ret = '';
-      // console.log(RadGrad.collectionLoadSequence);
-      MATRP.collectionLoadSequence.forEach((collection) => {
-        const result = loadCollectionNewDataOnly(collection, fixtureData, true);
-        // console.log(collection.getCollectionName(), result);
-        if (result) {
-          ret = `${ret} ${result},`;
-        }
-      });
-      // console.log(`loadFixtureMethod ${ret}`);
+      // MATRP.collectionLoadSequence.forEach((collection) => {
+      //   const result = loadCollectionNewDataOnly(collection, fixtureData, true);
+      //   if (result) {
+      //     ret = `${ret} ${result},`;
+      //   }
+      // });
+      const result = loadCollectionNewDataOnly(MATRP[db], fixtureData, true);
+      if (result) {
+        ret = `${ret} ${result},`;
+      }
       const trimmed = ret.trim();
       if (trimmed.length === 0) {
         ret = 'Defined no new instances.';

@@ -16,14 +16,19 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
   let retVal = '';
   // console.log('loadCollectionNewDataOnly', loadJSON, printToConsole, typeof collection);
   const type = collection.getType();
-  const definitions = getDefinitions(loadJSON, collection.getCollectionName());
+  // const definitions = getDefinitions(loadJSON, collection.getCollectionName());
   let count = 0;
-  definitions.forEach((definition) => {
-    if (collection.find(definition).count() === 0) {
-      collection.define(definition);
-      count++;
-    }
-  });
+  // definitions.forEach((definition) => {
+  //   if (collection.find(definition).count() === 0) {
+  //     collection.define(definition);
+  //     count++;
+  //   }
+  // });
+  if (collection.count() === 0) {
+    loadJSON.map(obj => collection.define(obj));
+  }
+  count++;
+
   if (count > 1) {
     retVal += `Defined ${count} ${type}s`;
   } else if (count === 1) {
