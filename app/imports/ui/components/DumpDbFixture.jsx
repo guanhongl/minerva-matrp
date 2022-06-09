@@ -17,12 +17,9 @@ const DumpDbFixture = () => {
     setInProgress(true);
     dumpDatabaseMethod.callPromise(db)
       .then(result => {
-        result.forEach(obj => {
-          obj.type = obj.type.join();
-        });
         setResults(result);
 
-        const fields = ['name', 'type', 'minimum', 'unit', 
+        const fields = ['drug', 'drugType', 'minQuantity', 'unit', 
           'lotIds.lotId', 'lotIds.brand', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 'lotIds.donated', 'lotIds.donatedBy', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
         const transforms_ = [transforms.unwind({ paths: ['lotIds'] })];
         const json2csvParser = new Parser({ fields, transforms: transforms_ });

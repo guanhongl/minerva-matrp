@@ -183,12 +183,12 @@ class MedicationCollection extends BaseCollection {
    */
    dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const name = doc.drug;
-    const type = doc.drugType;
-    const minimum = doc.minQuantity;
+    const drug = doc.drug;
+    const drugType = doc.drugType.join();
+    const minQuantity = doc.minQuantity;
     const unit = doc.unit;
     const lotIds = doc.lotIds;
-    return { name, type, minimum, unit, lotIds };
+    return { drug, drugType, minQuantity, unit, lotIds };
   }
 }
 

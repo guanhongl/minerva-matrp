@@ -36,9 +36,9 @@ const UploadFixture = () => {
     if (fileDataState) {
       setUploadFixtureWorking(true);
 
-      csv().fromString(fileDataState)
+      csv({ checkType: true }).fromString(fileDataState)
         .then((fixtureData) => {
-          // console.log(json)
+          console.log(fixtureData)
           return loadFixtureMethod.callPromise({ fixtureData, db });
         })
         .then(result => { setUploadResult(result); })

@@ -73,7 +73,7 @@ export const dumpDatabaseMethod = new ValidatedMethod({
       //   (entry) => entry.name);
       // const timestamp = new Date();
       // return { timestamp, collections };
-      const collection = _.sortBy(MATRP[db].dumpAll(), (entry) => entry.name);
+      const collection = _.sortBy(MATRP[db].dumpAll(), (entry) => Object.values(entry)[0]);
       return collection;
     }
     return null;

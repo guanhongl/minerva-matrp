@@ -30,11 +30,11 @@ if (Stuffs.count() === 0) {
   }
 }
 
-if (Meteor.settings.loadAssetsFile && Medications.count() === 0) {
-  console.log('Loading medications from private/sample_medication.json');
-  // jsonData.medications.map(medication => Medications.define(medication));
-  sampleMedication.map(medication => Medications.define(medication));
-}
+// if (Meteor.settings.loadAssetsFile && Medications.count() === 0) {
+//   console.log('Loading medications from private/sample_medication.json');
+//   // jsonData.medications.map(medication => Medications.define(medication));
+//   sampleMedication.map(medication => Medications.define(medication));
+// }
 
 if (Meteor.settings.loadAssetsFile && Historicals.count() === 0) {
   console.log('Loading history from private/historicals.json');
