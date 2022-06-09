@@ -17,10 +17,7 @@ export const acceptMethod = new ValidatedMethod({
     if (Meteor.isServer) {
       console.log(firstName, lastName, email);
       const userID = Accounts.createUser({ username: email, email: email });
-
-      Accounts.sendEnrollmentEmail(userID); // used solely to set the enroll token
-      const enrollToken = Meteor.users.findOne({ _id: userID }).services.password.enroll.token;
-      // console.log(enrollToken)
+      console.log(userID);
 
       // sendEnrollmentEmail
       const credentials = JSON.parse(Assets.getText('settings.production.json'));
@@ -99,7 +96,7 @@ export const acceptMethod = new ValidatedMethod({
           }
         });
 
-        const enrollURL = new URL(Meteor.absoluteUrl(`#/enroll-acct/${enrollToken}`));
+        const enrollURL = new URL(Meteor.absoluteUrl(`#/enroll-acct/${userID}`));
 
         const mailOptions = {
           from: `Minerva Alert <${credentials.user}>`,
@@ -131,6 +128,20 @@ export const acceptMethod = new ValidatedMethod({
       });
       
       return userID;
+    }
+    return '';
+  },
+});
+
+export const setPasswordMethod = new ValidatedMethod({
+  name: 'setPassword',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run({ userId, newPassword }) {
+    if (Meteor.isServer) {
+      Accounts.setPassword(userId, newPassword);
+
+      return '';
     }
     return '';
   },

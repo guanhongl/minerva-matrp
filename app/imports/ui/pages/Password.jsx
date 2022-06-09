@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, Redirect } from 'react-router';
-// import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+import { Meteor } from 'meteor/meteor';
+// import { Accounts } from 'meteor/accounts-base';
 import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
 import swal from 'sweetalert';
+import { setPasswordMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 // import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
@@ -37,14 +38,28 @@ const Password = ({ location }) => {
     if (password !== confirmPassword) {
       swal('Error', 'Passwords do not match.', 'error');
     } else {
-      Accounts.resetPassword(token, password, (err) => {
-        if (err) {
-          setError(err.reason);
-        } else {
-          setError('');
-          setRedirectToReferer(true);
-        }
-      });
+      // Accounts.resetPassword(token, password, (err) => {
+      //   if (err) {
+      //     setError(err.reason);
+      //   } else {
+      //     setError('');
+      //     setRedirectToReferer(true);
+      //   }
+      // });
+      setPasswordMethod.callPromise({ userId: token, newPassword: password })
+        .then(() => {
+          Meteor.loginWithPassword({ id: token }, password, (err) => {
+            if (err) {
+              setError(err.reason);
+            } else {
+              setError('');
+              setRedirectToReferer(true);
+            }
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   };
 
