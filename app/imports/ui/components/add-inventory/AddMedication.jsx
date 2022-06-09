@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import QRCode from 'qrcode';
-import { v4 as uuidv4 } from 'uuid';
+import { Random } from 'meteor/random'
 import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
@@ -23,7 +23,7 @@ const submit = (data, callback) => {
   const exists_id = exists?.lotIds?.find(obj => obj.lotId === lotId)?._id;
 
   // generate the QRCode and the uuid for the lotId
-  const _id = exists_id ?? uuidv4();
+  const _id = exists_id ?? Random.id();
   QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=0&_id=${_id}`)
     .then(url => {
       // if the medication does not exist:
