@@ -4,7 +4,7 @@ import { loadFixtureMethod } from '../../api/base/BaseCollection.methods';
 import UploadFixtureResult from './UploadFixtureResult';
 import csv from 'csvtojson';
 
-const UploadFixture = () => {
+const UploadFixture = ({ db }) => {
   const [fileDataState, setFileData] = useState('');
   const [uploadResult, setUploadResult] = useState('');
   const [error, setError] = useState(false);
@@ -20,7 +20,7 @@ const UploadFixture = () => {
     };
   };
 
-  const onSubmit = (db) => {
+  const onSubmit = () => {
     // const jsonData = fileDataState ? JSON.parse(fileDataState) : false;
     // if (jsonData) {
     //   setUploadFixtureWorking(true);
@@ -51,18 +51,18 @@ const UploadFixture = () => {
   };
 
   return (
-    <Segment>
-      <Header dividing>Upload DB Fixture</Header>
-      <Form widths="equal" onSubmit={() => onSubmit("drugs")}>
+    // <Segment>
+    //   <Header dividing>Upload DB Fixture</Header>
+      <Form widths="equal" onSubmit={onSubmit}>
         <Form.Field>
-          <Form.Input type="file" onChange={readFile} label="Fixture File" />
+          <Form.Input type="file" onChange={readFile} />
           <Form.Button basic color="green" loading={uploadFixtureWorking} type="Submit">
             Upload Fixture
           </Form.Button>
         </Form.Field>
       </Form>
-      {uploadResult ? <UploadFixtureResult error={error} message={uploadResult} /> : ''}
-    </Segment>
+      // {uploadResult ? <UploadFixtureResult error={error} message={uploadResult} /> : ''}
+    // </Segment>
   );
 };
 

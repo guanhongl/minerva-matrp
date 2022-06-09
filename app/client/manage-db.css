@@ -1,0 +1,5 @@
+#manage-database .ui.card .description {
+    display: flex;
+    flex-direction: column;
+    
+}

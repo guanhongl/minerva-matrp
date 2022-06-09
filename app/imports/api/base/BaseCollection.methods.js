@@ -126,3 +126,32 @@ export const updateManyMethod = new ValidatedMethod({
     }
   },
 });
+
+export const resetDatabaseMethod = new ValidatedMethod({
+  name: 'base.resetDatabase',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run(db) {
+    if (!this.userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in to reset the database..');
+    } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to reset the database.');
+    }
+    if (Meteor.isServer) {
+      return MATRP[db].resetDB();
+    }
+    return null;
+  },
+});
+
+export const readCSVMethod = new ValidatedMethod({
+  name: 'base.readCSV',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run(db) {
+    if (Meteor.isServer) {
+      return Assets.getText(`${db}_template.csv`);
+    }
+    return null;
+  },
+});

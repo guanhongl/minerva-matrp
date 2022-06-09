@@ -8,12 +8,12 @@ import { Parser, transforms } from 'json2csv';
 
 export const databaseFileDateFormat = 'YYYY-MM-DD-HH-mm-ss';
 
-const DumpDbFixture = () => {
+const DumpDbFixture = ({ db }) => {
   const [error, setError] = useState(false);
   const [results, setResults] = useState([]);
   const [inProgress, setInProgress] = useState(false);
 
-  const onClick = (db) => {
+  const onClick = () => {
     setInProgress(true);
     dumpDatabaseMethod.callPromise(db)
       .then(result => {
@@ -38,10 +38,10 @@ const DumpDbFixture = () => {
   };
 
   return (
-    <Segment>
-      <Header dividing>Dump DB Fixture</Header>
+    // <Segment>
+    //   <Header dividing>Dump DB Fixture</Header>
       <Form>
-        <Button color="green" loading={inProgress} basic type="submit" onClick={() => onClick("drugs")}>
+        <Button color="green" loading={inProgress} basic type="submit" onClick={onClick}>
           Dump Database
         </Button>
         {/* {results.length > 0 ? (
@@ -56,7 +56,7 @@ const DumpDbFixture = () => {
           ''
         )} */}
       </Form>
-    </Segment>
+    // </Segment>
   );
 };
 export default DumpDbFixture;

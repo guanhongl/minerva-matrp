@@ -275,6 +275,13 @@ class BaseCollection {
     updateObjects.forEach((updateObject) => this.update(updateObject.id, updateObject));
   }
 
+  /**
+   * 
+   * @returns the number of removed documents
+   */
+  resetDB() {
+    return this._collection.remove({});
+  }
 }
 
 export default BaseCollection;
