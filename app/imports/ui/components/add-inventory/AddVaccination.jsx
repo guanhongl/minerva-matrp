@@ -16,7 +16,7 @@ import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.met
 const submit = (data, callback) => {
   const { vaccine, minQuantity, quantity, visDate, brand, lotId, expire, location, note } = data;
   const collectionName = Vaccinations.getCollectionName();
-  const exists = Vaccinations.findOne({ vaccine }); // returns the existing vaccine or undefined
+  const exists = Vaccinations.findOne({ vaccine, brand }); // returns the existing vaccine or undefined
 
   // attempts to find an existing _id
   const exists_id = exists?.lotIds?.find(obj => obj.lotId === lotId)?._id;

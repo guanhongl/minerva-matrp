@@ -1,0 +1,10 @@
+supply,supplyType,minQuantity,stock.location,stock.quantity,stock.donated,stock.donatedBy,stock.note
+"ACE wrap 2""",Patient,30,Cabinet 1,25,FALSE,,"Example note for ACE wrap 2""."
+"ACE wrap 2""",Patient,30,Cabinet 3,26,TRUE,,"Example note for ACE wrap 2""."
+"ACE wrap 3""",Patient,90,Cabinet 1,65,FALSE,,"Example note for ACE wrap 3""."
+"ACE wrap 3""",Patient,90,Cabinet 3,65,FALSE,,"Example note for ACE wrap 3""."
+"ACE wrap 4""",Patient,10,Cabinet 1,10,FALSE,,"Example note for ACE wrap 4""."
+"ACE wrap 4""",Patient,10,Cabinet 3,10,FALSE,,"Example note for ACE wrap 4""."
+"ACE wrap 6""",Lab / Testing,40,Cabinet 1,39,FALSE,,"Example note for ACE wrap 6""."
+"ACE wrap 6""",Lab / Testing,40,Cabinet 3,39,FALSE,,"Example note for ACE wrap 6""."
+Blood Pressure Monitors - Patient,Lab / Testing,80,Cabinet 1,51,FALSE,,Example note for Blood Pressure Monitors - Patient.

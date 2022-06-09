@@ -19,9 +19,28 @@ const DumpDbFixture = ({ db }) => {
       .then(result => {
         setResults(result);
 
-        const fields = ['drug', 'drugType', 'minQuantity', 'unit', 
-          'lotIds.lotId', 'lotIds.brand', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 'lotIds.donated', 'lotIds.donatedBy', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
-        const transforms_ = [transforms.unwind({ paths: ['lotIds'] })];
+        let fields, arr;
+        switch (db) {
+          case 'drugs':
+            fields = ['drug', 'drugType', 'minQuantity', 'unit', 
+              'lotIds.lotId', 'lotIds.brand', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 
+              'lotIds.donated', 'lotIds.donatedBy', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
+            arr = 'lotIds';
+            break;
+          case 'vaccines':
+            fields = ['vaccine', 'brand', 'minQuantity', 'visDate', 
+              'lotIds.lotId', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
+            arr = 'lotIds';
+            break;
+          case 'supplies':
+            fields = ['supply', 'supplyType', 'minQuantity', 
+              'stock.location', 'stock.quantity', 'stock.donated', 'stock.donatedBy', 'stock.note', 'stock._id', 'stock.QRCode'];
+            arr = 'stock';
+            break;
+          default:
+            console.log('No type.');
+        };
+        const transforms_ = [transforms.unwind({ paths: [arr] })];
         const json2csvParser = new Parser({ fields, transforms: transforms_ });
         const csv = json2csvParser.parse(result);
 

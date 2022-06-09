@@ -153,6 +153,19 @@ class VaccinationCollection extends BaseCollection {
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ADMIN, ROLE.USER, ROLE.SUPERUSER]);
   }
+
+  /**
+   * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
+   */
+   dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const vaccine = doc.vaccine;
+    const brand = doc.brand;
+    const minQuantity = doc.minQuantity;
+    const visDate = doc.visDate;
+    const lotIds = doc.lotIds;
+    return { vaccine, brand, minQuantity, visDate, lotIds };
+  }
 }
 
 /**

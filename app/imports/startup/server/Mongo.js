@@ -56,12 +56,12 @@ if (Meteor.settings.loadAssetsFile && Sites.count() === 0) {
   jsonData.sites.map(site => Sites.define(site));
 }
 
-if (Meteor.settings.loadAssetsFile && Supplys.count() === 0) {
-  console.log('Loading supplies from private/sample_supply.json');
-  sampleSupply.map(supply => Supplys.define(supply));
-}
+// if (Meteor.settings.loadAssetsFile && Supplys.count() === 0) {
+//   console.log('Loading supplies from private/sample_supply.json');
+//   sampleSupply.map(supply => Supplys.define(supply));
+// }
 
-if (Meteor.settings.loadAssetsFile && Vaccinations.count() === 0) {
-  console.log('Loading vaccines from private/sample_vaccines.json');
-  sampleVaccines.map(vaccine => Vaccinations.define(vaccine));
-}
+// if (Meteor.settings.loadAssetsFile && Vaccinations.count() === 0) {
+//   console.log('Loading vaccines from private/sample_vaccines.json');
+//   sampleVaccines.map(vaccine => Vaccinations.define(vaccine));
+// }

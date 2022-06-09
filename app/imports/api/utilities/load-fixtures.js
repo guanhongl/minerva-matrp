@@ -29,10 +29,28 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
   //   }
   // });
 
-  // TEMPORARY
-  // collection._collection.remove({});
-
   if (collection.count() === 0) {
+    let tab, name, arr;
+    switch (type) {
+      case 'Medications':
+        tab = '0';
+        name = 'drug';
+        arr = 'lotIds';
+        break;
+      case 'Vaccinations':
+        tab = '1';
+        name = 'vaccine';
+        arr = 'lotIds';
+        break;
+      case 'Supplys':
+        tab = '2';
+        name = 'supply';
+        arr = 'stock';
+        break;
+      default:
+        console.log('No type.')
+    };
+
     const promises = [];
     const _ids = [];
 
@@ -41,7 +59,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
       const _id = Random.id();
       _ids.push(_id);
 
-      const url = Meteor.absoluteUrl(`/#/dispense?tab=0&_id=${_id}`);
+      const url = Meteor.absoluteUrl(`/#/dispense?tab=${tab}&_id=${_id}`);
       const promise = QRCode.toDataURL(url);
       promises.push(promise);
     };
@@ -49,21 +67,39 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
     Promise.all(promises)
       .then(urls => {
         loadJSON.forEach((obj, idx) => {
-          obj.drugType = obj.drugType.split(','); // parse type
-          // obj.lotIds.expire = moment(obj.lotIds.expire).format('YYYY-MM-DD'); // parse date
-          obj.lotIds.expire = format(obj.lotIds.expire); // parse date
+          // parse data
+          switch (type) {
+            case 'Medications':
+              obj.drugType = obj.drugType.split(','); // parse type
+              // obj.lotIds.expire = moment(obj.lotIds.expire).format('YYYY-MM-DD'); // parse date
+              obj.lotIds.expire = format(obj.lotIds.expire); // parse date
 
-          obj.lotIds._id = _ids[idx];
-          obj.lotIds.QRCode = urls[idx];
+              break;
+            case 'Vaccinations':
+              obj.visDate = format(obj.visDate); // parse date
+              obj.lotIds.expire = format(obj.lotIds.expire); // parse date
+
+              break;
+            case 'Supplys':
+              break;
+            default:
+              console.log('No type.')
+          };
+
+          obj[arr]._id = _ids[idx];
+          obj[arr].QRCode = urls[idx];
     
-          const target = collection.findOne({ drug: obj.drug });
+          const target = (type !== 'Vaccinations') ?
+            collection.findOne({ [name]: obj[name] })
+            :
+            collection.findOne({ [name]: obj[name], brand: obj.brand });
           // merge on array if name exists
           if (target) {
-            obj.lotIds = [ ...target.lotIds, obj.lotIds ];
-            const data = { lotIds: obj.lotIds };
+            obj[arr] = [ ...target[arr], obj[arr] ];
+            const data = { [arr]: obj[arr] };
             collection.update(target._id, data);
           } else {
-            obj.lotIds = [obj.lotIds]; // to array
+            obj[arr] = [obj[arr]]; // to array
             collection.define(obj);
           }
         });
@@ -71,34 +107,6 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
       .catch(e => {
         console.log(e);
       });
-
-    // loadJSON.forEach(obj => {
-    //   obj.drugType = obj.drugType.split(','); // parse type
-    //   obj.lotIds.expire = moment(obj.lotIds.expire).format('YYYY-MM-DD'); // parse date
-    //   // create _id and URL
-    //   const _id = Random.id();
-    //   obj.lotIds._id = _id;
-    //   const URL = Meteor.absoluteUrl(`/#/dispense?tab=0&_id=${_id}`);
-
-    //   const target = collection.findOne({ drug: obj.drug });
-    //   QRCode.toDataURL(URL)
-    //   .then(url => {
-    //     obj.lotIds.QRCode = url;
-
-    //     // merge on array if name exists
-    //     if (target) {
-    //       obj.lotIds = [ ...target.lotIds, obj.lotIds ];
-    //       const data = { lotIds: obj.lotIds };
-    //       collection.update(target._id, data);
-    //     } else {
-    //       obj.lotIds = [obj.lotIds]; // to array
-    //       collection.define(obj);
-    //     }
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-    // });
   }
   // count += collection.count();
 
