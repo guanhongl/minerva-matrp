@@ -30,44 +30,38 @@ if (Stuffs.count() === 0) {
   }
 }
 
-if (Meteor.settings.loadAssetsFile && Medications.count() === 0) {
-  // Medications._collection.remove({}); // clear collection (temporary)
-  console.log('Loading medications from private/sample_medication.json');
-  // jsonData.medications.map(medication => Medications.define(medication));
-  sampleMedication.map(medication => Medications.define(medication));
-}
+// if (Meteor.settings.loadAssetsFile && Medications.count() === 0) {
+//   console.log('Loading medications from private/sample_medication.json');
+//   // jsonData.medications.map(medication => Medications.define(medication));
+//   sampleMedication.map(medication => Medications.define(medication));
+// }
 
 if (Meteor.settings.loadAssetsFile && Historicals.count() === 0) {
-  // Historicals._collection.remove({}); // clear collection (temporary)
   console.log('Loading history from private/historicals.json');
   sampleHistorical.slice(0, 500).map(historical => Historicals.define(historical));
 }
 
 if (Meteor.settings.loadAssetsFile && DrugTypes.count() === 0) {
-  // DrugTypes._collection.remove({}); // clear collection (temporary)
   console.log(`Loading drugTypes from private/${assetsFileName}`);
   jsonData.drugTypes.map(drugType => DrugTypes.define(drugType));
 }
 
 if (Meteor.settings.loadAssetsFile && Locations.count() === 0) {
-  // Locations._collection.remove({}); // clear collection (temporary)
   console.log(`Loading locations from private/${assetsFileName}`);
   jsonData.locations.map(location => Locations.define(location));
 }
 
 if (Meteor.settings.loadAssetsFile && Sites.count() === 0) {
-  // Sites._collection.remove({}); // clear collection (temporary)
   console.log(`Loading sites from private/${assetsFileName}`);
   jsonData.sites.map(site => Sites.define(site));
 }
 
-if (Meteor.settings.loadAssetsFile && Supplys.count() === 0) {
-  // Supplys._collection.remove({});
-  console.log('Loading supplies from private/sample_supply.json');
-  sampleSupply.map(supply => Supplys.define(supply));
-}
+// if (Meteor.settings.loadAssetsFile && Supplys.count() === 0) {
+//   console.log('Loading supplies from private/sample_supply.json');
+//   sampleSupply.map(supply => Supplys.define(supply));
+// }
 
-if (Meteor.settings.loadAssetsFile && Vaccinations.count() === 0) {
-  console.log('Loading vaccines from private/sample_vaccines.json');
-  sampleVaccines.map(vaccine => Vaccinations.define(vaccine));
-}
+// if (Meteor.settings.loadAssetsFile && Vaccinations.count() === 0) {
+//   console.log('Loading vaccines from private/sample_vaccines.json');
+//   sampleVaccines.map(vaccine => Vaccinations.define(vaccine));
+// }

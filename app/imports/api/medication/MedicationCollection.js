@@ -177,6 +177,19 @@ class MedicationCollection extends BaseCollection {
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ADMIN, ROLE.USER, ROLE.SUPERUSER]);
   }
+
+  /**
+   * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
+   */
+   dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const drug = doc.drug;
+    const drugType = doc.drugType.join();
+    const minQuantity = doc.minQuantity;
+    const unit = doc.unit;
+    const lotIds = doc.lotIds;
+    return { drug, drugType, minQuantity, unit, lotIds };
+  }
 }
 
 /**

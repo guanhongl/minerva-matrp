@@ -4,7 +4,7 @@ import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import QRCode from 'qrcode';
-import { v4 as uuidv4 } from 'uuid';
+import { Random } from 'meteor/random'
 import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
@@ -21,7 +21,7 @@ const submit = (data, callback) => {
   const exists_id = exists?.stock?.find(obj => obj.location === location && obj.donated === donated)?._id;
 
   // generate the QRCode and the uuid for the location + donated
-  const _id = exists_id ?? uuidv4();
+  const _id = exists_id ?? Random.id();
   QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=2&_id=${_id}`)
     .then(url => {
       // if the supply does not exist:

@@ -1,0 +1,10 @@
+vaccine,brand,minQuantity,visDate,lotIds.lotId,lotIds.expire,lotIds.location,lotIds.quantity,lotIds.note
+Adenovirus,Barr Labs Inc.,70,12/27/2024,MEUa19,3/21/2023,Refrigerator,128,Example note for Barr Labs Inc. Adenovirus.
+Adenovirus,Barr Labs Inc.,70,12/27/2024,We9ERy,8/25/2022,Refrigerator,65,Example note for Barr Labs Inc. Adenovirus.
+Anthrax,Emergent,20,10/18/2024,dRgjna,7/22/2023,Refrigerator,11,Example note for Emergent Anthrax.
+Anthrax,Emergent,20,10/18/2024,RNLipN,2/3/2023,Refrigerator,11,Example note for Emergent Anthrax.
+Anthrax,BioSolutions,10,3/8/2023,ZBlpaG,7/31/2024,Refrigerator,9,Example note for BioSolutions Anthrax.
+Anthrax,BioSolutions,10,3/8/2023,U8pt40,3/17/2025,Refrigerator,9,Example note for BioSolutions Anthrax.
+Cholera,PaxVax,40,11/25/2021,V3Niz1,4/20/2024,Refrigerator,3,Example note for PaxVax Cholera.
+Cholera,PaxVax,40,11/25/2021,Sb1zCP,8/29/2022,Refrigerator,3,Example note for PaxVax Cholera.
+DT,sanofi,40,8/5/2022,lD2Et9,6/1/2022,Refrigerator,39,Example note for sanofi DT.

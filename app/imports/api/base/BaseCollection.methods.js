@@ -60,7 +60,7 @@ export const dumpDatabaseMethod = new ValidatedMethod({
   name: 'base.dumpDatabase',
   mixins: [CallPromiseMixin],
   validate: null,
-  run() {
+  run(db) {
     if (!this.userId) {
       throw new Meteor.Error('unauthorized', 'You must be logged in to dump the database..');
     } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
@@ -69,10 +69,12 @@ export const dumpDatabaseMethod = new ValidatedMethod({
     // Don't do the dump except on server side (disable client-side simulation).
     // Return an object with fields timestamp and collections.
     if (Meteor.isServer) {
-      const collections = _.sortBy(MATRP.collectionLoadSequence.map((collection) => collection.dumpAll()),
-        (entry) => entry.name);
-      const timestamp = new Date();
-      return { timestamp, collections };
+      // const collections = _.sortBy(MATRP.collectionLoadSequence.map((collection) => collection.dumpAll()),
+      //   (entry) => entry.name);
+      // const timestamp = new Date();
+      // return { timestamp, collections };
+      const collection = _.sortBy(MATRP[db].dumpAll(), (entry) => Object.values(entry)[0]);
+      return collection;
     }
     return null;
   },
@@ -82,8 +84,7 @@ export const loadFixtureMethod = new ValidatedMethod({
   name: 'base.loadFixture',
   mixins: [CallPromiseMixin],
   validate: null,
-  run(fixtureData) {
-    // console.log('loadFixtureMethod', fixtureData);
+  run({ fixtureData, db }) {
     if (!this.userId) {
       throw new Meteor.Error('unauthorized', 'You must be logged in to load a fixture.', '');
     } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
@@ -91,15 +92,16 @@ export const loadFixtureMethod = new ValidatedMethod({
     }
     if (Meteor.isServer) {
       let ret = '';
-      // console.log(RadGrad.collectionLoadSequence);
-      MATRP.collectionLoadSequence.forEach((collection) => {
-        const result = loadCollectionNewDataOnly(collection, fixtureData, true);
-        // console.log(collection.getCollectionName(), result);
-        if (result) {
-          ret = `${ret} ${result},`;
-        }
-      });
-      // console.log(`loadFixtureMethod ${ret}`);
+      // MATRP.collectionLoadSequence.forEach((collection) => {
+      //   const result = loadCollectionNewDataOnly(collection, fixtureData, true);
+      //   if (result) {
+      //     ret = `${ret} ${result},`;
+      //   }
+      // });
+      const result = loadCollectionNewDataOnly(MATRP[db], fixtureData, true);
+      if (result) {
+        ret = `${ret} ${result},`;
+      }
       const trimmed = ret.trim();
       if (trimmed.length === 0) {
         ret = 'Defined no new instances.';
@@ -122,5 +124,34 @@ export const updateManyMethod = new ValidatedMethod({
       collection.assertValidRoleForMethod(this.userId);
       collection.updateMany(updateObjects);
     }
+  },
+});
+
+export const resetDatabaseMethod = new ValidatedMethod({
+  name: 'base.resetDatabase',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run(db) {
+    if (!this.userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in to reset the database..');
+    } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to reset the database.');
+    }
+    if (Meteor.isServer) {
+      return MATRP[db].resetDB();
+    }
+    return null;
+  },
+});
+
+export const readCSVMethod = new ValidatedMethod({
+  name: 'base.readCSV',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run(db) {
+    if (Meteor.isServer) {
+      return Assets.getText(`${db}_template.csv`);
+    }
+    return null;
   },
 });

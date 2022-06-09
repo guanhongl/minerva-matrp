@@ -226,10 +226,11 @@ class BaseCollection {
    * @returns {Object} An object representing the contents of this collection.
    */
   dumpAll() {
-    const dumpObject = {
-      name: this._collectionName,
-      contents: this.find().map((docID) => this.dumpOne(docID)),
-    };
+    // const dumpObject = {
+    //   name: this._collectionName,
+    //   contents: this.find().map((docID) => this.dumpOne(docID)),
+    // };
+    const dumpObject = this.find().map((docID) => this.dumpOne(docID));
     // If a collection doesn't want to be dumped, it can just return null from dumpOne.
     dumpObject.contents = _.without(dumpObject.contents, null);
     // sort the contents array by slug (if present)
@@ -274,6 +275,13 @@ class BaseCollection {
     updateObjects.forEach((updateObject) => this.update(updateObject.id, updateObject));
   }
 
+  /**
+   * 
+   * @returns the number of removed documents
+   */
+  resetDB() {
+    return this._collection.remove({});
+  }
 }
 
 export default BaseCollection;

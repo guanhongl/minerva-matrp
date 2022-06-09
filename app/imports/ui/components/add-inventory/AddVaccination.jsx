@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import QRCode from 'qrcode';
-import { v4 as uuidv4 } from 'uuid';
+import { Random } from 'meteor/random'
 import { Locations } from '../../../api/location/LocationCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
@@ -16,13 +16,13 @@ import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.met
 const submit = (data, callback) => {
   const { vaccine, minQuantity, quantity, visDate, brand, lotId, expire, location, note } = data;
   const collectionName = Vaccinations.getCollectionName();
-  const exists = Vaccinations.findOne({ vaccine }); // returns the existing vaccine or undefined
+  const exists = Vaccinations.findOne({ vaccine, brand }); // returns the existing vaccine or undefined
 
   // attempts to find an existing _id
   const exists_id = exists?.lotIds?.find(obj => obj.lotId === lotId)?._id;
 
   // generate the QRCode and the uuid for the lotId
-  const _id = exists_id ?? uuidv4();
+  const _id = exists_id ?? Random.id();
   QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=1&_id=${_id}`)
     .then(url => {
       // if the vaccine does not exist:
@@ -156,6 +156,7 @@ const AddVaccination = ({ ready, vaccines, locations, lotIds, brands }) => {
   };
 
   // handles vaccine select
+  // TODO: consider brand
   const onVaccineSelect = (event, { value: vaccine }) => {
     const target = Vaccinations.findOne({ vaccine });
     // if the vaccine exists:

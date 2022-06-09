@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Form, Header, Segment } from 'semantic-ui-react';
 import { loadFixtureMethod } from '../../api/base/BaseCollection.methods';
 import UploadFixtureResult from './UploadFixtureResult';
+import csv from 'csvtojson';
 
-const UploadFixture = () => {
+const UploadFixture = ({ db }) => {
   const [fileDataState, setFileData] = useState('');
   const [uploadResult, setUploadResult] = useState('');
   const [error, setError] = useState(false);
@@ -20,10 +21,26 @@ const UploadFixture = () => {
   };
 
   const onSubmit = () => {
-    const jsonData = fileDataState ? JSON.parse(fileDataState) : false;
-    if (jsonData) {
+    // const jsonData = fileDataState ? JSON.parse(fileDataState) : false;
+    // if (jsonData) {
+    //   setUploadFixtureWorking(true);
+    //   loadFixtureMethod.callPromise(jsonData)
+    //     .then(result => { setUploadResult(result); })
+    //     .catch(err => { setError(true); setUploadResult(err.message); })
+    //     .finally(() => { console.log('finally'); setUploadFixtureWorking(false); });
+    // } else {
+    //   setError(true);
+    //   setUploadResult('No file specified');
+    // }
+
+    if (fileDataState) {
       setUploadFixtureWorking(true);
-      loadFixtureMethod.callPromise(jsonData)
+
+      csv({ checkType: true }).fromString(fileDataState)
+        .then((fixtureData) => {
+          console.log(fixtureData)
+          return loadFixtureMethod.callPromise({ fixtureData, db });
+        })
         .then(result => { setUploadResult(result); })
         .catch(err => { setError(true); setUploadResult(err.message); })
         .finally(() => { console.log('finally'); setUploadFixtureWorking(false); });
@@ -32,19 +49,20 @@ const UploadFixture = () => {
       setUploadResult('No file specified');
     }
   };
+
   return (
-    <Segment>
-      <Header dividing>Upload DB Fixture</Header>
+    // <Segment>
+    //   <Header dividing>Upload DB Fixture</Header>
       <Form widths="equal" onSubmit={onSubmit}>
         <Form.Field>
-          <Form.Input type="file" onChange={readFile} label="Fixture File" />
-          <Form.Button basic color="green" loading={uploadFixtureWorking} type="Submit">
-            Upload Fixture
+          <Form.Input type="file" onChange={readFile} />
+          <Form.Button color="green" loading={uploadFixtureWorking} type="Submit" fluid size='massive'>
+            Upload {db}
           </Form.Button>
         </Form.Field>
       </Form>
-      {uploadResult ? <UploadFixtureResult error={error} message={uploadResult} /> : ''}
-    </Segment>
+      // {uploadResult ? <UploadFixtureResult error={error} message={uploadResult} /> : ''}
+    // </Segment>
   );
 };
 

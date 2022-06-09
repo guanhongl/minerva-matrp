@@ -158,6 +158,18 @@ class SupplyCollection extends BaseCollection {
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ADMIN, ROLE.USER, ROLE.SUPERUSER]);
   }
+
+  /**
+   * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
+   */
+   dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const supply = doc.supply;
+    const supplyType = doc.supplyType;
+    const minQuantity = doc.minQuantity;
+    const stock = doc.stock;
+    return { supply, supplyType, minQuantity, stock };
+  }
 }
 
 /**
