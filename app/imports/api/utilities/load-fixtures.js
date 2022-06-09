@@ -30,7 +30,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
   // });
 
   // TEMPORARY
-  collection._collection.remove({});
+  // collection._collection.remove({});
 
   if (collection.count() === 0) {
     const promises = [];
@@ -51,6 +51,8 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
         loadJSON.forEach((obj, idx) => {
           obj.drugType = obj.drugType.split(','); // parse type
           // obj.lotIds.expire = moment(obj.lotIds.expire).format('YYYY-MM-DD'); // parse date
+          obj.lotIds.expire = format(obj.lotIds.expire); // parse date
+
           obj.lotIds._id = _ids[idx];
           obj.lotIds.QRCode = urls[idx];
     
@@ -109,4 +111,17 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
     console.log(retVal);
   }
   return retVal;
+};
+
+// MM/DD/YYYY to YYYY-MM-DD
+const format = (date) => {
+  if (!date) {
+    return '';
+  }
+
+  let d = new Date(date);
+  const o = d.getTimezoneOffset();
+  d = new Date(d.getTime() - (o * 60 * 1000));
+
+  return d.toISOString().split('T')[0];
 };
