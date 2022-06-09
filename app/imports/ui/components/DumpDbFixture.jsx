@@ -60,8 +60,8 @@ const DumpDbFixture = ({ db }) => {
     // <Segment>
     //   <Header dividing>Dump DB Fixture</Header>
       <Form>
-        <Button color="green" loading={inProgress} basic type="submit" onClick={onClick}>
-          Dump Database
+        <Button color="blue" loading={inProgress} type="submit" onClick={onClick} fluid size='massive'>
+          Download {db}
         </Button>
         {/* {results.length > 0 ? (
           <Grid stackable style={{ paddingTop: 20 }}>

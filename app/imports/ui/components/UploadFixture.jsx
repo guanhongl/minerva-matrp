@@ -56,8 +56,8 @@ const UploadFixture = ({ db }) => {
       <Form widths="equal" onSubmit={onSubmit}>
         <Form.Field>
           <Form.Input type="file" onChange={readFile} />
-          <Form.Button basic color="green" loading={uploadFixtureWorking} type="Submit">
-            Upload Fixture
+          <Form.Button color="green" loading={uploadFixtureWorking} type="Submit" fluid size='massive'>
+            Upload {db}
           </Form.Button>
         </Form.Field>
       </Form>

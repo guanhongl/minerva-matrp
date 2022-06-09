@@ -70,10 +70,10 @@ const ManageDatabase = () => {
           </Header>
         </Segment>
         <Segment>
-          <Card.Group>
+          <Card.Group itemsPerRow={2}>
             <Card key='upload'>
               <Card.Content>
-                <Card.Header>Upload {db}</Card.Header>
+                {/* <Card.Header>Upload {db}</Card.Header> */}
                 <Card.Description>
                   <UploadFixture db={db} />
                 </Card.Description>
@@ -81,7 +81,7 @@ const ManageDatabase = () => {
             </Card>
             <Card key='download'>
               <Card.Content>
-                <Card.Header>Download {db}</Card.Header>
+                {/* <Card.Header>Download {db}</Card.Header> */}
                 <Card.Description>
                   <DumpDbFixture db={db} />
                 </Card.Description>
@@ -89,11 +89,11 @@ const ManageDatabase = () => {
             </Card>
             <Card key='reset'>
               <Card.Content>
-                <Card.Header>Reset {db}</Card.Header>
+                {/* <Card.Header>Reset {db}</Card.Header> */}
                 <Card.Description>
                   <Form>
-                    <Button color="red" loading={reset} basic onClick={onClickReset}>
-                      Reset Database
+                    <Button color="red" loading={reset} onClick={onClickReset} fluid size='massive'>
+                      Reset {db}
                     </Button>
                   </Form>
                 </Card.Description>
@@ -101,11 +101,11 @@ const ManageDatabase = () => {
             </Card>
             <Card key='template'>
               <Card.Content>
-                <Card.Header>Download {db} template</Card.Header>
+                {/* <Card.Header>Download {db} template</Card.Header> */}
                 <Card.Description>
                   <Form>
-                    <Button color="green" basic onClick={onClickTemplate}>
-                      Download Template
+                    <Button color="orange" onClick={onClickTemplate} fluid size='massive'>
+                      Download {db} template
                     </Button>
                   </Form>
                 </Card.Description>

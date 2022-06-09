@@ -156,6 +156,7 @@ const AddVaccination = ({ ready, vaccines, locations, lotIds, brands }) => {
   };
 
   // handles vaccine select
+  // TODO: consider brand
   const onVaccineSelect = (event, { value: vaccine }) => {
     const target = Vaccinations.findOne({ vaccine });
     // if the vaccine exists:

@@ -1,5 +1,6 @@
 #manage-database .ui.card .description {
+    min-height: 120px;
     display: flex;
     flex-direction: column;
-    
+    justify-content: flex-end;
 }
