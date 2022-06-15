@@ -5,7 +5,7 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineInfoPage from './VaccineInfoPage';
-import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { Vaccines } from '../../../api/vaccine/VaccineCollection';
 import { removeItMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
 const VaccineStatusRow = ({ vaccine, locations }) => {
@@ -51,7 +51,7 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
       .then((isConfirm) => {
         // if 'yes'
         if (isConfirm) {
-          const collectionName = Vaccinations.getCollectionName();
+          const collectionName = Vaccines.getCollectionName();
           removeItMethod.callPromise({ collectionName, instance: vaccine._id })
             .then(() => swal('Success', `${vaccine.vaccine} deleted successfully`, 'success', { buttons: false, timer: 3000 }))
             .catch(error => swal('Error', error.message, 'error'));
@@ -73,8 +73,8 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
       .then((isConfirm) => {
         // if 'yes'
         if (isConfirm) {
-          const collectionName = Vaccinations.getCollectionName();
-          const exists = Vaccinations.findOne({ _id: vaccine._id });
+          const collectionName = Vaccines.getCollectionName();
+          const exists = Vaccines.findOne({ _id: vaccine._id });
           const { lotIds } = exists;
           const targetIndex = lotIds.findIndex((obj => obj._id === uuid));
           lotIds.splice(targetIndex, 1);

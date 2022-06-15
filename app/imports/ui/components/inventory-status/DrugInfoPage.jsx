@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Medications } from '../../../api/medication/MedicationCollection';
+import { Drugs } from '../../../api/drug/DrugCollection';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { printQRCode, getOptions } from '../../utilities/Functions';
 
-const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, 
+const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, 
                        detail: { _id: uuid, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode },
                        drugTypes, locations, units }) => {
   const [open, setOpen] = useState(false);
@@ -46,8 +46,8 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
     fields.newMinQuantity = parseInt(fields.newMinQuantity, 10);
     fields.newQuantity = parseInt(fields.newQuantity, 10);
 
-    const collectionName = Medications.getCollectionName();
-    const exists = Medications.findOne({ _id });
+    const collectionName = Drugs.getCollectionName();
+    const exists = Drugs.findOne({ _id });
     const { lotIds } = exists;
     const target = lotIds.find(obj => obj._id === uuid);
     target.lotId = fields.newLotId;
@@ -236,9 +236,9 @@ const MedInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
 };
 
 // Require info and detail to be passed to this component.
-MedInfoPage.propTypes = {
+DrugInfoPage.propTypes = {
   info: PropTypes.object.isRequired,
   detail: PropTypes.object.isRequired,
 };
 
-export default MedInfoPage;
+export default DrugInfoPage;

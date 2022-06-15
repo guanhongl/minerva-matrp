@@ -6,8 +6,8 @@ import { SuperUserProfiles } from '../user/SuperUserProfileCollection';
 import { DrugTypes } from '../drugType/DrugTypeCollection';
 import { Locations } from '../location/LocationCollection';
 import { Sites } from '../site/SiteCollection';
-import { Medications } from '../medication/MedicationCollection';
-import { Vaccinations } from '../vaccination/VaccinationCollection';
+import { Drugs } from '../drug/DrugCollection';
+import { Vaccines } from '../vaccine/VaccineCollection';
 import { Historicals } from '../historical/HistoricalCollection';
 import { Supplys } from '../supply/SupplyCollection';
 import { PendingUsers } from '../PendingUserCollection';
@@ -29,8 +29,8 @@ class MATRPClass {
       DrugTypes,
       Locations,
       Sites,
-      Medications,
-      Vaccinations,
+      Drugs,
+      Vaccines,
       Historicals,
       Supplys,
       PendingUsers,
@@ -47,21 +47,21 @@ class MATRPClass {
     //   DrugTypes,
     //   Locations,
     //   Sites,
-    //   Medications,
-    //   Vaccinations,
+    //   Drugs,
+    //   Vaccines,
     //   Historicals,
     //   Supplys,
     //   PendingUsers,
     // ];
 
     this.collectionLoadSequence = [
-      Medications,
-      Vaccinations,
+      Drugs,
+      Vaccines,
       Supplys,
     ];
 
-    this.drugs = Medications;
-    this.vaccines = Vaccinations;
+    this.drugs = Drugs;
+    this.vaccines = Vaccines;
     this.supplies = Supplys;
 
     /*

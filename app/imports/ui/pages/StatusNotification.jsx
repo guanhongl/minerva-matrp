@@ -3,7 +3,7 @@ import { Loader, Label, Icon, Popup } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { Medications } from '../../api/medication/MedicationCollection';
+import { Drugs } from '../../api/drug/DrugCollection';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 // Render the form.
@@ -81,11 +81,11 @@ StatusNotification.propTypes = {
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
-  const medSub = Medications.subscribeMedication();
+  const medSub = Drugs.subscribeDrug();
   // Determine if the subscription is ready
   const ready = medSub.ready();
   // Get the Medication documents and sort them by name.
-  const medications = Medications.find({}, { sort: { drug: 1 } }).fetch();
+  const medications = Drugs.find({}, { sort: { drug: 1 } }).fetch();
   return {
     medications,
     ready,

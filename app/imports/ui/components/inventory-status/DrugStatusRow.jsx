@@ -3,12 +3,12 @@ import { Icon, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
-import MedInfoPage from './MedInfoPage';
+import DrugInfoPage from './DrugInfoPage';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Medications } from '../../../api/medication/MedicationCollection';
+import { Drugs } from '../../../api/drug/DrugCollection';
 import { removeItMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
-const MedStatusRow = ({ med, drugTypes, locations, units }) => {
+const DrugStatusRow = ({ med, drugTypes, locations, units }) => {
   const [expand, setExpand] = useState(false);
   
   const handleOpen = () => setExpand(!expand);
@@ -52,7 +52,7 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
       .then((isConfirm) => {
         // if 'yes'
         if (isConfirm) {
-          const collectionName = Medications.getCollectionName();
+          const collectionName = Drugs.getCollectionName();
           removeItMethod.callPromise({ collectionName, instance: med._id })
             .then(() => swal('Success', `${med.drug} deleted successfully`, 'success', { buttons: false, timer: 3000 }))
             .catch(error => swal('Error', error.message, 'error'));
@@ -74,8 +74,8 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
       .then((isConfirm) => {
         // if 'yes'
         if (isConfirm) {
-          const collectionName = Medications.getCollectionName();
-          const exists = Medications.findOne({ _id: med._id });
+          const collectionName = Drugs.getCollectionName();
+          const exists = Drugs.findOne({ _id: med._id });
           const { lotIds } = exists;
           const targetIndex = lotIds.findIndex((obj => obj._id === uuid));
           lotIds.splice(targetIndex, 1);
@@ -142,7 +142,7 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
                     <Table.Cell className='icons'>
                       {/* <Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DRUG_PAGE_BUTTON}
                         onClick={() => setOpen(true)} /> */}
-                      <MedInfoPage info={med} detail={med.lotIds[index]} drugTypes={drugTypes} locations={locations} units={units} />
+                      <DrugInfoPage info={med} detail={med.lotIds[index]} drugTypes={drugTypes} locations={locations} units={units} />
                       <Icon name='trash alternate' onClick={() => deleteLot(uuid, lotId)} />
                     </Table.Cell>
                   </Table.Row>
@@ -156,7 +156,7 @@ const MedStatusRow = ({ med, drugTypes, locations, units }) => {
   );
 };
 
-MedStatusRow.propTypes = {
+DrugStatusRow.propTypes = {
   med: PropTypes.shape({
     drug: PropTypes.string,
     drugType: PropTypes.array,
@@ -167,4 +167,4 @@ MedStatusRow.propTypes = {
   }).isRequired,
 };
 
-export default MedStatusRow;
+export default DrugStatusRow;

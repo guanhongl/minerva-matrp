@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../../api/stuff/StuffCollection';
-import { Medications } from '../../api/medication/MedicationCollection';
+import { Drugs } from '../../api/drug/DrugCollection';
 import { DrugTypes } from '../../api/drugType/DrugTypeCollection';
 import { Locations } from '../../api/location/LocationCollection';
 import { Sites } from '../../api/site/SiteCollection';
 import { Historicals } from '../../api/historical/HistoricalCollection';
 import { Supplys } from '../../api/supply/SupplyCollection';
-import { Vaccinations } from '../../api/vaccination/VaccinationCollection';
+import { Vaccines } from '../../api/vaccine/VaccineCollection';
 /* eslint-disable no-console */
 
 // Initialize the database with a default data document.
@@ -17,7 +17,7 @@ function addData(data) {
 
 const assetsFileName = 'data.json';
 const jsonData = JSON.parse(Assets.getText(assetsFileName));
-const sampleMedication = JSON.parse(Assets.getText('sample_medication.json'));
+const sampleMedication = JSON.parse(Assets.getText('sample_drug.json'));
 const sampleSupply = JSON.parse(Assets.getText('sample_supply.json'));
 const sampleHistorical = JSON.parse(Assets.getText('historicals.json'));
 const sampleVaccines = JSON.parse(Assets.getText('sample_vaccines.json'));
@@ -30,10 +30,10 @@ if (Stuffs.count() === 0) {
   }
 }
 
-// if (Meteor.settings.loadAssetsFile && Medications.count() === 0) {
-//   console.log('Loading medications from private/sample_medication.json');
-//   // jsonData.medications.map(medication => Medications.define(medication));
-//   sampleMedication.map(medication => Medications.define(medication));
+// if (Meteor.settings.loadAssetsFile && Drugs.count() === 0) {
+//   console.log('Loading medications from private/sample_drug.json');
+//   // jsonData.medications.map(medication => Drugs.define(medication));
+//   sampleMedication.map(medication => Drugs.define(medication));
 // }
 
 if (Meteor.settings.loadAssetsFile && Historicals.count() === 0) {
@@ -61,7 +61,7 @@ if (Meteor.settings.loadAssetsFile && Sites.count() === 0) {
 //   sampleSupply.map(supply => Supplys.define(supply));
 // }
 
-// if (Meteor.settings.loadAssetsFile && Vaccinations.count() === 0) {
+// if (Meteor.settings.loadAssetsFile && Vaccines.count() === 0) {
 //   console.log('Loading vaccines from private/sample_vaccines.json');
-//   sampleVaccines.map(vaccine => Vaccinations.define(vaccine));
+//   sampleVaccines.map(vaccine => Vaccines.define(vaccine));
 // }

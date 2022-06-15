@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import QRCode from 'qrcode';
 import { Random } from 'meteor/random'
-import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
+import { Drugs, allowedUnits } from '../../../api/drug/DrugCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
@@ -16,8 +16,8 @@ import { distinct, getOptions, nestedDistinct, printQRCode } from '../../utiliti
 /** handles submit for add medication. */
 const submit = (data, callback) => {
   const { drug, drugType, minQuantity, quantity, unit, brand, lotId, expire, location, donated, donatedBy, note } = data;
-  const collectionName = Medications.getCollectionName();
-  const exists = Medications.findOne({ drug }); // returns the existing medication or undefined
+  const collectionName = Drugs.getCollectionName();
+  const exists = Drugs.findOne({ drug }); // returns the existing medication or undefined
   
   // attempts to find an existing _id
   const exists_id = exists?.lotIds?.find(obj => obj.lotId === lotId)?._id;
@@ -93,7 +93,7 @@ const validateForm = (data, callback) => {
 };
 
 /** Renders the Page for Add Medication. */
-const AddMedication = ({ drugTypes, ready, drugs, lotIds, brands, locations }) => {
+const AddDrug = ({ drugTypes, ready, drugs, lotIds, brands, locations }) => {
   const [fields, setFields] = useState({
     drug: '',
     drugType: [],
@@ -169,7 +169,7 @@ const AddMedication = ({ drugTypes, ready, drugs, lotIds, brands, locations }) =
 
   // handles drug select
   const onDrugSelect = (event, { value: drug }) => {
-    const target = Medications.findOne({ drug });
+    const target = Drugs.findOne({ drug });
     // if the drug exists:
     if (target) {
       // autofill the form with specific drug info
@@ -190,7 +190,7 @@ const AddMedication = ({ drugTypes, ready, drugs, lotIds, brands, locations }) =
 
   // handles lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
-    const target = Medications.findOne({ lotIds: { $elemMatch: { lotId } } });
+    const target = Drugs.findOne({ lotIds: { $elemMatch: { lotId } } });
     // if the lotId exists:
     if (target) {
       // autofill the form with specific lotId info
@@ -210,7 +210,7 @@ const AddMedication = ({ drugTypes, ready, drugs, lotIds, brands, locations }) =
   const onBrandSelect = (event, { value: brand }) => {
     setFields({ ...fields, brand });
     // filter drugs
-    const filter = distinct('drug', Medications, { lotIds: { $elemMatch: { brand } } });
+    const filter = distinct('drug', Drugs, { lotIds: { $elemMatch: { brand } } });
     if (filter.length && !fields.drug) {
       setFilteredDrugs(filter);
     } else {
@@ -231,7 +231,7 @@ const AddMedication = ({ drugTypes, ready, drugs, lotIds, brands, locations }) =
       <Tab.Pane id={COMPONENT_IDS.ADD_FORM} >
         <Header as="h2">
           <Header.Content>
-              Add Medication to Inventory Form
+              Add Drugs to Inventory Form
             <Header.Subheader>
               <i>Please input the following information to add to the inventory, to the best of your abilities.</i>
             </Header.Subheader>
@@ -332,7 +332,7 @@ const AddMedication = ({ drugTypes, ready, drugs, lotIds, brands, locations }) =
 };
 
 /** Require an array of Drugs, DrugTypes, LotIds, Locations, and Brands in the props. */
-AddMedication.propTypes = {
+AddDrug.propTypes = {
   drugs: PropTypes.array.isRequired,
   drugTypes: PropTypes.array.isRequired,
   lotIds: PropTypes.array.isRequired,
@@ -345,13 +345,13 @@ AddMedication.propTypes = {
 export default withTracker(() => {
   const typeSub = DrugTypes.subscribeDrugType();
   const locationSub = Locations.subscribeLocation();
-  const medSub = Medications.subscribeMedication();
+  const medSub = Drugs.subscribeDrug();
   return {
-    drugs: distinct('drug', Medications),
+    drugs: distinct('drug', Drugs),
     drugTypes: distinct('drugType', DrugTypes),
-    lotIds: nestedDistinct('lotId', Medications),
+    lotIds: nestedDistinct('lotId', Drugs),
     locations: distinct('location', Locations),
-    brands: nestedDistinct('brand', Medications),
+    brands: nestedDistinct('brand', Drugs),
     ready: typeSub.ready() && locationSub.ready() && medSub.ready(),
   };
-})(AddMedication);
+})(AddDrug);

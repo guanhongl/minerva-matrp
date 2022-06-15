@@ -8,15 +8,15 @@ import QRCode from 'qrcode';
 import { Random } from 'meteor/random'
 import { Locations } from '../../../api/location/LocationCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { Vaccines } from '../../../api/vaccine/VaccineCollection';
 import { distinct, getOptions, nestedDistinct, printQRCode } from '../../utilities/Functions';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
 /** On submit, insert the data. */
 const submit = (data, callback) => {
   const { vaccine, minQuantity, quantity, visDate, brand, lotId, expire, location, note } = data;
-  const collectionName = Vaccinations.getCollectionName();
-  const exists = Vaccinations.findOne({ vaccine, brand }); // returns the existing vaccine or undefined
+  const collectionName = Vaccines.getCollectionName();
+  const exists = Vaccines.findOne({ vaccine, brand }); // returns the existing vaccine or undefined
 
   // attempts to find an existing _id
   const exists_id = exists?.lotIds?.find(obj => obj.lotId === lotId)?._id;
@@ -92,7 +92,7 @@ const validateForm = (data, callback) => {
 };
 
 /** Renders the Page for Add Vaccine */
-const AddVaccination = ({ ready, vaccines, locations, lotIds, brands }) => {
+const AddVaccine = ({ ready, vaccines, locations, lotIds, brands }) => {
   const [fields, setFields] = useState({
     vaccine: '',
     brand: '',
@@ -158,7 +158,7 @@ const AddVaccination = ({ ready, vaccines, locations, lotIds, brands }) => {
   // handles vaccine select
   // TODO: consider brand
   const onVaccineSelect = (event, { value: vaccine }) => {
-    const target = Vaccinations.findOne({ vaccine });
+    const target = Vaccines.findOne({ vaccine });
     // if the vaccine exists:
     if (target) {
       // autofill the form with specific vaccine info
@@ -177,7 +177,7 @@ const AddVaccination = ({ ready, vaccines, locations, lotIds, brands }) => {
 
   // handles lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
-    const target = Vaccinations.findOne({ lotIds: { $elemMatch: { lotId } } });
+    const target = Vaccines.findOne({ lotIds: { $elemMatch: { lotId } } });
     // if the lotId exists:
     if (target) {
       // autofill the form with specific lotId info
@@ -205,7 +205,7 @@ const AddVaccination = ({ ready, vaccines, locations, lotIds, brands }) => {
       <Tab.Pane id={COMPONENT_IDS.ADD_FORM}>
         <Header as="h2">
           <Header.Content>
-              Add Vaccine to Inventory Form
+              Add Vaccines to Inventory Form
             <Header.Subheader>
               <i>Please input the following information to add to the inventory, to the best of your abilities.</i>
             </Header.Subheader>
@@ -287,7 +287,7 @@ const AddVaccination = ({ ready, vaccines, locations, lotIds, brands }) => {
 };
 
 /** Require an array of Stuff documents in the props. */
-AddVaccination.propTypes = {
+AddVaccine.propTypes = {
   vaccines: PropTypes.array.isRequired,
   lotIds: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
@@ -295,17 +295,16 @@ AddVaccination.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
-// Currently vaccination subscribes to same drugType collection as medication collection.
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const locationSub = Locations.subscribeLocation();
-  const vacSub = Vaccinations.subscribeVaccination();
+  const vacSub = Vaccines.subscribeVaccine();
   return {
-    vaccines: distinct('vaccine', Vaccinations),
-    lotIds: nestedDistinct('lotId', Vaccinations),
+    vaccines: distinct('vaccine', Vaccines),
+    lotIds: nestedDistinct('lotId', Vaccines),
     locations: distinct('location', Locations),
-    brands: distinct('brand', Vaccinations),
+    brands: distinct('brand', Vaccines),
     ready: locationSub.ready() && vacSub.ready(),
 
   };
-})(AddVaccination);
+})(AddVaccine);

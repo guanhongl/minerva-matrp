@@ -11,7 +11,7 @@ import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.met
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { distinct, getOptions, printQRCode } from '../../utilities/Functions';
 
-/** handles submit for add medication. */
+/** handles submit for add supply. */
 const submit = (data, callback) => {
   const { supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note } = data;
   const collectionName = Supplys.getCollectionName();

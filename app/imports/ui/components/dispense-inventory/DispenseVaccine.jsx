@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { Vaccines } from '../../../api/vaccine/VaccineCollection';
 import { Sites } from '../../../api/site/SiteCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
 import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
@@ -16,8 +16,8 @@ import { cloneDeep } from 'lodash';
 /** handle submit for Dispense Vaccine. */
 const submit = (data, callback) => {
   const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, vaccine, lotId, brand, expire, dose, visDate, note } = data;
-  const collectionName = Vaccinations.getCollectionName();
-  const targetVaccine = Vaccinations.findOne({ vaccine, brand }); // find the existing vaccine; vaccines are uniquely identified by (vaccine, brand)
+  const collectionName = Vaccines.getCollectionName();
+  const targetVaccine = Vaccines.findOne({ vaccine, brand }); // find the existing vaccine; vaccines are uniquely identified by (vaccine, brand)
   const { _id, lotIds } = targetVaccine;
   const copy = cloneDeep({ id: _id, lotIds }); // the copy of the record to update
   const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId)); // find the index of existing the lotId
@@ -80,7 +80,7 @@ const validateForm = (data, callback) => {
 };
 
 /** Renders the Page for Dispensing Vaccine. */
-const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
+const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
   const query = useQuery();
 
   const [fields, setFields] = useState({
@@ -103,7 +103,7 @@ const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
   useEffect(() => {
     const _id = query.get("_id");
     if (_id && ready) {
-      const target = Vaccinations.findOne({ lotIds: { $elemMatch: { _id } } });
+      const target = Vaccines.findOne({ lotIds: { $elemMatch: { _id } } });
       // autofill the form with specific lotId info
       const targetLotId = target.lotIds.find(obj => obj._id === _id);
       const { vaccine, brand, minQuantity, visDate } = target;
@@ -127,7 +127,7 @@ const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
 
   // handle lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
-    const target = Vaccinations.findOne({ lotIds: { $elemMatch: { lotId } } });
+    const target = Vaccines.findOne({ lotIds: { $elemMatch: { lotId } } });
     // if lotId is not empty:
     if (target) {
       // autofill the form with specific lotId info
@@ -157,7 +157,7 @@ const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
           <Header.Content>
             <Dropdown inline name='dispenseType' options={getOptions(dispenseTypes)}
               onChange={handleChange} value={fields.dispenseType} />
-            Dispense from Vaccine Inventory Form
+            Dispense from Vaccines Inventory Form
             <Header.Subheader>
               <i>Please input the following information to dispense from the inventory,
                 to the best of your abilities.</i>
@@ -238,7 +238,7 @@ const DispenseVaccination = ({ ready, vaccines, brands, lotIds, sites }) => {
   return (<Loader active>Getting data</Loader>);
 };
 
-DispenseVaccination.propTypes = {
+DispenseVaccine.propTypes = {
   sites: PropTypes.array.isRequired,
   vaccines: PropTypes.array.isRequired,
   lotIds: PropTypes.array.isRequired,
@@ -248,13 +248,13 @@ DispenseVaccination.propTypes = {
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const vaccineSub = Vaccinations.subscribeVaccination();
+  const vaccineSub = Vaccines.subscribeVaccine();
   const siteSub = Sites.subscribeSite();
   return {
     sites: distinct('site', Sites),
-    vaccines: distinct('vaccine', Vaccinations),
-    brands: distinct('brand', Vaccinations),
-    lotIds: nestedDistinct('lotId', Vaccinations),
+    vaccines: distinct('vaccine', Vaccines),
+    brands: distinct('brand', Vaccines),
+    lotIds: nestedDistinct('lotId', Vaccines),
     ready: vaccineSub.ready() && siteSub.ready(),
   };
-})(DispenseVaccination);
+})(DispenseVaccine);

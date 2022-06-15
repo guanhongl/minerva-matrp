@@ -4,12 +4,12 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
-import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
+import { Drugs, allowedUnits } from '../../../api/drug/DrugCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import MedStatusRow from './MedStatusRow';
+import DrugStatusRow from './DrugStatusRow';
 import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 
@@ -33,7 +33,7 @@ const statusOptions = [
 const currentDate = moment();
 
 // Render the form.
-const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
+const DrugStatus = ({ ready, medications, drugTypes, locations, brands }) => {
   const [filteredMedications, setFilteredMedications] = useState([]);
   useEffect(() => {
     setFilteredMedications(medications);
@@ -128,7 +128,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
       <Tab.Pane id={PAGE_IDS.MED_STATUS} className='status-tab'>
         <Header as="h2">
           <Header.Content>
-              Medication Inventory Status
+              Drug Inventory Status
             <Header.Subheader>
               <i>Use the search filter to check for a specific drug or
                   use the dropdown filters.</i>
@@ -140,7 +140,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
             <Popup
               trigger={<Input placeholder='Filter by drug name...' icon='search'
                 onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.STATUS_FILTER}/>}
-              content='This allows you to filter the Inventory by medication, brand, LotID, location, and expiration.'
+              content='This allows you to filter the Inventory by drug, brand, LotID, location, and expiration.'
               inverted
             />
           </Grid.Column>
@@ -149,17 +149,17 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
         <Grid divided columns="equal" style={{ display: 'flex' }}>
           <Grid.Row textAlign='center'>
             <Grid.Column>
-                Medication Type: {' '}
+                Drug Type: {' '}
               <Dropdown inline options={getFilters(drugTypes)} search
                 onChange={handleTypeFilter} value={typeFilter} id={COMPONENT_IDS.MEDICATION_TYPE}/>
             </Grid.Column>
             <Grid.Column>
-                Medication Brand: {' '}
+                Drug Brand: {' '}
               <Dropdown inline options={getFilters(brands)} search
                 onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.MEDICATION_BRAND}/>
             </Grid.Column>
             <Grid.Column>
-                Medication Location: {' '}
+                Drug Location: {' '}
               <Dropdown inline options={getFilters(locations)} search
                 onChange={handleLocationFilter} value={locationFilter}
                 id={COMPONENT_IDS.MEDICATION_LOCATION}/>
@@ -182,7 +182,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell/>
-              <Table.HeaderCell>Medication</Table.HeaderCell>
+              <Table.HeaderCell>Drug</Table.HeaderCell>
               <Table.HeaderCell>Type</Table.HeaderCell>
               <Table.HeaderCell>Total Quantity</Table.HeaderCell>
               <Table.HeaderCell>Unit</Table.HeaderCell>
@@ -194,7 +194,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
           <Table.Body>
             {
               filteredMedications.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(med => <MedStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={allowedUnits} />)
+                .map(med => <DrugStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={allowedUnits} />)
             }
           </Table.Body>
 
@@ -240,7 +240,7 @@ const MedStatus = ({ ready, medications, drugTypes, locations, brands }) => {
   return (<Loader active>Getting data</Loader>);
 };
 
-MedStatus.propTypes = {
+DrugStatus.propTypes = {
   medications: PropTypes.array.isRequired,
   drugTypes: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
@@ -250,16 +250,16 @@ MedStatus.propTypes = {
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
-  const medSub = Medications.subscribeMedication();
+  const medSub = Drugs.subscribeDrug();
   const drugTypeSub = DrugTypes.subscribeDrugType();
   const locationSub = Locations.subscribeLocation();
   // Determine if the subscription is ready
   const ready = medSub.ready() && drugTypeSub.ready() && locationSub.ready();
   // Get the Medication documents and sort them by name.
-  const medications = Medications.find({}, { sort: { drug: 1 } }).fetch();
+  const medications = Drugs.find({}, { sort: { drug: 1 } }).fetch();
   const drugTypes = distinct('drugType', DrugTypes);
   const locations = distinct('location', Locations);
-  const brands = nestedDistinct('brand', Medications);
+  const brands = nestedDistinct('brand', Drugs);
   return {
     medications,
     drugTypes,
@@ -267,4 +267,4 @@ export default withTracker(() => {
     brands,
     ready,
   };
-})(MedStatus);
+})(DrugStatus);

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
-import { Medications } from '../../../api/medication/MedicationCollection';
+import { Drugs } from '../../../api/drug/DrugCollection';
 import { defineMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 
 /**
@@ -51,7 +51,7 @@ const deleteOption = (option, id) => {
     .then((isConfirm) => {
       // if 'yes'
       if (isConfirm) {
-        const inUse = Medications.findOne({ drugType: option });
+        const inUse = Drugs.findOne({ drugType: option });
         const collectionName = DrugTypes.getCollectionName();
         // if an existing medication uses the drug type
         if (inUse) {
@@ -103,7 +103,7 @@ ManageDrugTypes.propTypes = {
 };
 
 export default withTracker(() => {
-  const medicationSub = Medications.subscribeMedication();
+  const medicationSub = Drugs.subscribeDrug();
   const drugTypeSub = DrugTypes.subscribeDrugType();
   const drugTypes = DrugTypes.find({}, { sort: { drugType: 1 } }).fetch();
   const ready = drugTypeSub.ready() && medicationSub.ready();

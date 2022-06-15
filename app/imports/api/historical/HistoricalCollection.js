@@ -11,11 +11,11 @@ export const historicalPublications = {
   historicalAdmin: 'HistoricalAdmin',
 };
 
-export const inventoryTypes = ['Medication', 'Vaccine', 'Supply'];
+export const inventoryTypes = ['Drug', 'Vaccine', 'Supply'];
 export const dispenseTypes = ['Patient Use', 'Broken', 'Lost', 'Contaminated', 'Expired', 'Inventory'];
 export const Schemas = {};
-// Medication Schema
-Schemas.Medication = new SimpleSchema({
+// Drug Schema
+Schemas.Drug = new SimpleSchema({
   inventoryType: {
     type: String,
     allowedValues: inventoryTypes,

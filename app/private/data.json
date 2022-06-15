@@ -121,7 +121,7 @@
 
   "historicals": [
     {
-      "inventoryType": "Medication",
+      "inventoryType": "Drug",
       "dispenseType": "Patient Use",
       "dateDispensed": "2021-10-05T24:00Z",
       "dispensedFrom": "johndoe@hawaii.edu",

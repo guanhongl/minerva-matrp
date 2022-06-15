@@ -7,17 +7,17 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Sites } from '../../../api/site/SiteCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Medications, allowedUnits } from '../../../api/medication/MedicationCollection';
+import { Drugs, allowedUnits } from '../../../api/drug/DrugCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
 import { defineMethod, updateManyMethod } from '../../../api/base/BaseCollection.methods';
 import { distinct, getOptions, nestedDistinct, useQuery } from '../../utilities/Functions';
-import DispenseMedicationSingle from './DispenseMedicationSingle';
+import DispenseDrugSingle from './DispenseDrugSingle';
 import { cloneDeep } from 'lodash';
 
 /** handle submit for Dispense Medication. */
 const submit = (fields, innerFields, callback) => {
   const { site, dateDispensed, dispensedTo, dispensedFrom, inventoryType, dispenseType, note } = fields;
-  const collectionName = Medications.getCollectionName();
+  const collectionName = Drugs.getCollectionName();
 
   const copy = []; // the copy of records to update
   const updateObjects = []; // the records to update
@@ -26,7 +26,7 @@ const submit = (fields, innerFields, callback) => {
 
   const error = innerFields.some(innerField => {
     const { lotId, drug, brand, expire, quantity, unit, donated, donatedBy } = innerField;
-    const medication = Medications.findOne({ drug }); // find the existing medication (assume the medication exists)
+    const medication = Drugs.findOne({ drug }); // find the existing medication (assume the medication exists)
     const { _id, lotIds } = medication;
     copy.push(cloneDeep({ id: _id, lotIds }));
     const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId)); // find the index of existing the lotId
@@ -108,14 +108,14 @@ const validateForm = (fields, innerFields, callback) => {
 };
 
 /** Renders the Page for Dispensing Medication. */
-const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
+const DispenseDrug = ({ ready, brands, drugs, lotIds, sites }) => {
   const query = useQuery();
 
   const [fields, setFields] = useState({
     site: '',
     dateDispensed: moment().format('YYYY-MM-DDTHH:mm'),
     dispensedTo: '',
-    inventoryType: 'Medication',
+    inventoryType: 'Drug',
     dispenseType: 'Patient Use',
     note: '',
   });
@@ -139,7 +139,7 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
     const _id = query.get("_id");
     if (_id && ready) {
       const newInnerFields = [...innerFields];
-      const target = Medications.findOne({ lotIds: { $elemMatch: { _id } } });
+      const target = Drugs.findOne({ lotIds: { $elemMatch: { _id } } });
       // autofill the form with specific lotId info
       const targetLotId = target.lotIds.find(obj => obj._id === _id);
       const { drug, unit } = target;
@@ -181,7 +181,7 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
   // handle lotId select
   const onLotIdSelect = (event, { index, value: lotId }) => {
     const newInnerFields = [...innerFields];
-    const target = Medications.findOne({ lotIds: { $elemMatch: { lotId } } });
+    const target = Drugs.findOne({ lotIds: { $elemMatch: { lotId } } });
     // if lotId is not empty:
     if (target) {
       // autofill the form with specific lotId info
@@ -227,7 +227,7 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
           <Header.Content>
             <Dropdown inline name='dispenseType' options={getOptions(dispenseTypes)}
               onChange={handleChange} value={fields.dispenseType} />
-              Dispense from Medication Inventory Form
+              Dispense from Drugs Inventory Form
             <Header.Subheader>
               <i>Please input the following information to dispense from the inventory, to the best of your abilities.</i>
             </Header.Subheader>
@@ -263,7 +263,7 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
               innerFields.map((innerField, index) => {
                 const elements = [];
                 elements.push(
-                  <DispenseMedicationSingle lotIds={lotIds} drugs={drugs} brands={brands} fields={innerField}
+                  <DispenseDrugSingle lotIds={lotIds} drugs={drugs} brands={brands} fields={innerField}
                     handleChange={handleChangeInner} handleCheck={handleCheck} onLotIdSelect={onLotIdSelect}
                     allowedUnits={allowedUnits} index={index} key={`FORM_${index}`} />,
                 );
@@ -308,7 +308,7 @@ const DispenseMedication = ({ ready, brands, drugs, lotIds, sites }) => {
 };
 
 /** Require an array of Sites, Drugs, LotIds, and Brands in the props. */
-DispenseMedication.propTypes = {
+DispenseDrug.propTypes = {
   sites: PropTypes.array.isRequired,
   drugs: PropTypes.array.isRequired,
   lotIds: PropTypes.array.isRequired,
@@ -318,13 +318,13 @@ DispenseMedication.propTypes = {
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const medSub = Medications.subscribeMedication();
+  const medSub = Drugs.subscribeDrug();
   const siteSub = Sites.subscribeSite();
   return {
     sites: distinct('site', Sites),
-    drugs: distinct('drug', Medications),
-    lotIds: nestedDistinct('lotId', Medications),
-    brands: nestedDistinct('brand', Medications),
+    drugs: distinct('drug', Drugs),
+    lotIds: nestedDistinct('lotId', Drugs),
+    brands: nestedDistinct('brand', Drugs),
     ready: siteSub.ready() && medSub.ready(),
   };
-})(DispenseMedication);
+})(DispenseDrug);

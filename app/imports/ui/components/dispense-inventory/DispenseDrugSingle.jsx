@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { getOptions } from '../../utilities/Functions';
 
-const DispenseMedicationSingle = ({ lotIds, drugs, brands, fields, handleChange, handleCheck, onLotIdSelect,
+const DispenseDrugSingle = ({ lotIds, drugs, brands, fields, handleChange, handleCheck, onLotIdSelect,
   allowedUnits, index }) => (
   // return (
   <>
@@ -53,7 +53,7 @@ const DispenseMedicationSingle = ({ lotIds, drugs, brands, fields, handleChange,
   // );
 );
 
-DispenseMedicationSingle.propTypes = {
+DispenseDrugSingle.propTypes = {
   drugs: PropTypes.array.isRequired,
   lotIds: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
@@ -65,4 +65,4 @@ DispenseMedicationSingle.propTypes = {
   index: PropTypes.number.isRequired,
 };
 
-export default DispenseMedicationSingle;
+export default DispenseDrugSingle;

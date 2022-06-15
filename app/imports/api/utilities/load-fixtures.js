@@ -36,12 +36,12 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
   if (collection.count() === 0) {
     let tab, name, arr;
     switch (type) {
-      case 'Medications':
+      case 'Drugs':
         tab = '0';
         name = 'drug';
         arr = 'lotIds';
         break;
-      case 'Vaccinations':
+      case 'Vaccines':
         tab = '1';
         name = 'vaccine';
         arr = 'lotIds';
@@ -73,13 +73,13 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
         loadJSON.forEach((obj, idx) => {
           // parse data
           switch (type) {
-            case 'Medications':
+            case 'Drugs':
               obj.drugType = obj.drugType.split(','); // parse type
               // obj.lotIds.expire = moment(obj.lotIds.expire).format('YYYY-MM-DD'); // parse date
               obj.lotIds.expire = format(obj.lotIds.expire); // parse date
 
               break;
-            case 'Vaccinations':
+            case 'Vaccines':
               obj.visDate = format(obj.visDate); // parse date
               obj.lotIds.expire = format(obj.lotIds.expire); // parse date
 
@@ -95,7 +95,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
             obj[arr].QRCode = urls[idx];
           }
     
-          const target = (type !== 'Vaccinations') ?
+          const target = (type !== 'Vaccines') ?
             collection.findOne({ [name]: obj[name] })
             :
             collection.findOne({ [name]: obj[name], brand: obj.brand });

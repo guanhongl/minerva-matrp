@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Vaccinations } from '../../../api/vaccination/VaccinationCollection';
+import { Vaccines } from '../../../api/vaccine/VaccineCollection';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { printQRCode, getOptions } from '../../utilities/Functions';
 
@@ -42,8 +42,8 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
     fields.newMinQuantity = parseInt(fields.newMinQuantity, 10);
     fields.newQuantity = parseInt(fields.newQuantity, 10);
 
-    const collectionName = Vaccinations.getCollectionName();
-    const exists = Vaccinations.findOne({ _id });
+    const collectionName = Vaccines.getCollectionName();
+    const exists = Vaccines.findOne({ _id });
     const { lotIds } = exists;
     const target = lotIds.find(obj => obj._id === uuid);
     target.lotId = fields.newLotId;

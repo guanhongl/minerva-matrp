@@ -2,17 +2,17 @@ import React from 'react';
 import { Container, Tab, Menu } from 'semantic-ui-react';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import MedStatus from '../components/inventory-status/MedStatus';
+import DrugStatus from '../components/inventory-status/DrugStatus';
 import SupplyStatus from '../components/inventory-status/SupplyStatus';
 import VaccineStatus from '../components/inventory-status/VaccineStatus';
 
-const medicationTab = () => <MedStatus />;
+const medicationTab = () => <DrugStatus />;
 const vaccinesTab = () => <VaccineStatus />;
 const suppliesTab = () => <SupplyStatus />;
 
 const panes = [
   {
-    menuItem: <Menu.Item key={COMPONENT_IDS.STATUS_TAB_ONE} id={COMPONENT_IDS.STATUS_TAB_ONE}>Medication</Menu.Item>,
+    menuItem: <Menu.Item key={COMPONENT_IDS.STATUS_TAB_ONE} id={COMPONENT_IDS.STATUS_TAB_ONE}>Drugs</Menu.Item>,
     render: medicationTab,
   },
   {
