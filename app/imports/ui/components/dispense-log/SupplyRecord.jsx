@@ -79,7 +79,7 @@ const SupplyRecord = ({ open, setOpen, record }) => {
             }
             <tr>
               <td>Note</td>
-              <td><textarea rows='3' readOnly>{note}</textarea></td>
+              <td><textarea rows='3' readOnly value={note} /></td>
             </tr>
           </tbody>
         </table>

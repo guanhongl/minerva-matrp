@@ -16,7 +16,14 @@ const UploadFixture = ({ db }) => {
     const reader = new FileReader();
     reader.readAsText(files[0]);
     reader.onload = (event) => {
-      setFileData(event.target.result);
+      if (files[0].type === 'text/csv') {
+        setFileData(event.target.result);
+      } else {
+        setFileData('');
+        setError(true);
+        setUploadResult('Invalid file format. Only files with the extension csv are allowed');
+        swal('Error', 'Invalid file format. Only files with the extension csv are allowed', 'error');
+      }
     };
   };
 
@@ -41,12 +48,20 @@ const UploadFixture = ({ db }) => {
           console.log(fixtureData)
           return loadFixtureMethod.callPromise({ fixtureData, db });
         })
-        .then(result => { setUploadResult(result); })
-        .catch(err => { setError(true); setUploadResult(err.message); })
-        .finally(() => { console.log('finally'); setUploadFixtureWorking(false); });
+        .then(result => { 
+          setUploadResult(result); 
+          swal('Success', `${result} ${db} defined successfully.`, 'success', { buttons: false, timer: 3000 });
+        })
+        .catch(err => { 
+          setError(true); 
+          setUploadResult(err.message); 
+          swal('Error', err.message, 'error');
+        })
+        .finally(() => { setUploadFixtureWorking(false); });
     } else {
       setError(true);
       setUploadResult('No file specified');
+      swal('Error', 'No file specified', 'error');
     }
   };
 

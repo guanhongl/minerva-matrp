@@ -17,7 +17,7 @@ export const getDefinitions = (loadJSON, collection) => {
 };
 
 export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) => {
-  let retVal = '';
+  // let retVal = '';
   // console.log('loadCollectionNewDataOnly', loadJSON, printToConsole, typeof collection);
   const type = collection.getType();
   // const definitions = getDefinitions(loadJSON, collection.getCollectionName());
@@ -28,6 +28,10 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
   //     count++;
   //   }
   // });
+
+  if (collection.count() !== 0) {
+    throw new Meteor.Error('The database is not empty. Try resetting the database.');
+  }
 
   if (collection.count() === 0) {
     let tab, name, arr;
@@ -64,7 +68,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
       promises.push(promise);
     };
 
-    Promise.all(promises)
+    return Promise.all(promises)
       .then(urls => {
         loadJSON.forEach((obj, idx) => {
           // parse data
@@ -86,8 +90,10 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
               console.log('No type.')
           };
 
-          obj[arr]._id = _ids[idx];
-          obj[arr].QRCode = urls[idx];
+          if (!obj[arr]._id && !obj[arr].QRCode) {
+            obj[arr]._id = _ids[idx];
+            obj[arr].QRCode = urls[idx];
+          }
     
           const target = (type !== 'Vaccinations') ?
             collection.findOne({ [name]: obj[name] })
@@ -101,24 +107,26 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
           } else {
             obj[arr] = [obj[arr]]; // to array
             collection.define(obj);
+            count++;
           }
         });
+
+        return count;
       })
       .catch(e => {
         console.log(e);
       });
   }
-  // count += collection.count();
 
-  if (count > 1) {
-    retVal += `Defined ${count} ${type}s`;
-  } else if (count === 1) {
-    retVal += `Defined a ${type}`;
-  }
-  if (printToConsole) {
-    console.log(retVal);
-  }
-  return retVal;
+  // if (count > 1) {
+  //   retVal += `Defined ${count} ${type}s`;
+  // } else if (count === 1) {
+  //   retVal += `Defined a ${type}`;
+  // }
+  // if (printToConsole) {
+  //   console.log(retVal);
+  // }
+  // return retVal;
 };
 
 // MM/DD/YYYY to YYYY-MM-DD

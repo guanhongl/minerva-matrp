@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Container, Header, Loader, Segment, Dropdown, Form, Button } from 'semantic-ui-react';
-import { withTracker } from 'meteor/react-meteor-data';
-import PropTypes from 'prop-types';
 import { ZipZap } from 'meteor/udondan:zipzap';
-import { AdminProfiles } from '../../api/user/AdminProfileCollection';
-import { Stuffs } from '../../api/stuff/StuffCollection';
-import { UserProfiles } from '../../api/user/UserProfileCollection';
 import UploadFixture from '../components/UploadFixture';
 import DumpDbFixture from '../components/DumpDbFixture';
 import { resetDatabaseMethod, readCSVMethod } from '../../api/base/BaseCollection.methods';
@@ -42,9 +37,11 @@ const ManageDatabase = () => {
     setReset(true);
     resetDatabaseMethod.callPromise(db)
       .then(response => {
-        console.log(response)
+        swal('Success', `${response} ${db} removed successfully.`, 'success', { buttons: false, timer: 3000 });
       })
-      .catch((e) => console.log(e))
+      .catch(error => {
+        swal('Error', error, 'error');
+      })
       .finally(() => setReset(false));
   };
 

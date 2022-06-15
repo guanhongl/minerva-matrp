@@ -62,7 +62,7 @@ export const dumpDatabaseMethod = new ValidatedMethod({
   validate: null,
   run(db) {
     if (!this.userId) {
-      throw new Meteor.Error('unauthorized', 'You must be logged in to dump the database..');
+      throw new Meteor.Error('unauthorized', 'You must be logged in to dump the database.');
     } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
       throw new Meteor.Error('unauthorized', 'You must be an admin to dump the database.');
     }
@@ -91,7 +91,7 @@ export const loadFixtureMethod = new ValidatedMethod({
       throw new Meteor.Error('unauthorized', 'You must be an admin to load a fixture.', '');
     }
     if (Meteor.isServer) {
-      let ret = '';
+      // let ret = '';
       // MATRP.collectionLoadSequence.forEach((collection) => {
       //   const result = loadCollectionNewDataOnly(collection, fixtureData, true);
       //   if (result) {
@@ -99,16 +99,17 @@ export const loadFixtureMethod = new ValidatedMethod({
       //   }
       // });
       const result = loadCollectionNewDataOnly(MATRP[db], fixtureData, true);
-      if (result) {
-        ret = `${ret} ${result},`;
-      }
-      const trimmed = ret.trim();
-      if (trimmed.length === 0) {
-        ret = 'Defined no new instances.';
-      } else {
-        ret = ret.substring(0, ret.length - 1); // trim off trailing ,
-      }
-      return ret;
+      // if (result) {
+      //   ret = `${ret} ${result},`;
+      // }
+      // const trimmed = ret.trim();
+      // if (trimmed.length === 0) {
+      //   ret = 'Defined no new instances.';
+      // } else {
+      //   ret = ret.substring(0, ret.length - 1); // trim off trailing ,
+      // }
+      // return ret;
+      return result;
     }
     return '';
   },
@@ -133,7 +134,7 @@ export const resetDatabaseMethod = new ValidatedMethod({
   validate: null,
   run(db) {
     if (!this.userId) {
-      throw new Meteor.Error('unauthorized', 'You must be logged in to reset the database..');
+      throw new Meteor.Error('unauthorized', 'You must be logged in to reset the database.');
     } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
       throw new Meteor.Error('unauthorized', 'You must be an admin to reset the database.');
     }
