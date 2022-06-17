@@ -5,27 +5,28 @@ import { _ } from 'meteor/underscore';
 // import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
+import { Drugs } from '../drug/DrugCollection';
 
-export const sitePublications = {
-  site: 'Site',
-  siteAdmin: 'SiteAdmin',
+export const unitPublications = {
+  unit: 'Unit',
+  unitAdmin: 'UnitAdmin',
 };
 
-class SiteCollection extends BaseCollection {
+class UnitCollection extends BaseCollection {
   constructor() {
-    super('Sites', new SimpleSchema({
-      site: String,
+    super('Units', new SimpleSchema({
+      unit: String,
     }));
   }
 
   /**
-   * Defines a new Site.
-   * @param site.
+   * Defines a new Unit.
+   * @param unit.
    * @return {String} the docID of the new document.
    */
-  define(site) {
+  define(unit) {
     const docID = this._collection.insert({
-      site,
+      unit,
     });
     return docID;
   }
@@ -48,16 +49,16 @@ class SiteCollection extends BaseCollection {
    */
   publish() {
     if (Meteor.isServer) {
-      // get the SiteCollection instance.
+      // get the UnitCollection instance.
       const instance = this;
-      Meteor.publish(sitePublications.site, function publish() {
+      Meteor.publish(unitPublications.unit, function publish() {
         if (this.userId) {
           return instance._collection.find();
         }
         return this.ready();
       });
 
-      Meteor.publish(sitePublications.siteAdmin, function publish() {
+      Meteor.publish(unitPublications.unitAdmin, function publish() {
         if (this.userId) {
           return instance._collection.find();
         }
@@ -67,11 +68,11 @@ class SiteCollection extends BaseCollection {
   }
 
   /**
-   * Subscribe to the entire collection.
+   * Subscribe to the entire collection. 
    */
   subscribe() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(sitePublications.site);
+      return Meteor.subscribe(unitPublications.unit);
     }
     return null;
   }
@@ -93,15 +94,15 @@ class SiteCollection extends BaseCollection {
   hasOption(option) {
     const records = this._collection.find().fetch();
 
-    return _.pluck(records, "site").map(record => record.toLowerCase()).includes(option.toLowerCase());
+    return _.pluck(records, "unit").map(record => record.toLowerCase()).includes(option.toLowerCase());
   }
 
   inUse(option) {
-    return false;
+    return !!Drugs.findOne({ unit: option });
   }
 }
 
 /**
  * Provides the singleton instance of this class to all other entities.
  */
-export const Sites = new SiteCollection();
+export const Units = new UnitCollection();

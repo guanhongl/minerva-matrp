@@ -29,7 +29,7 @@ export const defineMethod = new ValidatedMethod({
             
             return collection.define(newOption);
         }
-        return '';
+        return null;
     },
 });
 
@@ -49,6 +49,6 @@ export const removeItMethod = new ValidatedMethod({
 
             return collection.removeIt(instance);
         }
-        return true;
+        return null;
     },
   });

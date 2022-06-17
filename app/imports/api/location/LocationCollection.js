@@ -28,7 +28,7 @@ class LocationCollection extends BaseCollection {
    */
 define(location) {
     const docID = this._collection.insert({
-      location: location,
+      location,
     });
     return docID;
   }
@@ -101,9 +101,9 @@ define(location) {
 
   inUse(option) {
     return (
-      !!Drugs.findOne({ "lotIds.location": option }) ||
-      !!Vaccines.findOne({ "lotIds.location": option }) ||
-      !!Supplys.findOne({ "stock.location": option })
+      !!Drugs.findOne({ lotIds: { $elemMatch: { location: option } } }) ||
+      !!Vaccines.findOne({ lotIds: { $elemMatch: { location: option } } }) ||
+      !!Supplys.findOne({ stock: { $elemMatch: { location: option } } })
     );
   }
 }

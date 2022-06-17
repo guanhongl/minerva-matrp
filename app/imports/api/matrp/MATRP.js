@@ -3,7 +3,13 @@ import { Stuffs } from '../stuff/StuffCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
 import { SuperUserProfiles } from '../user/SuperUserProfileCollection';
+import { DrugNames } from '../drugName/DrugNameCollection';
 import { DrugTypes } from '../drugType/DrugTypeCollection';
+import { Units } from '../unit/UnitCollection';
+import { DrugBrands } from '../drugBrand/DrugBrandCollection';
+import { VaccineNames } from '../vaccineName/VaccineNameCollection';
+import { VaccineBrands } from '../vaccineBrand/VaccineBrandCollection';
+import { SupplyNames } from '../supplyName/SupplyNameCollection';
 import { Locations } from '../location/LocationCollection';
 import { Sites } from '../site/SiteCollection';
 import { Drugs } from '../drug/DrugCollection';
@@ -26,7 +32,13 @@ class MATRPClass {
       Stuffs,
       UserProfiles,
       SuperUserProfiles,
+      DrugNames,
       DrugTypes,
+      Units,
+      DrugBrands,
+      VaccineNames,
+      VaccineBrands,
+      SupplyNames,
       Locations,
       Sites,
       Drugs,

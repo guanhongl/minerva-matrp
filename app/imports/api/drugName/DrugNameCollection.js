@@ -5,27 +5,28 @@ import { _ } from 'meteor/underscore';
 // import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
+import { Drugs } from '../drug/DrugCollection';
 
-export const sitePublications = {
-  site: 'Site',
-  siteAdmin: 'SiteAdmin',
+export const drugNamePublications = {
+  drugName: 'DrugName',
+  drugNameAdmin: 'DrugNameAdmin',
 };
 
-class SiteCollection extends BaseCollection {
+class DrugNameCollection extends BaseCollection {
   constructor() {
-    super('Sites', new SimpleSchema({
-      site: String,
+    super('DrugNames', new SimpleSchema({
+      drugName: String,
     }));
   }
 
   /**
-   * Defines a new Site.
-   * @param site.
+   * Defines a new DrugName.
+   * @param drugName.
    * @return {String} the docID of the new document.
    */
-  define(site) {
+  define(drugName) {
     const docID = this._collection.insert({
-      site,
+      drugName,
     });
     return docID;
   }
@@ -48,16 +49,16 @@ class SiteCollection extends BaseCollection {
    */
   publish() {
     if (Meteor.isServer) {
-      // get the SiteCollection instance.
+      // get the DrugNameCollection instance.
       const instance = this;
-      Meteor.publish(sitePublications.site, function publish() {
+      Meteor.publish(drugNamePublications.drugName, function publish() {
         if (this.userId) {
           return instance._collection.find();
         }
         return this.ready();
       });
 
-      Meteor.publish(sitePublications.siteAdmin, function publish() {
+      Meteor.publish(drugNamePublications.drugNameAdmin, function publish() {
         if (this.userId) {
           return instance._collection.find();
         }
@@ -67,11 +68,11 @@ class SiteCollection extends BaseCollection {
   }
 
   /**
-   * Subscribe to the entire collection.
+   * Subscribe to the entire collection. 
    */
   subscribe() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(sitePublications.site);
+      return Meteor.subscribe(drugNamePublications.drugName);
     }
     return null;
   }
@@ -93,15 +94,15 @@ class SiteCollection extends BaseCollection {
   hasOption(option) {
     const records = this._collection.find().fetch();
 
-    return _.pluck(records, "site").map(record => record.toLowerCase()).includes(option.toLowerCase());
+    return _.pluck(records, "drugName").map(record => record.toLowerCase()).includes(option.toLowerCase());
   }
 
   inUse(option) {
-    return false;
+    return !!Drugs.findOne({ drug: option });
   }
 }
 
 /**
  * Provides the singleton instance of this class to all other entities.
  */
-export const Sites = new SiteCollection();
+export const DrugNames = new DrugNameCollection();

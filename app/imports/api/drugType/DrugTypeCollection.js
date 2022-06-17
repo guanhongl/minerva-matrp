@@ -26,7 +26,7 @@ class DrugTypeCollection extends BaseCollection {
    */
   define(drugType) {
     const docID = this._collection.insert({
-      drugType: drugType,
+      drugType,
     });
     return docID;
   }

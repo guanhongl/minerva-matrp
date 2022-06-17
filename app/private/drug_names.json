@@ -1,0 +1,605 @@
+[
+    {
+      "drugName": "Benzonatate Capsules"
+    },
+    {
+      "drugName": "Cetirizine Soln"
+    },
+    {
+      "drugName": "Cold and Flu Syrup"
+    },
+    {
+      "drugName": "Diphenhydramine 25 mg tabs"
+    },
+    {
+      "drugName": "Diphenhydramine Soln"
+    },
+    {
+      "drugName": "Steroid Nasal Spray"
+    },
+    {
+      "drugName": "Cetirizine Hydrochloride 5mg tablets"
+    },
+    {
+      "drugName": "Cetirizine 10 mg tablets"
+    },
+    {
+      "drugName": "Meclizine 12.5 mg"
+    },
+    {
+      "drugName": "Meclizine 25 mg chew tabs"
+    },
+    {
+      "drugName": "Montelukast 10mg"
+    },
+    {
+      "drugName": "Nasal Saline"
+    },
+    {
+      "drugName": "NetiPot"
+    },
+    {
+      "drugName": "Oxymetazoline (or Phenylephrine) Nasal Spray"
+    },
+    {
+      "drugName": "Pseudoephedrine 30 mg Tabs"
+    },
+    {
+      "drugName": "Tussin DM Cough Syrup"
+    },
+    {
+      "drugName": "Guaifenesin 400 mg tabs"
+    },
+    {
+      "drugName": "Guaifenesin syrup"
+    },
+    {
+      "drugName": "Delsym cough syrup (Dextromethorphan Polistirex)"
+    },
+    {
+      "drugName": "Cough Drops"
+    },
+    {
+      "drugName": "Patient digital themometer"
+    },
+    {
+      "drugName": "Thermometer probe covers"
+    },
+    {
+      "drugName": "Sore Throat Spray"
+    },
+    {
+      "drugName": "Acetaminophen 160mg/5 ml Susp"
+    },
+    {
+      "drugName": "Acetaminophen 500 mg Caps"
+    },
+    {
+      "drugName": "Acetaminophen 80 mg chewable tabs"
+    },
+    {
+      "drugName": "Acetaminophen Infant Drops"
+    },
+    {
+      "drugName": "Allopurinol 100 mg tabs"
+    },
+    {
+      "drugName": "Allopurinol 300 mg tabs"
+    },
+    {
+      "drugName": "Aspirin 81 mg"
+    },
+    {
+      "drugName": "Aspirin 325 mg"
+    },
+    {
+      "drugName": "Cyclobenzaprine 10 mg"
+    },
+    {
+      "drugName": "Gabapentin 300 mg"
+    },
+    {
+      "drugName": "Gabapentin 100 mg"
+    },
+    {
+      "drugName": "Ibuprofen 200 mg tabs"
+    },
+    {
+      "drugName": "Ibuprofen 800 mg tabs"
+    },
+    {
+      "drugName": "Ibuprofen suspension 50 mg per 1.25 mL infant"
+    },
+    {
+      "drugName": "Ibuprofen Suspension 100 mg per 5 mL childrens"
+    },
+    {
+      "drugName": "Indomethacin 25 mg caps"
+    },
+    {
+      "drugName": "Indomethacin 50 mg caps"
+    },
+    {
+      "drugName": "Kenalog 40mg/ml Injectable"
+    },
+    {
+      "drugName": "Lidocaine Oral Topical Solution"
+    },
+    {
+      "drugName": "Lidocaine with Epi, injectable"
+    },
+    {
+      "drugName": "Lidocaine w/o Epi, injectable"
+    },
+    {
+      "drugName": "Medrol Dose Pack (Methylprednisolone 4 mg)"
+    },
+    {
+      "drugName": "Methylprednisolone Soln"
+    },
+    {
+      "drugName": "Naproxen 500 mg tabs"
+    },
+    {
+      "drugName": "Phenazopyridine Tabs"
+    },
+    {
+      "drugName": "Prednisone 20 mg tabs"
+    },
+    {
+      "drugName": "Tramadol 50 mg Tabs"
+    },
+    {
+      "drugName": "Amlodipine 5 mg"
+    },
+    {
+      "drugName": "Amlodipine 10 mg"
+    },
+    {
+      "drugName": "Amlodipine 5mg/ Atorvastatin 20 mg"
+    },
+    {
+      "drugName": "Chlorthalidone or Hydrochlorothiazide 25 mg tabs"
+    },
+    {
+      "drugName": "Furosemide 20 mg"
+    },
+    {
+      "drugName": "Lisinopril 10 mg tab"
+    },
+    {
+      "drugName": "Lisinopril 20 mg tab"
+    },
+    {
+      "drugName": "Lisinopril 5 mg tab"
+    },
+    {
+      "drugName": "Losartan 25 mg"
+    },
+    {
+      "drugName": "Losartan potassium 50mg"
+    },
+    {
+      "drugName": "Metoprolol 25 mg"
+    },
+    {
+      "drugName": "Metoprolol 50 mg"
+    },
+    {
+      "drugName": "Nebivolol 5 mg"
+    },
+    {
+      "drugName": "Nebivolol 10 mg"
+    },
+    {
+      "drugName": "Lisinopril and Hydrochlorothiazide tabs 10mg/12.5mg"
+    },
+    {
+      "drugName": "Lisinopril and Hydrochlorothiazide tabs 20mg/12.5mg"
+    },
+    {
+      "drugName": "Azilsartan 80mg"
+    },
+    {
+      "drugName": "Azilsartan/chlorthalidone 40mg/12.5mg"
+    },
+    {
+      "drugName": "Azilsartan/chlorthalidone 40mg/25mg"
+    },
+    {
+      "drugName": "Amoxicillin 250 mg Chewables"
+    },
+    {
+      "drugName": "Amoxicillin 125 mg/5ml Susp"
+    },
+    {
+      "drugName": "Amoxicillin 250 mg/5ml Susp"
+    },
+    {
+      "drugName": "Amoxicillin 400 mg/5ml Susp"
+    },
+    {
+      "drugName": "Amoxicillin 500 mg Capsules"
+    },
+    {
+      "drugName": "Amoxicillin 875 mg Tab"
+    },
+    {
+      "drugName": "Amoxicillin/Clavulanate 875/125 Tabs"
+    },
+    {
+      "drugName": "Amox/Clavulanate 200/28.5/5 Susp"
+    },
+    {
+      "drugName": "Amox/Clavulanate 400/57/5 ml Susp"
+    },
+    {
+      "drugName": "Azithromycin 250 mg"
+    },
+    {
+      "drugName": "Azithromycin 200/5cc Solution"
+    },
+    {
+      "drugName": "Ceftriaxone 500 mg Injection"
+    },
+    {
+      "drugName": "Cephalexin 500 mg"
+    },
+    {
+      "drugName": "Ciprofloxacin 500 mg"
+    },
+    {
+      "drugName": "Clindamycin 300 mg"
+    },
+    {
+      "drugName": "Fluconazole 150 mg"
+    },
+    {
+      "drugName": "Doxycycline/Minocycline 100 mg"
+    },
+    {
+      "drugName": "Isoniazid 300 mg tabs"
+    },
+    {
+      "drugName": "Ketoconazole 200 mg"
+    },
+    {
+      "drugName": "Metronidazole 500 mg"
+    },
+    {
+      "drugName": "Penicillin VK 250mg/5ml Soln"
+    },
+    {
+      "drugName": "Penicillin VK 500 mg Tabs"
+    },
+    {
+      "drugName": "Terbinafine 250 mg Tabs"
+    },
+    {
+      "drugName": "Trimethoprim/Sulfamethoxazole 40/200 Susp"
+    },
+    {
+      "drugName": "Trimethroprim/Sulfamethoxazole (DS) 160/800"
+    },
+    {
+      "drugName": "Tamiflu 75 mg"
+    },
+    {
+      "drugName": "Valtrex 500 mg"
+    },
+    {
+      "drugName": "Lovastatin 20 mg"
+    },
+    {
+      "drugName": "Simvastatin 10 mg"
+    },
+    {
+      "drugName": "Simvastatin 20 mg"
+    },
+    {
+      "drugName": "Simvastatin 40 mg"
+    },
+    {
+      "drugName": "Nitroglycerin 0.4 mg tabs"
+    },
+    {
+      "drugName": "Bacitracin Ointment 15 gm tube"
+    },
+    {
+      "drugName": "Bacitracin Ointment packets"
+    },
+    {
+      "drugName": "Benzoyl Peroxide 10% Lotion"
+    },
+    {
+      "drugName": "Benzoyl Peroxide 10% Wash"
+    },
+    {
+      "drugName": "Chapstick"
+    },
+    {
+      "drugName": "Clotrimazole 1% Cream"
+    },
+    {
+      "drugName": "Desitin/Diaper Cream"
+    },
+    {
+      "drugName": "Hydrocotisone Cream 1%"
+    },
+    {
+      "drugName": "Ketoconazole 2% cream"
+    },
+    {
+      "drugName": "Medicated Lip Ointment"
+    },
+    {
+      "drugName": "Molefoam Padding"
+    },
+    {
+      "drugName": "Mupirocin 2% Ointment"
+    },
+    {
+      "drugName": "Nystatin Ointment"
+    },
+    {
+      "drugName": "Orasol Gel 20%"
+    },
+    {
+      "drugName": "Pain Relief Cream"
+    },
+    {
+      "drugName": "Permethrin 1% Shampoo"
+    },
+    {
+      "drugName": "Permethrin 5% Cream"
+    },
+    {
+      "drugName": "Proctosol-HC 2.5% Cream/Preparation-H"
+    },
+    {
+      "drugName": "Salicylic Acid Pads - Corn Remover"
+    },
+    {
+      "drugName": "Salicylic Acid Pads - Callus Remover"
+    },
+    {
+      "drugName": "Selenium Sulfide 2.5% Lotion"
+    },
+    {
+      "drugName": "Silver Sulfadiazine Cream"
+    },
+    {
+      "drugName": "Sting  Kill"
+    },
+    {
+      "drugName": "Tolnaftate Antifungal Powder"
+    },
+    {
+      "drugName": "Tolnaftate 1% Cream"
+    },
+    {
+      "drugName": "Triamcinolone 0.025% Cream"
+    },
+    {
+      "drugName": "Triamcinolone 0.1% Cream"
+    },
+    {
+      "drugName": "Betamethasone 0.05% Cream"
+    },
+    {
+      "drugName": "Unna Boot 3\""
+    },
+    {
+      "drugName": "Unna Boot 4\""
+    },
+    {
+      "drugName": "Urea Lotion"
+    },
+    {
+      "drugName": "LacHydrin Lotion or Amlactin"
+    },
+    {
+      "drugName": "White Petrolatum USP"
+    },
+    {
+      "drugName": "Glipizide 5 mg"
+    },
+    {
+      "drugName": "Glipizide 10 mg"
+    },
+    {
+      "drugName": "Glucose Tablets"
+    },
+    {
+      "drugName": "Metformin ER 500 mg tabs"
+    },
+    {
+      "drugName": "SGLT2 Inhibitors (Dapagliflozin 5 mg)"
+    },
+    {
+      "drugName": "SGLT2 Inhibitors (Dapagliflozin 10 mg)"
+    },
+    {
+      "drugName": "DPP-4 Inhibitors (Sitagliptin 100 mg)"
+    },
+    {
+      "drugName": "Sitagliptin/Metformin 50/500 (Janumet)"
+    },
+    {
+      "drugName": "Sitagliptin/Metformin 100/1000 (Janumet)"
+    },
+    {
+      "drugName": "SGLT2 Inhibitors/DPP4 Inhibitor (10mg/5mg)"
+    },
+    {
+      "drugName": "SGLT2 Inhibitors/DPP4 Inhibitor (25mg/5mg)"
+    },
+    {
+      "drugName": "Alogliptin/Metformin (12.5/500)"
+    },
+    {
+      "drugName": "Carbamide Peroxide 6.5%"
+    },
+    {
+      "drugName": "Antipyrine & Benzocaine Otic"
+    },
+    {
+      "drugName": "Gentamycin, Cipro, or Ofloxacin Ophthalmic Soln"
+    },
+    {
+      "drugName": "Artificial Tears"
+    },
+    {
+      "drugName": "Neomycin/Polymyxin/Hydrocortisone (Cortisporin) Otic"
+    },
+    {
+      "drugName": "Ear Plugs"
+    },
+    {
+      "drugName": "Napchon (Opticlear)"
+    },
+    {
+      "drugName": "Sulfacetamide or Polymyxin B Ophthalmic Soln"
+    },
+    {
+      "drugName": "Ammonia Inhalant"
+    },
+    {
+      "drugName": "Medicaine Sting/Bite Swab"
+    },
+    {
+      "drugName": "Epipen"
+    },
+    {
+      "drugName": "Epipen Jr."
+    },
+    {
+      "drugName": "Diphenhydramine 50 mg/mL"
+    },
+    {
+      "drugName": "Antacid"
+    },
+    {
+      "drugName": "Bisacodyl Suppositories"
+    },
+    {
+      "drugName": "Proton Pump Inhibitor"
+    },
+    {
+      "drugName": "Lactulose Solution"
+    },
+    {
+      "drugName": "Pepto-Bismol"
+    },
+    {
+      "drugName": "Docusate Sodium 100 mg"
+    },
+    {
+      "drugName": "Promethazine 25 mg"
+    },
+    {
+      "drugName": "Loperamide 2 mg"
+    },
+    {
+      "drugName": "Ranitidine (or other H2blocker)"
+    },
+    {
+      "drugName": "Miconazole Applicator Set"
+    },
+    {
+      "drugName": "Reclipsen Tabs"
+    },
+    {
+      "drugName": "Apri Tabs"
+    },
+    {
+      "drugName": "Depo-Provera"
+    },
+    {
+      "drugName": "Detrol LA (Tolterodin Tartate)"
+    },
+    {
+      "drugName": "Medroxyprogesterone 10 mg"
+    },
+    {
+      "drugName": "PlanB"
+    },
+    {
+      "drugName": "Ipratropium Inhalation Soln."
+    },
+    {
+      "drugName": "Albuterol Inhalation Soln."
+    },
+    {
+      "drugName": "Albuterol HFA (Proair/Ventolin)"
+    },
+    {
+      "drugName": "Steroid Inhaler"
+    },
+    {
+      "drugName": "Steroid/Long Acting Beta Agonist (Child)"
+    },
+    {
+      "drugName": "Steroid/Long Acting Beta Agonist (Adult)"
+    },
+    {
+      "drugName": "Tiotropium or Ipratropium"
+    },
+    {
+      "drugName": "Ipratropium/Albuterol"
+    },
+    {
+      "drugName": "Buproprion ER 150 mg"
+    },
+    {
+      "drugName": "Nicotine Gum 2 mg"
+    },
+    {
+      "drugName": "Nicotine Gum 4 mg"
+    },
+    {
+      "drugName": "Nicotine Patch 7 mg"
+    },
+    {
+      "drugName": "Nicotine Patch 14 mg"
+    },
+    {
+      "drugName": "Nicotine Patch 21 mg"
+    },
+    {
+      "drugName": "Multivitamins - Adult"
+    },
+    {
+      "drugName": "Multivitamins - Adult Gummies"
+    },
+    {
+      "drugName": "Multivitamins - Children's Gummies"
+    },
+    {
+      "drugName": "Multivitamins - Kids Chewable"
+    },
+    {
+      "drugName": "Calcium Supplements"
+    },
+    {
+      "drugName": "Prenatal Vitamins"
+    },
+    {
+      "drugName": "Fiber Capsules"
+    },
+    {
+      "drugName": "Fluoride 0.25 mg drops"
+    },
+    {
+      "drugName": "Fluoride .5 mg"
+    },
+    {
+      "drugName": "Fluoride 1 mg"
+    },
+    {
+      "drugName": "Iron 27 mg"
+    },
+    {
+      "drugName": "Melatonin 3 mg"
+    }
+]
