@@ -204,7 +204,7 @@ VaccineStatus.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const vaccineSub = Vaccines.subscribeVaccine();
-  const locationSub = Locations.subscribeLocation();
+  const locationSub = Locations.subscribe();
   // Determine if the subscription is ready
   const ready = vaccineSub.ready() && locationSub.ready();
   // Get the Vaccination documents and sort them by name.

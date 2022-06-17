@@ -319,7 +319,7 @@ DispenseDrug.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const medSub = Drugs.subscribeDrug();
-  const siteSub = Sites.subscribeSite();
+  const siteSub = Sites.subscribe();
   return {
     sites: distinct('site', Sites),
     drugs: distinct('drug', Drugs),

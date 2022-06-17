@@ -300,8 +300,8 @@ DispenseSupplies.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const supplySub = Supplys.subscribeSupply();
-  const siteSub = Sites.subscribeSite();
-  const locationSub = Locations.subscribeLocation();
+  const siteSub = Sites.subscribe();
+  const locationSub = Locations.subscribe();
 
   return {
     sites: distinct('site', Sites),

@@ -297,7 +297,7 @@ AddVaccine.propTypes = {
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const locationSub = Locations.subscribeLocation();
+  const locationSub = Locations.subscribe();
   const vacSub = Vaccines.subscribeVaccine();
   return {
     vaccines: distinct('vaccine', Vaccines),

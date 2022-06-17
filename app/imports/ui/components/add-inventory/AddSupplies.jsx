@@ -241,7 +241,7 @@ AddSupplies.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const supplySub = Supplys.subscribeSupply();
-  const locationSub = Locations.subscribeLocation();
+  const locationSub = Locations.subscribe();
   return {
     supplys: distinct('supply', Supplys),
     locations: distinct('location', Locations),

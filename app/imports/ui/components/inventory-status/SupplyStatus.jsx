@@ -176,7 +176,7 @@ SupplyStatus.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const supplySub = Supplys.subscribeSupply();
-  const locationSub = Locations.subscribeLocation();
+  const locationSub = Locations.subscribe();
   // Determine if the subscription is ready
   const ready = supplySub.ready() && locationSub.ready();
   // Get the Supply documents and sort them by name.

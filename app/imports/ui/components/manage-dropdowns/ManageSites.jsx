@@ -96,7 +96,7 @@ ManageSites.propTypes = {
 };
 
 export default withTracker(() => {
-  const siteSub = Sites.subscribeSite();
+  const siteSub = Sites.subscribe();
   const sites = Sites.find({}, { sort: { site: 1 } }).fetch();
   const ready = siteSub.ready();
   return {

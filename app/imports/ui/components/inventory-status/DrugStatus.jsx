@@ -252,7 +252,7 @@ DrugStatus.propTypes = {
 export default withTracker(() => {
   const medSub = Drugs.subscribeDrug();
   const drugTypeSub = DrugTypes.subscribe();
-  const locationSub = Locations.subscribeLocation();
+  const locationSub = Locations.subscribe();
   // Determine if the subscription is ready
   const ready = medSub.ready() && drugTypeSub.ready() && locationSub.ready();
   // Get the Medication documents and sort them by name.

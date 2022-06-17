@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
-// import { _ } from 'meteor/underscore';
+import { _ } from 'meteor/underscore';
 // import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
@@ -23,9 +23,9 @@ class SiteCollection extends BaseCollection {
    * @param site.
    * @return {String} the docID of the new document.
    */
-  define({ site }) {
+  define(site) {
     const docID = this._collection.insert({
-      site,
+      site: site,
     });
     return docID;
   }
@@ -44,13 +44,12 @@ class SiteCollection extends BaseCollection {
 
   /**
    * Default publication method for entities.
-   * It publishes the entire collection for admin and just the site associated to an owner.
+   * It publishes the entire collection.
    */
   publish() {
     if (Meteor.isServer) {
       // get the SiteCollection instance.
       const instance = this;
-      /** This subscription publishes only the documents associated with the logged in user */
       Meteor.publish(sitePublications.site, function publish() {
         if (this.userId) {
           return instance._collection.find();
@@ -58,7 +57,6 @@ class SiteCollection extends BaseCollection {
         return this.ready();
       });
 
-      /** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
       Meteor.publish(sitePublications.siteAdmin, function publish() {
         if (this.userId) {
           return instance._collection.find();
@@ -69,22 +67,11 @@ class SiteCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for site owned by the current user.
+   * Subscribe to the entire collection.
    */
-  subscribeSite() {
+  subscribe() {
     if (Meteor.isClient) {
       return Meteor.subscribe(sitePublications.site);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for admin users.
-   * It subscribes to the entire collection.
-   */
-  subscribeSiteAdmin() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(sitePublications.siteAdmin);
     }
     return null;
   }
@@ -96,7 +83,21 @@ class SiteCollection extends BaseCollection {
    * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
    */
   assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.ADMIN, ROLE.USER]);
+    this.assertRole(userId, [ROLE.ADMIN, ROLE.SUPERUSER, ROLE.USER]);
+  }
+
+  /**
+   * case insensitive query
+   * @param {*} option 
+   */
+  hasOption(option) {
+    const records = this._collection.find().fetch();
+
+    return _.pluck(records, "site").map(record => record.toLowerCase()).includes(option.toLowerCase());
+  }
+
+  inUse(option) {
+    return false;
   }
 }
 

@@ -201,7 +201,7 @@ DispenseLog.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const historicalSub = Historicals.subscribeHistorical();
-  const siteSub = Sites.subscribeSite();
+  const siteSub = Sites.subscribe();
   // Determine if the subscription is ready
   const ready = historicalSub.ready() && siteSub.ready();
   // Get the Historical documents.

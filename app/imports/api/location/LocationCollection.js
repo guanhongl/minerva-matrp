@@ -1,10 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
-// import { _ } from 'meteor/underscore';
+import { _ } from 'meteor/underscore';
 // import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
+import { Drugs } from '../drug/DrugCollection';
+import { Vaccines } from '../vaccine/VaccineCollection';
+import { Supplys } from '../supply/SupplyCollection';
 
 export const locationPublications = {
   location: 'Location',
@@ -23,9 +26,9 @@ class LocationCollection extends BaseCollection {
    * @param location.
    * @return {String} the docID of the new document.
    */
-  define({ location }) {
+define(location) {
     const docID = this._collection.insert({
-      location,
+      location: location,
     });
     return docID;
   }
@@ -44,13 +47,12 @@ class LocationCollection extends BaseCollection {
 
   /**
    * Default publication method for entities.
-   * It publishes the entire collection for admin and just the location associated to an owner.
+   * It publishes the entire collection.
    */
   publish() {
     if (Meteor.isServer) {
       // get the LocationCollection instance.
       const instance = this;
-      /** This subscription publishes only the documents associated with the logged in user */
       Meteor.publish(locationPublications.location, function publish() {
         if (this.userId) {
           return instance._collection.find();
@@ -58,7 +60,6 @@ class LocationCollection extends BaseCollection {
         return this.ready();
       });
 
-      /** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
       Meteor.publish(locationPublications.locationAdmin, function publish() {
         if (this.userId) {
           return instance._collection.find();
@@ -69,22 +70,11 @@ class LocationCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for location owned by the current user.
+   * Subscribe to the entire collection.
    */
-  subscribeLocation() {
+  subscribe() {
     if (Meteor.isClient) {
       return Meteor.subscribe(locationPublications.location);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for admin users.
-   * It subscribes to the entire collection.
-   */
-  subscribeLocationAdmin() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(locationPublications.locationAdmin);
     }
     return null;
   }
@@ -96,7 +86,25 @@ class LocationCollection extends BaseCollection {
    * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
    */
   assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.ADMIN, ROLE.USER]);
+    this.assertRole(userId, [ROLE.ADMIN, ROLE.SUPERUSER, ROLE.USER]);
+  }
+
+  /**
+   * case insensitive query
+   * @param {*} option 
+   */
+  hasOption(option) {
+    const records = this._collection.find().fetch();
+
+    return _.pluck(records, "location").map(record => record.toLowerCase()).includes(option.toLowerCase());
+  }
+
+  inUse(option) {
+    return (
+      !!Drugs.findOne({ "lotIds.location": option }) ||
+      !!Vaccines.findOne({ "lotIds.location": option }) ||
+      !!Supplys.findOne({ "stock.location": option })
+    );
   }
 }
 
