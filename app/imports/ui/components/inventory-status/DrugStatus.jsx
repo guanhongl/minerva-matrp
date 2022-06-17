@@ -251,7 +251,7 @@ DrugStatus.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const medSub = Drugs.subscribeDrug();
-  const drugTypeSub = DrugTypes.subscribeDrugType();
+  const drugTypeSub = DrugTypes.subscribe();
   const locationSub = Locations.subscribeLocation();
   // Determine if the subscription is ready
   const ready = medSub.ready() && drugTypeSub.ready() && locationSub.ready();

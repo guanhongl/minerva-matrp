@@ -343,7 +343,7 @@ AddDrug.propTypes = {
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const typeSub = DrugTypes.subscribeDrugType();
+  const typeSub = DrugTypes.subscribe();
   const locationSub = Locations.subscribeLocation();
   const medSub = Drugs.subscribeDrug();
   return {

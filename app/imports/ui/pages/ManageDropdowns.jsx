@@ -4,8 +4,12 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 import ManageDrugTypes from '../components/manage-dropdowns/ManageDrugTypes';
 import ManageLocations from '../components/manage-dropdowns/ManageLocations';
 import ManageSites from '../components/manage-dropdowns/ManageSites';
+import { DrugTypes } from '../../api/drugType/DrugTypeCollection';
+import ManageSingle from '../components/manage-dropdowns/ManageSingle';
 
-const drugTypesTab = () => <ManageDrugTypes />;
+
+// const drugTypesTab = () => <ManageDrugTypes />;
+const drugTypesTab = () => <ManageSingle collection={DrugTypes} title={"Drug Types"} name={"drugType"} />;
 const locationsTab = () => <ManageLocations />;
 const sitesTab = () => <ManageSites />;
 

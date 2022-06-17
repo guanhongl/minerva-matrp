@@ -5,3 +5,4 @@ import '/imports/startup/server/Mongo';
 import '../imports/api/base/BaseCollection.methods';
 import '../imports/api/PendingUserCollection.methods';
 import '../imports/api/ManageUser.methods';
+import '../imports/api/ManageDropdown.methods';
