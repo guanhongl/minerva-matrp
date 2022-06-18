@@ -8,7 +8,7 @@ import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { Drugs } from '../../../api/drug/DrugCollection';
 import { removeItMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
-const DrugStatusRow = ({ med, drugTypes, locations, units }) => {
+const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
   const [expand, setExpand] = useState(false);
   
   const handleOpen = () => setExpand(!expand);
@@ -142,7 +142,7 @@ const DrugStatusRow = ({ med, drugTypes, locations, units }) => {
                     <Table.Cell className='icons'>
                       {/* <Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DRUG_PAGE_BUTTON}
                         onClick={() => setOpen(true)} /> */}
-                      <DrugInfoPage info={med} detail={med.lotIds[index]} drugTypes={drugTypes} locations={locations} units={units} />
+                      <DrugInfoPage info={med} detail={med.lotIds[index]} drugTypes={drugTypes} locations={locations} units={units} brands={brands} />
                       <Icon name='trash alternate' onClick={() => deleteLot(uuid, lotId)} />
                     </Table.Cell>
                   </Table.Row>

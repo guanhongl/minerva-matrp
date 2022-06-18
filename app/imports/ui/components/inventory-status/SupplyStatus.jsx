@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
-import { distinct, getOptions } from '../../utilities/Functions';
+import { fetchField, getOptions } from '../../utilities/Functions';
 import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import SupplyStatusRow from './SupplyStatusRow';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
@@ -137,7 +137,7 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
           <Table.Body>
             {
               filteredSupplies.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(supply => <SupplyStatusRow key={supply._id} supply={supply} locations={locations} supplyTypes={supplyTypes} />)
+                .map(supply => <SupplyStatusRow key={supply._id} supply={supply} supplyTypes={supplyTypes} />)
             }
           </Table.Body>
 
@@ -181,7 +181,7 @@ export default withTracker(() => {
   const ready = supplySub.ready() && locationSub.ready();
   // Get the Supply documents and sort them by name.
   const supplies = Supplys.find({}, { sort: { supply: 1 } }).fetch();
-  const locations = distinct('location', Locations);
+  const locations = fetchField(Locations, "location");
   return {
     supplies,
     locations,

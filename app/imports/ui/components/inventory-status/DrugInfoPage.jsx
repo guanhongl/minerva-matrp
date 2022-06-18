@@ -10,7 +10,7 @@ import { printQRCode, getOptions } from '../../utilities/Functions';
 
 const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, 
                        detail: { _id: uuid, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode },
-                       drugTypes, locations, units }) => {
+                       drugTypes, locations, units, brands }) => {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -86,7 +86,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                   <span className='header'>Drug:</span>
                   {
                     edit ?
-                      <Input name='newDrug' value={fields.newDrug} onChange={handleChange} />
+                      <Input name='newDrug' value={fields.newDrug} onChange={handleChange} readOnly />
                       :
                       <>{drug}</>
                   }
@@ -136,7 +136,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                   <span className='header'>Brand:</span>
                   {
                     edit ?
-                      <Input name='newBrand' value={fields.newBrand} onChange={handleChange} />
+                      <Select name='newBrand' value={fields.newBrand} options={getOptions(brands)} onChange={handleChange} />
                       :
                       <>{brand}</>
                   }

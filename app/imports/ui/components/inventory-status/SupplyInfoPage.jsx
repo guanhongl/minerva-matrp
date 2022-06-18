@@ -9,7 +9,7 @@ import { printQRCode, getOptions } from '../../utilities/Functions';
 
 const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, 
                           detail: { _id: uuid, location, quantity, donated, donatedBy, note, QRCode }, 
-                          locations, supplyTypes }) => {
+                          supplyTypes }) => {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -77,7 +77,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                   <span className='header'>Supply:</span>
                   {
                     edit ?
-                      <Input name='newSupply' value={fields.newSupply} onChange={handleChange} />
+                      <Input name='newSupply' value={fields.newSupply} onChange={handleChange} readOnly />
                       :
                       <>{supply}</>
                   }
@@ -111,8 +111,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select name='newLocation' options={getOptions(locations)}
-                        value={fields.newLocation} onChange={handleChange} />
+                      <Input name='newLocation' value={fields.newLocation} onChange={handleChange} readOnly />
                       :
                       <>{location}</>
                   }
@@ -131,7 +130,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                   <span className='header'>Donated:</span>
                   {
                     edit ?
-                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
+                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} readOnly />
                       :
                       <>{donated ? 'Yes' : 'No'}</>
                   }

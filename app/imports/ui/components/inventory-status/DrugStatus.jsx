@@ -4,13 +4,15 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
-import { Drugs, allowedUnits } from '../../../api/drug/DrugCollection';
+import { Drugs } from '../../../api/drug/DrugCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
+import { Units } from '../../../api/unit/UnitCollection';
+import { DrugBrands } from '../../../api/drugBrand/DrugBrandCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import DrugStatusRow from './DrugStatusRow';
-import { distinct, getOptions, nestedDistinct } from '../../utilities/Functions';
+import { fetchField, getOptions } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 
 // convert array to dropdown options
@@ -33,11 +35,11 @@ const statusOptions = [
 const currentDate = moment();
 
 // Render the form.
-const DrugStatus = ({ ready, medications, drugTypes, locations, brands }) => {
+const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
   const [filteredMedications, setFilteredMedications] = useState([]);
   useEffect(() => {
-    setFilteredMedications(medications);
-  }, [medications]);
+    setFilteredMedications(drugs);
+  }, [drugs]);
   const [searchQuery, setSearchQuery] = useState('');
   const [pageNo, setPageNo] = useState(1);
   const [typeFilter, setTypeFilter] = useState(0);
@@ -48,7 +50,7 @@ const DrugStatus = ({ ready, medications, drugTypes, locations, brands }) => {
 
   // handles filtering
   useEffect(() => {
-    let filter = cloneDeep(medications);
+    let filter = cloneDeep(drugs);
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ drug, lotIds }) => (
@@ -194,7 +196,7 @@ const DrugStatus = ({ ready, medications, drugTypes, locations, brands }) => {
           <Table.Body>
             {
               filteredMedications.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(med => <DrugStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={allowedUnits} />)
+                .map(med => <DrugStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={units} brands={brands} />)
             }
           </Table.Body>
 
@@ -241,30 +243,35 @@ const DrugStatus = ({ ready, medications, drugTypes, locations, brands }) => {
 };
 
 DrugStatus.propTypes = {
-  medications: PropTypes.array.isRequired,
+  drugs: PropTypes.array.isRequired,
   drugTypes: PropTypes.array.isRequired,
-  locations: PropTypes.array.isRequired,
+  units: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
-  const medSub = Drugs.subscribeDrug();
+  const drugSub = Drugs.subscribeDrug();
   const drugTypeSub = DrugTypes.subscribe();
+  const unitSub = Units.subscribe();
+  const drugBrandSub = DrugBrands.subscribe();
   const locationSub = Locations.subscribe();
   // Determine if the subscription is ready
-  const ready = medSub.ready() && drugTypeSub.ready() && locationSub.ready();
-  // Get the Medication documents and sort them by name.
-  const medications = Drugs.find({}, { sort: { drug: 1 } }).fetch();
-  const drugTypes = distinct('drugType', DrugTypes);
-  const locations = distinct('location', Locations);
-  const brands = nestedDistinct('brand', Drugs);
+  const ready = drugSub.ready() && drugTypeSub.ready() && unitSub.ready() && drugBrandSub.ready() && locationSub.ready();
+  // Get the Drug documents and sort them by name.
+  const drugs = Drugs.find({}, { sort: { drug: 1 } }).fetch();
+  const drugTypes = fetchField(DrugTypes, "drugType");
+  const units = fetchField(Units, "unit");
+  const brands = fetchField(DrugBrands, "drugBrand");
+  const locations = fetchField(Locations, "location");
   return {
-    medications,
+    drugs,
     drugTypes,
-    locations,
+    units,
     brands,
+    locations,
     ready,
   };
 })(DrugStatus);
