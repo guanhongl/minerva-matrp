@@ -2,14 +2,21 @@ import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
 
-export function fetchField(collection, field) {
+export function fetchField(collection, field, selector = {}) {
   return _.pluck(
-    collection.find({}, { sort: { [field]: 1 } }).fetch(),
+    collection.find(selector, { sort: { [field]: 1 } }).fetch(),
     field,
   );
-}
+};
 
-// TODO: fix
+export function fetchLots(collection) {
+  return _.pluck(
+    _.pluck(collection.find().fetch(), "lotIds").flat(),
+    "lotId",
+  ).sort();
+};
+
+// TODO: remove
 export function distinct(field, collection, selector = {}) {
   const fields = _.pluck(
     collection.find(selector, { sort: { [field]: 1 }, fields: { [field]: 1 } }).fetch(),
@@ -22,6 +29,7 @@ export function distinct(field, collection, selector = {}) {
   );
 }
 
+// TODO: remove
 export function nestedDistinct(field, collection, selector = {}) {
   const fields = _.pluck(
     _.pluck(collection.find(selector, { fields: { [`lotIds.${field}`]: 1 } }).fetch(), 'lotIds').flat(),

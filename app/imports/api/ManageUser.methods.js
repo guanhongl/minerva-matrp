@@ -96,7 +96,7 @@ export const acceptMethod = new ValidatedMethod({
           }
         });
 
-        const enrollURL = new URL(Meteor.absoluteUrl(`#/enroll-acct/${userID}`));
+        const enrollURL = new URL(Meteor.absoluteUrl(`/#/enroll-acct/${userID}`));
 
         const mailOptions = {
           from: `Minerva Alert <${credentials.user}>`,

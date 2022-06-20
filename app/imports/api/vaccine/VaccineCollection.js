@@ -7,7 +7,7 @@ import { ROLE } from '../role/Role';
 
 export const vaccinePublications = {
   vaccine: 'Vaccine',
-  vaccineAdmin: 'VaccineAdmin',
+  vaccineLots: 'VaccineLots',
 };
 
 class VaccineCollection extends BaseCollection {
@@ -114,9 +114,9 @@ class VaccineCollection extends BaseCollection {
         return this.ready();
       });
 
-      Meteor.publish(vaccinePublications.vaccineAdmin, function publish() {
+      Meteor.publish(vaccinePublications.vaccineLots, function publish() {
         if (this.userId) {
-          return instance._collection.find();
+          return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
         }
         return this.ready();
       });
@@ -137,9 +137,9 @@ class VaccineCollection extends BaseCollection {
    * Subscription method for admin users.
    * It subscribes to the entire collection.
    */
-  subscribeVaccineAdmin() {
+  subscribeVaccineLots() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(vaccinePublications.vaccineAdmin);
+      return Meteor.subscribe(vaccinePublications.vaccineLots);
     }
     return null;
   }

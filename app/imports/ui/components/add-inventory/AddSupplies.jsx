@@ -3,97 +3,35 @@ import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import QRCode from 'qrcode';
-import { Random } from 'meteor/random'
-import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
+import { supplyTypes } from '../../../api/supply/SupplyCollection';
+import { SupplyNames } from '../../../api/supplyName/SupplyNameCollection';
 import { Locations } from '../../../api/location/LocationCollection';
-import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
+import { findOneMethod } from '../../../api/base/BaseCollection.methods';
+import { addMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { distinct, getOptions, printQRCode } from '../../utilities/Functions';
+import { fetchField, getOptions, printQRCode } from '../../utilities/Functions';
 
 /** handles submit for add supply. */
 const submit = (data, callback) => {
-  const { supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note } = data;
-  const collectionName = Supplys.getCollectionName();
-  const exists = Supplys.findOne({ supply }); // returns the existing supply or undefined
-
-  // attempts to find an existing _id
-  const exists_id = exists?.stock?.find(obj => obj.location === location && obj.donated === donated)?._id;
-
-  // generate the QRCode and the uuid for the location + donated
-  const _id = exists_id ?? Random.id();
-  QRCode.toDataURL(`${window.location.origin}/#/dispense?tab=2&_id=${_id}`)
+  addMethod.callPromise({ data })
     .then(url => {
-      // if the supply does not exist:
-      if (!exists) {
-        // insert the new supply and stock
-        const newStock = { _id, quantity, location, donated, donatedBy, note, QRCode: url };
-        const definitionData = { supply, supplyType, minQuantity, stock: [newStock] };
-        defineMethod.callPromise({ collectionName, definitionData })
-          .then(() => {
-            swal('Success', `${supply} added successfully`, url, { buttons: ['OK', 'Print'] })
-              .then(isPrint => {
-                if (isPrint) {
-                  printQRCode(url);
-                }
-              });
-            callback(); // resets the form
-          })
-          .catch(error => swal('Error', error.message, 'error'));
-      } else {
-        const { stock } = exists;
-        const target = stock.find(obj => obj.location === location && obj.donated === donated);
-        // if location + donated exists, increment the quantity:
-        if (target) {
-          target.quantity += quantity;
-        } else {
-          // else append the new location + donated
-          stock.push({ _id, location, quantity, donated, donatedBy, note, QRCode: url });
-        }
-        const updateData = { id: exists._id, stock };
-        updateMethod.callPromise({ collectionName, updateData })
-          .then(() => {
-            swal('Success', `${supply} updated successfully`, url, { buttons: ['OK', 'Print'] })
-              .then(isPrint => {
-                if (isPrint) {
-                  printQRCode(url);
-                }
-              });
-            callback(); // resets the form
-          })
-          .catch(error => swal('Error', error.message, 'error'));
-      }
+      swal('Success', `${data.supply} updated successfully`, url, { buttons: ['OK', 'Print'] })
+        .then(isPrint => {
+          if (isPrint) {
+            printQRCode(url);
+          }
+        });
+      callback(); // resets the form
     })
-    .catch(error => swal('Error', error, 'error'));
-};
-
-/** validates the add supply form */
-const validateForm = (data, callback) => {
-  const submitData = { ...data };
-  let errorMsg = '';
-  // the required String fields
-  const requiredFields = ['supply', 'supplyType', 'minQuantity', 'location', 'quantity'];
-
-  // if the field is empty, append error message
-  requiredFields.forEach(field => {
-    if (!submitData[field]) {
-      errorMsg += `${field} cannot be empty.\n`;
-    }
-  });
-
-  if (errorMsg) {
-    swal('Error', `${errorMsg}`, 'error');
-  } else {
-    submitData.minQuantity = parseInt(data.minQuantity, 10);
-    submitData.quantity = parseInt(data.quantity, 10);
-    submit(submitData, callback);
-  }
+    .catch(error => swal('Error', error.message, 'error'));
 };
 
 /** Renders the Page for Add Supplies. */
-// fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note
-const AddSupplies = ({ supplys, locations, ready }) => {
-  const [fields, setFields] = useState({
+// fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note\
+// TODO: filter location on supply select...
+const AddSupplies = ({ names, locations, ready }) => {
+  const collectionName = "SupplysCollection";
+  const initialState = {
     supply: '',
     supplyType: '',
     minQuantity: '',
@@ -102,41 +40,47 @@ const AddSupplies = ({ supplys, locations, ready }) => {
     note: '',
     donated: false,
     donatedBy: '',
-  });
-  const isDisabled = supplys.includes(fields.supply);
-
-  // a copy of supplies and filtered supplies and their respective filters
-  const [newSupplys, setNewSupplys] = useState([]);
-  useEffect(() => {
-    setNewSupplys(supplys);
-  }, [supplys]);
-  const [filteredSupplys, setFilteredSupplys] = useState([]);
-  useEffect(() => {
-    setFilteredSupplys(newSupplys);
-  }, [newSupplys]);
-
-  // handles adding a new supply; IS case sensitive
-  const onAddSupply = (event, { value }) => {
-    if (!newSupplys.map(supply => supply.toLowerCase()).includes(value.toLowerCase())) {
-      setNewSupplys([...newSupplys, value]);
-    }
   };
+
+  const [fields, setFields] = useState(initialState);
+  // disable supply type and minimum if the supply is populated. 
+  // assuming a supply cannot have 1+ types
+  const [disabled, setDisabled] = useState(false);
+  useEffect(() => {
+    findOneMethod.callPromise({ collectionName, selector: { supply: fields.supply } })
+      .then(res => setDisabled(!!res));
+  }, [fields.supply]);
 
   // handles supply select
   const onSupplySelect = (event, { value: supply }) => {
-    const target = Supplys.findOne({ supply });
-    // if the supply exists:
-    if (target) {
-      // autofill the form with specific supply info
-      const { supplyType, minQuantity } = target;
-      setFields({ ...fields, supply, supplyType, minQuantity });
-    } else {
-      // else reset specific supply info
-      setFields({ ...fields, supply, supplyType: '', minQuantity: '' });
-      // reset the filters
-      setFilteredSupplys(newSupplys);
-    }
+    findOneMethod.callPromise({ collectionName, selector: { supply } })
+      .then(target => {
+        // if the supply exists:
+        if (target) {
+          // autofill the form with specific supply info
+          const { supplyType, minQuantity } = target;
+          setFields({ ...fields, supply, supplyType, minQuantity });
+        } else {
+          // else reset specific supply info
+          setFields({ ...fields, supply, supplyType: '', minQuantity: '' });
+        }
+      });
   };
+
+  // autofill donated by and note on (supply, location, donated) select
+  useEffect(() => {
+    const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } }
+    findOneMethod.callPromise({ collectionName, selector })
+      .then(target => {
+        if (!!target) {
+          const targetLot = target.stock.find(o => ( o.location === fields.location && o.donated === fields.donated ));
+          const { donatedBy, note } = targetLot;
+          setFields({ ...fields, donatedBy, note });
+        } else {
+          setFields({ ...fields, donatedBy: '', note: '' });
+        }
+      });
+  }, [fields.supply, fields.location, fields.donated]);
 
   const handleChange = (event, { name, value }) => {
     setFields({ ...fields, [name]: value });
@@ -151,8 +95,7 @@ const AddSupplies = ({ supplys, locations, ready }) => {
   };
 
   const clearForm = () => {
-    setFields({ supply: '', supplyType: '', minQuantity: '', quantity: '', location: '', donated: false, donatedBy: '', note: '' });
-    setFilteredSupplys(newSupplys);
+    setFields(initialState);
   };
 
   if (ready) {
@@ -170,9 +113,8 @@ const AddSupplies = ({ supplys, locations, ready }) => {
           <Grid columns='equal' stackable>
             <Grid.Row>
               <Grid.Column>
-                <Form.Select clearable search label='Supply Name' options={getOptions(newSupplys)}
-                  placeholder="Hot Packs" name='supply' onChange={onSupplySelect} value={fields.supply}
-                  allowAdditions onAddItem={onAddSupply} id={COMPONENT_IDS.ADD_SUPPLY_NAME} />
+                <Form.Select clearable search label='Supply Name' options={getOptions(names)}
+                  placeholder="Hot Packs" name='supply' onChange={onSupplySelect} value={fields.supply} id={COMPONENT_IDS.ADD_SUPPLY_NAME} />
               </Grid.Column>
               <Grid.Column className='filler-column' />
               <Grid.Column className='filler-column' />
@@ -181,12 +123,12 @@ const AddSupplies = ({ supplys, locations, ready }) => {
             <Grid.Row>
               <Grid.Column>
                 <Form.Select clearable label='Supply Type' options={getOptions(supplyTypes)} placeholder="Patient"
-                  name='supplyType' onChange={handleChange} value={fields.supplyType} id={COMPONENT_IDS.ADD_SUPPLY_TYPE} disabled={isDisabled}/>
+                  name='supplyType' onChange={handleChange} value={fields.supplyType} id={COMPONENT_IDS.ADD_SUPPLY_TYPE} disabled={disabled}/>
               </Grid.Column>
               <Grid.Column>
                 <Form.Input label='Minimum Quantity' type='number' min={1} name='minQuantity' className='quantity'
                   onChange={handleChange} value={fields.minQuantity} placeholder="50"
-                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} disabled={isDisabled} />
+                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} disabled={disabled} />
               </Grid.Column>
               <Grid.Column className='filler-column' />
             </Grid.Row>
@@ -224,7 +166,7 @@ const AddSupplies = ({ supplys, locations, ready }) => {
         </Form>
         <div className='buttons-div'>
           <Button className='clear-button' id={COMPONENT_IDS.ADD_SUPPLY_CLEAR} onClick={clearForm}>Clear Fields</Button>
-          <Button className='submit-button' floated='right' onClick={() => validateForm(fields, clearForm)} id={COMPONENT_IDS.ADD_SUPPLY_SUBMIT}>Submit</Button>
+          <Button className='submit-button' floated='right' onClick={() => submit(fields, clearForm)} id={COMPONENT_IDS.ADD_SUPPLY_SUBMIT}>Submit</Button>
         </div>
       </Tab.Pane>
     );
@@ -233,18 +175,18 @@ const AddSupplies = ({ supplys, locations, ready }) => {
 };
 
 AddSupplies.propTypes = {
-  supplys: PropTypes.array.isRequired,
+  names: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const supplySub = Supplys.subscribeSupply();
+  const nameSub = SupplyNames.subscribe();
   const locationSub = Locations.subscribe();
   return {
-    supplys: distinct('supply', Supplys),
-    locations: distinct('location', Locations),
-    ready: supplySub.ready() && locationSub.ready(),
+    names: fetchField(SupplyNames, "supplyName"),
+    locations: fetchField(Locations, "location"),
+    ready: nameSub.ready() && locationSub.ready(),
   };
 })(AddSupplies);
