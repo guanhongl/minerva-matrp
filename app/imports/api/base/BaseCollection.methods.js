@@ -129,19 +129,6 @@ export const loadFixtureMethod = new ValidatedMethod({
   },
 });
 
-export const updateManyMethod = new ValidatedMethod({
-  name: 'BaseCollection.updateMany',
-  mixins: [CallPromiseMixin],
-  validate: null,
-  run({ collectionName, updateObjects }) {
-    if (Meteor.isServer) {
-      const collection = MATRP.getCollection(collectionName);
-      collection.assertValidRoleForMethod(this.userId);
-      collection.updateMany(updateObjects);
-    }
-  },
-});
-
 export const resetDatabaseMethod = new ValidatedMethod({
   name: 'base.resetDatabase',
   mixins: [CallPromiseMixin],

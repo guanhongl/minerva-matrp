@@ -21,7 +21,7 @@ class DrugCollection extends BaseCollection {
       minQuantity: Number,
       unit: {
         type: String,
-        allowedValues: allowedUnits,
+        // allowedValues: allowedUnits,
       },
       lotIds: Array,
       'lotIds.$': Object,

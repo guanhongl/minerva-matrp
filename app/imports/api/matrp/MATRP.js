@@ -75,6 +75,7 @@ class MATRPClass {
     this.drugs = Drugs;
     this.vaccines = Vaccines;
     this.supplies = Supplys;
+    this.history = Historicals;
 
     /*
      * An object with keys equal to the collection name and values the associated collection instance.
