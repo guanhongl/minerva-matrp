@@ -16,29 +16,6 @@ export function fetchLots(collection) {
   ).sort();
 };
 
-// TODO: remove
-export function distinct(field, collection, selector = {}) {
-  const fields = _.pluck(
-    collection.find(selector, { sort: { [field]: 1 }, fields: { [field]: 1 } }).fetch(),
-    field,
-  );
-
-  return _.uniq(
-    field === 'drugType' ? fields.flat() : fields,
-    true,
-  );
-}
-
-// TODO: remove
-export function nestedDistinct(field, collection, selector = {}) {
-  const fields = _.pluck(
-    _.pluck(collection.find(selector, { fields: { [`lotIds.${field}`]: 1 } }).fetch(), 'lotIds').flat(),
-    field,
-  ).sort();
-
-  return _.uniq(fields, true);
-}
-
 /** convert array to dropdown options */
 export function getOptions(arr) {
   return arr.map(name => ({ key: name, text: name, value: name }));
