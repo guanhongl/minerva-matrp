@@ -10,7 +10,7 @@ import { Sites } from '../../api/site/SiteCollection';
 import DispenseLogRow from '../components/dispense-log/DispenseLogRow';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { distinct, getOptions } from '../utilities/Functions';
+import { fetchField, getOptions } from '../utilities/Functions';
 import { cloneDeep } from 'lodash';
 
 // Used for the amount of history log rows that appear in each page.
@@ -201,12 +201,12 @@ DispenseLog.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const historicalSub = Historicals.subscribeHistorical();
-  const siteSub = Sites.subscribeSite();
+  const siteSub = Sites.subscribe();
   // Determine if the subscription is ready
   const ready = historicalSub.ready() && siteSub.ready();
   // Get the Historical documents.
   const historicals = Historicals.find({}, { sort: { dateDispensed: -1 } }).fetch();
-  const sites = distinct('site', Sites);
+  const sites = fetchField(Sites, "site");
   return {
     historicals,
     ready,

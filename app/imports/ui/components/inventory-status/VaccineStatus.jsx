@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import { Vaccines } from '../../../api/vaccine/VaccineCollection';
+import { VaccineBrands } from '../../../api/vaccineBrand/VaccineBrandCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineStatusRow from './VaccineStatusRow';
-import { distinct, getOptions } from '../../utilities/Functions';
+import { fetchField, getOptions } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 
 // convert array to dropdown options
@@ -32,7 +33,7 @@ const statusOptions = [
 const currentDate = moment();
 
 // Render the form.
-const VaccineStatus = ({ ready, vaccines, locations, brands }) => {
+const VaccineStatus = ({ ready, vaccines, brands, locations }) => {
   const [filteredVaccines, setFilteredVaccines] = useState([]);
   useEffect(() => {
     setFilteredVaccines(vaccines);
@@ -196,25 +197,26 @@ const VaccineStatus = ({ ready, vaccines, locations, brands }) => {
 
 VaccineStatus.propTypes = {
   vaccines: PropTypes.array.isRequired,
-  locations: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const vaccineSub = Vaccines.subscribeVaccine();
-  const locationSub = Locations.subscribeLocation();
+  const vaccineBrandSub = VaccineBrands.subscribe();
+  const locationSub = Locations.subscribe();
   // Determine if the subscription is ready
-  const ready = vaccineSub.ready() && locationSub.ready();
+  const ready = vaccineSub.ready() && vaccineBrandSub.ready() && locationSub.ready();
   // Get the Vaccination documents and sort them by name.
   const vaccines = Vaccines.find({}, { sort: { vaccine: 1 } }).fetch();
-  const locations = distinct('location', Locations);
-  const brands = distinct('brand', Vaccines);
+  const brands = fetchField(VaccineBrands, "vaccineBrand");
+  const locations = fetchField(Locations, "location");
   return {
     vaccines,
-    locations,
     brands,
+    locations,
     ready,
   };
 })(VaccineStatus);

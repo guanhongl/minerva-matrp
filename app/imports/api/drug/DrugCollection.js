@@ -9,7 +9,7 @@ import { ROLE } from '../role/Role';
 export const allowedUnits = ['bottle(s)', 'g', 'mL', 'tab(s)'];
 export const drugPublications = {
   drug: 'Drug',
-  drugAdmin: 'DrugAdmin',
+  drugLots: 'DrugLots',
 };
 
 class DrugCollection extends BaseCollection {
@@ -21,7 +21,7 @@ class DrugCollection extends BaseCollection {
       minQuantity: Number,
       unit: {
         type: String,
-        allowedValues: allowedUnits,
+        // allowedValues: allowedUnits,
       },
       lotIds: Array,
       'lotIds.$': Object,
@@ -138,9 +138,9 @@ class DrugCollection extends BaseCollection {
         return this.ready();
       });
 
-      Meteor.publish(drugPublications.drugAdmin, function publish() {
+      Meteor.publish(drugPublications.drugLots, function publish() {
         if (this.userId) {
-          return instance._collection.find();
+          return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
         }
         return this.ready();
       });
@@ -161,9 +161,9 @@ class DrugCollection extends BaseCollection {
    * Subscription method for admin users.
    * It subscribes to the entire collection.
    */
-  subscribeDrugAdmin() {
+  subscribeDrugLots() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(drugPublications.drugAdmin);
+      return Meteor.subscribe(drugPublications.drugLots);
     }
     return null;
   }

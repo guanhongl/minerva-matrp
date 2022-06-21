@@ -74,6 +74,7 @@ Schemas.Vaccine = new SimpleSchema({
   'element.$.brand': String,
   'element.$.expire': String,
   'element.$.dose': Number,
+  'element.$.quantity': Number,
   'element.$.visDate': String,
 });
 // Supply Schema
@@ -118,10 +119,10 @@ class HistoricalCollection extends BaseCollection {
    * @param owner the owner of the item.
    * @return {String} the docID of the new document.
    */
-  define({ inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, name, note, element }) {
-    // console.log(inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, name, note, element);
+  define({ inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element }) {
+    // console.log(inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element);
     const docID = this._collection.insert({
-      inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, name, note, element,
+      inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element,
     });
     return docID;
   }

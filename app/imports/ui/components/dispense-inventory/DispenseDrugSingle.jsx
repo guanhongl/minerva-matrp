@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { getOptions } from '../../utilities/Functions';
 
-const DispenseDrugSingle = ({ lotIds, drugs, brands, fields, handleChange, handleCheck, onLotIdSelect,
-  allowedUnits, index }) => (
+const DispenseDrugSingle = ({ names, units, brands, lotIds, fields, 
+  handleChange, handleCheck, onLotIdSelect, index }) => (
   // return (
   <>
     <Grid.Row>
@@ -14,7 +14,7 @@ const DispenseDrugSingle = ({ lotIds, drugs, brands, fields, handleChange, handl
           name='lotId' onChange={onLotIdSelect} value={fields.lotId} id={COMPONENT_IDS.DISPENSE_MED_LOT} index={index}/>
       </Grid.Column>
       <Grid.Column>
-        <Form.Select clearable search label='Drug Name' options={getOptions(drugs)} placeholder="Benzonatate Capsules"
+        <Form.Select clearable search label='Drug Name' options={getOptions(names)} placeholder="Benzonatate Capsules"
           name='drug' onChange={handleChange} value={fields.drug} index={index}/>
       </Grid.Column>
       <Grid.Column>
@@ -34,7 +34,7 @@ const DispenseDrugSingle = ({ lotIds, drugs, brands, fields, handleChange, handl
             type='number' min={1} name='quantity' className='quantity' placeholder='30'
             onChange={handleChange} value={fields.quantity} index={index} id={COMPONENT_IDS.DISPENSE_MED_QUANTITY}/>
           <Form.Select compact name='unit' onChange={handleChange} value={fields.unit} className='unit'
-            options={getOptions(allowedUnits)} index={index} />
+            options={getOptions(units)} index={index} />
         </Form.Group>
       </Grid.Column>
       <Grid.Column>
@@ -54,14 +54,14 @@ const DispenseDrugSingle = ({ lotIds, drugs, brands, fields, handleChange, handl
 );
 
 DispenseDrugSingle.propTypes = {
-  drugs: PropTypes.array.isRequired,
-  lotIds: PropTypes.array.isRequired,
+  names: PropTypes.array.isRequired,
+  units: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
+  lotIds: PropTypes.array.isRequired,
   fields: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleCheck: PropTypes.func.isRequired,
   onLotIdSelect: PropTypes.func.isRequired,
-  allowedUnits: PropTypes.array.isRequired,
   index: PropTypes.number.isRequired,
 };
 

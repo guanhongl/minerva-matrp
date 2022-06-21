@@ -79,7 +79,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   <span className='header'>Vaccine:</span>
                   {
                     edit ?
-                      <Input name='newVaccine' value={fields.newVaccine} onChange={handleChange} />
+                      <Input name='newVaccine' value={fields.newVaccine} onChange={handleChange} readOnly />
                       :
                       <>{vaccine}</>
                   }
@@ -88,7 +88,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   <span className='header'>Brand:</span>
                   {
                     edit ?
-                      <Input name='newBrand' value={fields.newBrand} onChange={handleChange} />
+                      <Input name='newBrand' value={fields.newBrand} onChange={handleChange} readOnly />
                       :
                       <>{brand}</>
                   }

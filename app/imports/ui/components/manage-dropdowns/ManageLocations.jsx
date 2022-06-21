@@ -104,7 +104,7 @@ ManageLocations.propTypes = {
 
 export default withTracker(() => {
   const medicationSub = Drugs.subscribeDrug();
-  const locationSub = Locations.subscribeLocation();
+  const locationSub = Locations.subscribe();
   const locations = Locations.find({}, { sort: { location: 1 } }).fetch();
   const ready = locationSub.ready() && medicationSub.ready();
   return {

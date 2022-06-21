@@ -104,7 +104,7 @@ ManageDrugTypes.propTypes = {
 
 export default withTracker(() => {
   const medicationSub = Drugs.subscribeDrug();
-  const drugTypeSub = DrugTypes.subscribeDrugType();
+  const drugTypeSub = DrugTypes.subscribe();
   const drugTypes = DrugTypes.find({}, { sort: { drugType: 1 } }).fetch();
   const ready = drugTypeSub.ready() && medicationSub.ready();
   return {

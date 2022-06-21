@@ -56,6 +56,20 @@ export const removeItMethod = new ValidatedMethod({
   },
 });
 
+export const findOneMethod = new ValidatedMethod({
+  name: 'BaseCollection.findOne',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run({ collectionName, selector, options }) {
+    if (Meteor.isServer) {
+      const collection = MATRP.getCollection(collectionName);
+      collection.assertValidRoleForMethod(this.userId);
+      return collection.findOne(selector, options);
+    }
+    return null;
+  },
+});
+
 export const dumpDatabaseMethod = new ValidatedMethod({
   name: 'base.dumpDatabase',
   mixins: [CallPromiseMixin],
@@ -112,19 +126,6 @@ export const loadFixtureMethod = new ValidatedMethod({
       return result;
     }
     return '';
-  },
-});
-
-export const updateManyMethod = new ValidatedMethod({
-  name: 'BaseCollection.updateMany',
-  mixins: [CallPromiseMixin],
-  validate: null,
-  run({ collectionName, updateObjects }) {
-    if (Meteor.isServer) {
-      const collection = MATRP.getCollection(collectionName);
-      collection.assertValidRoleForMethod(this.userId);
-      collection.updateMany(updateObjects);
-    }
   },
 });
 

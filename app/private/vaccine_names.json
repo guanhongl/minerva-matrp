@@ -1,0 +1,35 @@
+[
+    {
+      "vaccineName": "Adenovirus"
+    },
+    {
+      "vaccineName": "Anthrax"
+    },
+    {
+      "vaccineName": "Cholera"
+    },
+    {
+      "vaccineName": "DTaP"
+    },
+    {
+      "vaccineName": "DT"
+    },
+    {
+      "vaccineName": "Hib"
+    },
+    {
+      "vaccineName": "Hepatitis A"
+    },
+    {
+      "vaccineName": "Hepatitis B"
+    },
+    {
+      "vaccineName": "Shingles"
+    },
+    {
+      "vaccineName": "HPV"
+    },
+    {
+      "vaccineName": "Influenza"
+    }
+]

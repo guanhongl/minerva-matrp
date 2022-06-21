@@ -6,84 +6,29 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Vaccines } from '../../../api/vaccine/VaccineCollection';
+import { VaccineNames } from '../../../api/vaccineName/VaccineNameCollection';
+import { VaccineBrands } from '../../../api/vaccineBrand/VaccineBrandCollection';
 import { Sites } from '../../../api/site/SiteCollection';
 import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
-import { defineMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
-import { distinct, getOptions, nestedDistinct, useQuery } from '../../utilities/Functions';
-import { cloneDeep } from 'lodash';
+import { findOneMethod } from '../../../api/base/BaseCollection.methods';
+import { dispenseMethod } from '../../../api/vaccine/VaccineCollection.methods';
+import { fetchField, fetchLots, getOptions, useQuery } from '../../utilities/Functions';
 
-// TODO: think about what happens when multiple ppl dispense at a time
 /** handle submit for Dispense Vaccine. */
 const submit = (data, callback) => {
-  const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, vaccine, lotId, brand, expire, dose, visDate, note } = data;
-  const collectionName = Vaccines.getCollectionName();
-  const targetVaccine = Vaccines.findOne({ vaccine, brand }); // find the existing vaccine; vaccines are uniquely identified by (vaccine, brand)
-  const { _id, lotIds } = targetVaccine;
-  const copy = cloneDeep({ id: _id, lotIds }); // the copy of the record to update
-  const targetIndex = lotIds.findIndex((obj => obj.lotId === lotId)); // find the index of existing the lotId
-  const { quantity } = lotIds[targetIndex];
-
-  // assume dispense only dispenses 1 at a time
-  // if quantity > 1
-  if (quantity > 1) {
-    lotIds[targetIndex].quantity -= 1; // decrement the quantity
-  } else {
-    // else if quantity === 1
-    lotIds.splice(targetIndex, 1); // remove the lotId
-  }
-  const updateData = { id: _id, lotIds };
-  const element = [{ name: vaccine, lotId, brand, expire, dose, visDate }];
-  const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
-    note, element };
-
-  updateMethod.callPromise({ collectionName, updateData })
-    .then(() => {
-      return defineMethod.callPromise({ collectionName: 'HistoricalsCollection', definitionData });
-    })
-    .then(() => {
-      swal('Success', `${vaccine}, ${lotId} updated successfully`, 'success', { buttons: false, timer: 3000 });
+  dispenseMethod.callPromise({ data })
+    .then(success => {
+      swal('Success', success, 'success', { buttons: false, timer: 3000 });
       callback(); // resets the form
     })
-    // if update or define fail, restore the copy
-    .catch(error => {
-      updateMethod.call({ collectionName, updateData: copy });
-      swal('Error', error.message, 'error');
-    });
-};
-
-/** validates the dispense vaccine form */
-const validateForm = (data, callback) => {
-  const submitData = { ...data, dispensedFrom: Meteor.user().username };
-
-  if (data.dispenseType !== 'Patient Use') { // handle non patient use dispense
-    submitData.dispensedTo = '-';
-    submitData.site = '-';
-  }
-
-  let errorMsg = '';
-  // the required String fields
-  const requiredFields = ['dispensedTo', 'site', 'vaccine', 'lotId', 'brand', 'visDate', 'dose'];
-
-  // check required fields
-  requiredFields.forEach(field => {
-    if (!submitData[field]) {
-      errorMsg += `${field} cannot be empty.\n`;
-    }
-  });
-
-  if (errorMsg) {
-    swal('Error', `${errorMsg}`, 'error');
-  } else {
-    submitData.dose = parseInt(data.dose, 10);
-    submit(submitData, callback);
-  }
+    .catch(err => swal("Error", err.message, "error"));
 };
 
 /** Renders the Page for Dispensing Vaccine. */
-const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
+const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
+  const collectionName = Vaccines.getCollectionName();
   const query = useQuery();
-
-  const [fields, setFields] = useState({
+  const initFields = {
     inventoryType: 'Vaccine',
     dispenseType: 'Patient Use',
     dateDispensed: moment().format('YYYY-MM-DDTHH:mm'),
@@ -93,23 +38,31 @@ const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
     lotId: '',
     brand: '',
     expire: '',
-    dose: '', // the dose number; should always dispense only 1
+    dose: '', // the dose number
+    quantity: '',
     visDate: '',
     note: '',
-  });
-  // const [maxQuantity, setMaxQuantity] = useState(0);
-  const isDisabled = fields.dispenseType !== 'Patient Use';
+  };
+
+  const [fields, setFields] = useState(initFields);
+  const [maxQuantity, setMaxQuantity] = useState(0);
+  const patientUse = fields.dispenseType === 'Patient Use';
+  const nonPatientUse = fields.dispenseType !== 'Patient Use';
 
   useEffect(() => {
     const _id = query.get("_id");
     if (_id && ready) {
-      const target = Vaccines.findOne({ lotIds: { $elemMatch: { _id } } });
-      // autofill the form with specific lotId info
-      const targetLotId = target.lotIds.find(obj => obj._id === _id);
-      const { vaccine, brand, minQuantity, visDate } = target;
-      const { expire, lotId } = targetLotId;
-      const autoFields = { ...fields, lotId, vaccine, brand, minQuantity, visDate, expire };
-      setFields(autoFields);
+      const selector = { lotIds: { $elemMatch: { _id } } };
+      findOneMethod.callPromise({ collectionName, selector })
+        .then(target => {
+          // autofill the form with specific lotId info
+          const targetLotId = target.lotIds.find(obj => obj._id === _id);
+          const { vaccine, brand, visDate } = target;
+          const { expire, lotId, quantity } = targetLotId;
+          const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
+          setFields(autoFields);
+          setMaxQuantity(quantity);
+        });
     }
   }, [ready]);
 
@@ -127,27 +80,29 @@ const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
 
   // handle lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
-    const target = Vaccines.findOne({ lotIds: { $elemMatch: { lotId } } });
-    // if lotId is not empty:
-    if (target) {
-      // autofill the form with specific lotId info
-      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
-      const { vaccine, brand, minQuantity, visDate } = target;
-      const { expire, quantity } = targetLotId;
-      const autoFields = { ...fields, lotId, vaccine, brand, minQuantity, visDate, expire };
-      setFields(autoFields);
-      // setMaxQuantity(quantity);
-    } else {
-      // else reset specific lotId info
-      setFields({ ...fields, lotId, vaccine: '', brand: '', minQuantity: '', visDate: '', expire: '' });
-      // setMaxQuantity(0);
-    }
+    const selector = { lotIds: { $elemMatch: { lotId } } };
+    findOneMethod.callPromise({ collectionName, selector })
+      .then(target => {
+        // if lotId is not empty:
+        if (!!target) {
+          // autofill the form with specific lotId info
+          const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
+          const { vaccine, brand, visDate } = target;
+          const { expire, quantity } = targetLotId;
+          const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
+          setFields(autoFields);
+          setMaxQuantity(quantity);
+        } else {
+          // else reset specific lotId info
+          setFields({ ...fields, lotId, vaccine: '', brand: '', visDate: '', expire: '' });
+          setMaxQuantity(0);
+        }
+      });
   };
 
   const clearForm = () => {
-    setFields({ ...fields, dispenseType: 'Patient Use', dispensedTo: '', site: '', vaccine: '',
-      lotId: '', brand: '', expire: '', dose: '', visDate: '', note: '' });
-    // setMaxQuantity(0);
+    setFields(initFields);
+    setMaxQuantity(0);
   };
 
   if (ready) {
@@ -181,12 +136,12 @@ const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
               </Grid.Column>
               <Grid.Column>
                 <Form.Input label='Dispensed To' placeholder="Patient Number"
-                  name='dispensedTo' onChange={handleChange} value={fields.dispensedTo} disabled={isDisabled}/>
+                  name='dispensedTo' onChange={handleChange} value={fields.dispensedTo} disabled={nonPatientUse}/>
               </Grid.Column>
               <Grid.Column>
                 <Form.Select clearable search label='Site' options={getOptions(sites)}
                   placeholder="Kaka’ako" name='site'
-                  onChange={handleChange} value={fields.site} disabled={isDisabled}/>
+                  onChange={handleChange} value={fields.site} disabled={nonPatientUse}/>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
@@ -195,7 +150,7 @@ const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
                   placeholder="Z9Z99" name='lotId' value={fields.lotId} onChange={onLotIdSelect} />
               </Grid.Column>
               <Grid.Column>
-                <Form.Select clearable search label='Vaccine' options={getOptions(vaccines)}
+                <Form.Select clearable search label='Vaccine' options={getOptions(names)}
                   placeholder="J&J COVID" name='vaccine' value={fields.vaccine} onChange={handleChange} />
               </Grid.Column>
               <Grid.Column>
@@ -210,14 +165,18 @@ const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
                   onChange={handleChange} value={fields.expire}/>
               </Grid.Column>
               <Grid.Column>
+                <Form.Input type="date" label='VIS Date' name='visDate' 
+                  onChange={handleChange} value={fields.visDate} />
+              </Grid.Column>
+              <Grid.Column>
                 <Form.Group>
-                  <Form.Input type="date" label='VIS Date' name='visDate' className='quantity'
-                    onChange={handleChange} value={fields.visDate} />
+                  <Form.Input label={maxQuantity ? `Quantity (${maxQuantity} remaining)` : 'Quantity'} 
+                    type='number' min={1} name='quantity' className='quantity'
+                    onChange={handleChange} value={fields.quantity} placeholder='1' disabled={patientUse}/>
                   <Form.Input label='Dose #' type='number' min={1} name='dose' className='unit'
-                    onChange={handleChange} placeholder='1' />
+                    onChange={handleChange} placeholder='1' disabled={nonPatientUse}/>
                 </Form.Group>
               </Grid.Column>
-              <Grid.Column className='filler-column' />
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
@@ -229,7 +188,7 @@ const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
         </Form>
         <div className='buttons-div'>
           <Button className='clear-button' onClick={clearForm}>Clear Fields</Button>
-          <Button className='submit-button' floated='right' onClick={() => validateForm(fields, clearForm)}>Submit</Button>
+          <Button className='submit-button' floated='right' onClick={() => submit(fields, clearForm)}>Submit</Button>
           {/* <Button className='submit-button' floated='right' onClick={() => alert('Under Maintenance...')}>Submit</Button> */}
         </div>
       </Tab.Pane>
@@ -239,22 +198,25 @@ const DispenseVaccine = ({ ready, vaccines, brands, lotIds, sites }) => {
 };
 
 DispenseVaccine.propTypes = {
-  sites: PropTypes.array.isRequired,
-  vaccines: PropTypes.array.isRequired,
-  lotIds: PropTypes.array.isRequired,
+  names: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
+  lotIds: PropTypes.array.isRequired,
+  sites: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const vaccineSub = Vaccines.subscribeVaccine();
-  const siteSub = Sites.subscribeSite();
+  const nameSub = VaccineNames.subscribe();
+  const brandSub = VaccineBrands.subscribe();
+  const lotSub = Vaccines.subscribeVaccineLots();
+  const siteSub = Sites.subscribe();
+
   return {
-    sites: distinct('site', Sites),
-    vaccines: distinct('vaccine', Vaccines),
-    brands: distinct('brand', Vaccines),
-    lotIds: nestedDistinct('lotId', Vaccines),
-    ready: vaccineSub.ready() && siteSub.ready(),
+    names: fetchField(VaccineNames, "vaccineName"),
+    brands: fetchField(VaccineBrands, "vaccineBrand"),
+    lotIds: fetchLots(Vaccines),
+    sites: fetchField(Sites, "site"),
+    ready: nameSub.ready() && brandSub.ready() && lotSub.ready() && siteSub.ready(),
   };
 })(DispenseVaccine);
