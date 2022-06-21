@@ -187,6 +187,7 @@
         "brand": "Brand Z",
         "expire": "2023-09-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-29",
         "name": "PPD"
       }
@@ -426,6 +427,7 @@
         "brand": "Brand D",
         "expire": "2025-03-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-27",
         "name": "Hep B"
       }
@@ -502,6 +504,7 @@
         "brand": "Brand Q",
         "expire": "2023-09-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-15",
         "name": "J&J COVID"
       }
@@ -561,6 +564,7 @@
         "brand": "Brand R",
         "expire": "2022-12-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-18",
         "name": "Hep B"
       }
@@ -617,6 +621,7 @@
         "brand": "Brand J",
         "expire": "2023-11-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-28",
         "name": "Hep A"
       }
@@ -793,6 +798,7 @@
         "brand": "Brand T",
         "expire": "2024-07-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-16",
         "name": "Tdap"
       }
@@ -960,6 +966,7 @@
         "brand": "Brand Y",
         "expire": "2023-07-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-30",
         "name": "Varicella"
       }
@@ -1113,6 +1120,7 @@
         "brand": "Brand J",
         "expire": "2023-04-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-10",
         "name": "Influenza"
       }
@@ -1414,6 +1422,7 @@
         "brand": "Brand G",
         "expire": "2024-08-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-11",
         "name": "Tdap"
       }
@@ -1698,6 +1707,7 @@
         "brand": "Brand O",
         "expire": "2023-06-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-29",
         "name": "PPD"
       }
@@ -1757,6 +1767,7 @@
         "brand": "Brand G",
         "expire": "2023-07-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-31",
         "name": "J&J COVID"
       }
@@ -1776,6 +1787,7 @@
         "brand": "Brand C",
         "expire": "2022-08-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-25",
         "name": "Influenza"
       }
@@ -1999,6 +2011,7 @@
         "brand": "Brand N",
         "expire": "2022-09-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-27",
         "name": "Influenza"
       }
@@ -2286,6 +2299,7 @@
         "brand": "Brand J",
         "expire": "2022-08-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-21",
         "name": "Influenza"
       }
@@ -2480,6 +2494,7 @@
         "brand": "Brand F",
         "expire": "2025-02-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-20",
         "name": "Influenza"
       }
@@ -2637,6 +2652,7 @@
         "brand": "Brand T",
         "expire": "2024-08-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-29",
         "name": "Influenza"
       }
@@ -2733,6 +2749,7 @@
         "brand": "Brand D",
         "expire": "2023-12-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-20",
         "name": "Tdap"
       }
@@ -2887,6 +2904,7 @@
         "brand": "Brand M",
         "expire": "2023-01-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-19",
         "name": "Influenza"
       }
@@ -2958,6 +2976,7 @@
         "brand": "Brand I",
         "expire": "2024-08-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-23",
         "name": "Hep A"
       }
@@ -3017,6 +3036,7 @@
         "brand": "Brand A",
         "expire": "2023-10-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-31",
         "name": "Hep A"
       }
@@ -3036,6 +3056,7 @@
         "brand": "Brand I",
         "expire": "2023-01-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-29",
         "name": "Varicella"
       }
@@ -3055,6 +3076,7 @@
         "brand": "Brand A",
         "expire": "2025-10-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-07",
         "name": "PPD"
       }
@@ -3135,6 +3157,7 @@
         "brand": "Brand U",
         "expire": "2023-02-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-12",
         "name": "Influenza"
       }
@@ -3231,6 +3254,7 @@
         "brand": "Brand B",
         "expire": "2024-01-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-20",
         "name": "Hep B"
       }
@@ -3498,6 +3522,7 @@
         "brand": "Brand U",
         "expire": "2022-06-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-09",
         "name": "Hep B"
       }
@@ -3574,6 +3599,7 @@
         "brand": "Brand H",
         "expire": "2024-07-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-14",
         "name": "J&J COVID"
       }
@@ -3593,6 +3619,7 @@
         "brand": "Brand J",
         "expire": "2023-03-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-03",
         "name": "Hep A"
       }
@@ -3750,6 +3777,7 @@
         "brand": "Brand E",
         "expire": "2022-05-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-06",
         "name": "Varicella"
       }
@@ -3809,6 +3837,7 @@
         "brand": "Brand E",
         "expire": "2024-09-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-25",
         "name": "Tdap"
       }
@@ -3945,6 +3974,7 @@
         "brand": "Brand D",
         "expire": "2022-05-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-26",
         "name": "Influenza"
       }
@@ -3964,6 +3994,7 @@
         "brand": "Brand U",
         "expire": "2024-02-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-20",
         "name": "Influenza"
       }
@@ -3983,6 +4014,7 @@
         "brand": "Brand B",
         "expire": "2024-01-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-24",
         "name": "Varicella"
       }
@@ -4044,6 +4076,7 @@
         "brand": "Brand B",
         "expire": "2023-09-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-20",
         "name": "Hep B"
       }
@@ -4196,6 +4229,7 @@
         "brand": "Brand L",
         "expire": "2025-05-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-13",
         "name": "Influenza"
       }
@@ -4315,6 +4349,7 @@
         "brand": "Brand N",
         "expire": "2022-06-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-06",
         "name": "Influenza"
       }
@@ -4395,6 +4430,7 @@
         "brand": "Brand Q",
         "expire": "2023-02-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-15",
         "name": "J&J COVID"
       }
@@ -4434,6 +4470,7 @@
         "brand": "Brand J",
         "expire": "2023-05-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-02",
         "name": "Influenza"
       }
@@ -4473,6 +4510,7 @@
         "brand": "Brand F",
         "expire": "2025-07-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-27",
         "name": "Influenza"
       }
@@ -4546,6 +4584,7 @@
         "brand": "Brand H",
         "expire": "2023-01-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-12",
         "name": "Tdap"
       }
@@ -4787,6 +4826,7 @@
         "brand": "Brand S",
         "expire": "2022-02-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-11",
         "name": "J&J COVID"
       }
@@ -4940,6 +4980,7 @@
         "brand": "Brand A",
         "expire": "2022-01-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-24",
         "name": "Varicella"
       }
@@ -5034,6 +5075,7 @@
         "brand": "Brand O",
         "expire": "2025-08-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-14",
         "name": "PPD"
       }
@@ -5133,6 +5175,7 @@
         "brand": "Brand R",
         "expire": "2024-11-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-14",
         "name": "Varicella"
       }
@@ -5192,6 +5235,7 @@
         "brand": "Brand V",
         "expire": "2025-02-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-09",
         "name": "J&J COVID"
       }
@@ -5211,6 +5255,7 @@
         "brand": "Brand V",
         "expire": "2024-02-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-16",
         "name": "PPD"
       }
@@ -5371,6 +5416,7 @@
         "brand": "Brand Q",
         "expire": "2024-03-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-27",
         "name": "J&J COVID"
       }
@@ -5484,6 +5530,7 @@
         "brand": "Brand F",
         "expire": "2025-09-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-25",
         "name": "Tdap"
       }
@@ -5563,6 +5610,7 @@
         "brand": "Brand V",
         "expire": "2025-09-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-01",
         "name": "Influenza"
       }
@@ -5699,6 +5747,7 @@
         "brand": "Brand D",
         "expire": "2022-04-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-30",
         "name": "Tdap"
       }
@@ -5873,6 +5922,7 @@
         "brand": "Brand T",
         "expire": "2022-09-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-28",
         "name": "J&J COVID"
       }
@@ -6169,6 +6219,7 @@
         "brand": "Brand X",
         "expire": "2024-09-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-20",
         "name": "PPD"
       }
@@ -6228,6 +6279,7 @@
         "brand": "Brand E",
         "expire": "2024-12-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-31",
         "name": "PPD"
       }
@@ -6441,6 +6493,7 @@
         "brand": "Brand P",
         "expire": "2023-12-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-20",
         "name": "Varicella"
       }
@@ -6480,6 +6533,7 @@
         "brand": "Brand S",
         "expire": "2024-03-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-29",
         "name": "J&J COVID"
       }
@@ -6536,6 +6590,7 @@
         "brand": "Brand D",
         "expire": "2025-03-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-10",
         "name": "J&J COVID"
       }
@@ -6636,6 +6691,7 @@
         "brand": "Brand U",
         "expire": "2024-12-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-08",
         "name": "Tdap"
       }
@@ -6695,6 +6751,7 @@
         "brand": "Brand M",
         "expire": "2022-01-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-03",
         "name": "Tdap"
       }
@@ -6815,6 +6872,7 @@
         "brand": "Brand X",
         "expire": "2022-02-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-05",
         "name": "Hep A"
       }
@@ -7106,6 +7164,7 @@
         "brand": "Brand A",
         "expire": "2023-04-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-04",
         "name": "Influenza"
       }
@@ -7183,6 +7242,7 @@
         "brand": "Brand N",
         "expire": "2023-08-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-26",
         "name": "Hep A"
       }
@@ -7219,6 +7279,7 @@
         "brand": "Brand T",
         "expire": "2023-03-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-09",
         "name": "J&J COVID"
       }
@@ -7275,6 +7336,7 @@
         "brand": "Brand V",
         "expire": "2025-04-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-05",
         "name": "Hep A"
       }
@@ -7391,6 +7453,7 @@
         "brand": "Brand Q",
         "expire": "2025-08-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-05",
         "name": "J&J COVID"
       }
@@ -7410,6 +7473,7 @@
         "brand": "Brand Z",
         "expire": "2022-09-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-10",
         "name": "Varicella"
       }
@@ -7429,6 +7493,7 @@
         "brand": "Brand V",
         "expire": "2024-12-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-27",
         "name": "Influenza"
       }
@@ -7448,6 +7513,7 @@
         "brand": "Brand X",
         "expire": "2022-02-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-20",
         "name": "Hep A"
       }
@@ -7467,6 +7533,7 @@
         "brand": "Brand C",
         "expire": "2024-03-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-08",
         "name": "Hep A"
       }
@@ -7486,6 +7553,7 @@
         "brand": "Brand F",
         "expire": "2024-08-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-18",
         "name": "Tdap"
       }
@@ -7728,6 +7796,7 @@
         "brand": "Brand B",
         "expire": "2022-05-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-09",
         "name": "Tdap"
       }
@@ -7980,6 +8049,7 @@
         "brand": "Brand Q",
         "expire": "2022-04-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-18",
         "name": "Hep B"
       }
@@ -8228,6 +8298,7 @@
         "brand": "Brand H",
         "expire": "2025-07-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-01",
         "name": "J&J COVID"
       }
@@ -8328,6 +8399,7 @@
         "brand": "Brand N",
         "expire": "2025-03-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-01",
         "name": "Tdap"
       }
@@ -8508,6 +8580,7 @@
         "brand": "Brand Y",
         "expire": "2024-03-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-05",
         "name": "Hep A"
       }
@@ -8567,6 +8640,7 @@
         "brand": "Brand P",
         "expire": "2025-01-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-25",
         "name": "Hep B"
       }
@@ -8739,6 +8813,7 @@
         "brand": "Brand I",
         "expire": "2024-01-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-23",
         "name": "Hep B"
       }
@@ -8778,6 +8853,7 @@
         "brand": "Brand B",
         "expire": "2024-05-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-28",
         "name": "Hep B"
       }
@@ -8936,6 +9012,7 @@
         "brand": "Brand H",
         "expire": "2023-06-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-23",
         "name": "J&J COVID"
       }
@@ -8955,6 +9032,7 @@
         "brand": "Brand M",
         "expire": "2023-11-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-06",
         "name": "PPD"
       }
@@ -8974,6 +9052,7 @@
         "brand": "Brand T",
         "expire": "2023-06-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-10",
         "name": "Varicella"
       }
@@ -8993,6 +9072,7 @@
         "brand": "Brand I",
         "expire": "2022-08-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-03",
         "name": "Influenza"
       }
@@ -9052,6 +9132,7 @@
         "brand": "Brand I",
         "expire": "2024-07-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-05",
         "name": "Hep B"
       }
@@ -9091,6 +9172,7 @@
         "brand": "Brand B",
         "expire": "2022-05-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-27",
         "name": "Tdap"
       }
@@ -9187,6 +9269,7 @@
         "brand": "Brand A",
         "expire": "2021-12-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2021-12-30",
         "name": "Tdap"
       }
@@ -9226,6 +9309,7 @@
         "brand": "Brand W",
         "expire": "2024-09-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-13",
         "name": "PPD"
       }
@@ -9265,6 +9349,7 @@
         "brand": "Brand Z",
         "expire": "2023-02-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-20",
         "name": "Influenza"
       }
@@ -9284,6 +9369,7 @@
         "brand": "Brand F",
         "expire": "2023-02-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-07",
         "name": "PPD"
       }
@@ -9363,6 +9449,7 @@
         "brand": "Brand F",
         "expire": "2022-03-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-10",
         "name": "J&J COVID"
       }
@@ -9436,6 +9523,7 @@
         "brand": "Brand E",
         "expire": "2024-02-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-13",
         "name": "Hep B"
       }
@@ -9532,6 +9620,7 @@
         "brand": "Brand F",
         "expire": "2022-04-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-07",
         "name": "PPD"
       }
@@ -9608,6 +9697,7 @@
         "brand": "Brand Q",
         "expire": "2023-02-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-04",
         "name": "Tdap"
       }
@@ -9684,6 +9774,7 @@
         "brand": "Brand F",
         "expire": "2025-01-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-26",
         "name": "Varicella"
       }
@@ -9761,6 +9852,7 @@
         "brand": "Brand C",
         "expire": "2024-03-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-27",
         "name": "Tdap"
       }
@@ -9800,6 +9892,7 @@
         "brand": "Brand H",
         "expire": "2023-06-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-03",
         "name": "Hep A"
       }
@@ -9856,6 +9949,7 @@
         "brand": "Brand U",
         "expire": "2023-06-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-12",
         "name": "Varicella"
       }
@@ -10016,6 +10110,7 @@
         "brand": "Brand M",
         "expire": "2023-07-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-31",
         "name": "PPD"
       }
@@ -10035,6 +10130,7 @@
         "brand": "Brand M",
         "expire": "2022-11-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-11",
         "name": "Influenza"
       }
@@ -10268,6 +10364,7 @@
         "brand": "Brand T",
         "expire": "2024-03-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-20",
         "name": "Hep B"
       }
@@ -10287,6 +10384,7 @@
         "brand": "Brand C",
         "expire": "2024-03-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-14",
         "name": "J&J COVID"
       }
@@ -10544,6 +10642,7 @@
         "brand": "Brand Y",
         "expire": "2023-11-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-28",
         "name": "J&J COVID"
       }
@@ -10580,6 +10679,7 @@
         "brand": "Brand W",
         "expire": "2024-01-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-13",
         "name": "Tdap"
       }
@@ -10659,6 +10759,7 @@
         "brand": "Brand V",
         "expire": "2022-04-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-11",
         "name": "Tdap"
       }
@@ -10678,6 +10779,7 @@
         "brand": "Brand E",
         "expire": "2025-06-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-05",
         "name": "Hep A"
       }
@@ -10785,6 +10887,7 @@
         "brand": "Brand A",
         "expire": "2023-07-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-26",
         "name": "Influenza"
       }
@@ -10841,6 +10944,7 @@
         "brand": "Brand Z",
         "expire": "2023-04-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-08",
         "name": "Varicella"
       }
@@ -10958,6 +11062,7 @@
         "brand": "Brand I",
         "expire": "2023-01-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-25",
         "name": "Influenza"
       }
@@ -11014,6 +11119,7 @@
         "brand": "Brand S",
         "expire": "2025-06-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-14",
         "name": "Hep B"
       }
@@ -11173,6 +11279,7 @@
         "brand": "Brand I",
         "expire": "2022-05-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-18",
         "name": "Hep B"
       }
@@ -11289,6 +11396,7 @@
         "brand": "Brand N",
         "expire": "2025-05-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-02",
         "name": "Hep B"
       }
@@ -11544,6 +11652,7 @@
         "brand": "Brand C",
         "expire": "2024-04-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-05",
         "name": "J&J COVID"
       }
@@ -11637,6 +11746,7 @@
         "brand": "Brand D",
         "expire": "2022-06-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-15",
         "name": "Influenza"
       }
@@ -11753,6 +11863,7 @@
         "brand": "Brand P",
         "expire": "2025-08-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-20",
         "name": "Hep B"
       }
@@ -11792,6 +11903,7 @@
         "brand": "Brand N",
         "expire": "2025-08-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-06",
         "name": "Tdap"
       }
@@ -11865,6 +11977,7 @@
         "brand": "Brand I",
         "expire": "2023-03-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-01",
         "name": "Influenza"
       }
@@ -11884,6 +11997,7 @@
         "brand": "Brand Y",
         "expire": "2022-12-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-29",
         "name": "Tdap"
       }
@@ -11903,6 +12017,7 @@
         "brand": "Brand U",
         "expire": "2023-07-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-19",
         "name": "PPD"
       }
@@ -12002,6 +12117,7 @@
         "brand": "Brand A",
         "expire": "2023-02-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-24",
         "name": "Hep A"
       }
@@ -12021,6 +12137,7 @@
         "brand": "Brand T",
         "expire": "2025-05-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-13",
         "name": "Hep A"
       }
@@ -12175,6 +12292,7 @@
         "brand": "Brand H",
         "expire": "2024-10-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-16",
         "name": "Tdap"
       }
@@ -12271,6 +12389,7 @@
         "brand": "Brand Z",
         "expire": "2024-10-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-12",
         "name": "Tdap"
       }
@@ -12290,6 +12409,7 @@
         "brand": "Brand N",
         "expire": "2024-11-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-04",
         "name": "Hep A"
       }
@@ -12329,6 +12449,7 @@
         "brand": "Brand M",
         "expire": "2025-04-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-17",
         "name": "PPD"
       }
@@ -12390,6 +12511,7 @@
         "brand": "Brand O",
         "expire": "2022-10-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-08",
         "name": "Tdap"
       }
@@ -12638,6 +12760,7 @@
         "brand": "Brand Q",
         "expire": "2025-02-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-06",
         "name": "Tdap"
       }
@@ -12852,6 +12975,7 @@
         "brand": "Brand Y",
         "expire": "2022-10-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-07",
         "name": "Hep A"
       }
@@ -12929,6 +13053,7 @@
         "brand": "Brand M",
         "expire": "2025-03-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-13",
         "name": "PPD"
       }
@@ -12968,6 +13093,7 @@
         "brand": "Brand U",
         "expire": "2025-04-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-22",
         "name": "Varicella"
       }
@@ -12987,6 +13113,7 @@
         "brand": "Brand Z",
         "expire": "2022-11-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-10",
         "name": "Hep B"
       }
@@ -13103,6 +13230,7 @@
         "brand": "Brand J",
         "expire": "2024-08-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-09",
         "name": "Hep A"
       }
@@ -13122,6 +13250,7 @@
         "brand": "Brand L",
         "expire": "2024-04-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-26",
         "name": "Varicella"
       }
@@ -13201,6 +13330,7 @@
         "brand": "Brand F",
         "expire": "2025-08-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-01",
         "name": "Varicella"
       }
@@ -13882,6 +14012,7 @@
         "brand": "Brand K",
         "expire": "2024-10-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-13",
         "name": "Tdap"
       }
@@ -13918,6 +14049,7 @@
         "brand": "Brand T",
         "expire": "2023-01-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-09",
         "name": "Varicella"
       }
@@ -14074,6 +14206,7 @@
         "brand": "Brand P",
         "expire": "2022-02-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-16",
         "name": "Influenza"
       }
@@ -14190,6 +14323,7 @@
         "brand": "Brand D",
         "expire": "2023-08-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-25",
         "name": "Hep B"
       }
@@ -14326,6 +14460,7 @@
         "brand": "Brand Z",
         "expire": "2022-08-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-23",
         "name": "PPD"
       }
@@ -14345,6 +14480,7 @@
         "brand": "Brand B",
         "expire": "2022-01-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-15",
         "name": "Hep B"
       }
@@ -14384,6 +14520,7 @@
         "brand": "Brand A",
         "expire": "2022-08-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-12",
         "name": "Varicella"
       }
@@ -14403,6 +14540,7 @@
         "brand": "Brand X",
         "expire": "2022-02-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-12",
         "name": "Hep A"
       }
@@ -14459,6 +14597,7 @@
         "brand": "Brand W",
         "expire": "2022-12-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-01",
         "name": "J&J COVID"
       }
@@ -14499,6 +14638,7 @@
         "brand": "Brand S",
         "expire": "2025-09-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-25",
         "name": "PPD"
       }
@@ -14538,6 +14678,7 @@
         "brand": "Brand V",
         "expire": "2024-09-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-07",
         "name": "J&J COVID"
       }
@@ -14632,6 +14773,7 @@
         "brand": "Brand R",
         "expire": "2024-09-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-04",
         "name": "Hep B"
       }
@@ -14671,6 +14813,7 @@
         "brand": "Brand I",
         "expire": "2022-09-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-24",
         "name": "Tdap"
       }
@@ -14770,6 +14913,7 @@
         "brand": "Brand G",
         "expire": "2022-09-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-23",
         "name": "Influenza"
       }
@@ -15032,6 +15176,7 @@
         "brand": "Brand H",
         "expire": "2023-12-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-09",
         "name": "Influenza"
       }
@@ -15091,6 +15236,7 @@
         "brand": "Brand W",
         "expire": "2023-02-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-06",
         "name": "Influenza"
       }
@@ -15110,6 +15256,7 @@
         "brand": "Brand Q",
         "expire": "2022-05-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-30",
         "name": "Tdap"
       }
@@ -15149,6 +15296,7 @@
         "brand": "Brand N",
         "expire": "2023-06-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-19",
         "name": "J&J COVID"
       }
@@ -15459,6 +15607,7 @@
         "brand": "Brand I",
         "expire": "2022-08-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-08",
         "name": "J&J COVID"
       }
@@ -15826,6 +15975,7 @@
         "brand": "Brand H",
         "expire": "2023-08-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-16",
         "name": "Influenza"
       }
@@ -16004,6 +16154,7 @@
         "brand": "Brand H",
         "expire": "2022-03-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-06",
         "name": "PPD"
       }
@@ -16043,6 +16194,7 @@
         "brand": "Brand Q",
         "expire": "2022-11-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-17",
         "name": "J&J COVID"
       }
@@ -16062,6 +16214,7 @@
         "brand": "Brand D",
         "expire": "2024-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-18",
         "name": "PPD"
       }
@@ -16141,6 +16294,7 @@
         "brand": "Brand H",
         "expire": "2024-08-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-21",
         "name": "PPD"
       }
@@ -16281,6 +16435,7 @@
         "brand": "Brand P",
         "expire": "2023-04-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-18",
         "name": "Tdap"
       }
@@ -16300,6 +16455,7 @@
         "brand": "Brand L",
         "expire": "2024-03-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-28",
         "name": "Influenza"
       }
@@ -16356,6 +16512,7 @@
         "brand": "Brand U",
         "expire": "2022-06-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-13",
         "name": "Varicella"
       }
@@ -16452,6 +16609,7 @@
         "brand": "Brand T",
         "expire": "2022-06-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-22",
         "name": "J&J COVID"
       }
@@ -16551,6 +16709,7 @@
         "brand": "Brand D",
         "expire": "2023-05-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-26",
         "name": "PPD"
       }
@@ -16610,6 +16769,7 @@
         "brand": "Brand E",
         "expire": "2022-02-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-14",
         "name": "J&J COVID"
       }
@@ -16783,6 +16943,7 @@
         "brand": "Brand I",
         "expire": "2025-05-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-19",
         "name": "PPD"
       }
@@ -16882,6 +17043,7 @@
         "brand": "Brand R",
         "expire": "2025-06-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-14",
         "name": "PPD"
       }
@@ -16976,6 +17138,7 @@
         "brand": "Brand L",
         "expire": "2024-11-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-21",
         "name": "Varicella"
       }
@@ -17015,6 +17178,7 @@
         "brand": "Brand W",
         "expire": "2025-05-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-06",
         "name": "J&J COVID"
       }
@@ -17071,6 +17235,7 @@
         "brand": "Brand K",
         "expire": "2023-06-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-27",
         "name": "Varicella"
       }
@@ -17110,6 +17275,7 @@
         "brand": "Brand Z",
         "expire": "2023-11-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-28",
         "name": "Tdap"
       }
@@ -17129,6 +17295,7 @@
         "brand": "Brand V",
         "expire": "2023-05-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-05",
         "name": "Hep B"
       }
@@ -17289,6 +17456,7 @@
         "brand": "Brand R",
         "expire": "2025-06-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-10",
         "name": "Hep A"
       }
@@ -17385,6 +17553,7 @@
         "brand": "Brand J",
         "expire": "2022-11-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-14",
         "name": "Hep B"
       }
@@ -17484,6 +17653,7 @@
         "brand": "Brand P",
         "expire": "2025-09-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-15",
         "name": "J&J COVID"
       }
@@ -17702,6 +17872,7 @@
         "brand": "Brand I",
         "expire": "2023-06-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-19",
         "name": "PPD"
       }
@@ -17762,6 +17933,7 @@
         "brand": "Brand C",
         "expire": "2022-12-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-22",
         "name": "Hep B"
       }
@@ -17858,6 +18030,7 @@
         "brand": "Brand A",
         "expire": "2023-04-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-14",
         "name": "J&J COVID"
       }
@@ -17877,6 +18050,7 @@
         "brand": "Brand X",
         "expire": "2024-12-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-04",
         "name": "Tdap"
       }
@@ -18015,6 +18189,7 @@
         "brand": "Brand K",
         "expire": "2023-08-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-30",
         "name": "Varicella"
       }
@@ -18051,6 +18226,7 @@
         "brand": "Brand V",
         "expire": "2024-07-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-20",
         "name": "Varicella"
       }
@@ -18161,6 +18337,7 @@
         "brand": "Brand K",
         "expire": "2023-11-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-07",
         "name": "Influenza"
       }
@@ -18197,6 +18374,7 @@
         "brand": "Brand B",
         "expire": "2024-03-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-16",
         "name": "Influenza"
       }
@@ -18314,6 +18492,7 @@
         "brand": "Brand E",
         "expire": "2024-01-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-05",
         "name": "Hep A"
       }
@@ -18581,6 +18760,7 @@
         "brand": "Brand P",
         "expire": "2023-09-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-30",
         "name": "Hep B"
       }
@@ -18709,6 +18889,7 @@
         "brand": "Brand O",
         "expire": "2025-08-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-07",
         "name": "Hep B"
       }
@@ -18979,6 +19160,7 @@
         "brand": "Brand V",
         "expire": "2022-01-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-05",
         "name": "J&J COVID"
       }
@@ -18998,6 +19180,7 @@
         "brand": "Brand H",
         "expire": "2022-10-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-26",
         "name": "Influenza"
       }
@@ -19091,6 +19274,7 @@
         "brand": "Brand U",
         "expire": "2025-03-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-21",
         "name": "Influenza"
       }
@@ -19150,6 +19334,7 @@
         "brand": "Brand O",
         "expire": "2024-09-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-05",
         "name": "Hep B"
       }
@@ -19421,6 +19606,7 @@
         "brand": "Brand D",
         "expire": "2022-09-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-17",
         "name": "Tdap"
       }
@@ -19515,6 +19701,7 @@
         "brand": "Brand Z",
         "expire": "2025-03-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-02",
         "name": "PPD"
       }
@@ -19707,6 +19894,7 @@
         "brand": "Brand N",
         "expire": "2023-07-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-09",
         "name": "Hep A"
       }
@@ -19726,6 +19914,7 @@
         "brand": "Brand T",
         "expire": "2023-08-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-04",
         "name": "Varicella"
       }
@@ -19766,6 +19955,7 @@
         "brand": "Brand G",
         "expire": "2025-05-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-20",
         "name": "J&J COVID"
       }
@@ -19925,6 +20115,7 @@
         "brand": "Brand Q",
         "expire": "2023-05-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-30",
         "name": "Tdap"
       }
@@ -20082,6 +20273,7 @@
         "brand": "Brand U",
         "expire": "2022-11-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-29",
         "name": "J&J COVID"
       }
@@ -20198,6 +20390,7 @@
         "brand": "Brand P",
         "expire": "2022-08-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-28",
         "name": "J&J COVID"
       }
@@ -20294,6 +20487,7 @@
         "brand": "Brand Q",
         "expire": "2022-04-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-28",
         "name": "PPD"
       }
@@ -20313,6 +20507,7 @@
         "brand": "Brand M",
         "expire": "2023-08-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-04",
         "name": "Hep A"
       }
@@ -20353,6 +20548,7 @@
         "brand": "Brand A",
         "expire": "2023-02-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-15",
         "name": "J&J COVID"
       }
@@ -20471,6 +20667,7 @@
         "brand": "Brand Y",
         "expire": "2025-02-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-14",
         "name": "J&J COVID"
       }
@@ -20510,6 +20707,7 @@
         "brand": "Brand S",
         "expire": "2024-12-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-21",
         "name": "Hep A"
       }
@@ -20529,6 +20727,7 @@
         "brand": "Brand P",
         "expire": "2024-12-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-07",
         "name": "Hep A"
       }
@@ -20548,6 +20747,7 @@
         "brand": "Brand A",
         "expire": "2023-09-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-29",
         "name": "Varicella"
       }
@@ -20647,6 +20847,7 @@
         "brand": "Brand R",
         "expire": "2023-01-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-27",
         "name": "J&J COVID"
       }
@@ -20700,6 +20901,7 @@
         "brand": "Brand C",
         "expire": "2023-06-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-16",
         "name": "J&J COVID"
       }
@@ -20760,6 +20962,7 @@
         "brand": "Brand G",
         "expire": "2023-01-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-16",
         "name": "Influenza"
       }
@@ -20820,6 +21023,7 @@
         "brand": "Brand S",
         "expire": "2024-08-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-15",
         "name": "J&J COVID"
       }
@@ -20877,6 +21081,7 @@
         "brand": "Brand P",
         "expire": "2025-09-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-19",
         "name": "J&J COVID"
       }
@@ -20993,6 +21198,7 @@
         "brand": "Brand P",
         "expire": "2022-11-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-15",
         "name": "Influenza"
       }
@@ -21112,6 +21318,7 @@
         "brand": "Brand G",
         "expire": "2021-12-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2021-12-19",
         "name": "Hep A"
       }
@@ -21400,6 +21607,7 @@
         "brand": "Brand C",
         "expire": "2024-01-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-14",
         "name": "Influenza"
       }
@@ -21578,6 +21786,7 @@
         "brand": "Brand R",
         "expire": "2023-04-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-08",
         "name": "Hep A"
       }
@@ -21634,6 +21843,7 @@
         "brand": "Brand X",
         "expire": "2024-09-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-19",
         "name": "Varicella"
       }
@@ -21673,6 +21883,7 @@
         "brand": "Brand J",
         "expire": "2025-10-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-15",
         "name": "Tdap"
       }
@@ -21786,6 +21997,7 @@
         "brand": "Brand A",
         "expire": "2023-08-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-19",
         "name": "PPD"
       }
@@ -21845,6 +22057,7 @@
         "brand": "Brand A",
         "expire": "2022-07-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-03",
         "name": "Influenza"
       }
@@ -21884,6 +22097,7 @@
         "brand": "Brand O",
         "expire": "2025-07-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-16",
         "name": "Hep B"
       }
@@ -22000,6 +22214,7 @@
         "brand": "Brand J",
         "expire": "2023-06-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-30",
         "name": "Influenza"
       }
@@ -22039,6 +22254,7 @@
         "brand": "Brand M",
         "expire": "2021-12-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2021-12-23",
         "name": "Varicella"
       }
@@ -22058,6 +22274,7 @@
         "brand": "Brand C",
         "expire": "2022-11-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-23",
         "name": "J&J COVID"
       }
@@ -22216,6 +22433,7 @@
         "brand": "Brand X",
         "expire": "2023-02-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-19",
         "name": "Influenza"
       }
@@ -22314,6 +22532,7 @@
         "brand": "Brand A",
         "expire": "2023-10-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-31",
         "name": "PPD"
       }
@@ -22414,6 +22633,7 @@
         "brand": "Brand T",
         "expire": "2023-03-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-28",
         "name": "Varicella"
       }
@@ -22473,6 +22693,7 @@
         "brand": "Brand Q",
         "expire": "2023-10-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-15",
         "name": "Hep A"
       }
@@ -22613,6 +22834,7 @@
         "brand": "Brand Q",
         "expire": "2023-01-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-18",
         "name": "Hep A"
       }
@@ -23158,6 +23380,7 @@
         "brand": "Brand Y",
         "expire": "2024-05-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-27",
         "name": "Hep A"
       }
@@ -23274,6 +23497,7 @@
         "brand": "Brand C",
         "expire": "2023-12-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-05",
         "name": "PPD"
       }
@@ -23653,6 +23877,7 @@
         "brand": "Brand D",
         "expire": "2024-04-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-27",
         "name": "Hep A"
       }
@@ -23672,6 +23897,7 @@
         "brand": "Brand Y",
         "expire": "2025-09-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-04",
         "name": "Varicella"
       }
@@ -23691,6 +23917,7 @@
         "brand": "Brand O",
         "expire": "2025-10-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-09",
         "name": "J&J COVID"
       }
@@ -23751,6 +23978,7 @@
         "brand": "Brand D",
         "expire": "2022-11-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-23",
         "name": "Varicella"
       }
@@ -23831,6 +24059,7 @@
         "brand": "Brand L",
         "expire": "2024-04-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-12",
         "name": "Varicella"
       }
@@ -23850,6 +24079,7 @@
         "brand": "Brand P",
         "expire": "2023-01-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-14",
         "name": "Influenza"
       }
@@ -23890,6 +24120,7 @@
         "brand": "Brand D",
         "expire": "2024-10-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-03",
         "name": "Hep B"
       }
@@ -23909,6 +24140,7 @@
         "brand": "Brand U",
         "expire": "2024-12-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-30",
         "name": "PPD"
       }
@@ -23988,6 +24220,7 @@
         "brand": "Brand M",
         "expire": "2024-05-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-23",
         "name": "PPD"
       }
@@ -24047,6 +24280,7 @@
         "brand": "Brand Q",
         "expire": "2024-11-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-16",
         "name": "J&J COVID"
       }
@@ -24066,6 +24300,7 @@
         "brand": "Brand L",
         "expire": "2024-11-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-07",
         "name": "Hep A"
       }
@@ -24142,6 +24377,7 @@
         "brand": "Brand S",
         "expire": "2024-02-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-08",
         "name": "Influenza"
       }
@@ -24201,6 +24437,7 @@
         "brand": "Brand Y",
         "expire": "2022-04-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-10",
         "name": "PPD"
       }
@@ -24280,6 +24517,7 @@
         "brand": "Brand W",
         "expire": "2022-04-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-11",
         "name": "J&J COVID"
       }
@@ -24319,6 +24557,7 @@
         "brand": "Brand Q",
         "expire": "2022-10-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-26",
         "name": "Varicella"
       }
@@ -24338,6 +24577,7 @@
         "brand": "Brand W",
         "expire": "2025-07-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-30",
         "name": "Hep B"
       }
@@ -24391,6 +24631,7 @@
         "brand": "Brand Y",
         "expire": "2023-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-18",
         "name": "PPD"
       }
@@ -24467,6 +24708,7 @@
         "brand": "Brand Q",
         "expire": "2023-09-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-13",
         "name": "Hep A"
       }
@@ -24577,6 +24819,7 @@
         "brand": "Brand R",
         "expire": "2024-07-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-07",
         "name": "PPD"
       }
@@ -24596,6 +24839,7 @@
         "brand": "Brand Z",
         "expire": "2022-03-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-05",
         "name": "Hep B"
       }
@@ -24635,6 +24879,7 @@
         "brand": "Brand D",
         "expire": "2023-04-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-14",
         "name": "Tdap"
       }
@@ -24691,6 +24936,7 @@
         "brand": "Brand H",
         "expire": "2022-12-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-04",
         "name": "Hep A"
       }
@@ -24767,6 +25013,7 @@
         "brand": "Brand I",
         "expire": "2024-05-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-24",
         "name": "J&J COVID"
       }
@@ -24972,6 +25219,7 @@
         "brand": "Brand G",
         "expire": "2022-10-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-30",
         "name": "J&J COVID"
       }
@@ -25236,6 +25484,7 @@
         "brand": "Brand K",
         "expire": "2025-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-14",
         "name": "Hep A"
       }
@@ -25316,6 +25565,7 @@
         "brand": "Brand K",
         "expire": "2022-04-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-28",
         "name": "Hep B"
       }
@@ -25430,6 +25680,7 @@
         "brand": "Brand X",
         "expire": "2023-03-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-02",
         "name": "Hep B"
       }
@@ -25486,6 +25737,7 @@
         "brand": "Brand W",
         "expire": "2025-02-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-23",
         "name": "J&J COVID"
       }
@@ -25505,6 +25757,7 @@
         "brand": "Brand R",
         "expire": "2022-01-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-15",
         "name": "Varicella"
       }
@@ -25564,6 +25817,7 @@
         "brand": "Brand K",
         "expire": "2023-05-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-24",
         "name": "Hep A"
       }
@@ -26043,6 +26297,7 @@
         "brand": "Brand Y",
         "expire": "2023-02-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-22",
         "name": "Influenza"
       }
@@ -26277,6 +26532,7 @@
         "brand": "Brand Y",
         "expire": "2023-07-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-01",
         "name": "Varicella"
       }
@@ -26377,6 +26633,7 @@
         "brand": "Brand F",
         "expire": "2024-11-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-09",
         "name": "Hep A"
       }
@@ -26884,6 +27141,7 @@
         "brand": "Brand B",
         "expire": "2025-07-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-22",
         "name": "Tdap"
       }
@@ -26943,6 +27201,7 @@
         "brand": "Brand I",
         "expire": "2025-01-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-23",
         "name": "PPD"
       }
@@ -27139,6 +27398,7 @@
         "brand": "Brand U",
         "expire": "2023-05-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-16",
         "name": "J&J COVID"
       }
@@ -27216,6 +27476,7 @@
         "brand": "Brand W",
         "expire": "2023-02-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-02",
         "name": "J&J COVID"
       }
@@ -27252,6 +27513,7 @@
         "brand": "Brand E",
         "expire": "2022-02-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-15",
         "name": "Hep A"
       }
@@ -27271,6 +27533,7 @@
         "brand": "Brand B",
         "expire": "2024-02-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-16",
         "name": "PPD"
       }
@@ -27330,6 +27593,7 @@
         "brand": "Brand B",
         "expire": "2025-05-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-09",
         "name": "J&J COVID"
       }
@@ -27510,6 +27774,7 @@
         "brand": "Brand G",
         "expire": "2023-12-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-24",
         "name": "Hep A"
       }
@@ -27583,6 +27848,7 @@
         "brand": "Brand D",
         "expire": "2023-12-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-24",
         "name": "Influenza"
       }
@@ -27724,6 +27990,7 @@
         "brand": "Brand E",
         "expire": "2023-09-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-13",
         "name": "Tdap"
       }
@@ -27824,6 +28091,7 @@
         "brand": "Brand O",
         "expire": "2025-06-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-14",
         "name": "J&J COVID"
       }
@@ -27940,6 +28208,7 @@
         "brand": "Brand R",
         "expire": "2024-09-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-11",
         "name": "PPD"
       }
@@ -28016,6 +28285,7 @@
         "brand": "Brand F",
         "expire": "2022-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-14",
         "name": "Tdap"
       }
@@ -28072,6 +28342,7 @@
         "brand": "Brand D",
         "expire": "2025-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-14",
         "name": "Tdap"
       }
@@ -28191,6 +28462,7 @@
         "brand": "Brand T",
         "expire": "2023-06-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-16",
         "name": "Tdap"
       }
@@ -28347,6 +28619,7 @@
         "brand": "Brand A",
         "expire": "2025-03-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-26",
         "name": "Hep A"
       }
@@ -28636,6 +28909,7 @@
         "brand": "Brand R",
         "expire": "2021-12-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2021-12-29",
         "name": "Hep B"
       }
@@ -28655,6 +28929,7 @@
         "brand": "Brand T",
         "expire": "2022-03-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-24",
         "name": "Tdap"
       }
@@ -28828,6 +29103,7 @@
         "brand": "Brand O",
         "expire": "2024-10-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-12",
         "name": "Hep A"
       }
@@ -28847,6 +29123,7 @@
         "brand": "Brand G",
         "expire": "2025-03-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-22",
         "name": "Influenza"
       }
@@ -28980,6 +29257,7 @@
         "brand": "Brand H",
         "expire": "2024-07-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-29",
         "name": "Tdap"
       }
@@ -29116,6 +29394,7 @@
         "brand": "Brand I",
         "expire": "2022-12-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-15",
         "name": "Hep A"
       }
@@ -29271,6 +29550,7 @@
         "brand": "Brand D",
         "expire": "2022-04-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-11",
         "name": "Hep A"
       }
@@ -29487,6 +29767,7 @@
         "brand": "Brand J",
         "expire": "2022-11-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-23",
         "name": "Varicella"
       }
@@ -29526,6 +29807,7 @@
         "brand": "Brand T",
         "expire": "2022-12-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-28",
         "name": "Influenza"
       }
@@ -29700,6 +29982,7 @@
         "brand": "Brand M",
         "expire": "2022-01-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-23",
         "name": "PPD"
       }
@@ -29756,6 +30039,7 @@
         "brand": "Brand X",
         "expire": "2023-03-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-30",
         "name": "Tdap"
       }
@@ -29792,6 +30076,7 @@
         "brand": "Brand C",
         "expire": "2023-08-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-06",
         "name": "Influenza"
       }
@@ -29831,6 +30116,7 @@
         "brand": "Brand P",
         "expire": "2024-01-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-12",
         "name": "Hep B"
       }
@@ -30047,6 +30333,7 @@
         "brand": "Brand D",
         "expire": "2022-09-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-11",
         "name": "Tdap"
       }
@@ -30086,6 +30373,7 @@
         "brand": "Brand U",
         "expire": "2022-12-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-08",
         "name": "Varicella"
       }
@@ -30281,6 +30569,7 @@
         "brand": "Brand E",
         "expire": "2023-09-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-08",
         "name": "Varicella"
       }
@@ -30440,6 +30729,7 @@
         "brand": "Brand N",
         "expire": "2024-11-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-08",
         "name": "Varicella"
       }
@@ -30480,6 +30770,7 @@
         "brand": "Brand D",
         "expire": "2023-01-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-02",
         "name": "PPD"
       }
@@ -30499,6 +30790,7 @@
         "brand": "Brand T",
         "expire": "2023-01-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-10",
         "name": "Tdap"
       }
@@ -30576,6 +30868,7 @@
         "brand": "Brand I",
         "expire": "2023-12-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-01",
         "name": "Hep A"
       }
@@ -30595,6 +30888,7 @@
         "brand": "Brand Z",
         "expire": "2024-03-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-17",
         "name": "Hep A"
       }
@@ -30634,6 +30928,7 @@
         "brand": "Brand T",
         "expire": "2022-06-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-05",
         "name": "Hep B"
       }
@@ -30693,6 +30988,7 @@
         "brand": "Brand G",
         "expire": "2022-08-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-10",
         "name": "Tdap"
       }
@@ -30732,6 +31028,7 @@
         "brand": "Brand I",
         "expire": "2022-12-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-04",
         "name": "Varicella"
       }
@@ -30771,6 +31068,7 @@
         "brand": "Brand E",
         "expire": "2022-07-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-28",
         "name": "Hep B"
       }
@@ -30933,6 +31231,7 @@
         "brand": "Brand H",
         "expire": "2022-05-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-13",
         "name": "Varicella"
       }
@@ -30952,6 +31251,7 @@
         "brand": "Brand M",
         "expire": "2024-10-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-13",
         "name": "Tdap"
       }
@@ -30991,6 +31291,7 @@
         "brand": "Brand X",
         "expire": "2023-12-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-23",
         "name": "Influenza"
       }
@@ -31139,6 +31440,7 @@
         "brand": "Brand T",
         "expire": "2024-05-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-06",
         "name": "J&J COVID"
       }
@@ -31235,6 +31537,7 @@
         "brand": "Brand G",
         "expire": "2022-03-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-03",
         "name": "PPD"
       }
@@ -31435,6 +31738,7 @@
         "brand": "Brand L",
         "expire": "2025-04-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-25",
         "name": "Hep A"
       }
@@ -31474,6 +31778,7 @@
         "brand": "Brand H",
         "expire": "2023-04-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-09",
         "name": "Hep A"
       }
@@ -31527,6 +31832,7 @@
         "brand": "Brand L",
         "expire": "2022-08-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-11",
         "name": "Influenza"
       }
@@ -31546,6 +31852,7 @@
         "brand": "Brand R",
         "expire": "2022-02-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-16",
         "name": "Hep A"
       }
@@ -31585,6 +31892,7 @@
         "brand": "Brand R",
         "expire": "2025-04-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-25",
         "name": "Varicella"
       }
@@ -31745,6 +32053,7 @@
         "brand": "Brand G",
         "expire": "2024-10-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-01",
         "name": "PPD"
       }
@@ -31928,6 +32237,7 @@
         "brand": "Brand Z",
         "expire": "2025-09-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-11",
         "name": "Hep B"
       }
@@ -31947,6 +32257,7 @@
         "brand": "Brand E",
         "expire": "2024-05-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-10",
         "name": "J&J COVID"
       }
@@ -32178,6 +32489,7 @@
         "brand": "Brand H",
         "expire": "2025-01-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-26",
         "name": "Hep A"
       }
@@ -32197,6 +32509,7 @@
         "brand": "Brand O",
         "expire": "2022-01-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-02",
         "name": "Influenza"
       }
@@ -32317,6 +32630,7 @@
         "brand": "Brand E",
         "expire": "2025-09-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-25",
         "name": "Influenza"
       }
@@ -32356,6 +32670,7 @@
         "brand": "Brand R",
         "expire": "2024-05-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-23",
         "name": "J&J COVID"
       }
@@ -32415,6 +32730,7 @@
         "brand": "Brand Y",
         "expire": "2024-10-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-24",
         "name": "Tdap"
       }
@@ -32576,6 +32892,7 @@
         "brand": "Brand F",
         "expire": "2024-08-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-05",
         "name": "Influenza"
       }
@@ -32655,6 +32972,7 @@
         "brand": "Brand Y",
         "expire": "2024-11-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-04",
         "name": "Influenza"
       }
@@ -32728,6 +33046,7 @@
         "brand": "Brand H",
         "expire": "2024-07-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-14",
         "name": "Tdap"
       }
@@ -32747,6 +33066,7 @@
         "brand": "Brand E",
         "expire": "2025-08-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-01",
         "name": "Hep A"
       }
@@ -32904,6 +33224,7 @@
         "brand": "Brand Y",
         "expire": "2022-03-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-30",
         "name": "Hep B"
       }
@@ -32923,6 +33244,7 @@
         "brand": "Brand N",
         "expire": "2025-04-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-24",
         "name": "Tdap"
       }
@@ -32942,6 +33264,7 @@
         "brand": "Brand C",
         "expire": "2024-09-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-28",
         "name": "J&J COVID"
       }
@@ -32961,6 +33284,7 @@
         "brand": "Brand W",
         "expire": "2022-08-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-12",
         "name": "Tdap"
       }
@@ -33037,6 +33361,7 @@
         "brand": "Brand P",
         "expire": "2023-11-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-22",
         "name": "Tdap"
       }
@@ -33173,6 +33498,7 @@
         "brand": "Brand J",
         "expire": "2024-05-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-23",
         "name": "Hep B"
       }
@@ -33431,6 +33757,7 @@
         "brand": "Brand T",
         "expire": "2023-01-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-31",
         "name": "Hep B"
       }
@@ -33530,6 +33857,7 @@
         "brand": "Brand H",
         "expire": "2023-08-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-28",
         "name": "Tdap"
       }
@@ -33647,6 +33975,7 @@
         "brand": "Brand B",
         "expire": "2022-11-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-09",
         "name": "PPD"
       }
@@ -33854,6 +34183,7 @@
         "brand": "Brand K",
         "expire": "2024-08-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-07",
         "name": "Influenza"
       }
@@ -33992,6 +34322,7 @@
         "brand": "Brand L",
         "expire": "2024-12-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-28",
         "name": "Hep B"
       }
@@ -34011,6 +34342,7 @@
         "brand": "Brand Q",
         "expire": "2025-04-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-01",
         "name": "Hep B"
       }
@@ -34108,6 +34440,7 @@
         "brand": "Brand R",
         "expire": "2022-11-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-29",
         "name": "Hep B"
       }
@@ -34205,6 +34538,7 @@
         "brand": "Brand B",
         "expire": "2025-04-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-16",
         "name": "Varicella"
       }
@@ -34536,6 +34870,7 @@
         "brand": "Brand H",
         "expire": "2025-04-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-22",
         "name": "Influenza"
       }
@@ -34555,6 +34890,7 @@
         "brand": "Brand W",
         "expire": "2025-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-14",
         "name": "J&J COVID"
       }
@@ -34649,6 +34985,7 @@
         "brand": "Brand H",
         "expire": "2023-08-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-19",
         "name": "Hep B"
       }
@@ -34688,6 +35025,7 @@
         "brand": "Brand C",
         "expire": "2023-09-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-15",
         "name": "Varicella"
       }
@@ -34938,6 +35276,7 @@
         "brand": "Brand U",
         "expire": "2022-09-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-03",
         "name": "Varicella"
       }
@@ -35185,6 +35524,7 @@
         "brand": "Brand B",
         "expire": "2023-03-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-25",
         "name": "Varicella"
       }
@@ -35456,6 +35796,7 @@
         "brand": "Brand I",
         "expire": "2024-02-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-19",
         "name": "PPD"
       }
@@ -36012,6 +36353,7 @@
         "brand": "Brand U",
         "expire": "2023-12-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-17",
         "name": "Varicella"
       }
@@ -36089,6 +36431,7 @@
         "brand": "Brand B",
         "expire": "2025-08-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-14",
         "name": "Hep A"
       }
@@ -36280,6 +36623,7 @@
         "brand": "Brand E",
         "expire": "2022-02-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-24",
         "name": "Hep A"
       }
@@ -36356,6 +36700,7 @@
         "brand": "Brand D",
         "expire": "2024-07-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-22",
         "name": "Varicella"
       }
@@ -36395,6 +36740,7 @@
         "brand": "Brand G",
         "expire": "2024-04-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-17",
         "name": "PPD"
       }
@@ -36513,6 +36859,7 @@
         "brand": "Brand J",
         "expire": "2023-01-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-19",
         "name": "Varicella"
       }
@@ -36726,6 +37073,7 @@
         "brand": "Brand S",
         "expire": "2025-06-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-05",
         "name": "PPD"
       }
@@ -36806,6 +37154,7 @@
         "brand": "Brand T",
         "expire": "2024-12-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-16",
         "name": "Hep A"
       }
@@ -37160,6 +37509,7 @@
         "brand": "Brand P",
         "expire": "2024-10-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-08",
         "name": "Hep A"
       }
@@ -37369,6 +37719,7 @@
         "brand": "Brand E",
         "expire": "2025-04-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-19",
         "name": "PPD"
       }
@@ -37546,6 +37897,7 @@
         "brand": "Brand T",
         "expire": "2023-09-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-05",
         "name": "Tdap"
       }
@@ -37660,6 +38012,7 @@
         "brand": "Brand Q",
         "expire": "2023-04-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-21",
         "name": "Influenza"
       }
@@ -37679,6 +38032,7 @@
         "brand": "Brand H",
         "expire": "2022-04-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-26",
         "name": "Tdap"
       }
@@ -37813,6 +38167,7 @@
         "brand": "Brand L",
         "expire": "2023-10-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-25",
         "name": "Hep A"
       }
@@ -37852,6 +38207,7 @@
         "brand": "Brand F",
         "expire": "2024-04-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-17",
         "name": "J&J COVID"
       }
@@ -38025,6 +38381,7 @@
         "brand": "Brand B",
         "expire": "2023-04-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-16",
         "name": "Varicella"
       }
@@ -38085,6 +38442,7 @@
         "brand": "Brand M",
         "expire": "2024-09-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-17",
         "name": "Varicella"
       }
@@ -38104,6 +38462,7 @@
         "brand": "Brand D",
         "expire": "2023-11-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-18",
         "name": "J&J COVID"
       }
@@ -38123,6 +38482,7 @@
         "brand": "Brand Y",
         "expire": "2024-06-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-11",
         "name": "PPD"
       }
@@ -38176,6 +38536,7 @@
         "brand": "Brand Y",
         "expire": "2022-04-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-02",
         "name": "Varicella"
       }
@@ -38604,6 +38965,7 @@
         "brand": "Brand Y",
         "expire": "2024-01-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-05",
         "name": "PPD"
       }
@@ -38663,6 +39025,7 @@
         "brand": "Brand Q",
         "expire": "2025-09-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-14",
         "name": "J&J COVID"
       }
@@ -38759,6 +39122,7 @@
         "brand": "Brand O",
         "expire": "2024-12-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-03",
         "name": "Hep A"
       }
@@ -38839,6 +39203,7 @@
         "brand": "Brand J",
         "expire": "2023-10-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-25",
         "name": "Hep B"
       }
@@ -38878,6 +39243,7 @@
         "brand": "Brand M",
         "expire": "2022-01-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-25",
         "name": "J&J COVID"
       }
@@ -39344,6 +39710,7 @@
         "brand": "Brand U",
         "expire": "2023-02-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-21",
         "name": "J&J COVID"
       }
@@ -39383,6 +39750,7 @@
         "brand": "Brand N",
         "expire": "2023-09-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-16",
         "name": "PPD"
       }
@@ -39500,6 +39868,7 @@
         "brand": "Brand T",
         "expire": "2024-03-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-26",
         "name": "J&J COVID"
       }
@@ -39539,6 +39908,7 @@
         "brand": "Brand Y",
         "expire": "2024-06-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-23",
         "name": "Tdap"
       }
@@ -39558,6 +39928,7 @@
         "brand": "Brand P",
         "expire": "2023-10-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-12",
         "name": "PPD"
       }
@@ -39778,6 +40149,7 @@
         "brand": "Brand W",
         "expire": "2025-02-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-18",
         "name": "J&J COVID"
       }
@@ -39837,6 +40209,7 @@
         "brand": "Brand C",
         "expire": "2025-04-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-07",
         "name": "Hep B"
       }
@@ -39896,6 +40269,7 @@
         "brand": "Brand K",
         "expire": "2022-07-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-02",
         "name": "Influenza"
       }
@@ -39973,6 +40347,7 @@
         "brand": "Brand T",
         "expire": "2022-04-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-17",
         "name": "PPD"
       }
@@ -39992,6 +40367,7 @@
         "brand": "Brand G",
         "expire": "2024-06-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-01",
         "name": "Tdap"
       }
@@ -40011,6 +40387,7 @@
         "brand": "Brand L",
         "expire": "2023-06-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-24",
         "name": "J&J COVID"
       }
@@ -40164,6 +40541,7 @@
         "brand": "Brand Y",
         "expire": "2025-08-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-22",
         "name": "Varicella"
       }
@@ -40284,6 +40662,7 @@
         "brand": "Brand U",
         "expire": "2022-11-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-20",
         "name": "Influenza"
       }
@@ -40536,6 +40915,7 @@
         "brand": "Brand U",
         "expire": "2023-05-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-07",
         "name": "Influenza"
       }
@@ -40575,6 +40955,7 @@
         "brand": "Brand W",
         "expire": "2024-10-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-17",
         "name": "PPD"
       }
@@ -40675,6 +41056,7 @@
         "brand": "Brand B",
         "expire": "2025-09-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-24",
         "name": "J&J COVID"
       }
@@ -40775,6 +41157,7 @@
         "brand": "Brand U",
         "expire": "2025-07-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-20",
         "name": "Tdap"
       }
@@ -40914,6 +41297,7 @@
         "brand": "Brand U",
         "expire": "2022-08-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-13",
         "name": "Hep A"
       }
@@ -41140,6 +41524,7 @@
         "brand": "Brand C",
         "expire": "2022-07-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-27",
         "name": "Influenza"
       }
@@ -41219,6 +41604,7 @@
         "brand": "Brand U",
         "expire": "2024-07-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-12",
         "name": "Hep B"
       }
@@ -41238,6 +41624,7 @@
         "brand": "Brand L",
         "expire": "2022-08-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-22",
         "name": "Tdap"
       }
@@ -41277,6 +41664,7 @@
         "brand": "Brand T",
         "expire": "2023-08-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-14",
         "name": "Hep B"
       }
@@ -41314,6 +41702,7 @@
         "brand": "Brand B",
         "expire": "2022-12-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-16",
         "name": "Tdap"
       }
@@ -41390,6 +41779,7 @@
         "brand": "Brand M",
         "expire": "2023-11-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-26",
         "name": "Tdap"
       }
@@ -41429,6 +41819,7 @@
         "brand": "Brand V",
         "expire": "2024-01-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-23",
         "name": "Hep A"
       }
@@ -41545,6 +41936,7 @@
         "brand": "Brand U",
         "expire": "2025-03-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-23",
         "name": "Hep B"
       }
@@ -41718,6 +42110,7 @@
         "brand": "Brand Q",
         "expire": "2022-03-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-13",
         "name": "Hep A"
       }
@@ -41798,6 +42191,7 @@
         "brand": "Brand H",
         "expire": "2023-11-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-20",
         "name": "Hep B"
       }
@@ -41854,6 +42248,7 @@
         "brand": "Brand Q",
         "expire": "2024-07-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-09",
         "name": "Hep B"
       }
@@ -41873,6 +42268,7 @@
         "brand": "Brand D",
         "expire": "2023-06-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-22",
         "name": "Influenza"
       }
@@ -41912,6 +42308,7 @@
         "brand": "Brand S",
         "expire": "2023-11-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-02",
         "name": "J&J COVID"
       }
@@ -42131,6 +42528,7 @@
         "brand": "Brand F",
         "expire": "2022-11-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-28",
         "name": "Hep B"
       }
@@ -42588,6 +42986,7 @@
         "brand": "Brand T",
         "expire": "2024-09-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-02",
         "name": "Influenza"
       }
@@ -42705,6 +43104,7 @@
         "brand": "Brand A",
         "expire": "2023-11-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-03",
         "name": "PPD"
       }
@@ -42804,6 +43204,7 @@
         "brand": "Brand U",
         "expire": "2024-11-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-17",
         "name": "Tdap"
       }
@@ -43071,6 +43472,7 @@
         "brand": "Brand G",
         "expire": "2022-08-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-17",
         "name": "PPD"
       }
@@ -43161,6 +43563,7 @@
         "brand": "Brand A",
         "expire": "2023-12-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-19",
         "name": "Varicella"
       }
@@ -43301,6 +43704,7 @@
         "brand": "Brand T",
         "expire": "2023-12-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-22",
         "name": "Hep A"
       }
@@ -43320,6 +43724,7 @@
         "brand": "Brand D",
         "expire": "2023-11-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-02",
         "name": "Influenza"
       }
@@ -43514,6 +43919,7 @@
         "brand": "Brand W",
         "expire": "2023-03-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-15",
         "name": "Influenza"
       }
@@ -43553,6 +43959,7 @@
         "brand": "Brand E",
         "expire": "2024-07-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-16",
         "name": "Hep B"
       }
@@ -43592,6 +43999,7 @@
         "brand": "Brand M",
         "expire": "2025-08-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-14",
         "name": "Tdap"
       }
@@ -43631,6 +44039,7 @@
         "brand": "Brand V",
         "expire": "2023-09-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-11",
         "name": "Hep A"
       }
@@ -43670,6 +44079,7 @@
         "brand": "Brand B",
         "expire": "2024-12-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-31",
         "name": "Varicella"
       }
@@ -43706,6 +44116,7 @@
         "brand": "Brand N",
         "expire": "2024-03-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-29",
         "name": "Hep B"
       }
@@ -43745,6 +44156,7 @@
         "brand": "Brand L",
         "expire": "2024-03-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-16",
         "name": "Varicella"
       }
@@ -43764,6 +44176,7 @@
         "brand": "Brand H",
         "expire": "2022-03-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-11",
         "name": "Varicella"
       }
@@ -44095,6 +44508,7 @@
         "brand": "Brand O",
         "expire": "2024-07-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-21",
         "name": "Tdap"
       }
@@ -44229,6 +44643,7 @@
         "brand": "Brand V",
         "expire": "2023-10-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-02",
         "name": "PPD"
       }
@@ -44308,6 +44723,7 @@
         "brand": "Brand N",
         "expire": "2023-05-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-26",
         "name": "Influenza"
       }
@@ -44347,6 +44763,7 @@
         "brand": "Brand X",
         "expire": "2023-12-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-08",
         "name": "Hep B"
       }
@@ -44406,6 +44823,7 @@
         "brand": "Brand J",
         "expire": "2025-07-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-06",
         "name": "PPD"
       }
@@ -44425,6 +44843,7 @@
         "brand": "Brand B",
         "expire": "2022-10-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-05",
         "name": "Tdap"
       }
@@ -44598,6 +45017,7 @@
         "brand": "Brand N",
         "expire": "2025-02-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-04",
         "name": "Influenza"
       }
@@ -44694,6 +45114,7 @@
         "brand": "Brand X",
         "expire": "2022-06-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-24",
         "name": "Influenza"
       }
@@ -44787,6 +45208,7 @@
         "brand": "Brand M",
         "expire": "2025-10-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-04",
         "name": "J&J COVID"
       }
@@ -44923,6 +45345,7 @@
         "brand": "Brand C",
         "expire": "2024-10-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-05",
         "name": "Tdap"
       }
@@ -44979,6 +45402,7 @@
         "brand": "Brand K",
         "expire": "2025-06-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-07",
         "name": "Hep A"
       }
@@ -45036,6 +45460,7 @@
         "brand": "Brand K",
         "expire": "2025-09-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-26",
         "name": "Hep B"
       }
@@ -45055,6 +45480,7 @@
         "brand": "Brand N",
         "expire": "2022-06-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-16",
         "name": "Influenza"
       }
@@ -45171,6 +45597,7 @@
         "brand": "Brand S",
         "expire": "2025-02-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-02",
         "name": "PPD"
       }
@@ -45404,6 +45831,7 @@
         "brand": "Brand T",
         "expire": "2023-10-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-18",
         "name": "Influenza"
       }
@@ -45538,6 +45966,7 @@
         "brand": "Brand Z",
         "expire": "2023-07-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-30",
         "name": "J&J COVID"
       }
@@ -45771,6 +46200,7 @@
         "brand": "Brand O",
         "expire": "2022-09-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-26",
         "name": "Hep A"
       }
@@ -45969,6 +46399,7 @@
         "brand": "Brand U",
         "expire": "2024-10-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-05",
         "name": "Varicella"
       }
@@ -46025,6 +46456,7 @@
         "brand": "Brand H",
         "expire": "2023-12-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-21",
         "name": "J&J COVID"
       }
@@ -46044,6 +46476,7 @@
         "brand": "Brand W",
         "expire": "2024-01-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-19",
         "name": "Tdap"
       }
@@ -46141,6 +46574,7 @@
         "brand": "Brand J",
         "expire": "2025-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-14",
         "name": "J&J COVID"
       }
@@ -46334,6 +46768,7 @@
         "brand": "Brand T",
         "expire": "2023-01-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-09",
         "name": "Varicella"
       }
@@ -46623,6 +47058,7 @@
         "brand": "Brand X",
         "expire": "2022-01-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-18",
         "name": "Tdap"
       }
@@ -46642,6 +47078,7 @@
         "brand": "Brand F",
         "expire": "2022-01-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-14",
         "name": "Influenza"
       }
@@ -46721,6 +47158,7 @@
         "brand": "Brand H",
         "expire": "2023-05-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-09",
         "name": "Tdap"
       }
@@ -47146,6 +47584,7 @@
         "brand": "Brand Q",
         "expire": "2024-06-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-11",
         "name": "Tdap"
       }
@@ -47246,6 +47685,7 @@
         "brand": "Brand C",
         "expire": "2022-01-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-26",
         "name": "Hep B"
       }
@@ -47265,6 +47705,7 @@
         "brand": "Brand D",
         "expire": "2022-07-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-17",
         "name": "Tdap"
       }
@@ -47284,6 +47725,7 @@
         "brand": "Brand Y",
         "expire": "2022-06-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-30",
         "name": "Hep A"
       }
@@ -47303,6 +47745,7 @@
         "brand": "Brand J",
         "expire": "2024-10-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-08",
         "name": "J&J COVID"
       }
@@ -47423,6 +47866,7 @@
         "brand": "Brand I",
         "expire": "2025-07-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-24",
         "name": "Varicella"
       }
@@ -47660,6 +48104,7 @@
         "brand": "Brand E",
         "expire": "2023-12-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-08",
         "name": "Influenza"
       }
@@ -47875,6 +48320,7 @@
         "brand": "Brand C",
         "expire": "2023-02-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-03",
         "name": "Influenza"
       }
@@ -48032,6 +48478,7 @@
         "brand": "Brand Y",
         "expire": "2025-01-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-03",
         "name": "J&J COVID"
       }
@@ -48089,6 +48536,7 @@
         "brand": "Brand N",
         "expire": "2024-07-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-15",
         "name": "Varicella"
       }
@@ -48182,6 +48630,7 @@
         "brand": "Brand H",
         "expire": "2022-09-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-11",
         "name": "Influenza"
       }
@@ -48262,6 +48711,7 @@
         "brand": "Brand W",
         "expire": "2023-01-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-21",
         "name": "Hep B"
       }
@@ -48535,6 +48985,7 @@
         "brand": "Brand G",
         "expire": "2024-03-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-26",
         "name": "J&J COVID"
       }
@@ -48591,6 +49042,7 @@
         "brand": "Brand X",
         "expire": "2022-09-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-12",
         "name": "Hep A"
       }
@@ -48726,6 +49178,7 @@
         "brand": "Brand S",
         "expire": "2022-08-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-19",
         "name": "Tdap"
       }
@@ -48745,6 +49198,7 @@
         "brand": "Brand P",
         "expire": "2024-05-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-10",
         "name": "Varicella"
       }
@@ -48861,6 +49315,7 @@
         "brand": "Brand H",
         "expire": "2024-10-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-13",
         "name": "J&J COVID"
       }
@@ -49038,6 +49493,7 @@
         "brand": "Brand L",
         "expire": "2023-09-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-15",
         "name": "Tdap"
       }
@@ -49118,6 +49574,7 @@
         "brand": "Brand E",
         "expire": "2024-12-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-21",
         "name": "Tdap"
       }
@@ -49351,6 +49808,7 @@
         "brand": "Brand R",
         "expire": "2025-05-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-11",
         "name": "Hep A"
       }
@@ -49447,6 +49905,7 @@
         "brand": "Brand U",
         "expire": "2024-04-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-04",
         "name": "J&J COVID"
       }
@@ -49546,6 +50005,7 @@
         "brand": "Brand H",
         "expire": "2024-04-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-13",
         "name": "Hep A"
       }
@@ -49783,6 +50243,7 @@
         "brand": "Brand W",
         "expire": "2021-12-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2021-12-20",
         "name": "PPD"
       }
@@ -49896,6 +50357,7 @@
         "brand": "Brand G",
         "expire": "2024-09-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-03",
         "name": "J&J COVID"
       }
@@ -49973,6 +50435,7 @@
         "brand": "Brand Y",
         "expire": "2025-08-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-21",
         "name": "Hep A"
       }
@@ -49992,6 +50455,7 @@
         "brand": "Brand T",
         "expire": "2024-03-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-30",
         "name": "Influenza"
       }
@@ -50048,6 +50512,7 @@
         "brand": "Brand C",
         "expire": "2024-03-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-07",
         "name": "J&J COVID"
       }
@@ -50107,6 +50572,7 @@
         "brand": "Brand X",
         "expire": "2022-09-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-02",
         "name": "Hep A"
       }
@@ -50240,6 +50706,7 @@
         "brand": "Brand I",
         "expire": "2025-10-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-06",
         "name": "Tdap"
       }
@@ -50468,6 +50935,7 @@
         "brand": "Brand X",
         "expire": "2024-05-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-07",
         "name": "J&J COVID"
       }
@@ -50527,6 +50995,7 @@
         "brand": "Brand O",
         "expire": "2025-02-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-04",
         "name": "Hep A"
       }
@@ -50678,6 +51147,7 @@
         "brand": "Brand T",
         "expire": "2023-04-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-21",
         "name": "PPD"
       }
@@ -50735,6 +51205,7 @@
         "brand": "Brand B",
         "expire": "2023-09-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-24",
         "name": "Hep A"
       }
@@ -50754,6 +51225,7 @@
         "brand": "Brand K",
         "expire": "2022-06-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-04",
         "name": "Varicella"
       }
@@ -50773,6 +51245,7 @@
         "brand": "Brand T",
         "expire": "2023-01-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-20",
         "name": "Varicella"
       }
@@ -51013,6 +51486,7 @@
         "brand": "Brand Z",
         "expire": "2022-02-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-07",
         "name": "Tdap"
       }
@@ -51166,6 +51640,7 @@
         "brand": "Brand W",
         "expire": "2025-05-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-26",
         "name": "Hep B"
       }
@@ -51205,6 +51680,7 @@
         "brand": "Brand K",
         "expire": "2023-07-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-24",
         "name": "Tdap"
       }
@@ -51224,6 +51700,7 @@
         "brand": "Brand N",
         "expire": "2024-01-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-13",
         "name": "Tdap"
       }
@@ -51243,6 +51720,7 @@
         "brand": "Brand E",
         "expire": "2024-07-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-24",
         "name": "Tdap"
       }
@@ -51282,6 +51760,7 @@
         "brand": "Brand I",
         "expire": "2022-06-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-11",
         "name": "Varicella"
       }
@@ -51301,6 +51780,7 @@
         "brand": "Brand N",
         "expire": "2022-07-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-21",
         "name": "Tdap"
       }
@@ -51400,6 +51880,7 @@
         "brand": "Brand B",
         "expire": "2022-11-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-21",
         "name": "Hep B"
       }
@@ -51419,6 +51900,7 @@
         "brand": "Brand B",
         "expire": "2022-10-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-21",
         "name": "Tdap"
       }
@@ -51518,6 +52000,7 @@
         "brand": "Brand S",
         "expire": "2022-09-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-19",
         "name": "Hep B"
       }
@@ -51753,6 +52236,7 @@
         "brand": "Brand P",
         "expire": "2024-07-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-01",
         "name": "PPD"
       }
@@ -51772,6 +52256,7 @@
         "brand": "Brand C",
         "expire": "2023-01-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-17",
         "name": "Tdap"
       }
@@ -51831,6 +52316,7 @@
         "brand": "Brand G",
         "expire": "2025-06-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-26",
         "name": "Varicella"
       }
@@ -51948,6 +52434,7 @@
         "brand": "Brand T",
         "expire": "2023-11-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-19",
         "name": "Varicella"
       }
@@ -52027,6 +52514,7 @@
         "brand": "Brand L",
         "expire": "2025-02-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-23",
         "name": "Hep B"
       }
@@ -52086,6 +52574,7 @@
         "brand": "Brand B",
         "expire": "2022-01-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-06",
         "name": "PPD"
       }
@@ -52105,6 +52594,7 @@
         "brand": "Brand R",
         "expire": "2022-07-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-07",
         "name": "J&J COVID"
       }
@@ -52124,6 +52614,7 @@
         "brand": "Brand N",
         "expire": "2025-09-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-01",
         "name": "Varicella"
       }
@@ -52183,6 +52674,7 @@
         "brand": "Brand D",
         "expire": "2024-02-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-18",
         "name": "Influenza"
       }
@@ -52222,6 +52714,7 @@
         "brand": "Brand R",
         "expire": "2024-07-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-15",
         "name": "Hep B"
       }
@@ -52278,6 +52771,7 @@
         "brand": "Brand G",
         "expire": "2023-08-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-24",
         "name": "Tdap"
       }
@@ -52375,6 +52869,7 @@
         "brand": "Brand Z",
         "expire": "2022-09-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-02",
         "name": "Tdap"
       }
@@ -52411,6 +52906,7 @@
         "brand": "Brand S",
         "expire": "2024-02-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-16",
         "name": "Influenza"
       }
@@ -52430,6 +52926,7 @@
         "brand": "Brand O",
         "expire": "2024-10-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-30",
         "name": "Varicella"
       }
@@ -52466,6 +52963,7 @@
         "brand": "Brand Q",
         "expire": "2023-12-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-15",
         "name": "Hep A"
       }
@@ -52597,6 +53095,7 @@
         "brand": "Brand P",
         "expire": "2022-11-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-20",
         "name": "Influenza"
       }
@@ -52656,6 +53155,7 @@
         "brand": "Brand A",
         "expire": "2023-11-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-25",
         "name": "Tdap"
       }
@@ -52675,6 +53175,7 @@
         "brand": "Brand H",
         "expire": "2023-10-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-16",
         "name": "PPD"
       }
@@ -52694,6 +53195,7 @@
         "brand": "Brand I",
         "expire": "2025-04-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-06",
         "name": "Influenza"
       }
@@ -52733,6 +53235,7 @@
         "brand": "Brand N",
         "expire": "2022-04-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-24",
         "name": "Varicella"
       }
@@ -52849,6 +53352,7 @@
         "brand": "Brand K",
         "expire": "2024-09-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-15",
         "name": "J&J COVID"
       }
@@ -52946,6 +53450,7 @@
         "brand": "Brand J",
         "expire": "2024-05-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-11",
         "name": "Hep A"
       }
@@ -53172,6 +53677,7 @@
         "brand": "Brand K",
         "expire": "2022-07-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-11",
         "name": "Tdap"
       }
@@ -53191,6 +53697,7 @@
         "brand": "Brand Q",
         "expire": "2022-12-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-03",
         "name": "Varicella"
       }
@@ -53388,6 +53895,7 @@
         "brand": "Brand S",
         "expire": "2025-03-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-16",
         "name": "Hep B"
       }
@@ -53447,6 +53955,7 @@
         "brand": "Brand M",
         "expire": "2024-02-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-04",
         "name": "Tdap"
       }
@@ -53486,6 +53995,7 @@
         "brand": "Brand E",
         "expire": "2023-01-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-18",
         "name": "Hep A"
       }
@@ -53642,6 +54152,7 @@
         "brand": "Brand G",
         "expire": "2024-11-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-30",
         "name": "Hep A"
       }
@@ -53681,6 +54192,7 @@
         "brand": "Brand T",
         "expire": "2025-02-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-18",
         "name": "Varicella"
       }
@@ -53720,6 +54232,7 @@
         "brand": "Brand Y",
         "expire": "2024-08-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-29",
         "name": "Influenza"
       }
@@ -53739,6 +54252,7 @@
         "brand": "Brand P",
         "expire": "2022-01-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-04",
         "name": "J&J COVID"
       }
@@ -53873,6 +54387,7 @@
         "brand": "Brand E",
         "expire": "2024-12-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-23",
         "name": "Hep A"
       }
@@ -53933,6 +54448,7 @@
         "brand": "Brand H",
         "expire": "2023-11-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-30",
         "name": "Tdap"
       }
@@ -53972,6 +54488,7 @@
         "brand": "Brand P",
         "expire": "2023-10-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-10",
         "name": "Tdap"
       }
@@ -54125,6 +54642,7 @@
         "brand": "Brand C",
         "expire": "2023-07-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-02",
         "name": "PPD"
       }
@@ -54202,6 +54720,7 @@
         "brand": "Brand I",
         "expire": "2023-10-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-11",
         "name": "Tdap"
       }
@@ -54241,6 +54760,7 @@
         "brand": "Brand C",
         "expire": "2025-04-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-23",
         "name": "Hep B"
       }
@@ -54379,6 +54899,7 @@
         "brand": "Brand K",
         "expire": "2024-08-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-22",
         "name": "Hep B"
       }
@@ -54475,6 +54996,7 @@
         "brand": "Brand C",
         "expire": "2022-11-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-26",
         "name": "Varicella"
       }
@@ -54494,6 +55016,7 @@
         "brand": "Brand T",
         "expire": "2022-07-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-20",
         "name": "Tdap"
       }
@@ -54533,6 +55056,7 @@
         "brand": "Brand Z",
         "expire": "2022-06-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-28",
         "name": "Hep A"
       }
@@ -54646,6 +55170,7 @@
         "brand": "Brand M",
         "expire": "2024-09-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-23",
         "name": "Hep B"
       }
@@ -54682,6 +55207,7 @@
         "brand": "Brand M",
         "expire": "2023-08-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-24",
         "name": "PPD"
       }
@@ -54701,6 +55227,7 @@
         "brand": "Brand M",
         "expire": "2025-03-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-28",
         "name": "PPD"
       }
@@ -55078,6 +55605,7 @@
         "brand": "Brand P",
         "expire": "2025-07-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-19",
         "name": "Tdap"
       }
@@ -55257,6 +55785,7 @@
         "brand": "Brand E",
         "expire": "2025-05-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-24",
         "name": "PPD"
       }
@@ -55437,6 +55966,7 @@
         "brand": "Brand R",
         "expire": "2022-06-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-09",
         "name": "Influenza"
       }
@@ -55456,6 +55986,7 @@
         "brand": "Brand M",
         "expire": "2025-08-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-17",
         "name": "Hep B"
       }
@@ -55556,6 +56087,7 @@
         "brand": "Brand Q",
         "expire": "2024-11-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-30",
         "name": "Hep A"
       }
@@ -55939,6 +56471,7 @@
         "brand": "Brand J",
         "expire": "2025-07-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-01",
         "name": "Hep B"
       }
@@ -55958,6 +56491,7 @@
         "brand": "Brand F",
         "expire": "2024-03-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-29",
         "name": "Varicella"
       }
@@ -55997,6 +56531,7 @@
         "brand": "Brand L",
         "expire": "2024-04-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-17",
         "name": "Varicella"
       }
@@ -56110,6 +56645,7 @@
         "brand": "Brand I",
         "expire": "2025-04-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-10",
         "name": "Influenza"
       }
@@ -56129,6 +56665,7 @@
         "brand": "Brand I",
         "expire": "2024-03-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-28",
         "name": "Varicella"
       }
@@ -56303,6 +56840,7 @@
         "brand": "Brand O",
         "expire": "2024-09-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-30",
         "name": "Hep B"
       }
@@ -56623,6 +57161,7 @@
         "brand": "Brand P",
         "expire": "2023-10-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-02",
         "name": "Tdap"
       }
@@ -56902,6 +57441,7 @@
         "brand": "Brand K",
         "expire": "2025-04-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-19",
         "name": "J&J COVID"
       }
@@ -57149,6 +57689,7 @@
         "brand": "Brand M",
         "expire": "2024-06-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-23",
         "name": "Hep B"
       }
@@ -57185,6 +57726,7 @@
         "brand": "Brand T",
         "expire": "2024-07-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-10",
         "name": "Influenza"
       }
@@ -57244,6 +57786,7 @@
         "brand": "Brand P",
         "expire": "2024-11-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-16",
         "name": "Hep B"
       }
@@ -57263,6 +57806,7 @@
         "brand": "Brand S",
         "expire": "2025-02-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-15",
         "name": "Tdap"
       }
@@ -57382,6 +57926,7 @@
         "brand": "Brand Y",
         "expire": "2024-04-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-16",
         "name": "PPD"
       }
@@ -57421,6 +57966,7 @@
         "brand": "Brand T",
         "expire": "2025-01-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-16",
         "name": "Hep A"
       }
@@ -57440,6 +57986,7 @@
         "brand": "Brand B",
         "expire": "2022-05-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-15",
         "name": "PPD"
       }
@@ -57479,6 +58026,7 @@
         "brand": "Brand W",
         "expire": "2025-06-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-09",
         "name": "Hep B"
       }
@@ -57632,6 +58180,7 @@
         "brand": "Brand G",
         "expire": "2023-07-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-10",
         "name": "Influenza"
       }
@@ -57728,6 +58277,7 @@
         "brand": "Brand G",
         "expire": "2022-04-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-28",
         "name": "Varicella"
       }
@@ -57884,6 +58434,7 @@
         "brand": "Brand K",
         "expire": "2025-09-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-30",
         "name": "PPD"
       }
@@ -58003,6 +58554,7 @@
         "brand": "Brand R",
         "expire": "2025-06-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-19",
         "name": "PPD"
       }
@@ -58153,6 +58705,7 @@
         "brand": "Brand Y",
         "expire": "2023-04-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-09",
         "name": "Hep B"
       }
@@ -58232,6 +58785,7 @@
         "brand": "Brand K",
         "expire": "2024-02-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-06",
         "name": "Varicella"
       }
@@ -58351,6 +58905,7 @@
         "brand": "Brand Y",
         "expire": "2024-11-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-13",
         "name": "Varicella"
       }
@@ -58822,6 +59377,7 @@
         "brand": "Brand X",
         "expire": "2025-05-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-18",
         "name": "PPD"
       }
@@ -58938,6 +59494,7 @@
         "brand": "Brand S",
         "expire": "2024-03-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-19",
         "name": "J&J COVID"
       }
@@ -58977,6 +59534,7 @@
         "brand": "Brand Z",
         "expire": "2025-07-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-26",
         "name": "PPD"
       }
@@ -59131,6 +59689,7 @@
         "brand": "Brand W",
         "expire": "2023-06-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-19",
         "name": "Hep A"
       }
@@ -59661,6 +60220,7 @@
         "brand": "Brand X",
         "expire": "2024-11-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-05",
         "name": "Influenza"
       }
@@ -59738,6 +60298,7 @@
         "brand": "Brand F",
         "expire": "2024-09-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-27",
         "name": "PPD"
       }
@@ -60029,6 +60590,7 @@
         "brand": "Brand B",
         "expire": "2022-07-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-19",
         "name": "Hep B"
       }
@@ -60316,6 +60878,7 @@
         "brand": "Brand O",
         "expire": "2022-10-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-15",
         "name": "Hep A"
       }
@@ -60389,6 +60952,7 @@
         "brand": "Brand H",
         "expire": "2023-10-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-29",
         "name": "Hep B"
       }
@@ -60425,6 +60989,7 @@
         "brand": "Brand E",
         "expire": "2023-03-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-18",
         "name": "J&J COVID"
       }
@@ -60798,6 +61363,7 @@
         "brand": "Brand U",
         "expire": "2025-08-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-11",
         "name": "Hep A"
       }
@@ -60838,6 +61404,7 @@
         "brand": "Brand M",
         "expire": "2025-07-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-14",
         "name": "Tdap"
       }
@@ -60972,6 +61539,7 @@
         "brand": "Brand D",
         "expire": "2023-11-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-02",
         "name": "Tdap"
       }
@@ -61108,6 +61676,7 @@
         "brand": "Brand H",
         "expire": "2024-12-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-29",
         "name": "Hep A"
       }
@@ -61147,6 +61716,7 @@
         "brand": "Brand O",
         "expire": "2025-02-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-18",
         "name": "Varicella"
       }
@@ -61306,6 +61876,7 @@
         "brand": "Brand U",
         "expire": "2022-10-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-07",
         "name": "Influenza"
       }
@@ -61345,6 +61916,7 @@
         "brand": "Brand L",
         "expire": "2024-02-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-07",
         "name": "Tdap"
       }
@@ -61461,6 +62033,7 @@
         "brand": "Brand C",
         "expire": "2022-02-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-02",
         "name": "Hep B"
       }
@@ -61480,6 +62053,7 @@
         "brand": "Brand U",
         "expire": "2022-01-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-26",
         "name": "J&J COVID"
       }
@@ -61499,6 +62073,7 @@
         "brand": "Brand P",
         "expire": "2023-10-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-11",
         "name": "PPD"
       }
@@ -61518,6 +62093,7 @@
         "brand": "Brand K",
         "expire": "2022-02-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-15",
         "name": "PPD"
       }
@@ -61617,6 +62193,7 @@
         "brand": "Brand O",
         "expire": "2024-01-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-01",
         "name": "Influenza"
       }
@@ -61656,6 +62233,7 @@
         "brand": "Brand R",
         "expire": "2024-06-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-01",
         "name": "PPD"
       }
@@ -61675,6 +62253,7 @@
         "brand": "Brand J",
         "expire": "2022-05-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-20",
         "name": "Influenza"
       }
@@ -61772,6 +62351,7 @@
         "brand": "Brand A",
         "expire": "2024-07-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-11",
         "name": "PPD"
       }
@@ -61831,6 +62411,7 @@
         "brand": "Brand B",
         "expire": "2025-03-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-14",
         "name": "Hep A"
       }
@@ -61890,6 +62471,7 @@
         "brand": "Brand I",
         "expire": "2023-06-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-21",
         "name": "Hep B"
       }
@@ -61909,6 +62491,7 @@
         "brand": "Brand P",
         "expire": "2025-02-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-24",
         "name": "Tdap"
       }
@@ -61968,6 +62551,7 @@
         "brand": "Brand K",
         "expire": "2024-06-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-22",
         "name": "Influenza"
       }
@@ -62326,6 +62910,7 @@
         "brand": "Brand F",
         "expire": "2024-03-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-20",
         "name": "Hep B"
       }
@@ -62491,6 +63076,7 @@
         "brand": "Brand B",
         "expire": "2025-06-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-27",
         "name": "Varicella"
       }
@@ -62570,6 +63156,7 @@
         "brand": "Brand O",
         "expire": "2023-03-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-18",
         "name": "Tdap"
       }
@@ -62684,6 +63271,7 @@
         "brand": "Brand C",
         "expire": "2024-09-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-18",
         "name": "Hep B"
       }
@@ -62917,6 +63505,7 @@
         "brand": "Brand F",
         "expire": "2023-07-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-18",
         "name": "Varicella"
       }
@@ -63047,6 +63636,7 @@
         "brand": "Brand Z",
         "expire": "2022-06-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-01",
         "name": "Varicella"
       }
@@ -63124,6 +63714,7 @@
         "brand": "Brand I",
         "expire": "2024-02-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-27",
         "name": "J&J COVID"
       }
@@ -63143,6 +63734,7 @@
         "brand": "Brand C",
         "expire": "2024-11-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-03",
         "name": "Varicella"
       }
@@ -63243,6 +63835,7 @@
         "brand": "Brand D",
         "expire": "2022-11-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-14",
         "name": "Varicella"
       }
@@ -63379,6 +63972,7 @@
         "brand": "Brand V",
         "expire": "2024-04-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-19",
         "name": "Varicella"
       }
@@ -63574,6 +64168,7 @@
         "brand": "Brand V",
         "expire": "2024-01-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-13",
         "name": "Influenza"
       }
@@ -63745,6 +64340,7 @@
         "brand": "Brand X",
         "expire": "2023-08-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-08",
         "name": "Influenza"
       }
@@ -63846,6 +64442,7 @@
         "brand": "Brand S",
         "expire": "2024-10-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-29",
         "name": "Varicella"
       }
@@ -63942,6 +64539,7 @@
         "brand": "Brand J",
         "expire": "2022-12-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-16",
         "name": "Tdap"
       }
@@ -64018,6 +64616,7 @@
         "brand": "Brand G",
         "expire": "2022-07-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-09",
         "name": "Varicella"
       }
@@ -64248,6 +64847,7 @@
         "brand": "Brand D",
         "expire": "2023-03-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-04",
         "name": "Influenza"
       }
@@ -64440,6 +65040,7 @@
         "brand": "Brand M",
         "expire": "2024-02-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-08",
         "name": "Varicella"
       }
@@ -64459,6 +65060,7 @@
         "brand": "Brand L",
         "expire": "2024-01-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-08",
         "name": "Hep B"
       }
@@ -64512,6 +65114,7 @@
         "brand": "Brand Y",
         "expire": "2022-08-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-06",
         "name": "Hep B"
       }
@@ -64531,6 +65134,7 @@
         "brand": "Brand G",
         "expire": "2024-03-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-20",
         "name": "Varicella"
       }
@@ -64684,6 +65288,7 @@
         "brand": "Brand K",
         "expire": "2023-06-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-28",
         "name": "J&J COVID"
       }
@@ -64859,6 +65464,7 @@
         "brand": "Brand C",
         "expire": "2023-12-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-17",
         "name": "Tdap"
       }
@@ -64918,6 +65524,7 @@
         "brand": "Brand X",
         "expire": "2024-10-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-15",
         "name": "Tdap"
       }
@@ -65078,6 +65685,7 @@
         "brand": "Brand I",
         "expire": "2022-02-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-24",
         "name": "Varicella"
       }
@@ -65117,6 +65725,7 @@
         "brand": "Brand Y",
         "expire": "2024-11-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-13",
         "name": "PPD"
       }
@@ -65253,6 +65862,7 @@
         "brand": "Brand A",
         "expire": "2023-04-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-14",
         "name": "PPD"
       }
@@ -65312,6 +65922,7 @@
         "brand": "Brand C",
         "expire": "2024-03-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-11",
         "name": "Hep A"
       }
@@ -65488,6 +66099,7 @@
         "brand": "Brand M",
         "expire": "2024-06-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-05",
         "name": "Hep A"
       }
@@ -65629,6 +66241,7 @@
         "brand": "Brand N",
         "expire": "2022-04-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-28",
         "name": "Hep B"
       }
@@ -65648,6 +66261,7 @@
         "brand": "Brand X",
         "expire": "2024-01-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-20",
         "name": "Hep A"
       }
@@ -65687,6 +66301,7 @@
         "brand": "Brand B",
         "expire": "2023-09-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-13",
         "name": "J&J COVID"
       }
@@ -65838,6 +66453,7 @@
         "brand": "Brand K",
         "expire": "2023-06-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-30",
         "name": "Hep A"
       }
@@ -66104,6 +66720,7 @@
         "brand": "Brand P",
         "expire": "2024-09-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-24",
         "name": "Varicella"
       }
@@ -66123,6 +66740,7 @@
         "brand": "Brand M",
         "expire": "2025-06-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-29",
         "name": "Hep B"
       }
@@ -66162,6 +66780,7 @@
         "brand": "Brand I",
         "expire": "2022-01-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-26",
         "name": "Hep A"
       }
@@ -66201,6 +66820,7 @@
         "brand": "Brand K",
         "expire": "2024-02-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-15",
         "name": "Influenza"
       }
@@ -66257,6 +66877,7 @@
         "brand": "Brand W",
         "expire": "2024-07-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-27",
         "name": "Hep A"
       }
@@ -66357,6 +66978,7 @@
         "brand": "Brand P",
         "expire": "2023-06-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-12",
         "name": "Influenza"
       }
@@ -66436,6 +67058,7 @@
         "brand": "Brand X",
         "expire": "2024-04-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-26",
         "name": "Varicella"
       }
@@ -66455,6 +67078,7 @@
         "brand": "Brand S",
         "expire": "2024-04-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-11",
         "name": "PPD"
       }
@@ -66474,6 +67098,7 @@
         "brand": "Brand N",
         "expire": "2022-03-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-01",
         "name": "PPD"
       }
@@ -66513,6 +67138,7 @@
         "brand": "Brand M",
         "expire": "2025-06-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-26",
         "name": "Influenza"
       }
@@ -66612,6 +67238,7 @@
         "brand": "Brand K",
         "expire": "2025-03-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-27",
         "name": "Hep A"
       }
@@ -66708,6 +67335,7 @@
         "brand": "Brand O",
         "expire": "2024-12-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-17",
         "name": "PPD"
       }
@@ -66841,6 +67469,7 @@
         "brand": "Brand A",
         "expire": "2024-01-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-31",
         "name": "Tdap"
       }
@@ -66860,6 +67489,7 @@
         "brand": "Brand U",
         "expire": "2022-02-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-09",
         "name": "J&J COVID"
       }
@@ -66996,6 +67626,7 @@
         "brand": "Brand E",
         "expire": "2022-07-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-02",
         "name": "Hep B"
       }
@@ -67015,6 +67646,7 @@
         "brand": "Brand E",
         "expire": "2024-12-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-10",
         "name": "J&J COVID"
       }
@@ -67034,6 +67666,7 @@
         "brand": "Brand J",
         "expire": "2024-03-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-23",
         "name": "Varicella"
       }
@@ -67261,6 +67894,7 @@
         "brand": "Brand C",
         "expire": "2025-03-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-23",
         "name": "Tdap"
       }
@@ -67377,6 +68011,7 @@
         "brand": "Brand R",
         "expire": "2024-10-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-09",
         "name": "Hep B"
       }
@@ -67416,6 +68051,7 @@
         "brand": "Brand T",
         "expire": "2023-12-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-17",
         "name": "J&J COVID"
       }
@@ -67455,6 +68091,7 @@
         "brand": "Brand F",
         "expire": "2024-06-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-27",
         "name": "J&J COVID"
       }
@@ -67474,6 +68111,7 @@
         "brand": "Brand C",
         "expire": "2023-02-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-28",
         "name": "J&J COVID"
       }
@@ -67571,6 +68209,7 @@
         "brand": "Brand G",
         "expire": "2024-06-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-13",
         "name": "Hep B"
       }
@@ -67630,6 +68269,7 @@
         "brand": "Brand W",
         "expire": "2025-10-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-01",
         "name": "Varicella"
       }
@@ -67689,6 +68329,7 @@
         "brand": "Brand R",
         "expire": "2023-08-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-03",
         "name": "PPD"
       }
@@ -67962,6 +68603,7 @@
         "brand": "Brand J",
         "expire": "2022-05-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-13",
         "name": "J&J COVID"
       }
@@ -68078,6 +68720,7 @@
         "brand": "Brand Q",
         "expire": "2023-10-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-30",
         "name": "Influenza"
       }
@@ -68097,6 +68740,7 @@
         "brand": "Brand R",
         "expire": "2023-10-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-23",
         "name": "PPD"
       }
@@ -68354,6 +68998,7 @@
         "brand": "Brand G",
         "expire": "2024-12-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-01",
         "name": "PPD"
       }
@@ -68450,6 +69095,7 @@
         "brand": "Brand D",
         "expire": "2022-07-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-29",
         "name": "J&J COVID"
       }
@@ -68586,6 +69232,7 @@
         "brand": "Brand C",
         "expire": "2022-03-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-14",
         "name": "Varicella"
       }
@@ -68686,6 +69333,7 @@
         "brand": "Brand F",
         "expire": "2022-09-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-10",
         "name": "Hep A"
       }
@@ -68863,6 +69511,7 @@
         "brand": "Brand H",
         "expire": "2022-02-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-09",
         "name": "Hep A"
       }
@@ -68902,6 +69551,7 @@
         "brand": "Brand C",
         "expire": "2023-11-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-08",
         "name": "PPD"
       }
@@ -69093,6 +69743,7 @@
         "brand": "Brand O",
         "expire": "2023-02-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-05",
         "name": "Hep A"
       }
@@ -69132,6 +69783,7 @@
         "brand": "Brand N",
         "expire": "2025-02-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-12",
         "name": "PPD"
       }
@@ -69245,6 +69897,7 @@
         "brand": "Brand Z",
         "expire": "2023-07-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-08",
         "name": "PPD"
       }
@@ -69284,6 +69937,7 @@
         "brand": "Brand J",
         "expire": "2023-09-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-07",
         "name": "Hep B"
       }
@@ -69323,6 +69977,7 @@
         "brand": "Brand H",
         "expire": "2025-08-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-22",
         "name": "PPD"
       }
@@ -69359,6 +70014,7 @@
         "brand": "Brand B",
         "expire": "2023-04-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-26",
         "name": "PPD"
       }
@@ -69398,6 +70054,7 @@
         "brand": "Brand P",
         "expire": "2022-06-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-06",
         "name": "PPD"
       }
@@ -69494,6 +70151,7 @@
         "brand": "Brand R",
         "expire": "2022-09-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-16",
         "name": "Tdap"
       }
@@ -69764,6 +70422,7 @@
         "brand": "Brand Y",
         "expire": "2023-04-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-19",
         "name": "J&J COVID"
       }
@@ -69860,6 +70519,7 @@
         "brand": "Brand J",
         "expire": "2023-12-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-19",
         "name": "J&J COVID"
       }
@@ -69879,6 +70539,7 @@
         "brand": "Brand G",
         "expire": "2023-04-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-10",
         "name": "J&J COVID"
       }
@@ -70308,6 +70969,7 @@
         "brand": "Brand X",
         "expire": "2023-09-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-25",
         "name": "Varicella"
       }
@@ -70384,6 +71046,7 @@
         "brand": "Brand U",
         "expire": "2023-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-14",
         "name": "PPD"
       }
@@ -70639,6 +71302,7 @@
         "brand": "Brand A",
         "expire": "2023-01-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-12",
         "name": "Varicella"
       }
@@ -70658,6 +71322,7 @@
         "brand": "Brand C",
         "expire": "2024-01-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-28",
         "name": "Varicella"
       }
@@ -70873,6 +71538,7 @@
         "brand": "Brand A",
         "expire": "2023-06-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-13",
         "name": "Varicella"
       }
@@ -70947,6 +71613,7 @@
         "brand": "Brand M",
         "expire": "2024-03-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-10",
         "name": "Tdap"
       }
@@ -70966,6 +71633,7 @@
         "brand": "Brand F",
         "expire": "2022-06-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-13",
         "name": "J&J COVID"
       }
@@ -71005,6 +71673,7 @@
         "brand": "Brand G",
         "expire": "2022-08-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-05",
         "name": "PPD"
       }
@@ -71061,6 +71730,7 @@
         "brand": "Brand I",
         "expire": "2025-06-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-09",
         "name": "J&J COVID"
       }
@@ -71080,6 +71750,7 @@
         "brand": "Brand J",
         "expire": "2022-05-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-05",
         "name": "Hep A"
       }
@@ -71679,6 +72350,7 @@
         "brand": "Brand D",
         "expire": "2023-06-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-16",
         "name": "Hep B"
       }
@@ -71935,6 +72607,7 @@
         "brand": "Brand E",
         "expire": "2023-11-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-25",
         "name": "Hep B"
       }
@@ -71954,6 +72627,7 @@
         "brand": "Brand S",
         "expire": "2023-05-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-30",
         "name": "J&J COVID"
       }
@@ -71973,6 +72647,7 @@
         "brand": "Brand Q",
         "expire": "2024-01-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-22",
         "name": "J&J COVID"
       }
@@ -72536,6 +73211,7 @@
         "brand": "Brand I",
         "expire": "2022-03-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-31",
         "name": "Tdap"
       }
@@ -72575,6 +73251,7 @@
         "brand": "Brand N",
         "expire": "2022-08-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-27",
         "name": "Influenza"
       }
@@ -72615,6 +73292,7 @@
         "brand": "Brand P",
         "expire": "2025-05-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-21",
         "name": "J&J COVID"
       }
@@ -72771,6 +73449,7 @@
         "brand": "Brand P",
         "expire": "2023-12-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-06",
         "name": "Hep B"
       }
@@ -72890,6 +73569,7 @@
         "brand": "Brand X",
         "expire": "2024-02-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-13",
         "name": "Influenza"
       }
@@ -73179,6 +73859,7 @@
         "brand": "Brand R",
         "expire": "2022-02-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-09",
         "name": "Tdap"
       }
@@ -73215,6 +73896,7 @@
         "brand": "Brand H",
         "expire": "2023-12-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-08",
         "name": "Tdap"
       }
@@ -73569,6 +74251,7 @@
         "brand": "Brand D",
         "expire": "2024-05-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-09",
         "name": "Influenza"
       }
@@ -73784,6 +74467,7 @@
         "brand": "Brand U",
         "expire": "2023-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-18",
         "name": "J&J COVID"
       }
@@ -73879,6 +74563,7 @@
         "brand": "Brand N",
         "expire": "2023-02-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-05",
         "name": "Influenza"
       }
@@ -73975,6 +74660,7 @@
         "brand": "Brand Y",
         "expire": "2024-01-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-10",
         "name": "PPD"
       }
@@ -74093,6 +74779,7 @@
         "brand": "Brand X",
         "expire": "2025-05-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-22",
         "name": "J&J COVID"
       }
@@ -74132,6 +74819,7 @@
         "brand": "Brand U",
         "expire": "2023-11-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-01",
         "name": "Hep A"
       }
@@ -74211,6 +74899,7 @@
         "brand": "Brand H",
         "expire": "2025-09-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-24",
         "name": "Influenza"
       }
@@ -74344,6 +75033,7 @@
         "brand": "Brand Q",
         "expire": "2024-12-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-14",
         "name": "Hep A"
       }
@@ -74363,6 +75053,7 @@
         "brand": "Brand M",
         "expire": "2023-02-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-25",
         "name": "Influenza"
       }
@@ -74442,6 +75133,7 @@
         "brand": "Brand C",
         "expire": "2023-11-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-02",
         "name": "Varicella"
       }
@@ -74578,6 +75270,7 @@
         "brand": "Brand D",
         "expire": "2022-07-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-19",
         "name": "Varicella"
       }
@@ -74597,6 +75290,7 @@
         "brand": "Brand I",
         "expire": "2022-04-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-18",
         "name": "Influenza"
       }
@@ -74616,6 +75310,7 @@
         "brand": "Brand M",
         "expire": "2022-10-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-11",
         "name": "J&J COVID"
       }
@@ -74675,6 +75370,7 @@
         "brand": "Brand X",
         "expire": "2024-06-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-08",
         "name": "Influenza"
       }
@@ -74986,6 +75682,7 @@
         "brand": "Brand P",
         "expire": "2025-08-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-03",
         "name": "J&J COVID"
       }
@@ -75281,6 +75978,7 @@
         "brand": "Brand M",
         "expire": "2022-07-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-30",
         "name": "Hep B"
       }
@@ -75320,6 +76018,7 @@
         "brand": "Brand Z",
         "expire": "2025-08-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-31",
         "name": "Hep A"
       }
@@ -75533,6 +76232,7 @@
         "brand": "Brand Y",
         "expire": "2022-06-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-28",
         "name": "Varicella"
       }
@@ -75552,6 +76252,7 @@
         "brand": "Brand U",
         "expire": "2023-02-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-20",
         "name": "PPD"
       }
@@ -75749,6 +76450,7 @@
         "brand": "Brand D",
         "expire": "2023-02-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-22",
         "name": "Influenza"
       }
@@ -75788,6 +76490,7 @@
         "brand": "Brand U",
         "expire": "2024-08-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-31",
         "name": "Hep A"
       }
@@ -75827,6 +76530,7 @@
         "brand": "Brand U",
         "expire": "2025-08-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-30",
         "name": "Varicella"
       }
@@ -76118,6 +76822,7 @@
         "brand": "Brand X",
         "expire": "2023-12-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-28",
         "name": "Hep A"
       }
@@ -76315,6 +77020,7 @@
         "brand": "Brand W",
         "expire": "2023-11-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-18",
         "name": "J&J COVID"
       }
@@ -76354,6 +77060,7 @@
         "brand": "Brand B",
         "expire": "2023-07-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-02",
         "name": "Varicella"
       }
@@ -76373,6 +77080,7 @@
         "brand": "Brand Z",
         "expire": "2023-02-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-14",
         "name": "PPD"
       }
@@ -76490,6 +77198,7 @@
         "brand": "Brand G",
         "expire": "2022-11-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-24",
         "name": "Influenza"
       }
@@ -76509,6 +77218,7 @@
         "brand": "Brand L",
         "expire": "2023-10-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-10-13",
         "name": "Influenza"
       }
@@ -76669,6 +77379,7 @@
         "brand": "Brand C",
         "expire": "2023-09-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-20",
         "name": "Hep B"
       }
@@ -76728,6 +77439,7 @@
         "brand": "Brand V",
         "expire": "2022-09-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-23",
         "name": "Hep A"
       }
@@ -76747,6 +77459,7 @@
         "brand": "Brand B",
         "expire": "2023-07-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-06",
         "name": "Hep B"
       }
@@ -76766,6 +77479,7 @@
         "brand": "Brand X",
         "expire": "2024-09-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-20",
         "name": "Varicella"
       }
@@ -76806,6 +77520,7 @@
         "brand": "Brand H",
         "expire": "2024-01-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-17",
         "name": "J&J COVID"
       }
@@ -76883,6 +77598,7 @@
         "brand": "Brand X",
         "expire": "2024-10-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-22",
         "name": "PPD"
       }
@@ -77002,6 +77718,7 @@
         "brand": "Brand D",
         "expire": "2023-12-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-27",
         "name": "PPD"
       }
@@ -77075,6 +77792,7 @@
         "brand": "Brand D",
         "expire": "2022-08-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-25",
         "name": "Varicella"
       }
@@ -77214,6 +77932,7 @@
         "brand": "Brand V",
         "expire": "2022-05-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-17",
         "name": "Tdap"
       }
@@ -77388,6 +78107,7 @@
         "brand": "Brand E",
         "expire": "2023-11-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-05",
         "name": "PPD"
       }
@@ -77527,6 +78247,7 @@
         "brand": "Brand L",
         "expire": "2024-07-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-12",
         "name": "Hep B"
       }
@@ -77718,6 +78439,7 @@
         "brand": "Brand S",
         "expire": "2022-02-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-23",
         "name": "Influenza"
       }
@@ -77814,6 +78536,7 @@
         "brand": "Brand B",
         "expire": "2025-04-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-07",
         "name": "Hep A"
       }
@@ -77931,6 +78654,7 @@
         "brand": "Brand Y",
         "expire": "2023-12-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-17",
         "name": "Tdap"
       }
@@ -78150,6 +78874,7 @@
         "brand": "Brand U",
         "expire": "2025-01-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-27",
         "name": "J&J COVID"
       }
@@ -78169,6 +78894,7 @@
         "brand": "Brand Y",
         "expire": "2022-02-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-01",
         "name": "Influenza"
       }
@@ -78188,6 +78914,7 @@
         "brand": "Brand T",
         "expire": "2023-08-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-24",
         "name": "Varicella"
       }
@@ -78267,6 +78994,7 @@
         "brand": "Brand F",
         "expire": "2025-02-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-01",
         "name": "PPD"
       }
@@ -78438,6 +79166,7 @@
         "brand": "Brand B",
         "expire": "2023-04-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-16",
         "name": "Varicella"
       }
@@ -78474,6 +79203,7 @@
         "brand": "Brand D",
         "expire": "2022-06-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-15",
         "name": "Varicella"
       }
@@ -78493,6 +79223,7 @@
         "brand": "Brand S",
         "expire": "2023-11-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-22",
         "name": "Hep A"
       }
@@ -78586,6 +79317,7 @@
         "brand": "Brand V",
         "expire": "2023-09-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-17",
         "name": "Influenza"
       }
@@ -78642,6 +79374,7 @@
         "brand": "Brand E",
         "expire": "2024-05-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-18",
         "name": "Influenza"
       }
@@ -78701,6 +79434,7 @@
         "brand": "Brand M",
         "expire": "2024-12-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-29",
         "name": "Hep B"
       }
@@ -78761,6 +79495,7 @@
         "brand": "Brand I",
         "expire": "2024-10-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-07",
         "name": "Hep B"
       }
@@ -78878,6 +79613,7 @@
         "brand": "Brand X",
         "expire": "2024-02-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-09",
         "name": "PPD"
       }
@@ -79063,6 +79799,7 @@
         "brand": "Brand B",
         "expire": "2023-05-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-11",
         "name": "Hep A"
       }
@@ -79236,6 +79973,7 @@
         "brand": "Brand Z",
         "expire": "2022-02-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-01",
         "name": "Tdap"
       }
@@ -79356,6 +80094,7 @@
         "brand": "Brand Y",
         "expire": "2022-03-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-25",
         "name": "Tdap"
       }
@@ -79452,6 +80191,7 @@
         "brand": "Brand X",
         "expire": "2022-07-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-09",
         "name": "J&J COVID"
       }
@@ -79589,6 +80329,7 @@
         "brand": "Brand O",
         "expire": "2023-12-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-27",
         "name": "Varicella"
       }
@@ -79648,6 +80389,7 @@
         "brand": "Brand U",
         "expire": "2024-09-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-01",
         "name": "Hep A"
       }
@@ -79748,6 +80490,7 @@
         "brand": "Brand C",
         "expire": "2023-08-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-17",
         "name": "Hep A"
       }
@@ -79807,6 +80550,7 @@
         "brand": "Brand R",
         "expire": "2022-02-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-23",
         "name": "J&J COVID"
       }
@@ -79846,6 +80590,7 @@
         "brand": "Brand N",
         "expire": "2023-11-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-08",
         "name": "J&J COVID"
       }
@@ -79882,6 +80627,7 @@
         "brand": "Brand Q",
         "expire": "2023-03-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-28",
         "name": "PPD"
       }
@@ -80099,6 +80845,7 @@
         "brand": "Brand U",
         "expire": "2023-05-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-24",
         "name": "Varicella"
       }
@@ -80155,6 +80902,7 @@
         "brand": "Brand F",
         "expire": "2024-05-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-06",
         "name": "Influenza"
       }
@@ -80248,6 +80996,7 @@
         "brand": "Brand L",
         "expire": "2024-01-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-15",
         "name": "Hep B"
       }
@@ -80327,6 +81076,7 @@
         "brand": "Brand M",
         "expire": "2025-07-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-14",
         "name": "Tdap"
       }
@@ -80383,6 +81133,7 @@
         "brand": "Brand R",
         "expire": "2024-05-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-20",
         "name": "Hep A"
       }
@@ -80536,6 +81287,7 @@
         "brand": "Brand G",
         "expire": "2022-07-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-10",
         "name": "Varicella"
       }
@@ -80652,6 +81404,7 @@
         "brand": "Brand Q",
         "expire": "2023-03-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-28",
         "name": "Influenza"
       }
@@ -80728,6 +81481,7 @@
         "brand": "Brand H",
         "expire": "2025-05-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-05",
         "name": "Tdap"
       }
@@ -80921,6 +81675,7 @@
         "brand": "Brand N",
         "expire": "2023-03-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-31",
         "name": "Influenza"
       }
@@ -81137,6 +81892,7 @@
         "brand": "Brand S",
         "expire": "2022-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-18",
         "name": "PPD"
       }
@@ -81156,6 +81912,7 @@
         "brand": "Brand L",
         "expire": "2022-08-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-28",
         "name": "Tdap"
       }
@@ -81233,6 +81990,7 @@
         "brand": "Brand K",
         "expire": "2025-08-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-30",
         "name": "Hep B"
       }
@@ -81252,6 +82010,7 @@
         "brand": "Brand A",
         "expire": "2022-07-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-17",
         "name": "J&J COVID"
       }
@@ -81371,6 +82130,7 @@
         "brand": "Brand L",
         "expire": "2022-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-14",
         "name": "J&J COVID"
       }
@@ -81390,6 +82150,7 @@
         "brand": "Brand I",
         "expire": "2022-07-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-08",
         "name": "Influenza"
       }
@@ -81529,6 +82290,7 @@
         "brand": "Brand M",
         "expire": "2024-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-18",
         "name": "Varicella"
       }
@@ -81648,6 +82410,7 @@
         "brand": "Brand C",
         "expire": "2024-07-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-29",
         "name": "J&J COVID"
       }
@@ -81924,6 +82687,7 @@
         "brand": "Brand T",
         "expire": "2025-03-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-26",
         "name": "Hep B"
       }
@@ -82004,6 +82768,7 @@
         "brand": "Brand H",
         "expire": "2022-06-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-26",
         "name": "Hep A"
       }
@@ -82023,6 +82788,7 @@
         "brand": "Brand C",
         "expire": "2023-03-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-06",
         "name": "Hep B"
       }
@@ -82617,6 +83383,7 @@
         "brand": "Brand M",
         "expire": "2023-09-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-29",
         "name": "Varicella"
       }
@@ -82636,6 +83403,7 @@
         "brand": "Brand U",
         "expire": "2025-07-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-23",
         "name": "J&J COVID"
       }
@@ -82655,6 +83423,7 @@
         "brand": "Brand P",
         "expire": "2025-09-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-26",
         "name": "Hep B"
       }
@@ -82674,6 +83443,7 @@
         "brand": "Brand F",
         "expire": "2022-07-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-15",
         "name": "Tdap"
       }
@@ -82753,6 +83523,7 @@
         "brand": "Brand P",
         "expire": "2025-04-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-23",
         "name": "PPD"
       }
@@ -82873,6 +83644,7 @@
         "brand": "Brand U",
         "expire": "2024-12-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-01",
         "name": "Influenza"
       }
@@ -82933,6 +83705,7 @@
         "brand": "Brand A",
         "expire": "2023-08-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-14",
         "name": "PPD"
       }
@@ -83049,6 +83822,7 @@
         "brand": "Brand Y",
         "expire": "2025-07-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-26",
         "name": "J&J COVID"
       }
@@ -83145,6 +83919,7 @@
         "brand": "Brand S",
         "expire": "2024-11-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-04",
         "name": "Hep B"
       }
@@ -83412,6 +84187,7 @@
         "brand": "Brand F",
         "expire": "2023-01-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-28",
         "name": "PPD"
       }
@@ -83488,6 +84264,7 @@
         "brand": "Brand C",
         "expire": "2024-08-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-17",
         "name": "Varicella"
       }
@@ -83544,6 +84321,7 @@
         "brand": "Brand A",
         "expire": "2024-08-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-09",
         "name": "Varicella"
       }
@@ -83584,6 +84362,7 @@
         "brand": "Brand N",
         "expire": "2025-03-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-05",
         "name": "Varicella"
       }
@@ -83640,6 +84419,7 @@
         "brand": "Brand K",
         "expire": "2025-03-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-05",
         "name": "J&J COVID"
       }
@@ -83737,6 +84517,7 @@
         "brand": "Brand K",
         "expire": "2025-02-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-01",
         "name": "Hep B"
       }
@@ -83773,6 +84554,7 @@
         "brand": "Brand T",
         "expire": "2023-07-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-03",
         "name": "Hep A"
       }
@@ -83792,6 +84574,7 @@
         "brand": "Brand R",
         "expire": "2022-01-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-25",
         "name": "PPD"
       }
@@ -83831,6 +84614,7 @@
         "brand": "Brand G",
         "expire": "2022-08-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-21",
         "name": "PPD"
       }
@@ -83890,6 +84674,7 @@
         "brand": "Brand K",
         "expire": "2024-04-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-19",
         "name": "Influenza"
       }
@@ -83946,6 +84731,7 @@
         "brand": "Brand Y",
         "expire": "2025-01-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-08",
         "name": "J&J COVID"
       }
@@ -84122,6 +84908,7 @@
         "brand": "Brand U",
         "expire": "2023-04-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-15",
         "name": "PPD"
       }
@@ -84322,6 +85109,7 @@
         "brand": "Brand R",
         "expire": "2024-07-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-25",
         "name": "PPD"
       }
@@ -84401,6 +85189,7 @@
         "brand": "Brand U",
         "expire": "2025-01-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-22",
         "name": "Varicella"
       }
@@ -84440,6 +85229,7 @@
         "brand": "Brand B",
         "expire": "2022-07-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-22",
         "name": "PPD"
       }
@@ -84537,6 +85327,7 @@
         "brand": "Brand P",
         "expire": "2023-07-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-22",
         "name": "Influenza"
       }
@@ -84576,6 +85367,7 @@
         "brand": "Brand F",
         "expire": "2022-08-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-20",
         "name": "Tdap"
       }
@@ -84669,6 +85461,7 @@
         "brand": "Brand T",
         "expire": "2024-02-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-02-09",
         "name": "Hep B"
       }
@@ -84708,6 +85501,7 @@
         "brand": "Brand C",
         "expire": "2025-03-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-09",
         "name": "Influenza"
       }
@@ -84804,6 +85598,7 @@
         "brand": "Brand S",
         "expire": "2024-10-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-06",
         "name": "Hep A"
       }
@@ -84823,6 +85618,7 @@
         "brand": "Brand G",
         "expire": "2023-06-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-27",
         "name": "Tdap"
       }
@@ -84999,6 +85795,7 @@
         "brand": "Brand P",
         "expire": "2022-07-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-02",
         "name": "PPD"
       }
@@ -85075,6 +85872,7 @@
         "brand": "Brand E",
         "expire": "2025-09-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-12",
         "name": "Hep B"
       }
@@ -85308,6 +86106,7 @@
         "brand": "Brand P",
         "expire": "2023-03-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-13",
         "name": "J&J COVID"
       }
@@ -85347,6 +86146,7 @@
         "brand": "Brand H",
         "expire": "2023-04-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-20",
         "name": "Influenza"
       }
@@ -85423,6 +86223,7 @@
         "brand": "Brand Z",
         "expire": "2025-02-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-19",
         "name": "Tdap"
       }
@@ -85442,6 +86243,7 @@
         "brand": "Brand X",
         "expire": "2025-10-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-10-11",
         "name": "Hep A"
       }
@@ -85576,6 +86378,7 @@
         "brand": "Brand V",
         "expire": "2025-05-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-13",
         "name": "Hep B"
       }
@@ -85749,6 +86552,7 @@
         "brand": "Brand R",
         "expire": "2022-09-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-19",
         "name": "Influenza"
       }
@@ -85768,6 +86572,7 @@
         "brand": "Brand A",
         "expire": "2022-02-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-23",
         "name": "PPD"
       }
@@ -85966,6 +86771,7 @@
         "brand": "Brand Z",
         "expire": "2023-08-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-24",
         "name": "Hep A"
       }
@@ -86080,6 +86886,7 @@
         "brand": "Brand Z",
         "expire": "2022-05-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-03",
         "name": "Influenza"
       }
@@ -86505,6 +87312,7 @@
         "brand": "Brand E",
         "expire": "2024-08-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-18",
         "name": "Influenza"
       }
@@ -86683,6 +87491,7 @@
         "brand": "Brand G",
         "expire": "2023-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-18",
         "name": "Hep A"
       }
@@ -87035,6 +87844,7 @@
         "brand": "Brand V",
         "expire": "2022-03-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-21",
         "name": "PPD"
       }
@@ -87171,6 +87981,7 @@
         "brand": "Brand F",
         "expire": "2025-02-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-08",
         "name": "Tdap"
       }
@@ -87208,6 +88019,7 @@
         "brand": "Brand S",
         "expire": "2024-10-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-11",
         "name": "Hep A"
       }
@@ -87227,6 +88039,7 @@
         "brand": "Brand G",
         "expire": "2022-02-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-02",
         "name": "Varicella"
       }
@@ -87323,6 +88136,7 @@
         "brand": "Brand C",
         "expire": "2023-11-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-30",
         "name": "Hep A"
       }
@@ -87419,6 +88233,7 @@
         "brand": "Brand N",
         "expire": "2024-11-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-23",
         "name": "PPD"
       }
@@ -87438,6 +88253,7 @@
         "brand": "Brand J",
         "expire": "2021-12-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2021-12-26",
         "name": "PPD"
       }
@@ -87648,6 +88464,7 @@
         "brand": "Brand D",
         "expire": "2025-01-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-11",
         "name": "PPD"
       }
@@ -87741,6 +88558,7 @@
         "brand": "Brand F",
         "expire": "2023-04-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-23",
         "name": "J&J COVID"
       }
@@ -87780,6 +88598,7 @@
         "brand": "Brand W",
         "expire": "2025-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-18",
         "name": "Tdap"
       }
@@ -88146,6 +88965,7 @@
         "brand": "Brand R",
         "expire": "2025-06-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-23",
         "name": "Hep A"
       }
@@ -88185,6 +89005,7 @@
         "brand": "Brand R",
         "expire": "2025-03-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-07",
         "name": "PPD"
       }
@@ -88321,6 +89142,7 @@
         "brand": "Brand M",
         "expire": "2025-09-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-16",
         "name": "Hep A"
       }
@@ -88340,6 +89162,7 @@
         "brand": "Brand J",
         "expire": "2025-05-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-29",
         "name": "Hep A"
       }
@@ -88419,6 +89242,7 @@
         "brand": "Brand L",
         "expire": "2024-05-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-20",
         "name": "Hep A"
       }
@@ -88783,6 +89607,7 @@
         "brand": "Brand G",
         "expire": "2024-04-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-20",
         "name": "Tdap"
       }
@@ -88931,6 +89756,7 @@
         "brand": "Brand G",
         "expire": "2023-03-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-29",
         "name": "Varicella"
       }
@@ -89045,6 +89871,7 @@
         "brand": "Brand B",
         "expire": "2022-05-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-05-23",
         "name": "Tdap"
       }
@@ -89337,6 +90164,7 @@
         "brand": "Brand V",
         "expire": "2025-08-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-10",
         "name": "PPD"
       }
@@ -89537,6 +90365,7 @@
         "brand": "Brand H",
         "expire": "2023-02-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-08",
         "name": "J&J COVID"
       }
@@ -89650,6 +90479,7 @@
         "brand": "Brand Y",
         "expire": "2025-02-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-25",
         "name": "Hep B"
       }
@@ -89924,6 +90754,7 @@
         "brand": "Brand A",
         "expire": "2022-08-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-31",
         "name": "Influenza"
       }
@@ -89943,6 +90774,7 @@
         "brand": "Brand K",
         "expire": "2025-08-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-09",
         "name": "PPD"
       }
@@ -90019,6 +90851,7 @@
         "brand": "Brand E",
         "expire": "2023-03-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-09",
         "name": "Tdap"
       }
@@ -90078,6 +90911,7 @@
         "brand": "Brand B",
         "expire": "2023-04-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-23",
         "name": "J&J COVID"
       }
@@ -90298,6 +91132,7 @@
         "brand": "Brand C",
         "expire": "2022-08-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-11",
         "name": "Hep A"
       }
@@ -90465,6 +91300,7 @@
         "brand": "Brand J",
         "expire": "2023-01-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-06",
         "name": "Hep A"
       }
@@ -90618,6 +91454,7 @@
         "brand": "Brand U",
         "expire": "2024-09-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-01",
         "name": "Hep A"
       }
@@ -90754,6 +91591,7 @@
         "brand": "Brand I",
         "expire": "2022-02-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-18",
         "name": "PPD"
       }
@@ -90871,6 +91709,7 @@
         "brand": "Brand N",
         "expire": "2025-07-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-13",
         "name": "Tdap"
       }
@@ -90890,6 +91729,7 @@
         "brand": "Brand I",
         "expire": "2024-08-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-11",
         "name": "Influenza"
       }
@@ -91070,6 +91910,7 @@
         "brand": "Brand W",
         "expire": "2023-05-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-15",
         "name": "Hep A"
       }
@@ -91303,6 +92144,7 @@
         "brand": "Brand N",
         "expire": "2022-08-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-01",
         "name": "Varicella"
       }
@@ -91322,6 +92164,7 @@
         "brand": "Brand K",
         "expire": "2024-05-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-31",
         "name": "Tdap"
       }
@@ -91358,6 +92201,7 @@
         "brand": "Brand K",
         "expire": "2025-09-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-06",
         "name": "Hep A"
       }
@@ -91475,6 +92319,7 @@
         "brand": "Brand D",
         "expire": "2022-09-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-23",
         "name": "PPD"
       }
@@ -91514,6 +92359,7 @@
         "brand": "Brand K",
         "expire": "2025-05-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-26",
         "name": "Hep A"
       }
@@ -91634,6 +92480,7 @@
         "brand": "Brand B",
         "expire": "2023-03-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-17",
         "name": "PPD"
       }
@@ -91690,6 +92537,7 @@
         "brand": "Brand P",
         "expire": "2024-01-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-08",
         "name": "J&J COVID"
       }
@@ -91951,6 +92799,7 @@
         "brand": "Brand A",
         "expire": "2025-05-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-04",
         "name": "Tdap"
       }
@@ -92182,6 +93031,7 @@
         "brand": "Brand S",
         "expire": "2023-06-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-18",
         "name": "J&J COVID"
       }
@@ -92456,6 +93306,7 @@
         "brand": "Brand B",
         "expire": "2025-01-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-02",
         "name": "Varicella"
       }
@@ -92475,6 +93326,7 @@
         "brand": "Brand P",
         "expire": "2024-01-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-17",
         "name": "Hep A"
       }
@@ -92575,6 +93427,7 @@
         "brand": "Brand N",
         "expire": "2025-07-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-07",
         "name": "Hep A"
       }
@@ -92594,6 +93447,7 @@
         "brand": "Brand O",
         "expire": "2022-11-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-25",
         "name": "Influenza"
       }
@@ -92796,6 +93650,7 @@
         "brand": "Brand I",
         "expire": "2023-06-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-02",
         "name": "J&J COVID"
       }
@@ -92893,6 +93748,7 @@
         "brand": "Brand L",
         "expire": "2023-09-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-09",
         "name": "Hep A"
       }
@@ -92949,6 +93805,7 @@
         "brand": "Brand R",
         "expire": "2024-08-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-11",
         "name": "Influenza"
       }
@@ -92985,6 +93842,7 @@
         "brand": "Brand I",
         "expire": "2022-03-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-12",
         "name": "J&J COVID"
       }
@@ -93045,6 +93903,7 @@
         "brand": "Brand G",
         "expire": "2024-06-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-11",
         "name": "Influenza"
       }
@@ -93103,6 +93962,7 @@
         "brand": "Brand S",
         "expire": "2023-02-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-24",
         "name": "Influenza"
       }
@@ -93179,6 +94039,7 @@
         "brand": "Brand O",
         "expire": "2022-12-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-29",
         "name": "Tdap"
       }
@@ -93298,6 +94159,7 @@
         "brand": "Brand U",
         "expire": "2023-05-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-21",
         "name": "Varicella"
       }
@@ -93431,6 +94293,7 @@
         "brand": "Brand R",
         "expire": "2024-03-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-25",
         "name": "Hep B"
       }
@@ -93704,6 +94567,7 @@
         "brand": "Brand N",
         "expire": "2022-02-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-22",
         "name": "PPD"
       }
@@ -93723,6 +94587,7 @@
         "brand": "Brand I",
         "expire": "2023-06-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-07",
         "name": "J&J COVID"
       }
@@ -93902,6 +94767,7 @@
         "brand": "Brand T",
         "expire": "2025-06-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-29",
         "name": "J&J COVID"
       }
@@ -94388,6 +95254,7 @@
         "brand": "Brand D",
         "expire": "2024-11-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-21",
         "name": "Varicella"
       }
@@ -94563,6 +95430,7 @@
         "brand": "Brand N",
         "expire": "2022-07-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-13",
         "name": "Hep B"
       }
@@ -94682,6 +95550,7 @@
         "brand": "Brand R",
         "expire": "2022-07-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-14",
         "name": "J&J COVID"
       }
@@ -95018,6 +95887,7 @@
         "brand": "Brand U",
         "expire": "2024-08-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-21",
         "name": "Influenza"
       }
@@ -95194,6 +96064,7 @@
         "brand": "Brand Q",
         "expire": "2024-11-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-17",
         "name": "J&J COVID"
       }
@@ -95213,6 +96084,7 @@
         "brand": "Brand J",
         "expire": "2025-07-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-18",
         "name": "Influenza"
       }
@@ -95409,6 +96281,7 @@
         "brand": "Brand S",
         "expire": "2022-10-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-14",
         "name": "Tdap"
       }
@@ -95590,6 +96463,7 @@
         "brand": "Brand J",
         "expire": "2025-07-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-30",
         "name": "J&J COVID"
       }
@@ -96153,6 +97027,7 @@
         "brand": "Brand G",
         "expire": "2023-11-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-18",
         "name": "PPD"
       }
@@ -96384,6 +97259,7 @@
         "brand": "Brand S",
         "expire": "2022-01-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-05",
         "name": "Hep A"
       }
@@ -96501,6 +97377,7 @@
         "brand": "Brand V",
         "expire": "2022-04-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-16",
         "name": "Influenza"
       }
@@ -96719,6 +97596,7 @@
         "brand": "Brand B",
         "expire": "2024-11-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-26",
         "name": "PPD"
       }
@@ -96819,6 +97697,7 @@
         "brand": "Brand V",
         "expire": "2023-02-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-16",
         "name": "Hep B"
       }
@@ -96838,6 +97717,7 @@
         "brand": "Brand Y",
         "expire": "2024-07-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-06",
         "name": "PPD"
       }
@@ -96975,6 +97855,7 @@
         "brand": "Brand U",
         "expire": "2023-06-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-03",
         "name": "Tdap"
       }
@@ -97229,6 +98110,7 @@
         "brand": "Brand Y",
         "expire": "2023-08-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-14",
         "name": "Tdap"
       }
@@ -97396,6 +98278,7 @@
         "brand": "Brand D",
         "expire": "2024-12-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-11",
         "name": "Hep A"
       }
@@ -97489,6 +98372,7 @@
         "brand": "Brand P",
         "expire": "2023-01-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-16",
         "name": "Influenza"
       }
@@ -97665,6 +98549,7 @@
         "brand": "Brand W",
         "expire": "2025-05-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-04",
         "name": "Hep B"
       }
@@ -97819,6 +98704,7 @@
         "brand": "Brand Z",
         "expire": "2023-03-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-25",
         "name": "Varicella"
       }
@@ -97952,6 +98838,7 @@
         "brand": "Brand G",
         "expire": "2022-11-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-11-02",
         "name": "Hep B"
       }
@@ -97971,6 +98858,7 @@
         "brand": "Brand G",
         "expire": "2023-12-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-15",
         "name": "Tdap"
       }
@@ -98165,6 +99053,7 @@
         "brand": "Brand U",
         "expire": "2025-02-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-02-23",
         "name": "Hep B"
       }
@@ -98302,6 +99191,7 @@
         "brand": "Brand C",
         "expire": "2025-09-12",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-09-12",
         "name": "Influenza"
       }
@@ -98376,6 +99266,7 @@
         "brand": "Brand W",
         "expire": "2023-06-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-17",
         "name": "J&J COVID"
       }
@@ -98471,6 +99362,7 @@
         "brand": "Brand V",
         "expire": "2023-02-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-15",
         "name": "PPD"
       }
@@ -98490,6 +99382,7 @@
         "brand": "Brand W",
         "expire": "2022-04-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-06",
         "name": "Hep B"
       }
@@ -98624,6 +99517,7 @@
         "brand": "Brand T",
         "expire": "2024-06-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-01",
         "name": "PPD"
       }
@@ -98663,6 +99557,7 @@
         "brand": "Brand R",
         "expire": "2022-04-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-08",
         "name": "PPD"
       }
@@ -98682,6 +99577,7 @@
         "brand": "Brand S",
         "expire": "2025-01-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-06",
         "name": "PPD"
       }
@@ -98799,6 +99695,7 @@
         "brand": "Brand X",
         "expire": "2025-05-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-09",
         "name": "PPD"
       }
@@ -98835,6 +99732,7 @@
         "brand": "Brand T",
         "expire": "2023-01-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-10",
         "name": "Varicella"
       }
@@ -98891,6 +99789,7 @@
         "brand": "Brand E",
         "expire": "2023-05-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-17",
         "name": "PPD"
       }
@@ -99082,6 +99981,7 @@
         "brand": "Brand I",
         "expire": "2024-06-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-14",
         "name": "Hep B"
       }
@@ -99233,6 +100133,7 @@
         "brand": "Brand Z",
         "expire": "2024-09-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-04",
         "name": "Varicella"
       }
@@ -99272,6 +100173,7 @@
         "brand": "Brand M",
         "expire": "2022-02-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-22",
         "name": "Hep B"
       }
@@ -99308,6 +100210,7 @@
         "brand": "Brand T",
         "expire": "2024-12-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-19",
         "name": "Hep B"
       }
@@ -99367,6 +100270,7 @@
         "brand": "Brand Q",
         "expire": "2024-03-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-22",
         "name": "Hep B"
       }
@@ -99537,6 +100441,7 @@
         "brand": "Brand S",
         "expire": "2024-03-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-03-09",
         "name": "Influenza"
       }
@@ -99576,6 +100481,7 @@
         "brand": "Brand X",
         "expire": "2024-05-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-14",
         "name": "Varicella"
       }
@@ -99616,6 +100522,7 @@
         "brand": "Brand X",
         "expire": "2024-06-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-17",
         "name": "Varicella"
       }
@@ -99635,6 +100542,7 @@
         "brand": "Brand E",
         "expire": "2023-05-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-29",
         "name": "Hep B"
       }
@@ -99654,6 +100562,7 @@
         "brand": "Brand G",
         "expire": "2023-01-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-18",
         "name": "Hep A"
       }
@@ -99673,6 +100582,7 @@
         "brand": "Brand J",
         "expire": "2024-12-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-25",
         "name": "PPD"
       }
@@ -99692,6 +100602,7 @@
         "brand": "Brand X",
         "expire": "2025-06-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-10",
         "name": "Hep B"
       }
@@ -99751,6 +100662,7 @@
         "brand": "Brand O",
         "expire": "2025-05-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-11",
         "name": "Hep B"
       }
@@ -99810,6 +100722,7 @@
         "brand": "Brand P",
         "expire": "2022-02-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-23",
         "name": "Varicella"
       }
@@ -99847,6 +100760,7 @@
         "brand": "Brand I",
         "expire": "2022-03-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-29",
         "name": "Varicella"
       }
@@ -99883,6 +100797,7 @@
         "brand": "Brand E",
         "expire": "2024-04-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-09",
         "name": "Influenza"
       }
@@ -99902,6 +100817,7 @@
         "brand": "Brand A",
         "expire": "2022-12-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-26",
         "name": "J&J COVID"
       }
@@ -100249,6 +101165,7 @@
         "brand": "Brand M",
         "expire": "2024-11-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-09",
         "name": "Hep B"
       }
@@ -100288,6 +101205,7 @@
         "brand": "Brand Y",
         "expire": "2025-06-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-25",
         "name": "J&J COVID"
       }
@@ -100327,6 +101245,7 @@
         "brand": "Brand V",
         "expire": "2022-02-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-09",
         "name": "Hep B"
       }
@@ -100346,6 +101265,7 @@
         "brand": "Brand R",
         "expire": "2025-06-03",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-03",
         "name": "Hep A"
       }
@@ -100406,6 +101326,7 @@
         "brand": "Brand U",
         "expire": "2024-06-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-07",
         "name": "Hep B"
       }
@@ -100425,6 +101346,7 @@
         "brand": "Brand T",
         "expire": "2024-12-27",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-27",
         "name": "J&J COVID"
       }
@@ -100565,6 +101487,7 @@
         "brand": "Brand R",
         "expire": "2025-04-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-19",
         "name": "Hep B"
       }
@@ -100722,6 +101645,7 @@
         "brand": "Brand C",
         "expire": "2023-11-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-11-17",
         "name": "Varicella"
       }
@@ -101283,6 +102207,7 @@
         "brand": "Brand T",
         "expire": "2024-09-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-14",
         "name": "PPD"
       }
@@ -101459,6 +102384,7 @@
         "brand": "Brand S",
         "expire": "2022-02-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-20",
         "name": "Tdap"
       }
@@ -101498,6 +102424,7 @@
         "brand": "Brand S",
         "expire": "2022-06-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-06-28",
         "name": "Hep B"
       }
@@ -101634,6 +102561,7 @@
         "brand": "Brand A",
         "expire": "2023-03-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-13",
         "name": "J&J COVID"
       }
@@ -101674,6 +102602,7 @@
         "brand": "Brand O",
         "expire": "2022-02-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-16",
         "name": "Hep B"
       }
@@ -101753,6 +102682,7 @@
         "brand": "Brand P",
         "expire": "2023-08-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-06",
         "name": "Influenza"
       }
@@ -101890,6 +102820,7 @@
         "brand": "Brand R",
         "expire": "2024-10-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-01",
         "name": "Hep B"
       }
@@ -102063,6 +102994,7 @@
         "brand": "Brand Z",
         "expire": "2023-01-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-01-23",
         "name": "Hep A"
       }
@@ -102261,6 +103193,7 @@
         "brand": "Brand C",
         "expire": "2022-12-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-11",
         "name": "J&J COVID"
       }
@@ -102338,6 +103271,7 @@
         "brand": "Brand F",
         "expire": "2024-05-08",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-05-08",
         "name": "Hep A"
       }
@@ -102572,6 +103506,7 @@
         "brand": "Brand S",
         "expire": "2022-08-18",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-08-18",
         "name": "Hep B"
       }
@@ -102649,6 +103584,7 @@
         "brand": "Brand Q",
         "expire": "2025-01-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-17",
         "name": "Tdap"
       }
@@ -102728,6 +103664,7 @@
         "brand": "Brand G",
         "expire": "2024-10-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-26",
         "name": "J&J COVID"
       }
@@ -102824,6 +103761,7 @@
         "brand": "Brand B",
         "expire": "2024-07-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-04",
         "name": "Hep B"
       }
@@ -102971,6 +103909,7 @@
         "brand": "Brand W",
         "expire": "2022-09-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-09-07",
         "name": "Influenza"
       }
@@ -102990,6 +103929,7 @@
         "brand": "Brand B",
         "expire": "2024-01-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-21",
         "name": "PPD"
       }
@@ -103029,6 +103969,7 @@
         "brand": "Brand G",
         "expire": "2023-04-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-04-07",
         "name": "J&J COVID"
       }
@@ -103105,6 +104046,7 @@
         "brand": "Brand F",
         "expire": "2022-01-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-25",
         "name": "Influenza"
       }
@@ -103144,6 +104086,7 @@
         "brand": "Brand X",
         "expire": "2025-07-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-17",
         "name": "Hep A"
       }
@@ -103223,6 +104166,7 @@
         "brand": "Brand R",
         "expire": "2025-04-24",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-24",
         "name": "Hep A"
       }
@@ -103282,6 +104226,7 @@
         "brand": "Brand Q",
         "expire": "2024-04-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-04-01",
         "name": "Hep A"
       }
@@ -103361,6 +104306,7 @@
         "brand": "Brand R",
         "expire": "2022-12-13",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-12-13",
         "name": "Hep A"
       }
@@ -103380,6 +104326,7 @@
         "brand": "Brand T",
         "expire": "2023-03-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-31",
         "name": "Influenza"
       }
@@ -103419,6 +104366,7 @@
         "brand": "Brand Q",
         "expire": "2025-01-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-28",
         "name": "Hep B"
       }
@@ -103455,6 +104403,7 @@
         "brand": "Brand K",
         "expire": "2023-03-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-09",
         "name": "J&J COVID"
       }
@@ -103474,6 +104423,7 @@
         "brand": "Brand D",
         "expire": "2025-08-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-16",
         "name": "Varicella"
       }
@@ -103513,6 +104463,7 @@
         "brand": "Brand D",
         "expire": "2022-03-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-31",
         "name": "J&J COVID"
       }
@@ -103663,6 +104614,7 @@
         "brand": "Brand T",
         "expire": "2022-04-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-04-06",
         "name": "Varicella"
       }
@@ -103759,6 +104711,7 @@
         "brand": "Brand I",
         "expire": "2022-01-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-01-04",
         "name": "Hep B"
       }
@@ -103850,6 +104803,7 @@
         "brand": "Brand K",
         "expire": "2024-01-31",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-01-31",
         "name": "Tdap"
       }
@@ -103930,6 +104884,7 @@
         "brand": "Brand M",
         "expire": "2025-04-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-29",
         "name": "PPD"
       }
@@ -103949,6 +104904,7 @@
         "brand": "Brand I",
         "expire": "2022-03-15",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-15",
         "name": "Varicella"
       }
@@ -103968,6 +104924,7 @@
         "brand": "Brand Y",
         "expire": "2022-02-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-02-26",
         "name": "Varicella"
       }
@@ -104007,6 +104964,7 @@
         "brand": "Brand W",
         "expire": "2022-07-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-30",
         "name": "PPD"
       }
@@ -104204,6 +105162,7 @@
         "brand": "Brand Q",
         "expire": "2025-07-21",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-21",
         "name": "Hep B"
       }
@@ -104341,6 +105300,7 @@
         "brand": "Brand A",
         "expire": "2022-07-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-22",
         "name": "Tdap"
       }
@@ -104461,6 +105421,7 @@
         "brand": "Brand Z",
         "expire": "2025-04-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-04-16",
         "name": "Varicella"
       }
@@ -104500,6 +105461,7 @@
         "brand": "Brand Z",
         "expire": "2024-07-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-07-17",
         "name": "Tdap"
       }
@@ -104693,6 +105655,7 @@
         "brand": "Brand E",
         "expire": "2025-08-02",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-02",
         "name": "Tdap"
       }
@@ -104828,6 +105791,7 @@
         "brand": "Brand R",
         "expire": "2022-03-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-11",
         "name": "Tdap"
       }
@@ -105004,6 +105968,7 @@
         "brand": "Brand O",
         "expire": "2025-08-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-08-17",
         "name": "Varicella"
       }
@@ -105023,6 +105988,7 @@
         "brand": "Brand Q",
         "expire": "2022-03-09",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-09",
         "name": "PPD"
       }
@@ -105042,6 +106008,7 @@
         "brand": "Brand I",
         "expire": "2025-03-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-25",
         "name": "Hep B"
       }
@@ -105135,6 +106102,7 @@
         "brand": "Brand X",
         "expire": "2022-07-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-07-01",
         "name": "Influenza"
       }
@@ -105154,6 +106122,7 @@
         "brand": "Brand K",
         "expire": "2025-01-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-30",
         "name": "Varicella"
       }
@@ -105251,6 +106220,7 @@
         "brand": "Brand I",
         "expire": "2025-03-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-17",
         "name": "Tdap"
       }
@@ -105350,6 +106320,7 @@
         "brand": "Brand I",
         "expire": "2023-02-20",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-02-20",
         "name": "Hep A"
       }
@@ -105407,6 +106378,7 @@
         "brand": "Brand O",
         "expire": "2025-03-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-03-05",
         "name": "Tdap"
       }
@@ -105762,6 +106734,7 @@
         "brand": "Brand Z",
         "expire": "2025-06-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-25",
         "name": "Influenza"
       }
@@ -105781,6 +106754,7 @@
         "brand": "Brand P",
         "expire": "2022-10-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-10-28",
         "name": "J&J COVID"
       }
@@ -106012,6 +106986,7 @@
         "brand": "Brand M",
         "expire": "2023-07-30",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-07-30",
         "name": "Varicella"
       }
@@ -106068,6 +107043,7 @@
         "brand": "Brand U",
         "expire": "2023-09-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-09-17",
         "name": "Hep A"
       }
@@ -106108,6 +107084,7 @@
         "brand": "Brand F",
         "expire": "2024-08-04",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-08-04",
         "name": "Hep B"
       }
@@ -106249,6 +107226,7 @@
         "brand": "Brand M",
         "expire": "2024-06-29",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-29",
         "name": "PPD"
       }
@@ -106442,6 +107420,7 @@
         "brand": "Brand S",
         "expire": "2023-03-01",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-03-01",
         "name": "PPD"
       }
@@ -106481,6 +107460,7 @@
         "brand": "Brand E",
         "expire": "2023-12-14",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-12-14",
         "name": "PPD"
       }
@@ -106500,6 +107480,7 @@
         "brand": "Brand K",
         "expire": "2023-06-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-11",
         "name": "Hep B"
       }
@@ -106553,6 +107534,7 @@
         "brand": "Brand G",
         "expire": "2022-03-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-16",
         "name": "Tdap"
       }
@@ -106632,6 +107614,7 @@
         "brand": "Brand I",
         "expire": "2024-12-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-12-23",
         "name": "Influenza"
       }
@@ -106765,6 +107748,7 @@
         "brand": "Brand F",
         "expire": "2025-01-25",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-01-25",
         "name": "Hep B"
       }
@@ -106844,6 +107828,7 @@
         "brand": "Brand M",
         "expire": "2024-10-22",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-22",
         "name": "Influenza"
       }
@@ -106903,6 +107888,7 @@
         "brand": "Brand S",
         "expire": "2025-06-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-28",
         "name": "Hep A"
       }
@@ -106962,6 +107948,7 @@
         "brand": "Brand N",
         "expire": "2022-03-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2022-03-16",
         "name": "Hep A"
       }
@@ -107098,6 +108085,7 @@
         "brand": "Brand M",
         "expire": "2025-05-19",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-19",
         "name": "Varicella"
       }
@@ -107254,6 +108242,7 @@
         "brand": "Brand Z",
         "expire": "2025-06-06",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-06-06",
         "name": "Varicella"
       }
@@ -107310,6 +108299,7 @@
         "brand": "Brand M",
         "expire": "2023-06-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-06-17",
         "name": "Hep B"
       }
@@ -107403,6 +108393,7 @@
         "brand": "Brand A",
         "expire": "2024-10-26",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-26",
         "name": "J&J COVID"
       }
@@ -107422,6 +108413,7 @@
         "brand": "Brand Y",
         "expire": "2024-11-16",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-11-16",
         "name": "Hep B"
       }
@@ -107461,6 +108453,7 @@
         "brand": "Brand B",
         "expire": "2025-05-11",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-05-11",
         "name": "Hep B"
       }
@@ -107598,6 +108591,7 @@
         "brand": "Brand X",
         "expire": "2025-07-28",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2025-07-28",
         "name": "Tdap"
       }
@@ -107617,6 +108611,7 @@
         "brand": "Brand F",
         "expire": "2024-06-23",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-06-23",
         "name": "Hep B"
       }
@@ -107929,6 +108924,7 @@
         "brand": "Brand M",
         "expire": "2024-10-05",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-10-05",
         "name": "Hep A"
       }
@@ -108005,6 +109001,7 @@
         "brand": "Brand M",
         "expire": "2024-09-10",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2024-09-10",
         "name": "Hep A"
       }
@@ -108121,6 +109118,7 @@
         "brand": "Brand I",
         "expire": "2023-05-07",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-05-07",
         "name": "PPD"
       }
@@ -108298,6 +109296,7 @@
         "brand": "Brand H",
         "expire": "2023-08-17",
         "dose": 1,
+        "quantity": 1,
         "visDate": "2023-08-17",
         "name": "Varicella"
       }

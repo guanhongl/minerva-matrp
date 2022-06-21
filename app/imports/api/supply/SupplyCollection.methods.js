@@ -5,6 +5,7 @@ import { _ } from 'meteor/underscore';
 import { MATRP } from '../matrp/MATRP';
 import QRCode from 'qrcode';
 import { Random } from 'meteor/random';
+import { cloneDeep } from 'lodash';
 
 export const addMethod = new ValidatedMethod({
     name: 'supply.add',
@@ -69,6 +70,78 @@ export const addMethod = new ValidatedMethod({
                         throw new Meteor.Error("qrcode-failure", err);
                     });
             }
+        }
+        return null;
+    },
+});
+
+export const dispenseMethod = new ValidatedMethod({
+    name: 'supply.dispense',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ data }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.supplies;
+            const history = MATRP.history;
+            collection.assertValidRoleForMethod(this.userId);
+
+            data.dispensedFrom = Meteor.user().username;
+            // handle non patient use dispense
+            if (data.dispenseType !== 'Patient Use') {
+                data.dispensedTo = 'N/A';
+                data.site = 'N/A';
+            }
+            // validation
+            let errorMsg = '';
+            // the required String fields
+            const requiredFields = ['dispensedTo', 'site', 'supply', 'supplyType', 'location', 'quantity'];
+            // if the field is empty, append error message
+            requiredFields.forEach(field => {
+                if (!data[field]) {
+                    errorMsg += `${field} cannot be empty.\n`;
+                }
+            });
+            if (errorMsg) {
+                throw new Meteor.Error("required-fields", errorMsg);
+            }
+
+            // submit
+            data.quantity = parseInt(data.quantity, 10);
+
+            const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, supply, note, 
+                supplyType, quantity, donated, donatedBy, location } = data;
+            const target = collection.findOne({ supply }); // find the existing supply
+            const { _id, stock } = target;
+            const copy = cloneDeep({ id: _id, stock }); // the copy of the record to update
+            const targetIndex = stock.findIndex((o => o.location === location && o.donated === donated)); // find the index of existing the supply
+            const targetQuantity = stock[targetIndex].quantity;
+            // if dispense quantity > target quantity:
+            if (quantity > targetQuantity) {
+                throw new Meteor.Error("quantity-cap", `${supply} @ ${location} only has ${targetQuantity} remaining.`);
+            } else {
+            // if dispense quantity < supply quantity:
+                if (quantity < targetQuantity) {
+                    stock[targetIndex].quantity -= quantity; // decrement the quantity
+                } else {
+            // else if dispense quantity === supply quantity:
+                    stock.splice(targetIndex, 1); // remove the stock
+                }
+            }
+            // const update = { id: _id, stock };
+            const element = [{ name: supply, supplyType, quantity, donated, donatedBy }];
+            const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element };
+
+            try {
+                collection.update(_id, { stock });
+                history.define(definitionData);
+
+                return `${supply} @ ${location} updated successfully`;
+            } catch (error) {
+            // if update or define fail, restore the copy
+                collection.update(_id, { stock: copy.stock });
+
+                throw new Meteor.Error("update-error", error);
+            };
         }
         return null;
     },

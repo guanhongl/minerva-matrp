@@ -74,6 +74,7 @@ Schemas.Vaccine = new SimpleSchema({
   'element.$.brand': String,
   'element.$.expire': String,
   'element.$.dose': Number,
+  'element.$.quantity': Number,
   'element.$.visDate': String,
 });
 // Supply Schema
