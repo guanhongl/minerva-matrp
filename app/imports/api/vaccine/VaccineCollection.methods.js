@@ -153,3 +153,44 @@ export const dispenseMethod = new ValidatedMethod({
         return null;
     },
 });
+
+export const updateMethod = new ValidatedMethod({
+    name: 'vaccine.update',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ _id, uuid, fields }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.vaccines;
+            collection.assertValidRoleForMethod(this.userId);
+            const { newMinQuantity, newVisDate, newLotId, newExpire, newLocation, newQuantity, newNote } = fields;
+            
+            // validation
+            const minQuantity = parseInt(newMinQuantity, 10);
+            const quantity = parseInt(newQuantity, 10);
+            // throw error if lot is empty
+            if (!newLotId) {
+                throw new Meteor.Error("empty-lot", "Lot cannot be empty.")
+            }
+            // throw error if lot is not unique
+            const current = collection.findOne({ lotIds: { $elemMatch: { lotId: newLotId } } });
+            const notUnique = !!current && (current.lotIds.find(o => o.lotId === newLotId)._id !== uuid);
+            if (notUnique) {
+                throw new Meteor.Error("unique-lot", "Lot must be unique.")
+            }
+            // submit
+            const target = collection.findOne({ _id });
+            const targetLot = target.lotIds.find(o => o._id === uuid);
+
+            targetLot.lotId = newLotId;
+            targetLot.expire = newExpire;
+            targetLot.location = newLocation;
+            targetLot.quantity = quantity;
+            targetLot.note = newNote;
+            const updateData = { minQuantity, visDate: newVisDate, lotIds: target.lotIds };
+            collection.update(_id, updateData);
+
+            return 'Vaccine updated successfully.';
+        }
+        return null;
+    },
+});

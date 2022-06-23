@@ -3,10 +3,15 @@ import { Button, Modal, Input, TextArea, Select, Icon } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
+import { updateMethod } from '../../../api/vaccine/VaccineCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Vaccines } from '../../../api/vaccine/VaccineCollection';
-import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { printQRCode, getOptions } from '../../utilities/Functions';
+
+const submit = (_id, uuid, fields) => {
+  updateMethod.callPromise({ _id, uuid, fields })
+    .then(success => swal('Success', success, 'success', { buttons: false, timer: 3000 }))
+    .catch(error => swal('Error', error.message, 'error'));
+};
 
 const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate }, 
                            detail: { _id: uuid, lotId, expire, location, quantity, note, QRCode },
@@ -16,8 +21,6 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
 
   // form fields
   const initialState = {
-    newVaccine: vaccine,
-    newBrand: brand,
     newMinQuantity: minQuantity,
     newVisDate: visDate,
     newLotId: lotId,
@@ -36,25 +39,6 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
 
   const handleChange = (event, { name, value }) => {
     setFields({ ...fields, [name]: value });
-  };
-
-  const submit = (data) => {
-    fields.newMinQuantity = parseInt(fields.newMinQuantity, 10);
-    fields.newQuantity = parseInt(fields.newQuantity, 10);
-
-    const collectionName = Vaccines.getCollectionName();
-    const exists = Vaccines.findOne({ _id });
-    const { lotIds } = exists;
-    const target = lotIds.find(obj => obj._id === uuid);
-    target.lotId = fields.newLotId;
-    target.expire = fields.newExpire;
-    target.location = fields.newLocation;
-    target.quantity = fields.newQuantity;
-    target.note = fields.newNote;
-    const updateData = { id: _id, vaccine: fields.newVaccine, brand: fields.newBrand, minQuantity: fields.newMinQuantity, visDate: fields.newVisDate, lotIds };
-    updateMethod.callPromise({ collectionName, updateData })
-      .then(() => swal('Success', 'Vaccine updated successfully', 'success', { buttons: false, timer: 3000 }))
-      .catch(error => swal('Error', error.message, 'error'));
   };
 
   return (
@@ -79,7 +63,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   <span className='header'>Vaccine:</span>
                   {
                     edit ?
-                      <Input name='newVaccine' value={fields.newVaccine} onChange={handleChange} readOnly />
+                      <Input value={vaccine} disabled />
                       :
                       <>{vaccine}</>
                   }
@@ -88,7 +72,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   <span className='header'>Brand:</span>
                   {
                     edit ?
-                      <Input name='newBrand' value={fields.newBrand} onChange={handleChange} readOnly />
+                      <Input value={brand} disabled />
                       :
                       <>{brand}</>
                   }
@@ -201,7 +185,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
           // content="Save Changes"
           // labelPosition='right'
           icon='check'
-          onClick={submit}
+          onClick={() => submit(_id, uuid, fields)}
           color='green'
         />
         {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.VACCINE_INFO_CLOSE}>

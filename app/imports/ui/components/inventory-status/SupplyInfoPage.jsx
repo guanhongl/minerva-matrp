@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { Button, Modal, Input, TextArea, Select, Icon, Checkbox } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import { updateMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Supplys } from '../../../api/supply/SupplyCollection';
-import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { printQRCode, getOptions } from '../../utilities/Functions';
+
+const submit = (_id, uuid, fields) => {
+  updateMethod.callPromise({ _id, uuid, fields })
+    .then(success => swal('Success', success, 'success', { buttons: false, timer: 3000 }))
+    .catch(error => swal('Error', error.message, 'error'));
+};
 
 const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, 
                           detail: { _id: uuid, location, quantity, donated, donatedBy, note, QRCode }, 
-                          supplyTypes }) => {
+                          supplyTypes, locations }) => {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
   // form fields
   const initialState = {
-    newSupply: supply,
     newSupplyType: supplyType,
     newMinQuantity: minQuantity,
     newLocation: location,
@@ -34,25 +38,6 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
 
   const handleChange = (event, { name, value, checked }) => {
     setFields({ ...fields, [name]: value ?? checked });
-  };
-
-  const submit = () => {
-    fields.newMinQuantity = parseInt(fields.newMinQuantity, 10);
-    fields.newQuantity = parseInt(fields.newQuantity, 10);
-
-    const collectionName = Supplys.getCollectionName();
-    const exists = Supplys.findOne({ _id });
-    const { stock } = exists;
-    const target = stock.find(obj => obj._id === uuid);
-    target.location = fields.newLocation;
-    target.quantity = fields.newQuantity;
-    target.donated = fields.newDonated;
-    target.donatedBy = fields.newDonated ? fields.newDonatedBy : '';
-    target.note = fields.newNote;
-    const updateData = { id: _id, supply: fields.newSupply, supplyType: fields.newSupplyType, minQuantity: fields.newMinQuantity, stock };
-    updateMethod.callPromise({ collectionName, updateData })
-      .then(() => swal('Success', 'Supply updated successfully', 'success', { buttons: false, timer: 3000 }))
-      .catch(error => swal('Error', error.message, 'error'));
   };
 
   return (
@@ -77,7 +62,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                   <span className='header'>Supply:</span>
                   {
                     edit ?
-                      <Input name='newSupply' value={fields.newSupply} onChange={handleChange} readOnly />
+                      <Input value={supply} disabled />
                       :
                       <>{supply}</>
                   }
@@ -111,7 +96,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Input name='newLocation' value={fields.newLocation} onChange={handleChange} readOnly />
+                      <Select name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
                       :
                       <>{location}</>
                   }
@@ -130,7 +115,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                   <span className='header'>Donated:</span>
                   {
                     edit ?
-                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} readOnly />
+                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
                       :
                       <>{donated ? 'Yes' : 'No'}</>
                   }
@@ -182,7 +167,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
           // content="Save Changes"
           // labelPosition='right'
           icon='check'
-          onClick={submit}
+          onClick={() => submit(_id, uuid, fields)}
           color='green'
         />
         {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.SUPPLY_INFO_CLOSE}>

@@ -137,7 +137,7 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
           <Table.Body>
             {
               filteredSupplies.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(supply => <SupplyStatusRow key={supply._id} supply={supply} supplyTypes={supplyTypes} />)
+                .map(supply => <SupplyStatusRow key={supply._id} supply={supply} supplyTypes={supplyTypes} locations={locations} />)
             }
           </Table.Body>
 

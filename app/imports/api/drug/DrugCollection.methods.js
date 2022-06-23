@@ -188,3 +188,47 @@ export const dispenseMethod = new ValidatedMethod({
         return null;
     },
 });
+
+export const updateMethod = new ValidatedMethod({
+    name: 'drug.update',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ _id, uuid, fields }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.drugs;
+            collection.assertValidRoleForMethod(this.userId);
+            const { newDrugType, newMinQuantity, newUnit, 
+                newLotId, newBrand, newExpire, newLocation, newQuantity, newDonated, newDonatedBy, newNote } = fields;
+            
+            // validation
+            const minQuantity = parseInt(newMinQuantity, 10);
+            const quantity = parseInt(newQuantity, 10);
+            // throw error if lot is empty
+            if (!newLotId) {
+                throw new Meteor.Error("empty-lot", "Lot cannot be empty.")
+            }
+            // throw error if lot is not unique
+            const current = collection.findOne({ lotIds: { $elemMatch: { lotId: newLotId } } });
+            const notUnique = !!current && (current.lotIds.find(o => o.lotId === newLotId)._id !== uuid);
+            if (notUnique) {
+                throw new Meteor.Error("unique-lot", "Lot must be unique.")
+            }
+            // submit
+            const target = collection.findOne({ _id });
+            const targetLot = target.lotIds.find(o => o._id === uuid);
+            targetLot.lotId = newLotId;
+            targetLot.brand = newBrand;
+            targetLot.expire = newExpire;
+            targetLot.location = newLocation;
+            targetLot.quantity = quantity;
+            targetLot.donated = newDonated;
+            targetLot.donatedBy = newDonated ? newDonatedBy : '';
+            targetLot.note = newNote;
+            const updateData = { drugType: newDrugType, minQuantity, unit: newUnit, lotIds: target.lotIds };
+            collection.update(_id, updateData);
+
+            return 'Drug updated successfully.';
+        }
+        return null;
+    },
+});

@@ -3,10 +3,16 @@ import { Button, Modal, Input, Checkbox, TextArea, Select, Icon } from 'semantic
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
+import { updateMethod } from '../../../api/drug/DrugCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { Drugs } from '../../../api/drug/DrugCollection';
-import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { printQRCode, getOptions } from '../../utilities/Functions';
+
+// TODO fix bug where submit re-renders
+const submit = (_id, uuid, fields) => {
+  updateMethod.callPromise({ _id, uuid, fields })
+    .then(success => swal('Success', success, 'success', { buttons: false, timer: 3000 }))
+    .catch(error => swal('Error', error.message, 'error'));
+};
 
 const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, 
                        detail: { _id: uuid, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode },
@@ -16,7 +22,6 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
 
   // form fields
   const initialState = {
-    newDrug: drug,
     newDrugType: drugType,
     newMinQuantity: minQuantity,
     newUnit: unit,
@@ -41,29 +46,6 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
     setFields({ ...fields, [name]: value ?? checked });
   };
 
-  // TODO fix bug where submit re-renders
-  const submit = () => {
-    fields.newMinQuantity = parseInt(fields.newMinQuantity, 10);
-    fields.newQuantity = parseInt(fields.newQuantity, 10);
-
-    const collectionName = Drugs.getCollectionName();
-    const exists = Drugs.findOne({ _id });
-    const { lotIds } = exists;
-    const target = lotIds.find(obj => obj._id === uuid);
-    target.lotId = fields.newLotId;
-    target.brand = fields.newBrand;
-    target.expire = fields.newExpire;
-    target.location = fields.newLocation;
-    target.quantity = fields.newQuantity;
-    target.donated = fields.newDonated;
-    target.donatedBy = fields.newDonated ? fields.newDonatedBy : '';
-    target.note = fields.newNote;
-    const updateData = { id: _id, drug: fields.newDrug, drugType: fields.newDrugType, minQuantity: fields.newMinQuantity, unit: fields.newUnit, lotIds };
-    updateMethod.callPromise({ collectionName, updateData })
-      .then(() => swal('Success', 'Drug updated successfully', 'success', { buttons: false, timer: 3000 }))
-      .catch(error => swal('Error', error.message, 'error'));
-  };
-
   return (
     <Modal
       closeIcon
@@ -86,7 +68,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                   <span className='header'>Drug:</span>
                   {
                     edit ?
-                      <Input name='newDrug' value={fields.newDrug} onChange={handleChange} readOnly />
+                      <Input value={drug} disabled />
                       :
                       <>{drug}</>
                   }
@@ -224,7 +206,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
           // content="Save Changes"
           // labelPosition='right'
           icon='check'
-          onClick={submit}
+          onClick={() => submit(_id, uuid, fields)}
           color='green'
         />
         {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DRUG_CLOSE}>

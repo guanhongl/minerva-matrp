@@ -7,7 +7,7 @@ import SupplyInfoPage from './SupplyInfoPage';
 import { Supplys } from '../../../api/supply/SupplyCollection';
 import { removeItMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
-const SupplyStatusRow = ({ supply, supplyTypes }) => {
+const SupplyStatusRow = ({ supply, supplyTypes, locations }) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(!isOpen);
 
@@ -121,7 +121,7 @@ const SupplyStatusRow = ({ supply, supplyTypes }) => {
                       }
                     </Table.Cell>
                     <Table.Cell className='icons'>
-                      <SupplyInfoPage info={supply} detail={supply.stock[index]} supplyTypes={supplyTypes} />
+                      <SupplyInfoPage info={supply} detail={supply.stock[index]} supplyTypes={supplyTypes} locations={locations} />
                       <Icon name='trash alternate' onClick={() => deleteLot(uuid)} />
                     </Table.Cell>
                   </Table.Row>

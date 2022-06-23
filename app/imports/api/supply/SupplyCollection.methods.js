@@ -146,3 +146,39 @@ export const dispenseMethod = new ValidatedMethod({
         return null;
     },
 });
+
+export const updateMethod = new ValidatedMethod({
+    name: 'supply.update',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ _id, uuid, fields }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.supplies;
+            collection.assertValidRoleForMethod(this.userId);
+            const { newSupplyType, newMinQuantity, newLocation, newQuantity, newDonated, newDonatedBy, newNote } = fields;
+            
+            // validation
+            const minQuantity = parseInt(newMinQuantity, 10);
+            const quantity = parseInt(newQuantity, 10);
+            // throw error if (location, donated) is not unique
+            const target = collection.findOne({ _id });
+            const current = target.stock.find(o => ( o.location === newLocation && o.donated === newDonated ));
+            const notUnique = !!current && (current._id !== uuid);
+            if (notUnique) {
+                throw new Meteor.Error("unique-error", "Location, donated pair must be unique.")
+            }
+            // submit
+            const targetLot = target.stock.find(o => o._id === uuid);
+            targetLot.location = newLocation;
+            targetLot.quantity = quantity;
+            targetLot.donated = newDonated;
+            targetLot.donatedBy = newDonated ? newDonatedBy : '';
+            targetLot.note = newNote;
+            const updateData = { supplyType: newSupplyType, minQuantity, stock: target.stock };
+            collection.update(_id, updateData);
+
+            return 'Supply updated successfully.';
+        }
+        return null;
+    },
+});
