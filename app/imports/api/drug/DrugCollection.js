@@ -82,28 +82,25 @@ class DrugCollection extends BaseCollection {
         updateData[name] = data[name];
       }
     }
-    // function addBoolean(name) { // if not undefined
-    //   if (_.isBoolean(data[name])) {
-    //     updateData[name] = data[name];
-    //   }
-    // }
 
     addString('drug');
-    // check if drugType is not undefined && every drug type is not undefined
-    if (data.drugType && data.drugType.every(elem => elem)) {
+    // check if drugType is array AND every drugType is not undefined
+    if (Array.isArray(data.drugType) && data.drugType.every(e => e)) {
       updateData.drugType = data.drugType;
     }
     addNumber('minQuantity');
     addString('unit');
-    if (data.lotIds && data.lotIds.every(lotId => (
-      _.isObject(lotId) &&
-      lotId._id &&
-      lotId.lotId &&
-      lotId.brand &&
-      _.isNumber(lotId.quantity) &&
-      lotId.location &&
-      _.isBoolean(lotId.donated)
-    ))) {
+    if (Array.isArray(data.lotIds) && 
+      data.lotIds.every(o => (
+        _.isObject(o) &&
+        o._id &&
+        o.lotId &&
+        o.brand &&
+        _.isNumber(o.quantity) &&
+        o.location &&
+        _.isBoolean(o.donated)
+      ))
+    ) {
       updateData.lotIds = data.lotIds;
     }
 

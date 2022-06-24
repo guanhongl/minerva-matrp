@@ -100,6 +100,26 @@ class SupplyNameCollection extends BaseCollection {
   inUse(option) {
     return !!Supplys.findOne({ supply: option });
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this supply name
+    this._collection.update(instance, { $set: { supplyName: option } });
+    // find the matching docs
+    const docs = Supplys.find({ supply: prev }, { fields: { supply: 1 } }).fetch();
+    // console.log(docs);
+    // update the matching docs
+    if (docs.length) {
+      return Supplys._collection.update(
+        { _id: { $in: _.pluck(docs, "_id") } },
+        { $set: { supply: option } },
+        { multi: true },
+      );
+    }
+    return 0;
+  }
 }
 
 /**

@@ -73,13 +73,15 @@ class VaccineCollection extends BaseCollection {
     addString('brand');
     addNumber('minQuantity');
     addString('visDate');
-    if (data.lotIds && data.lotIds.every(lotId => (
-      _.isObject(lotId) &&
-      lotId._id &&
-      lotId.lotId &&
-      _.isNumber(lotId.quantity) &&
-      lotId.location
-    ))) {
+    if (Array.isArray(data.lotIds) && 
+      data.lotIds.every(o => (
+        _.isObject(o) &&
+        o._id &&
+        o.lotId &&
+        _.isNumber(o.quantity) &&
+        o.location
+      ))
+    ) {
       updateData.lotIds = data.lotIds;
     }
 

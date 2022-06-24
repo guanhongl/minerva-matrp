@@ -100,6 +100,26 @@ class VaccineNameCollection extends BaseCollection {
   inUse(option) {
     return !!Vaccines.findOne({ vaccine: option });
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this vaccine name
+    this._collection.update(instance, { $set: { vaccineName: option } });
+    // find the matching docs
+    const docs = Vaccines.find({ vaccine: prev }, { fields: { vaccine: 1 } }).fetch();
+    // console.log(docs);
+    // update the matching docs
+    if (docs.length) {
+      return Vaccines._collection.update(
+        { _id: { $in: _.pluck(docs, "_id") } },
+        { $set: { vaccine: option } },
+        { multi: true },
+      );
+    }
+    return 0;
+  }
 }
 
 /**

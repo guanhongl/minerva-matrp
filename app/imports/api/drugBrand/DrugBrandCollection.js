@@ -100,6 +100,32 @@ class DrugBrandCollection extends BaseCollection {
   inUse(option) {
     return !!Drugs.findOne({ lotIds: { $elemMatch: { brand: option } } });
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this drug brand
+    this._collection.update(instance, { $set: { drugBrand: option } });
+    // find the matching docs
+    const docs = Drugs.find(
+      { lotIds: { $elemMatch: { brand: prev } } }, 
+      { fields: { lotIds: 1 } },
+    ).fetch();
+    // console.log(docs);
+    // update the matching docs
+    if (docs.length) {
+      docs.forEach(doc => {
+        doc.lotIds.forEach(o => {
+          if (o.brand === prev) {
+            o.brand = option;
+          }
+        });
+      });
+      Drugs.updateMany(docs);
+    }
+    return docs.length;
+  }
 }
 
 /**

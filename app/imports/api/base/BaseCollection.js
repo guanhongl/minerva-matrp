@@ -272,7 +272,10 @@ class BaseCollection {
   }
 
   updateMany(updateObjects) {
-    updateObjects.forEach((updateObject) => this.update(updateObject.id, updateObject));
+    updateObjects.forEach(o => {
+      const { _id, ...updateObject } = o; 
+      this.update(_id, updateObject);
+    });
   }
 
   /**

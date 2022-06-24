@@ -100,6 +100,26 @@ class DrugTypeCollection extends BaseCollection {
   inUse(option) {
     return !!Drugs.findOne({ drugType: option });
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this drug type
+    this._collection.update(instance, { $set: { drugType: option } });
+    // find the matching docs
+    const docs = Drugs.find({ drugType: prev }, { fields: { drugType: 1 } }).fetch();
+    // console.log(docs);
+    // update the matching docs
+    if (docs.length) {
+      docs.forEach(doc => {
+        const idx = doc.drugType.indexOf(prev);
+        doc.drugType[idx] = option;
+      });
+      Drugs.updateMany(docs);
+    }
+    return docs.length;
+  }
 }
 
 /**

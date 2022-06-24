@@ -100,6 +100,26 @@ class VaccineBrandCollection extends BaseCollection {
   inUse(option) {
     return !!Vaccines.findOne({ brand: option });
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this vaccine brand
+    this._collection.update(instance, { $set: { vaccineBrand: option } });
+    // find the matching docs
+    const docs = Vaccines.find({ brand: prev }, { fields: { brand: 1 } }).fetch();
+    // console.log(docs);
+    // update the matching docs
+    if (docs.length) {
+      return Vaccines._collection.update(
+        { _id: { $in: _.pluck(docs, "_id") } },
+        { $set: { brand: option } },
+        { multi: true },
+      );
+    }
+    return 0;
+  }
 }
 
 /**

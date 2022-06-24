@@ -143,10 +143,10 @@ export const dispenseMethod = new ValidatedMethod({
                 const { lotId, drug, brand, expire, quantity, unit, donated, donatedBy } = innerField;
                 const target = collection.findOne({ drug }); // find the existing drug
                 const { _id } = target;
-                const match = update.find(o => o.id === _id);
+                const match = update.find(o => o._id === _id);
                 const lotIds = !!match ? match.lotIds : target.lotIds; // set reference to match or target
                 if (!!!match) { 
-                    copy.push(cloneDeep( { id: _id, lotIds } )); // store a copy (we modify lotIds)
+                    copy.push(cloneDeep( { _id, lotIds } )); // store a copy (we modify lotIds)
                 }
                 const targetIndex = lotIds.findIndex((o => o.lotId === lotId)); // find the index of existing the lotId
                 const targetQuantity = lotIds[targetIndex].quantity;
@@ -163,7 +163,7 @@ export const dispenseMethod = new ValidatedMethod({
                     }
                 }
                 if (!!!match) {
-                    update.push({ id: _id, lotIds }); // store the update
+                    update.push({ _id, lotIds }); // store the update
                 }
                 element.push({ name: drug, unit, lotId, brand, expire, quantity, donated, donatedBy });
                 successMsg += `${drug}, ${lotId} updated successfully.\n`;

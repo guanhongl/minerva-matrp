@@ -78,13 +78,15 @@ class SupplyCollection extends BaseCollection {
     addString('supply');
     addString('supplyType');
     addNumber('minQuantity');
-    if (data.stock && data.stock.every(elem => (
-      _.isObject(elem) &&
-      elem._id &&
-      _.isNumber(elem.quantity) &&
-      elem.location &&
-      _.isBoolean(elem.donated)
-    ))) {
+    if (Array.isArray(data.stock) && 
+      data.stock.every(o => (
+        _.isObject(o) &&
+        o._id &&
+        _.isNumber(o.quantity) &&
+        o.location &&
+        _.isBoolean(o.donated)
+      ))
+    ) {
       updateData.stock = data.stock;
     }
 

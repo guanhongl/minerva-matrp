@@ -26,7 +26,7 @@ class LocationCollection extends BaseCollection {
    * @param location.
    * @return {String} the docID of the new document.
    */
-define(location) {
+  define(location) {
     const docID = this._collection.insert({
       location,
     });
@@ -105,6 +105,60 @@ define(location) {
       !!Vaccines.findOne({ lotIds: { $elemMatch: { location: option } } }) ||
       !!Supplys.findOne({ stock: { $elemMatch: { location: option } } })
     );
+  }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this location
+    this._collection.update(instance, { $set: { location: option } });
+    // find the matching docs
+    const drugDocs = Drugs.find(
+      { lotIds: { $elemMatch: { location: prev } } }, 
+      { fields: { lotIds: 1 } },
+    ).fetch();
+    const vaccineDocs = Vaccines.find(
+      { lotIds: { $elemMatch: { location: prev } } }, 
+      { fields: { lotIds: 1 } },
+    ).fetch();
+    const supplyDocs = Supplys.find(
+      { stock: { $elemMatch: { location: prev } } }, 
+      { fields: { stock: 1 } },
+    ).fetch();
+    // update the matching docs
+    if (drugDocs.length) {
+      drugDocs.forEach(doc => {
+        doc.lotIds.forEach(o => {
+          if (o.location === prev) {
+            o.location = option;
+          }
+        });
+      });
+      Drugs.updateMany(drugDocs);
+    }
+    if (vaccineDocs.length) {
+      vaccineDocs.forEach(doc => {
+        doc.lotIds.forEach(o => {
+          if (o.location === prev) {
+            o.location = option;
+          }
+        });
+      });
+      Vaccines.updateMany(vaccineDocs);
+    }
+    if (supplyDocs.length) {
+      supplyDocs.forEach(doc => {
+        doc.stock.forEach(o => {
+          if (o.location === prev) {
+            o.location = option;
+          }
+        });
+      });
+      Supplys.updateMany(supplyDocs);
+    }
+
+    return drugDocs.length + vaccineDocs.length + supplyDocs.length;
   }
 }
 

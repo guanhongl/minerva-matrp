@@ -99,6 +99,16 @@ class SiteCollection extends BaseCollection {
   inUse(option) {
     return false;
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this site
+    this._collection.update(instance, { $set: { site: option } });
+    
+    return 0;
+  }
 }
 
 /**

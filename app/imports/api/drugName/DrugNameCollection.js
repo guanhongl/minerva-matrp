@@ -108,15 +108,12 @@ class DrugNameCollection extends BaseCollection {
     // update this drug name
     this._collection.update(instance, { $set: { drugName: option } });
     // find the matching docs
-    const docs = _.pluck(
-      Drugs.find({ drug: prev }, { fields: { drug: 1 } }).fetch(),
-      "_id",
-    );
+    const docs = Drugs.find({ drug: prev }, { fields: { drug: 1 } }).fetch();
     // console.log(docs);
     // update the matching docs
     if (docs.length) {
       return Drugs._collection.update(
-        { _id: { $in: docs } },
+        { _id: { $in: _.pluck(docs, "_id") } },
         { $set: { drug: option } },
         { multi: true },
       );

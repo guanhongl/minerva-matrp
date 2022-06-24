@@ -100,6 +100,26 @@ class UnitCollection extends BaseCollection {
   inUse(option) {
     return !!Drugs.findOne({ unit: option });
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this unit
+    this._collection.update(instance, { $set: { unit: option } });
+    // find the matching docs
+    const docs = Drugs.find({ unit: prev }, { fields: { unit: 1 } }).fetch();
+    // console.log(docs);
+    // update the matching docs
+    if (docs.length) {
+      return Drugs._collection.update(
+        { _id: { $in: _.pluck(docs, "_id") } },
+        { $set: { unit: option } },
+        { multi: true },
+      );
+    }
+    return 0;
+  }
 }
 
 /**
