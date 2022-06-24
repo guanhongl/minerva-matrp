@@ -100,6 +100,29 @@ class DrugNameCollection extends BaseCollection {
   inUse(option) {
     return !!Drugs.findOne({ drug: option });
   }
+
+  /**
+   * Returns the number of matched documents.
+   */
+  updateMulti(prev, option, instance) {
+    // update this drug name
+    this._collection.update(instance, { $set: { drugName: option } });
+    // find the matching docs
+    const docs = _.pluck(
+      Drugs.find({ drug: prev }, { fields: { drug: 1 } }).fetch(),
+      "_id",
+    );
+    // console.log(docs);
+    // update the matching docs
+    if (docs.length) {
+      return Drugs._collection.update(
+        { _id: { $in: docs } },
+        { $set: { drug: option } },
+        { multi: true },
+      );
+    }
+    return 0;
+  }
 }
 
 /**

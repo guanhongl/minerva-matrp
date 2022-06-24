@@ -51,4 +51,31 @@ export const removeItMethod = new ValidatedMethod({
         }
         return null;
     },
-  });
+});
+
+export const updateMethod = new ValidatedMethod({
+    name: 'Dropdown.update',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ collectionName, prev, option, instance }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.getCollection(collectionName);
+            // throw error if option is empty
+            if (!option) {
+                throw new Meteor.Error("option-empty", "The option cannot be empty.");
+            }
+            // throw error if option exists
+            if (collection.hasOption(option)) {
+                throw new Meteor.Error("option-exists", "The option already exists.");
+            }
+            // update
+            try {
+                return collection.updateMulti(prev, option, instance);
+            } catch (error) {
+                console.log(error);
+                throw new Meteor.Error("update-error", error);
+            }
+        }
+        return null;
+    },
+});
