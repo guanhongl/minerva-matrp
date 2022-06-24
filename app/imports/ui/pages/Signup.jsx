@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Form, Grid, Header, Icon } from 'semantic-ui-react';
 import swal from 'sweetalert';
-import { PendingUsers } from '../../api/PendingUserCollection';
-import { defineMethod } from '../../api/PendingUserCollection.methods';
+import { PendingUsers } from '../../api/pending-user/PendingUserCollection';
+import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 

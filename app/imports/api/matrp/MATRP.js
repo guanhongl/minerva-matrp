@@ -16,7 +16,7 @@ import { Drugs } from '../drug/DrugCollection';
 import { Vaccines } from '../vaccine/VaccineCollection';
 import { Historicals } from '../historical/HistoricalCollection';
 import { Supplys } from '../supply/SupplyCollection';
-import { PendingUsers } from '../PendingUserCollection';
+import { PendingUsers } from '../pending-user/PendingUserCollection';
 
 class MATRPClass {
   collections;

@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 // import { Accounts } from 'meteor/accounts-base';
-import { PendingUsers } from '../../api/PendingUserCollection';
+import { PendingUsers } from '../../api/pending-user/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
 import { acceptMethod, removeUserMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
