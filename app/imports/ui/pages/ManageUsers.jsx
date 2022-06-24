@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Header, Loader, Icon, Segment, Card, Input, Dropdown } from 'semantic-ui-react';
+import { Container, Header, Loader, Icon, Segment, Input, Dropdown, Table } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
@@ -75,7 +75,43 @@ const ManageUsers = ({ ready, userList, roles }) => {
             <Input placeholder='Search users...' value={userFilter} onChange={(event, { value }) => setUserFilter(value)} />
           </Segment>
           <Segment>
-            <Card.Group>
+            <Table basic='very' columns={4} unstackable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Email</Table.HeaderCell>
+                  <Table.HeaderCell>Role</Table.HeaderCell>
+                  <Table.HeaderCell />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+              {
+                // 1) filter by name 2) map
+                userList.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
+                  .map(user => 
+                    <Table.Row key={user._id}>
+                      <Table.Cell>{`${user.lastName}, ${user.firstName}`}</Table.Cell>
+                      <Table.Cell>{user.email}</Table.Cell>
+                      <Table.Cell>
+                        <Dropdown
+                          inline
+                          options={roles}
+                          value={user.role}
+                          onChange={(event, { value }) => updateRole(user, value)}
+                        />
+                      </Table.Cell>
+                      <Table.Cell textAlign='right'>
+                        <span className='delete-user' onClick={() => deleteUser(user)}>
+                          <Icon name='trash alternate' />
+                          Delete User
+                        </span>
+                      </Table.Cell>
+                    </Table.Row>
+                  )
+              }
+              </Table.Body>
+            </Table>
+            {/* <Card.Group>
               {
                 userList.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
                   .map(user => <Card fluid key={user._id}>
@@ -98,7 +134,7 @@ const ManageUsers = ({ ready, userList, roles }) => {
                     </Card.Content>
                   </Card>)
               }
-            </Card.Group>
+            </Card.Group> */}
           </Segment>
         </Segment.Group>
       </Container>

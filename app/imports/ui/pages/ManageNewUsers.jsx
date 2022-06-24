@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Header, Loader, Button, Segment, Card, Input } from 'semantic-ui-react';
+import { Container, Header, Loader, Segment, Input, Table } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import moment from 'moment';
 // import { Accounts } from 'meteor/accounts-base';
 import { PendingUsers } from '../../api/pending-user/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
@@ -62,7 +63,36 @@ const ManageNewUsers = ({ ready, users }) => {
             <Input placeholder='Search users...' value={userFilter} onChange={(event, { value }) => setUserFilter(value)} />
           </Segment>
           <Segment>
-            <Card.Group>
+            <Table basic='very' columns={4} unstackable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Date added</Table.HeaderCell>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Email</Table.HeaderCell>
+                  <Table.HeaderCell />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+              {
+                // 1) filter by name 2) map
+                users.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
+                  .map(user => 
+                    <Table.Row key={user._id}>
+                      <Table.Cell>{moment(user.createdAt).format('MMM D YYYY, hh:mm:ss a')}</Table.Cell>
+                      <Table.Cell>{`${user.lastName}, ${user.firstName}`}</Table.Cell>
+                      <Table.Cell>{user.email}</Table.Cell>
+                      <Table.Cell>
+                        <div className='user-controls'>
+                          <span onClick={() => acceptUser(user)}>Accept</span>
+                          <span onClick={() => rejectUser(user.email, user._id)}>Reject</span>
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  )
+              }
+              </Table.Body>
+            </Table>
+            {/* <Card.Group>
               {
                 users.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
                   .map(user => <Card fluid key={user._id}>
@@ -77,7 +107,7 @@ const ManageNewUsers = ({ ready, users }) => {
                     </Card.Content>
                   </Card>)
               }
-            </Card.Group>
+            </Card.Group> */}
           </Segment>
         </Segment.Group>
       </Container>
