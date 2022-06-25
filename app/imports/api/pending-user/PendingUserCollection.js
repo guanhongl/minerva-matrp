@@ -22,8 +22,18 @@ class PendingUserCollection extends BaseCollection {
    * @return {String} the docID of the new document.
    */
   define({ firstName, lastName, email, createdAt }) {
+    // validation
+    if (!firstName) {
+      throw new Meteor.Error("required-fields", "First Name cannot be empty.");
+    }
+    if (!lastName) {
+      throw new Meteor.Error("required-fields", "Last Name cannot be empty.");
+    }
+    if (!email) {
+      throw new Meteor.Error("required-fields", "Email cannot be empty.");
+    }
     if (this._collection.findOne({ email }) || Accounts.findUserByEmail(email)) {
-      throw new Meteor.Error('Email is already registered.');
+      throw new Meteor.Error("email-error", "This email is already registered.");
     }
     const docID = this._collection.insert({
       firstName, lastName, email, createdAt,

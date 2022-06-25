@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Header, Loader, Icon, Segment, Input, Dropdown, Table } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
-// import { Accounts } from 'meteor/accounts-base';
 import { UserProfiles } from '../../api/user/UserProfileCollection';
 import { SuperUserProfiles } from '../../api/user/SuperUserProfileCollection';
 import { AdminProfiles } from '../../api/user/AdminProfileCollection';
-import { removeItMethod } from '../../api/base/BaseCollection.methods';
-import { removeUserMethod, updateRoleMethod, defineMethod } from '../../api/ManageUser.methods';
+import { removeMethod, updateRoleMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
-const getUserCollectionName = (role) => {
+const getCollectionNameForProfile = (role) => {
   if (role === 'USER') {
     return UserProfiles.getCollectionName();
   }
@@ -21,25 +19,19 @@ const getUserCollectionName = (role) => {
   return AdminProfiles.getCollectionName();
 };
 
-const updateRole = ({ email, firstName, lastName, userID, _id: profileID, role }, newRole) => {
-  // console.log(userID, profileID, role, newRole)
-  removeItMethod.callPromise({ collectionName: getUserCollectionName(role), instance: profileID })
-    .then(() => {
-      return defineMethod.callPromise({ collectionName: getUserCollectionName(newRole), definitionData: { email, firstName, lastName, userID, role: newRole } });
-    })
-    .then(() => {
-      return updateRoleMethod.callPromise({ userID, role: newRole });
-    })
-    .then(() => {
-      swal('Success', 'User updated successfully', 'success', { buttons: false, timer: 3000 });
-    })
-    .catch((error) => swal('Error', error.message, 'error'));
+const updateRole = (user, newRole) => {
+  const prev = getCollectionNameForProfile(user.role);
+  const collectionName = getCollectionNameForProfile(newRole);
+
+  updateRoleMethod.callPromise({ prev, collectionName, user, newRole })
+    .then(() => swal('Success', `${user.email} updated successfully`, 'success', { buttons: false, timer: 3000 }))
+    .catch(error => swal('Error', error.error, 'error'));
 };
 
-const deleteUser = ({ userID, _id: profileID, role }) => {
+const deleteUser = ({ userID, _id: profileID, role, email }) => {
   swal({
     title: 'Are you sure?',
-    text: 'Do you really want to delete this user?',
+    text: `Do you really want to delete ${email}?`,
     icon: 'warning',
     buttons: [
       'No, cancel it!',
@@ -50,14 +42,10 @@ const deleteUser = ({ userID, _id: profileID, role }) => {
     .then((isConfirm) => {
       // if 'yes'
       if (isConfirm) {
-        const collectionName = getUserCollectionName(role);
-        removeItMethod.callPromise({ collectionName, instance: profileID })
-          .then(() => {
-            swal('Success', 'User deleted successfully', 'success', { buttons: false, timer: 3000 });
-          })
-          .catch(error => swal('Error', error.message, 'error'));
-
-        removeUserMethod.call({ userID, username: '' });
+        const collectionName = getCollectionNameForProfile(role);
+        removeMethod.callPromise({ collectionName, userID, profileID })
+          .then(() => swal('Success', `${email} deleted successfully`, 'success', { buttons: false, timer: 3000 }))
+          .catch(error => swal('Error', error.error, 'error'));
       }
     });
 };
@@ -65,6 +53,23 @@ const deleteUser = ({ userID, _id: profileID, role }) => {
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageUsers = ({ ready, userList, roles }) => {
   const [userFilter, setUserFilter] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState(userList);
+
+  useEffect(() => {
+    setFilteredUsers(userList)
+  }, [userList]);
+
+  const handleFilter = (event, { value }) => {
+    setUserFilter(value);
+    const query = value.toLowerCase();
+    const filter = userList.filter(({ firstName, lastName }) => {
+      if (value) {
+        return firstName.toLowerCase().includes(query) || lastName.toLowerCase().includes(query);
+      } 
+      return true;
+    });
+    setFilteredUsers(filter);
+  };
 
   return (
     (ready) ? (
@@ -72,7 +77,7 @@ const ManageUsers = ({ ready, userList, roles }) => {
         <Segment.Group>
           <Segment className='manage-user-header'>
             <Header as="h2">Manage Users</Header>
-            <Input placeholder='Search users...' value={userFilter} onChange={(event, { value }) => setUserFilter(value)} />
+            <Input placeholder='Search users...' value={userFilter} onChange={handleFilter} />
           </Segment>
           <Segment>
             <Table basic='very' columns={4} unstackable>
@@ -86,9 +91,8 @@ const ManageUsers = ({ ready, userList, roles }) => {
               </Table.Header>
               <Table.Body>
               {
-                // 1) filter by name 2) map
-                userList.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
-                  .map(user => 
+                filteredUsers.length ? 
+                  filteredUsers.map(user => 
                     <Table.Row key={user._id}>
                       <Table.Cell>{`${user.lastName}, ${user.firstName}`}</Table.Cell>
                       <Table.Cell>{user.email}</Table.Cell>
@@ -108,6 +112,10 @@ const ManageUsers = ({ ready, userList, roles }) => {
                       </Table.Cell>
                     </Table.Row>
                   )
+                  :
+                  <Table.Row>
+                    <Table.Cell as='td' colSpan='4' textAlign='center' content={'No users to display.'} />
+                  </Table.Row>
               }
               </Table.Body>
             </Table>
@@ -167,6 +175,14 @@ export default withTracker(() => {
     }
     if (a.lastName > b.lastName) {
       return 1;
+    }
+    if (a.lastName === b.lastName) {
+      if (a.firstName < b.firstName) {
+        return -1;
+      }
+      if (a.firstName > b.firstName) {
+        return 1;
+      }
     }
     return 0;
   }

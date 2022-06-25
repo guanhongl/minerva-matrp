@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Form, Grid, Header, Icon } from 'semantic-ui-react';
 import swal from 'sweetalert';
-import { PendingUsers } from '../../api/pending-user/PendingUserCollection';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
@@ -35,7 +34,7 @@ const Signup = () => {
 
   /* Handle Signup submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = () => {
-    const collectionName = PendingUsers.getCollectionName();
+    const collectionName = "PendingUsersCollection";
     const definitionData = { firstName, lastName, email, createdAt: new Date() };
     defineMethod.callPromise({ collectionName, definitionData })
       .then(() => {

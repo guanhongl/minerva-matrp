@@ -1,31 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Header, Loader, Segment, Input, Table } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
-// import { Accounts } from 'meteor/accounts-base';
 import { PendingUsers } from '../../api/pending-user/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
-import { acceptMethod, removeUserMethod } from '../../api/ManageUser.methods';
+import { acceptMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
 const acceptUser = (user) => {
   acceptMethod.callPromise(user)
-    .then(() => {
-      swal('Success', `${user.email} accepted successfully`, 'success', { buttons: false, timer: 3000 });
-
-      const collectionName = PendingUsers.getCollectionName();
-      removeItMethod.call({ collectionName, instance: user._id }) // assume delete works
-    })
-    .catch(error => {
-      swal('Error', error.message, 'error');
-
-      removeUserMethod.call({ userID: '', username: user.email });
-    });
+    .then(() => swal('Success', `${user.email} accepted successfully`, 'success', { buttons: false, timer: 3000 }))
+    .catch(error => swal('Error', error.error, 'error'));
 };
 
-const rejectUser = (email, id) => {
+const rejectUser = ({ email, _id }) => {
   swal({
     title: 'Are you sure?',
     text: `Do you really want to reject ${email}?`,
@@ -41,11 +31,11 @@ const rejectUser = (email, id) => {
       if (isConfirm) {
         const collectionName = PendingUsers.getCollectionName();
 
-        removeItMethod.callPromise({ collectionName, instance: id })
+        removeItMethod.callPromise({ collectionName, instance: _id })
           .then(() => {
             swal('Success', `${email} rejected successfully`, 'success', { buttons: false, timer: 3000 });
           })
-          .catch(error => swal('Error', error.message, 'error'));
+          .catch(error => swal('Error', error.error, 'error'));
       }
     });
 };
@@ -53,6 +43,23 @@ const rejectUser = (email, id) => {
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageNewUsers = ({ ready, users }) => {
   const [userFilter, setUserFilter] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
+
+  const handleFilter = (event, { value }) => {
+    setUserFilter(value);
+    const query = value.toLowerCase();
+    const filter = users.filter(({ firstName, lastName }) => {
+      if (value) {
+        return firstName.toLowerCase().includes(query) || lastName.toLowerCase().includes(query);
+      } 
+      return true;
+    });
+    setFilteredUsers(filter);
+  };
 
   return (
     (ready) ? (
@@ -60,7 +67,7 @@ const ManageNewUsers = ({ ready, users }) => {
         <Segment.Group>
           <Segment className='manage-user-header'>
             <Header as="h2">Manage New Users</Header>
-            <Input placeholder='Search users...' value={userFilter} onChange={(event, { value }) => setUserFilter(value)} />
+            <Input placeholder='Search users...' value={userFilter} onChange={handleFilter} />
           </Segment>
           <Segment>
             <Table basic='very' columns={4} unstackable>
@@ -74,9 +81,8 @@ const ManageNewUsers = ({ ready, users }) => {
               </Table.Header>
               <Table.Body>
               {
-                // 1) filter by name 2) map
-                users.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
-                  .map(user => 
+                filteredUsers.length ? 
+                  filteredUsers.map(user => 
                     <Table.Row key={user._id}>
                       <Table.Cell>{moment(user.createdAt).format('MMM D YYYY, hh:mm:ss a')}</Table.Cell>
                       <Table.Cell>{`${user.lastName}, ${user.firstName}`}</Table.Cell>
@@ -84,11 +90,15 @@ const ManageNewUsers = ({ ready, users }) => {
                       <Table.Cell>
                         <div className='user-controls'>
                           <span onClick={() => acceptUser(user)}>Accept</span>
-                          <span onClick={() => rejectUser(user.email, user._id)}>Reject</span>
+                          <span onClick={() => rejectUser(user)}>Reject</span>
                         </div>
                       </Table.Cell>
                     </Table.Row>
                   )
+                  :
+                  <Table.Row>
+                    <Table.Cell as='td' colSpan='4' textAlign='center' content={'No users to display.'} />
+                  </Table.Row>
               }
               </Table.Body>
             </Table>

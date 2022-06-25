@@ -133,7 +133,7 @@ class BaseProfileCollection extends BaseCollection {
     throw new Meteor.Error(`User ${profile.email} owns Stuff.`);
   }
 
-  defineProfile({ email, firstName, lastName, userID, role }) {
+  defineBase({ email, firstName, lastName, userID, role }) {
     const docID = this._collection.insert({
       email, firstName, lastName, userID, role,
     });
