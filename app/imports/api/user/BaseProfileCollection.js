@@ -124,13 +124,14 @@ class BaseProfileCollection extends BaseCollection {
    */
   removeIt(profileID) {
     // console.log('BaseProfileCollection.removeIt', profileID);
-    const profile = this._collection.findOne({ _id: profileID });
-    const userID = profile.userID;
-    if (!Users.isReferenced(userID)) {
-      // Meteor.users.remove({ _id: userID }); <-- don't want this
-      return super.removeIt(profileID);
-    }
-    throw new Meteor.Error(`User ${profile.email} owns Stuff.`);
+    // const profile = this._collection.findOne({ _id: profileID });
+    // const userID = profile.userID;
+    // if (!Users.isReferenced(userID)) {
+    //   // Meteor.users.remove({ _id: userID }); <-- don't want this
+    //   return super.removeIt(profileID);
+    // }
+    // throw new Meteor.Error(`User ${profile.email} owns Stuff.`);
+    return super.removeIt(profileID);
   }
 
   defineBase({ email, firstName, lastName, userID, role }) {

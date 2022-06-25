@@ -57,7 +57,7 @@ const Password = ({ location }) => {
           });
         })
         .catch(e => {
-          console.log(e);
+          swal("Error", e.message, "error");
         });
     }
   };

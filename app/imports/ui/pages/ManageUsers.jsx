@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { useState, useEffect } from 'react';
 import { Container, Header, Loader, Icon, Segment, Input, Dropdown, Table } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -51,7 +52,7 @@ const deleteUser = ({ userID, _id: profileID, role, email }) => {
 };
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ManageUsers = ({ ready, userList, roles }) => {
+const ManageUsers = ({ ready, userList, roles, waitlist }) => {
   const [userFilter, setUserFilter] = useState('');
   const [filteredUsers, setFilteredUsers] = useState(userList);
 
@@ -80,12 +81,13 @@ const ManageUsers = ({ ready, userList, roles }) => {
             <Input placeholder='Search users...' value={userFilter} onChange={handleFilter} />
           </Segment>
           <Segment>
-            <Table basic='very' columns={4} unstackable>
+            <Table basic='very' unstackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Name</Table.HeaderCell>
                   <Table.HeaderCell>Email</Table.HeaderCell>
                   <Table.HeaderCell>Role</Table.HeaderCell>
+                  <Table.HeaderCell>Note</Table.HeaderCell>
                   <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
@@ -104,6 +106,7 @@ const ManageUsers = ({ ready, userList, roles }) => {
                           onChange={(event, { value }) => updateRole(user, value)}
                         />
                       </Table.Cell>
+                      <Table.Cell>{waitlist.find(o => o._id === user.userID).services.password ? "" : "Waiting for response..."}</Table.Cell>
                       <Table.Cell textAlign='right'>
                         <span className='delete-user' onClick={() => deleteUser(user)}>
                           <Icon name='trash alternate' />
@@ -153,6 +156,7 @@ const ManageUsers = ({ ready, userList, roles }) => {
 ManageUsers.propTypes = {
   userList: PropTypes.array.isRequired,
   roles: PropTypes.array.isRequired,
+  waitlist: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -161,9 +165,10 @@ export default withTracker(() => {
   const subscribeUser = UserProfiles.subscribe();
   const subscribeSuperUser = SuperUserProfiles.subscribe();
   const subscribeAdmin = AdminProfiles.subscribe();
+  const subscribeWaitlist = Meteor.subscribe("waitlist");
 
   // Determine if the subscription is ready
-  const ready = subscribeAdmin.ready() && subscribeSuperUser.ready() && subscribeUser.ready();
+  const ready = subscribeAdmin.ready() && subscribeSuperUser.ready() && subscribeUser.ready() && subscribeWaitlist.ready();
 
   const users = UserProfiles.find({}, { sort: { lastName: 1 } }).fetch();
   const superusers = SuperUserProfiles.find({}, { sort: { lastName: 1 } }).fetch();
@@ -188,7 +193,7 @@ export default withTracker(() => {
   }
 
   const userList = users.concat(superusers, admins).sort(compare);
-
+  const waitlist = Meteor.users.find({}, { fields: { services: 1 } }).fetch();
   const roles = [
     { key: 'USER', text: 'Student', value: 'USER' },
     { key: 'SUPERUSER', text: 'Doctor', value: 'SUPERUSER' },
@@ -198,6 +203,7 @@ export default withTracker(() => {
   return {
     userList,
     roles,
+    waitlist,
     ready,
   };
 })(ManageUsers);

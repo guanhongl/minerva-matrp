@@ -76,6 +76,10 @@ class MATRPClass {
     this.vaccines = Vaccines;
     this.supplies = Supplys;
     this.history = Historicals;
+    // profiles
+    this.USER = UserProfiles;
+    this.SUPERUSER = SuperUserProfiles;
+    this.ADMIN = AdminProfiles;
 
     /*
      * An object with keys equal to the collection name and values the associated collection instance.
