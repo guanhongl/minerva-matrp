@@ -10,19 +10,15 @@ import { AdminProfiles } from '../../api/user/AdminProfileCollection';
 import { removeMethod, updateRoleMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
-const getCollectionNameForProfile = (role) => {
-  if (role === 'USER') {
-    return UserProfiles.getCollectionName();
-  }
-  if (role === 'SUPERUSER') {
-    return SuperUserProfiles.getCollectionName();
-  }
-  return AdminProfiles.getCollectionName();
+const rolesToCollectionNames = {
+  USER: UserProfiles.getCollectionName(),
+  SUPERUSER: SuperUserProfiles.getCollectionName(),
+  ADMIN: AdminProfiles.getCollectionName(),
 };
 
 const updateRole = (user, newRole) => {
-  const prev = getCollectionNameForProfile(user.role);
-  const collectionName = getCollectionNameForProfile(newRole);
+  const prev = rolesToCollectionNames[user.role];
+  const collectionName = rolesToCollectionNames[newRole];
 
   updateRoleMethod.callPromise({ prev, collectionName, user, newRole })
     .then(() => swal('Success', `${user.email} updated successfully`, 'success', { buttons: false, timer: 3000 }))
@@ -43,7 +39,7 @@ const deleteUser = ({ userID, _id: profileID, role, email }) => {
     .then((isConfirm) => {
       // if 'yes'
       if (isConfirm) {
-        const collectionName = getCollectionNameForProfile(role);
+        const collectionName = rolesToCollectionNames[role];
         removeMethod.callPromise({ collectionName, userID, profileID })
           .then(() => swal('Success', `${email} deleted successfully`, 'success', { buttons: false, timer: 3000 }))
           .catch(error => swal('Error', error.error, 'error'));
@@ -81,7 +77,7 @@ const ManageUsers = ({ ready, userList, roles, waitlist }) => {
             <Input placeholder='Search users...' value={userFilter} onChange={handleFilter} />
           </Segment>
           <Segment>
-            <Table basic='very' unstackable>
+            <Table basic='very' columns={5} unstackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Name</Table.HeaderCell>
@@ -106,7 +102,7 @@ const ManageUsers = ({ ready, userList, roles, waitlist }) => {
                           onChange={(event, { value }) => updateRole(user, value)}
                         />
                       </Table.Cell>
-                      <Table.Cell>{waitlist.find(o => o._id === user.userID).services.password ? "" : "Waiting for response..."}</Table.Cell>
+                      <Table.Cell>{waitlist.find(o => o._id === user.userID).services.resume ? "" : "Waiting for response..."}</Table.Cell>
                       <Table.Cell textAlign='right'>
                         <span className='delete-user' onClick={() => deleteUser(user)}>
                           <Icon name='trash alternate' />
@@ -193,7 +189,7 @@ export default withTracker(() => {
   }
 
   const userList = users.concat(superusers, admins).sort(compare);
-  const waitlist = Meteor.users.find({}, { fields: { services: 1 } }).fetch();
+  const waitlist = Meteor.users.find({}, { fields: { "services.resume": 1 } }).fetch();
   const roles = [
     { key: 'USER', text: 'Student', value: 'USER' },
     { key: 'SUPERUSER', text: 'Doctor', value: 'SUPERUSER' },

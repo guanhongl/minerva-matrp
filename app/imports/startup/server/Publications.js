@@ -16,7 +16,7 @@ Meteor.publish(null, function () {
 
 Meteor.publish("waitlist", function () {
   if (this.userId && Roles.userIsInRole(this.userId, "ADMIN")) {
-    return Meteor.users.find({}, { fields: { services: 1 } });
+    return Meteor.users.find({}, { fields: { "services.resume": 1 } });
   }
   return this.ready();
 });

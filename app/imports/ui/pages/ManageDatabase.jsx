@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Container, Header, Loader, Segment, Dropdown, Form, Button } from 'semantic-ui-react';
+import { Card, Container, Header, Loader, Segment, Dropdown, Form, Button, Table, Input, Icon } from 'semantic-ui-react';
 import { ZipZap } from 'meteor/udondan:zipzap';
 import UploadFixture from '../components/UploadFixture';
 import DumpDbFixture from '../components/DumpDbFixture';
@@ -23,11 +23,12 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 //   };
 // })(ManageDatabase);
 
-const dbOptions = [
-  { key: 'drugs', text: 'Drugs', value: 'drugs' },
-  { key: 'vaccines', text: 'Vaccines', value: 'vaccines' },
-  { key: 'supplies', text: 'Supplies', value: 'supplies' },
-];
+// const dbOptions = [
+//   { key: 'drugs', text: 'Drugs', value: 'drugs' },
+//   { key: 'vaccines', text: 'Vaccines', value: 'vaccines' },
+//   { key: 'supplies', text: 'Supplies', value: 'supplies' },
+// ];
+const dbs = ["drugs", "vaccines", "supplies"];
 
 const ManageDatabase = () => {
   const [db, setDb] = useState("drugs");
@@ -61,16 +62,59 @@ const ManageDatabase = () => {
       <Segment.Group>
         <Segment>
           <Header as="h2">
-            <span>{'Manage '}</span>
+            {/* <span>{'Manage '}</span>
             <Dropdown inline options={dbOptions} value={db} onChange={(event, { value }) => setDb(value)} />
-            <span>{' Database'}</span>
+            <span>{' Database'}</span> */}
+            Manage Database
           </Header>
         </Segment>
         <Segment>
-          <Card.Group itemsPerRow={2}>
+          <Table basic='very' unstackable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Upload</Table.HeaderCell>
+                <Table.HeaderCell>Download</Table.HeaderCell>
+                <Table.HeaderCell>Reset</Table.HeaderCell>
+                <Table.HeaderCell>Template</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {
+                dbs.map(db => 
+                  <Table.Row key={db}>
+                    <Table.Cell>
+                      <Input type="file" />
+                      <span>
+                        <Icon name="download" />
+                        {`Download ${db}`}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span>
+                        <Icon name="upload" />
+                        {`Upload ${db}`}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span>
+                        <Icon name="trash alternate" />
+                        {`Reset ${db}`}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span>
+                        <Icon name="download" />
+                        {`Download ${db} template`}
+                      </span>
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              }
+            </Table.Body>
+          </Table>
+          {/* <Card.Group itemsPerRow={2}>
             <Card key='upload'>
               <Card.Content>
-                {/* <Card.Header>Upload {db}</Card.Header> */}
                 <Card.Description>
                   <UploadFixture db={db} />
                 </Card.Description>
@@ -78,7 +122,6 @@ const ManageDatabase = () => {
             </Card>
             <Card key='download'>
               <Card.Content>
-                {/* <Card.Header>Download {db}</Card.Header> */}
                 <Card.Description>
                   <DumpDbFixture db={db} />
                 </Card.Description>
@@ -86,7 +129,6 @@ const ManageDatabase = () => {
             </Card>
             <Card key='reset'>
               <Card.Content>
-                {/* <Card.Header>Reset {db}</Card.Header> */}
                 <Card.Description>
                   <Form>
                     <Button color="red" loading={reset} onClick={onClickReset} fluid size='massive'>
@@ -98,7 +140,6 @@ const ManageDatabase = () => {
             </Card>
             <Card key='template'>
               <Card.Content>
-                {/* <Card.Header>Download {db} template</Card.Header> */}
                 <Card.Description>
                   <Form>
                     <Button color="orange" onClick={onClickTemplate} fluid size='massive'>
@@ -108,7 +149,7 @@ const ManageDatabase = () => {
                 </Card.Description>
               </Card.Content>
             </Card>
-          </Card.Group>
+          </Card.Group> */}
         </Segment>
       </Segment.Group>
     </Container>

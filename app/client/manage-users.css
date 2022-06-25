@@ -75,3 +75,7 @@
 #manage-users .ui.inline.dropdown > .text {
     font-weight: initial;
 }
+
+#manage-users .ui.segments .ui.segment:nth-child(2), #manage-new-users .ui.segments .ui.segment:nth-child(2) {
+    min-height: 25em;
+}

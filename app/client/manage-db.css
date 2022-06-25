@@ -1,6 +1,28 @@
-#manage-database .ui.card .description {
+/* #manage-database .ui.card .description {
     min-height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+} */
+
+#manage-database table tbody span {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#manage-database table tbody tr td:nth-child(1) span {
+    color: #2185d0;
+}
+#manage-database table tbody tr td:nth-child(2) span {
+    color: #21ba45;
+}
+#manage-database table tbody tr td:nth-child(3) span {
+    color: #db2828;
+}
+#manage-database table tbody tr td:nth-child(4) span {
+    color: #2185d0;
+}
+
+#manage-database .ui.segments .ui.segment:nth-child(2) {
+    min-height: 25em;
 }
