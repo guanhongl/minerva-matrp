@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import moment from 'moment';
 import { PendingUsers } from '../../api/pending-user/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
-import { acceptMethod } from '../../api/ManageUser.methods';
+import { acceptMethod, generateAuthUrlMethod, generateRefreshTokenMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
 const acceptUser = (user) => {
@@ -39,6 +39,21 @@ const rejectUser = ({ email, _id }) => {
       }
     });
 };
+
+// const generateAuthUrl = () => {
+//   generateAuthUrlMethod.callPromise()
+//     .then(url => {
+//       // GET
+//       console.log(`Browse to the following URL: ${url}`)
+//     })
+//     .catch(error => swal('Error', error.error, 'error'));
+// };
+
+// const generateRefreshToken = () => {
+//   generateRefreshTokenMethod.callPromise()
+//     .then()
+//     .catch(error => swal('Error', error.error, 'error'));
+// };
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageNewUsers = ({ ready, users }) => {
@@ -119,6 +134,10 @@ const ManageNewUsers = ({ ready, users }) => {
               }
             </Card.Group> */}
           </Segment>
+          {/* <Segment>
+            <span onClick={generateAuthUrl}>Get auth code</span>
+            <span onClick={generateRefreshToken}>Get refresh token</span>
+          </Segment> */}
         </Segment.Group>
       </Container>
     ) : <Loader active>Getting data</Loader>

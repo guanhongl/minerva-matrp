@@ -10,46 +10,74 @@ import { UserProfiles } from './user/UserProfileCollection';
 import { PendingUsers } from './pending-user/PendingUserCollection';
 import nodemailer from 'nodemailer';
 
-// get the auth code for refresh token and access token (if needed)
-// let code = '';
+/**
+ * Creates the URL for pasting in the browser, which will generate the code
+ * to be placed in the CODE variable.
+ */
+export const generateAuthUrlMethod = new ValidatedMethod({
+  name: 'generateAuthUrlMethod',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run() {
+    if (Meteor.isServer) {
+      // get client_id
+      const credentials = JSON.parse(Assets.getText('settings.production.json'));
+      const client_id = credentials.clientId;
+      // generate URL
+      const URL = "https://accounts.google.com/o/oauth2/v2/auth?" + new URLSearchParams({
+        scope: "https://www.googleapis.com/auth/gmail.send",
+        // scope: "https://mail.google.com/",
+        redirect_uri: "https://developers.google.com/oauthplayground",
+        // redirect_uri: "http://localhost:3000",
+        response_type: "code",
+        access_type: "offline",
+        client_id,
+        // prompt: "consent",
+      });
 
-// fetch("https://accounts.google.com/o/oauth2/v2/auth?" + new URLSearchParams({
-//   scope: "https://www.googleapis.com/auth/gmail.send",
-//   redirect_uri: "https://developers.google.com/oauthplayground",
-//   response_type: "code",
-//   access_type: "offline",
-//   client_id: credentials.clientId,
-//   prompt: "consent",
-// }), {
-//   method: 'GET',
-//   headers: new Headers({
-//     'Content-Type': 'application/json'
-//   }),
-// })
-// .then(response => response.json())
-// .then(response => {
-//   // NEED CONSENT
-//   console.log('auth code: ', response)
-//   code = response.code;
-// });
-// fetch("https://www.googleapis.com/oauth2/v4/token", {
-//   method: 'POST',
-//   headers: new Headers({
-//     'Content-Type': 'application/json'
-//   }),
-//   body: JSON.stringify({
-//     code,
-//     client_id: credentials.clientId,
-//     client_secret: credentials.clientSecret,
-//     redirect_uri: "https://developers.google.com/oauthplayground",
-//     grant_type: "authorization_code",
-//   }),
-// })
-// .then(response => response.json())
-// .then(response => {
-//   console.log('refresh token: ', response.refresh_token)
-//   console.log('access token: ', response.access_token)
-// });
+      return URL;
+    }
+    return null;
+  },
+});
+
+/**
+ * Generates a refresh token given the authorization code.
+ */
+export const generateRefreshTokenMethod = new ValidatedMethod({
+  name: 'generateRefreshTokenMethod',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run() {
+    if (Meteor.isServer) {
+      // set up the credentials
+      const credentials = JSON.parse(Assets.getText('settings.production.json'));
+      const body = {
+        code: "", // PASTE HERE
+        client_id: credentials.clientId,
+        client_secret: credentials.clientSecret,
+        redirect_uri: "https://developers.google.com/oauthplayground",
+        // redirect_uri: "http://localhost:3000",
+        grant_type: "authorization_code",
+      };
+      // fetch refresh token and access token
+      fetch("https://www.googleapis.com/oauth2/v4/token", {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(body),
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+        });
+      
+      return '';
+    }
+    return null;
+  },
+});
 
 export const acceptMethod = new ValidatedMethod({
   name: 'acceptMethod',

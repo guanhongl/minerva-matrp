@@ -102,7 +102,7 @@ const ManageUsers = ({ ready, userList, roles, waitlist }) => {
                           onChange={(event, { value }) => updateRole(user, value)}
                         />
                       </Table.Cell>
-                      <Table.Cell>{waitlist.find(o => o._id === user.userID).services.resume ? "" : "Waiting for response..."}</Table.Cell>
+                      <Table.Cell>{waitlist.find(o => o._id === user.userID)?.services?.resume ? "" : "Waiting for response..."}</Table.Cell>
                       <Table.Cell textAlign='right'>
                         <span className='delete-user' onClick={() => deleteUser(user)}>
                           <Icon name='trash alternate' />
