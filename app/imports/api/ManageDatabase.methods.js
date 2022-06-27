@@ -1,0 +1,170 @@
+import { Meteor } from 'meteor/meteor';
+import { CallPromiseMixin } from 'meteor/didericis:callpromise-mixin';
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { Roles } from 'meteor/alanning:roles';
+import _ from 'lodash';
+import { MATRP } from './matrp/MATRP';
+import { ROLE } from './role/Role';
+import { loadCollectionNewDataOnly } from './utilities/load-fixtures';
+import { Parser, transforms } from 'json2csv';
+import csv from 'csvtojson';
+
+/**
+ * download the database as a .csv file
+ */
+export const downloadDatabaseMethod = new ValidatedMethod({
+    name: 'downloadDatabase',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ db }) {
+        if (!this.userId) {
+            throw new Meteor.Error('unauthorized', 'You must be logged in to download the database.');
+        } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+            throw new Meteor.Error('unauthorized', 'You must be an admin to download the database.');
+        }
+        // Don't do the dump except on server side (disable client-side simulation).
+        // Return an object with fields timestamp and collections.
+        if (Meteor.isServer) {
+            // const collections = _.sortBy(MATRP.collectionLoadSequence.map((collection) => collection.dumpAll()),
+            //   (entry) => entry.name);
+            // const timestamp = new Date();
+            // return { timestamp, collections };
+
+            const collection = MATRP[db];
+            if (collection.count() === 0) {
+                throw new Meteor.Error("empty-database", "The database is empty.");
+            }
+            // get collection as json
+            const json = _.sortBy(collection.dumpAll(), (entry) => Object.values(entry)[0]);
+            // fields: the csv columns
+            // arr: the nested field
+            let fields, arr;
+            switch (db) {
+                case 'drugs':
+                    fields = ['drug', 'drugType', 'minQuantity', 'unit', 
+                        'lotIds.lotId', 'lotIds.brand', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 
+                        'lotIds.donated', 'lotIds.donatedBy', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
+                    arr = 'lotIds';
+                    break;
+                case 'vaccines':
+                    fields = ['vaccine', 'brand', 'minQuantity', 'visDate', 
+                        'lotIds.lotId', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
+                    arr = 'lotIds';
+                    break;
+                case 'supplies':
+                    fields = ['supply', 'supplyType', 'minQuantity', 
+                        'stock.location', 'stock.quantity', 'stock.donated', 'stock.donatedBy', 'stock.note', 'stock._id', 'stock.QRCode'];
+                    arr = 'stock';
+                    break;
+                default:
+                    console.log('No type.');
+            };
+            // unwind arrays multiple times or with nested objects.
+            const transforms_ = [transforms.unwind({ paths: [arr] })];
+            // json to csv
+            try {
+                const json2csvParser = new Parser({ fields, transforms: transforms_ });
+                const csv = json2csvParser.parse(json);
+
+                return csv;
+            } catch (error) {
+                throw new Meteor.Error(error);
+            }
+        }
+        return null;
+    },
+});
+
+/**
+ * upload the .csv file to the database
+ */
+export const uploadDatabaseMethod = new ValidatedMethod({
+    name: 'uploadDatabase',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ data, db }) {
+        if (!this.userId) {
+            throw new Meteor.Error('unauthorized', 'You must be logged in to upload to the database.');
+        } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+            throw new Meteor.Error('unauthorized', 'You must be an admin to upload to the database.');
+        }
+        if (Meteor.isServer) {
+            // let ret = '';
+            // MATRP.collectionLoadSequence.forEach((collection) => {
+            //   const result = loadCollectionNewDataOnly(collection, fixtureData, true);
+            //   if (result) {
+            //     ret = `${ret} ${result},`;
+            //   }
+            // });
+            // if (result) {
+            //   ret = `${ret} ${result},`;
+            // }
+            // const trimmed = ret.trim();
+            // if (trimmed.length === 0) {
+            //   ret = 'Defined no new instances.';
+            // } else {
+            //   ret = ret.substring(0, ret.length - 1); // trim off trailing ,
+            // }
+            // return ret;
+
+            const collection = MATRP[db];
+            // throw error if database is not empty
+            if (collection.count() > 0) {
+                throw new Meteor.Error("not-empty", "The database is not empty. Try resetting the database.");
+            }
+            // throw error if csv is empty
+            if (!data) {
+                throw new Meteor.Error("no-file", "No file specified");
+            }
+            // csv to json
+            return csv({ checkType: true }).fromString(data)
+                .then(json => {
+                    return loadCollectionNewDataOnly(collection, json, true);
+                })
+                .catch(error => {
+                    throw new Meteor.Error(error.message);
+                });
+        }
+        return '';
+    },
+});
+
+/**
+ * remove all for a database
+ */
+export const resetDatabaseMethod = new ValidatedMethod({
+    name: 'resetDatabase',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ db }) {
+        if (!this.userId) {
+            throw new Meteor.Error('unauthorized', 'You must be logged in to reset the database.');
+        } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+            throw new Meteor.Error('unauthorized', 'You must be an admin to reset the database.');
+        }
+        if (Meteor.isServer) {
+            return MATRP[db].resetDB();
+        }
+        return null;
+    },
+});
+
+/**
+ * reads the template .csv file
+ */
+export const readCSVMethod = new ValidatedMethod({
+    name: 'readCSV',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ db }) {
+        if (!this.userId) {
+            throw new Meteor.Error('unauthorized', 'You must be logged in.');
+        } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+            throw new Meteor.Error('unauthorized', 'You must be an admin.');
+        }
+        if (Meteor.isServer) {
+            return Assets.getText(`${db}_template.csv`);
+        }
+        return null;
+    },
+});

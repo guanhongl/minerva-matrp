@@ -8,3 +8,4 @@ import '../imports/api/vaccine/VaccineCollection.methods';
 import '../imports/api/supply/SupplyCollection.methods';
 import '../imports/api/ManageUser.methods';
 import '../imports/api/ManageDropdown.methods';
+import '../imports/api/ManageDatabase.methods';
