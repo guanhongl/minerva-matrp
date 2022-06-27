@@ -47,7 +47,7 @@ const deleteUser = ({ userID, _id: profileID, role, email }) => {
     });
 };
 
-/** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/** Renders ManageUsers */
 const ManageUsers = ({ ready, userList, roles, waitlist }) => {
   const [userFilter, setUserFilter] = useState('');
   const [filteredUsers, setFilteredUsers] = useState(userList);
@@ -118,30 +118,6 @@ const ManageUsers = ({ ready, userList, roles, waitlist }) => {
               }
               </Table.Body>
             </Table>
-            {/* <Card.Group>
-              {
-                userList.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
-                  .map(user => <Card fluid key={user._id}>
-                    <Card.Content>
-                      <Card.Header>{`${user.lastName}, ${user.firstName}`}</Card.Header>
-                      <Card.Meta>{`Email: ${user.email}`}</Card.Meta>
-                      <Card.Description>
-                        <label>{'Role: '}</label>
-                        <Dropdown
-                          inline
-                          options={roles}
-                          value={user.role}
-                          onChange={(event, { value }) => updateRole(user, value)}
-                        />
-                        <span className='delete-user' onClick={() => deleteUser(user)}>
-                          <Icon name='trash alternate' />
-                          Delete User
-                        </span>
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>)
-              }
-            </Card.Group> */}
           </Segment>
         </Segment.Group>
       </Container>

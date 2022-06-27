@@ -5,37 +5,12 @@ import QRCode from 'qrcode';
 import { Meteor } from 'meteor/meteor'
 
 /**
- * Returns the definition array associated with collectionName in the loadJSON structure,
- * or an empty array if none was found.
- * @param loadJSON The load file contents.
- * @param collection The collection of interest.
- * @memberOf api/test
+ * validates the .csv file
+ * populates a doc w/ _id and QRCode if either are missing
+ * defines docs per .csv row
+ * @returns Promise
  */
-export const getDefinitions = (loadJSON, collection) => {
-  const definitionObj = _.find(loadJSON.collections, (obj) => obj.name === collection);
-  return definitionObj ? definitionObj.contents : [];
-};
-
-export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) => {
-  // let retVal = '';
-  // console.log('loadCollectionNewDataOnly', loadJSON, printToConsole, typeof collection);
-  // const definitions = getDefinitions(loadJSON, collection.getCollectionName());
-  // definitions.forEach((definition) => {
-  //   if (collection.find(definition).count() === 0) {
-  //     collection.define(definition);
-  //     count++;
-  //   }
-  // });
-  // if (count > 1) {
-  //   retVal += `Defined ${count} ${type}s`;
-  // } else if (count === 1) {
-  //   retVal += `Defined a ${type}`;
-  // }
-  // if (printToConsole) {
-  //   console.log(retVal);
-  // }
-  // return retVal;
-
+export const loadCollectionNewDataOnly = (collection, loadJSON) => {
   const type = collection.getType();
   let count = 0;
   let tab, name, arr, required;
@@ -65,12 +40,12 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
       console.log('No type.')
   };
   // reject the first required field
-  // required.forEach(field => {
-  //   if (loadJSON.some(o => !_.get(o, field))) {
-  //     return Promise.reject(new Error(`${field} cannot be empty!`));
-  //     // throw new Error(`${field} cannot be empty!`);
-  //   }
-  // });
+  for (let i = 0; i < required.length; i++) {
+    const field = required[i];
+    if (loadJSON.some(o => !_.get(o, field))) {
+      return Promise.reject(new Error(`${field} cannot be empty!`));
+    }
+  }
   // check if any _ids or qrcodes are empty
   let empty = false;
   empty = loadJSON.some(o => !o[arr]._id);
@@ -93,13 +68,6 @@ export const loadCollectionNewDataOnly = (collection, loadJSON, printToConsole) 
   // an empty promises array resolves...
   return Promise.all(promises)
     .then(urls => {
-      // reject the first required field
-      required.forEach(field => {
-        if (loadJSON.some(o => !_.get(o, field))) {
-          // return Promise.reject(new Error(`${field} cannot be empty!`));
-          throw new Error(`${field} cannot be empty!`);
-        }
-      });
       loadJSON.forEach((obj, idx) => {
         // parse data
         switch (type) {

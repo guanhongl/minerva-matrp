@@ -5,7 +5,6 @@ import { Roles } from 'meteor/alanning:roles';
 import _ from 'lodash';
 import { MATRP } from '../matrp/MATRP';
 import { ROLE } from '../role/Role';
-import { loadCollectionNewDataOnly } from '../utilities/load-fixtures';
 
 /**
  * Meteor method used to define new instances of the given collection name.

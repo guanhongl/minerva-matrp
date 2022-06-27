@@ -23,13 +23,7 @@ export const downloadDatabaseMethod = new ValidatedMethod({
             throw new Meteor.Error('unauthorized', 'You must be an admin to download the database.');
         }
         // Don't do the dump except on server side (disable client-side simulation).
-        // Return an object with fields timestamp and collections.
         if (Meteor.isServer) {
-            // const collections = _.sortBy(MATRP.collectionLoadSequence.map((collection) => collection.dumpAll()),
-            //   (entry) => entry.name);
-            // const timestamp = new Date();
-            // return { timestamp, collections };
-
             const collection = MATRP[db];
             if (collection.count() === 0) {
                 throw new Meteor.Error("empty-database", "The database is empty.");
@@ -68,7 +62,7 @@ export const downloadDatabaseMethod = new ValidatedMethod({
 
                 return csv;
             } catch (error) {
-                throw new Meteor.Error(error);
+                throw new Meteor.Error(error.message);
             }
         }
         return null;
@@ -89,24 +83,6 @@ export const uploadDatabaseMethod = new ValidatedMethod({
             throw new Meteor.Error('unauthorized', 'You must be an admin to upload to the database.');
         }
         if (Meteor.isServer) {
-            // let ret = '';
-            // MATRP.collectionLoadSequence.forEach((collection) => {
-            //   const result = loadCollectionNewDataOnly(collection, fixtureData, true);
-            //   if (result) {
-            //     ret = `${ret} ${result},`;
-            //   }
-            // });
-            // if (result) {
-            //   ret = `${ret} ${result},`;
-            // }
-            // const trimmed = ret.trim();
-            // if (trimmed.length === 0) {
-            //   ret = 'Defined no new instances.';
-            // } else {
-            //   ret = ret.substring(0, ret.length - 1); // trim off trailing ,
-            // }
-            // return ret;
-
             const collection = MATRP[db];
             // throw error if database is not empty
             if (collection.count() > 0) {
@@ -119,8 +95,9 @@ export const uploadDatabaseMethod = new ValidatedMethod({
             // csv to json
             return csv({ checkType: true }).fromString(data)
                 .then(json => {
-                    return loadCollectionNewDataOnly(collection, json, true);
+                    return loadCollectionNewDataOnly(collection, json);
                 })
+                // can't catch csvtojson
                 .catch(error => {
                     throw new Meteor.Error(error.message);
                 });

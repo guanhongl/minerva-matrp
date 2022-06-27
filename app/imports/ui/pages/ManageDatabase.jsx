@@ -4,28 +4,6 @@ import { ZipZap } from 'meteor/udondan:zipzap';
 import { uploadDatabaseMethod, downloadDatabaseMethod, resetDatabaseMethod, readCSVMethod } from '../../api/ManageDatabase.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
-// const ManageDatabase = ({ ready }) => ((ready) ? (<Container id={PAGE_IDS.MANAGE_DATABASE}>
-//   <Header as="h2" textAlign="center">Manage Database</Header>
-//   <UploadFixture />
-//   <DumpDbFixture />
-// </Container>) : <Loader active>Getting data</Loader>);
-
-// ManageDatabase.propTypes = {
-//   ready: PropTypes.bool,
-// };
-
-// export default withTracker(() => {
-//   const ready = AdminProfiles.subscribe().ready() && Stuffs.subscribeStuffAdmin().ready() && UserProfiles.subscribe().ready();
-//   return {
-//     ready,
-//   };
-// })(ManageDatabase);
-
-// const dbOptions = [
-//   { key: 'drugs', text: 'Drugs', value: 'drugs' },
-//   { key: 'vaccines', text: 'Vaccines', value: 'vaccines' },
-//   { key: 'supplies', text: 'Supplies', value: 'supplies' },
-// ];
 const dbs = ["drugs", "vaccines", "supplies"];
 
 const UploadDB = ({ db }) => {
@@ -177,9 +155,6 @@ const ManageDatabase = () => {
       <Segment.Group>
         <Segment>
           <Header as="h2">
-            {/* <span>{'Manage '}</span>
-            <Dropdown inline options={dbOptions} value={db} onChange={(event, { value }) => setDb(value)} />
-            <span>{' Database'}</span> */}
             Manage Database
           </Header>
         </Segment>
@@ -206,44 +181,6 @@ const ManageDatabase = () => {
               }
             </Table.Body>
           </Table>
-          {/* <Card.Group itemsPerRow={2}>
-            <Card key='upload'>
-              <Card.Content>
-                <Card.Description>
-                  <UploadFixture db={db} />
-                </Card.Description>
-              </Card.Content>
-            </Card>
-            <Card key='download'>
-              <Card.Content>
-                <Card.Description>
-                  <DumpDbFixture db={db} />
-                </Card.Description>
-              </Card.Content>
-            </Card>
-            <Card key='reset'>
-              <Card.Content>
-                <Card.Description>
-                  <Form>
-                    <Button color="red" loading={reset} onClick={onClickReset} fluid size='massive'>
-                      Reset {db}
-                    </Button>
-                  </Form>
-                </Card.Description>
-              </Card.Content>
-            </Card>
-            <Card key='template'>
-              <Card.Content>
-                <Card.Description>
-                  <Form>
-                    <Button color="orange" onClick={onClickTemplate} fluid size='massive'>
-                      Download {db} template
-                    </Button>
-                  </Form>
-                </Card.Description>
-              </Card.Content>
-            </Card>
-          </Card.Group> */}
         </Segment>
       </Segment.Group>
     </Container>

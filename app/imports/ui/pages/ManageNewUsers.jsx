@@ -55,7 +55,7 @@ const rejectUser = ({ email, _id }) => {
 //     .catch(error => swal('Error', error.error, 'error'));
 // };
 
-/** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/** Renders ManageNewUsers */
 const ManageNewUsers = ({ ready, users }) => {
   const [userFilter, setUserFilter] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -117,22 +117,6 @@ const ManageNewUsers = ({ ready, users }) => {
               }
               </Table.Body>
             </Table>
-            {/* <Card.Group>
-              {
-                users.filter(({ firstName, lastName }) => firstName.concat(' ', lastName).toLowerCase().includes(userFilter.toLowerCase()))
-                  .map(user => <Card fluid key={user._id}>
-                    <Card.Content>
-                      <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
-                      <Card.Meta>{`Email: ${user.email}`}</Card.Meta>
-                      <Card.Description>{`${user.firstName} wants to register.`}</Card.Description>
-                      <div className='user-controls'>
-                        <Button className='accept-button' compact onClick={() => acceptUser(user)}>Accept</Button>
-                        <Button className='reject-button' compact onClick={() => rejectUser(user.email, user._id)}>Reject</Button>
-                      </div>
-                    </Card.Content>
-                  </Card>)
-              }
-            </Card.Group> */}
           </Segment>
           {/* <Segment>
             <span onClick={generateAuthUrl}>Get auth code</span>
@@ -144,7 +128,7 @@ const ManageNewUsers = ({ ready, users }) => {
   );
 };
 
-// Require an array of Stuff documents in the props.
+// Require an array of users in the props.
 ManageNewUsers.propTypes = {
   users: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
@@ -152,11 +136,11 @@ ManageNewUsers.propTypes = {
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
-  // Get access to Stuff documents.
+  // Get access to documents.
   const subscription = PendingUsers.subscribePendingUser();
   // Determine if the subscription is ready
   const ready = subscription.ready();
-  // Get the Stuff documents and sort them by name.
+  // Get the documents and sort them by name.
   const users = PendingUsers.find({}, { sort: { createdAt: -1 } }).fetch();
   return {
     users,
