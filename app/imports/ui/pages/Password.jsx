@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, Redirect } from 'react-router';
 import { Meteor } from 'meteor/meteor';
-// import { Accounts } from 'meteor/accounts-base';
 import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { setPasswordMethod } from '../../api/ManageUser.methods';
@@ -58,7 +57,7 @@ const Password = ({ location }) => {
           });
         })
         .catch(e => {
-          console.log(e);
+          swal("Error", e.message, "error");
         });
     }
   };

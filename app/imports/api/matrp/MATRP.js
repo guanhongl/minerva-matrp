@@ -16,7 +16,7 @@ import { Drugs } from '../drug/DrugCollection';
 import { Vaccines } from '../vaccine/VaccineCollection';
 import { Historicals } from '../historical/HistoricalCollection';
 import { Supplys } from '../supply/SupplyCollection';
-import { PendingUsers } from '../PendingUserCollection';
+import { PendingUsers } from '../pending-user/PendingUserCollection';
 
 class MATRPClass {
   collections;
@@ -76,6 +76,10 @@ class MATRPClass {
     this.vaccines = Vaccines;
     this.supplies = Supplys;
     this.history = Historicals;
+    // profiles
+    this.USER = UserProfiles;
+    this.SUPERUSER = SuperUserProfiles;
+    this.ADMIN = AdminProfiles;
 
     /*
      * An object with keys equal to the collection name and values the associated collection instance.

@@ -1,23 +1,19 @@
 #manage-new-users .user-controls {
-    position: absolute;
-    right: 20px;
-    top: calc(50% - 18px);
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 1em;
 }
 
-#manage-new-users .accept-button {
-    min-width: 120px;
-    border-radius: 500rem;
-    border: 2px solid rgb(29, 62, 102);
-    background-color: white;
-    color:rgb(29, 62, 102);
+#manage-new-users .user-controls span {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
 }
-
-#manage-new-users .reject-button {
-    min-width: 120px;
-    border-radius: 500rem;
-    border: 2px solid #db2828;
-    background-color: white;
-    color: #db2828;
+#manage-new-users .user-controls span:nth-child(1) {
+    color: rgb(29, 62, 102);
+}
+#manage-new-users .user-controls span:nth-child(2) {
+    color: rgb(219, 40, 40);
 }
 
 #manage-new-users .manage-user-header {
@@ -31,7 +27,7 @@
 }
 
 #manage-new-users .ui.input {
-    height: 30px;
+    height: 2em;
 }
 
 /* Manage Users css */
@@ -47,11 +43,19 @@
 }
 
 #manage-users .ui.input {
-    height: 30px;
+    height: 2em;
 }
 
 #manage-users .delete-user {
-    float: right;
     cursor: pointer;
     text-decoration: underline;
+    /* font-weight: bold; */
+}
+
+#manage-users .ui.inline.dropdown > .text {
+    font-weight: initial;
+}
+
+#manage-users .ui.segments .ui.segment:nth-child(2), #manage-new-users .ui.segments .ui.segment:nth-child(2) {
+    min-height: 25em;
 }
