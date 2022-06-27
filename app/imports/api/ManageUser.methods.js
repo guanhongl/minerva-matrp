@@ -79,71 +79,93 @@ export const generateRefreshTokenMethod = new ValidatedMethod({
   },
 });
 
+// global scope
+// see https://stackoverflow.com/questions/27509125/global-variables-in-meteor
+ACCESS_TOKEN = "";
+
 export const acceptMethod = new ValidatedMethod({
   name: 'acceptMethod',
   mixins: [CallPromiseMixin],
   validate: null,
-  run({ firstName, lastName, email, _id }) {
+  run({ user }) {
     if (Meteor.isServer) {
+      const { firstName, lastName, email, _id } = user;
       console.log("first: ", firstName, "last: ", lastName, "@: ", email);
       const userID = Accounts.createUser({ username: email, email });
       console.log("ID: ", userID);
       // set up the credentials
       const credentials = JSON.parse(Assets.getText('settings.production.json'));
-      const body = {
-        client_id: credentials.clientId,
-        client_secret: credentials.clientSecret,
-        refresh_token: credentials.refreshToken,
-        grant_type: "refresh_token",
+      // set up SMTP
+      let transport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          type: "OAuth2",
+          user: credentials.user,
+          // clientId: credentials.clientId,
+          // clientSecret: credentials.clientSecret,
+          // refreshToken: credentials.refreshToken,
+          accessToken: ACCESS_TOKEN,
+        }
+      });
+      // set up the enrollment URL
+      const enrollURL = new URL(Meteor.absoluteUrl(`/#/enroll-acct/${userID}`));
+      // set up the email
+      const mailOptions = {
+        from: `Minerva Alert <${credentials.user}>`,
+        to: email,
+        subject: "Welcome to Minerva!",
+        // generateTextFromHTML: true,
+        html: "<p>Congratulations. Your account has been successfully created.</p>"
+            + "<br>"
+            + "<p>To activate your account, simply click the link below:</p>"
+            + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
+        text: "Congratulations. Your account has been successfully created. "
+            + "To activate your account, simply click the link below: "
+            + enrollURL,
       };
-      // fetch the access token
-      return fetch("https://www.googleapis.com/oauth2/v4/token", {
-        method: 'POST',
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        }),
-        body: JSON.stringify(body),
-      })
-        .then(response => response.json())
-        .then(response => {
-          // throw error if invalid access_token (likely bad refresh token)
-          if (response.error) {
-            throw new Error(`[${response.error}] ${response.error_description}`);
-          }
-          // else
-          if (response.access_token) {
-            const accessToken = response.access_token;
-            // set up SMTP
-            const transport = nodemailer.createTransport({
-              service: "gmail",
-              auth: {
-                type: "OAuth2",
-                user: credentials.user,
-                clientId: credentials.clientId,
-                clientSecret: credentials.clientSecret,
-                refreshToken: credentials.refreshToken,
-                accessToken,
+      // try the access token
+      return transport.sendMail(mailOptions)
+        // if first attempt error
+        .catch(() => {
+          // set up the POST body
+          const body = {
+            client_id: credentials.clientId,
+            client_secret: credentials.clientSecret,
+            refresh_token: credentials.refreshToken,
+            grant_type: "refresh_token",
+          };
+          // fetch the access token
+          return fetch("https://www.googleapis.com/oauth2/v4/token", {
+            method: 'POST',
+            headers: new Headers({
+              'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(body),
+          })
+            .then(response => response.json())
+            .then(response => {
+              // throw error if invalid access_token (likely bad refresh token)
+              if (response.error) {
+                // throw new Error(`[${response.error}] ${response.error_description}`);
+                return Promise.reject(new Error(`[${response.error}] ${response.error_description}`));
+              }
+              // else
+              if (response.access_token) {
+                // remember access_token
+                ACCESS_TOKEN = response.access_token;
+                // set up new transport
+                transport = nodemailer.createTransport({
+                  service: "gmail",
+                  auth: {
+                    type: "OAuth2",
+                    user: credentials.user,
+                    accessToken: ACCESS_TOKEN,
+                  }
+                });
+                // send the enrollment email
+                return transport.sendMail(mailOptions);
               }
             });
-            // set up the enrollment URL
-            const enrollURL = new URL(Meteor.absoluteUrl(`/#/enroll-acct/${userID}`));
-            // set up the email
-            const mailOptions = {
-              from: `Minerva Alert <${credentials.user}>`,
-              to: email,
-              subject: "Welcome to Minerva!",
-              // generateTextFromHTML: true,
-              html: "<p>Congratulations. Your account has been successfully created.</p>"
-                  + "<br>"
-                  + "<p>To activate your account, simply click the link below:</p>"
-                  + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
-              text: "Congratulations. Your account has been successfully created. "
-                  + "To activate your account, simply click the link below: "
-                  + enrollURL,
-            };
-            // send the enrollment email
-            return transport.sendMail(mailOptions);
-          }
         })
         .then(response => {
           // if success

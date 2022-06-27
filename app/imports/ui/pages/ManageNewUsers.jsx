@@ -10,7 +10,7 @@ import { acceptMethod, generateAuthUrlMethod, generateRefreshTokenMethod } from 
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
 const acceptUser = (user) => {
-  acceptMethod.callPromise(user)
+  acceptMethod.callPromise({ user })
     .then(() => swal('Success', `${user.email} accepted successfully`, 'success', { buttons: false, timer: 3000 }))
     .catch(error => swal('Error', error.error, 'error'));
 };
