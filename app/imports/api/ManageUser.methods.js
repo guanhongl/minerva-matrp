@@ -9,6 +9,7 @@ import { MATRP } from './matrp/MATRP';
 import { UserProfiles } from './user/UserProfileCollection';
 import { PendingUsers } from './pending-user/PendingUserCollection';
 import nodemailer from 'nodemailer';
+import csv from 'csvtojson';
 
 /**
  * Creates the URL for pasting in the browser, which will generate the code
@@ -245,6 +246,38 @@ export const updateRoleMethod = new ValidatedMethod({
       Roles.setUserRoles(userID, [newRole]);
 
       return '';
+    }
+    return '';
+  },
+});
+
+/**
+ * upload the .csv file to the database
+ */
+export const uploadUserMethod = new ValidatedMethod({
+  name: 'uploadUser',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run({ data }) {
+    if (!this.userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in to upload to the database.');
+    } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to upload to the database.');
+    }
+    if (Meteor.isServer) {
+      // throw error if csv is empty
+      if (!data) {
+        throw new Meteor.Error("no-file", "No file specified");
+      }
+      // csv to json
+      return csv({ checkType: true }).fromString(data)
+        .then(json => {
+          console.log(json)
+        })
+        // can't catch csvtojson
+        .catch(error => {
+          throw new Meteor.Error(error.message);
+        });
     }
     return '';
   },

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Header, Loader, Segment, Input, Table } from 'semantic-ui-react';
+import { Container, Header, Loader, Segment, Input, Table, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
+import { ZipZap } from 'meteor/udondan:zipzap';
 import { PendingUsers } from '../../api/pending-user/PendingUserCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
-import { acceptMethod, generateAuthUrlMethod, generateRefreshTokenMethod } from '../../api/ManageUser.methods';
+import { acceptMethod, generateAuthUrlMethod, generateRefreshTokenMethod, uploadUserMethod } from '../../api/ManageUser.methods';
+import { readCSVMethod } from '../../api/ManageDatabase.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 
 const acceptUser = (user) => {
@@ -59,6 +61,8 @@ const rejectUser = ({ email, _id }) => {
 const ManageNewUsers = ({ ready, users }) => {
   const [userFilter, setUserFilter] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [fileData, setFileData] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setFilteredUsers(users);
@@ -76,6 +80,40 @@ const ManageNewUsers = ({ ready, users }) => {
     setFilteredUsers(filter);
   };
 
+  const readFile = (e) => {
+    const files = e.target.files;
+    // eslint-disable-next-line no-undef
+    const reader = new FileReader();
+    reader.readAsText(files[0]);
+    reader.onload = (event) => {
+      if (files[0].type === 'text/csv') {
+        setFileData(event.target.result);
+      } else {
+        setFileData('');
+        swal('Error', 'Invalid file format. Only files with the extension csv are allowed', 'error');
+      }
+    };
+  };
+
+  const upload = () => {
+    setLoading(true);
+    uploadUserMethod.callPromise({ data: fileData })
+      .then(count => swal('Success', `${count} users defined successfully.`, 'success', { buttons: false, timer: 3000 }))
+      .catch(error => swal("Error", error.message, "error"))
+      .finally(() => setLoading(false));
+  };
+
+  const download = () => {
+    const db = "user";
+    readCSVMethod.callPromise({ db })
+      .then(csv => {
+        const zip = new ZipZap();
+        zip.file(`${db}_template.csv`, csv);
+        zip.saveAs(`${db}_template.zip`);
+      })
+      .catch(error => swal("Error", error.message, "error"));
+  };
+
   return (
     (ready) ? (
       <Container id='manage-new-users'>
@@ -83,6 +121,28 @@ const ManageNewUsers = ({ ready, users }) => {
           <Segment className='manage-user-header'>
             <Header as="h2">Manage New Users</Header>
             <Input placeholder='Search users...' value={userFilter} onChange={handleFilter} />
+          </Segment>
+          <Segment>
+            <div className='csv-segment'>
+                <div>
+                  <Input type="file" onChange={readFile} />
+                  {
+                    loading ? 
+                      <Loader inline active />
+                      :
+                      <span onClick={upload}>
+                        <Icon name="upload" />
+                        Upload
+                        <Icon name="file excel" />
+                      </span>
+                  }
+                </div>
+                <span onClick={download}>
+                  <Icon name="download" />
+                  Download template
+                  <Icon name="file excel" />
+                </span>
+            </div>
           </Segment>
           <Segment>
             <Table basic='very' columns={4} unstackable>
