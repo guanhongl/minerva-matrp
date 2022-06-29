@@ -10,6 +10,7 @@ import { UserProfiles } from './user/UserProfileCollection';
 import { PendingUsers } from './pending-user/PendingUserCollection';
 import nodemailer from 'nodemailer';
 import csv from 'csvtojson';
+import { _ } from 'meteor/underscore';
 
 /**
  * Creates the URL for pasting in the browser, which will generate the code
@@ -252,13 +253,102 @@ export const updateRoleMethod = new ValidatedMethod({
 });
 
 /**
+ * @returns Promise array
+ */
+const createPromises = (userIDs, from, tos) => {
+  // set up SMTP
+  const transport = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      type: "OAuth2",
+      user: from,
+      accessToken: ACCESS_TOKEN,
+    }
+  });
+
+  const promises = [];
+  for (let k = 0; k < tos.length; k++) {
+    const userID = userIDs[k];
+    const to = tos[k];
+    const enrollURL = new URL(Meteor.absoluteUrl(`/#/enroll-acct/${userID}`));
+    const mailOptions = {
+      from: `Minerva Alert <${from}>`,
+      to,
+      subject: "Welcome to Minerva!",
+      html: "<p>Congratulations. Your account has been successfully created.</p>"
+          + "<br>"
+          + "<p>To activate your account, simply click the link below:</p>"
+          + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
+      text: "Congratulations. Your account has been successfully created. "
+          + "To activate your account, simply click the link below: "
+          + enrollURL,
+    };
+    // push the promise
+    const promise = transport.sendMail(mailOptions);
+    promises.push(promise);
+  }
+
+  return promises;
+}
+
+/**
+ * @returns the resolved array of results
+ * @throws error
+ */
+async function sendMail(userIDs, credentials, json) {
+  // try the access token
+  try {
+    console.log("TRY")
+    // set up the email for each user
+    const promises = createPromises(userIDs, credentials.user, _.pluck(json, "email"));
+
+    const values = await Promise.all(promises);
+    return values; // converts to a resolved Promise...
+  // if first attempt error
+  } catch (error) {
+    console.log("CATCH")
+    // set up the POST body
+    const body = {
+      client_id: credentials.clientId,
+      client_secret: credentials.clientSecret,
+      refresh_token: credentials.refreshToken,
+      grant_type: "refresh_token",
+    };
+    // fetch the access token
+    const res = await fetch("https://www.googleapis.com/oauth2/v4/token", {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(body),
+    });
+    const response = await res.json();
+    // throw error if invalid access_token (likely bad refresh token)
+    if (response.error) {
+      // return Promise.reject(new Error(`[${response.error}] ${response.error_description}`));
+      throw new Error(`[${response.error}] ${response.error_description}`); // rethrow
+    }
+    // else
+    if (response.access_token) {
+      // remember access_token
+      ACCESS_TOKEN = response.access_token;
+      // send the enrollment emails w/ new access token
+      const newPromises = createPromises(userIDs, credentials.user, _.pluck(json, "email"));
+      const values = await Promise.all(newPromises);
+
+      return values;
+    }
+  }
+}
+
+/**
  * upload the .csv file to the database
  */
 export const uploadUserMethod = new ValidatedMethod({
   name: 'uploadUser',
   mixins: [CallPromiseMixin],
   validate: null,
-  run({ data }) {
+  async run({ data }) {
     if (!this.userId) {
       throw new Meteor.Error('unauthorized', 'You must be logged in to upload to the database.');
     } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
@@ -277,155 +367,65 @@ export const uploadUserMethod = new ValidatedMethod({
       };
 
       // csv to json
-      return csv({ checkType: true }).fromString(data)
-        .then(json => {
-          console.log(json)
-          const LENGTH = json.length;
-          // reject the first required field
-          const required = ["firstName", "lastName", "email"];
-          for (let i = 0; i < required.length; i++) {
-            const field = required[i];
-            if (json.some(o => !o[field])) {
-              return Promise.reject(new Error(`${field} cannot be empty!`));
-            }
+      try {
+        const json = await csv({ checkType: true }).fromString(data);
+        console.log(json)
+        const LENGTH = json.length;
+        // reject the first required field
+        const required = ["firstName", "lastName", "email"];
+        for (let i = 0; i < required.length; i++) {
+          const field = required[i];
+          if (json.some(o => !o[field])) {
+            // return Promise.reject(new Error(`${field} cannot be empty!`));
+            throw new Error(`${field} cannot be empty!`); // rethrow
           }
-          // reject the first unrecognized role
-          const unknown = json.find( o => (o.role !== "" && o.role !== "doctor" && o.role !== "admin") );
-          if (!!unknown) {
-            return Promise.reject(new Error(`Unrecognized role: ${unknown.role}!`));
-          }
-          // create the users
-          const userIDs = [];
-          for (let j = 0; j < LENGTH; j++) {
-            const email = json[j].email;
-            // ERROR HERE
-            const userID = Accounts.createUser({ username: email, email });
-            userIDs.push(userID);
-          }
-          // set up the credentials
-          const credentials = JSON.parse(Assets.getText('settings.production.json'));
-          // set up SMTP
-          let transport = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-              type: "OAuth2",
-              user: credentials.user,
-              accessToken: ACCESS_TOKEN,
-            }
-          });
-          // set up the email for each user
-          let promises = [];
-          for (let k = 0; k < LENGTH; k++) {
-            const userID = userIDs[k];
-            const email = json[k].email;
-            const enrollURL = new URL(Meteor.absoluteUrl(`/#/enroll-acct/${userID}`));
-            const mailOptions = {
-              from: `Minerva Alert <${credentials.user}>`,
-              to: email,
-              subject: "Welcome to Minerva!",
-              html: "<p>Congratulations. Your account has been successfully created.</p>"
-                  + "<br>"
-                  + "<p>To activate your account, simply click the link below:</p>"
-                  + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
-              text: "Congratulations. Your account has been successfully created. "
-                  + "To activate your account, simply click the link below: "
-                  + enrollURL,
-            };
-            // push the promise
-            const promise = transport.sendMail(mailOptions);
-            promises.push(promise);
-          }
-          // try the access token
-          return Promise.all(promises)
-            // if first attempt error
-            .catch(() => {
-              // set up the POST body
-              const body = {
-                client_id: credentials.clientId,
-                client_secret: credentials.clientSecret,
-                refresh_token: credentials.refreshToken,
-                grant_type: "refresh_token",
-              };
-              // fetch the access token
-              return fetch("https://www.googleapis.com/oauth2/v4/token", {
-                method: 'POST',
-                headers: new Headers({
-                  'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify(body),
-              })
-                .then(response => response.json())
-                .then(response => {
-                  // throw error if invalid access_token (likely bad refresh token)
-                  if (response.error) {
-                    return Promise.reject(new Error(`[${response.error}] ${response.error_description}`));
-                  }
-                  // else
-                  if (response.access_token) {
-                    // remember access_token
-                    ACCESS_TOKEN = response.access_token;
-                    // set up new transport
-                    transport = nodemailer.createTransport({
-                      service: "gmail",
-                      auth: {
-                        type: "OAuth2",
-                        user: credentials.user,
-                        accessToken: ACCESS_TOKEN,
-                      }
-                    });
-                    // send the enrollment emails
-                    promises = [];
-                    for (let k = 0; k < LENGTH; k++) {
-                      const userID = userIDs[k];
-                      const email = json[k].email;
-                      const enrollURL = new URL(Meteor.absoluteUrl(`/#/enroll-acct/${userID}`));
-                      const mailOptions = {
-                        from: `Minerva Alert <${credentials.user}>`,
-                        to: email,
-                        subject: "Welcome to Minerva!",
-                        html: "<p>Congratulations. Your account has been successfully created.</p>"
-                            + "<br>"
-                            + "<p>To activate your account, simply click the link below:</p>"
-                            + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
-                        text: "Congratulations. Your account has been successfully created. "
-                            + "To activate your account, simply click the link below: "
-                            + enrollURL,
-                      };
-                      // push the promise
-                      const promise = transport.sendMail(mailOptions);
-                      promises.push(promise);
-                    }
-                    return Promise.all(promises)
-                  }
-                });
-            })
-            .then(values => {
-              console.log(values)
-              // set up the roles and profiles
-              for (let l = 0; l < LENGTH; l++) {
-                const { email, firstName, lastName } = json[l];
-                // parse role
-                const level = json[l].role || "student";
-                const role = ref[level];
-                const userID = userIDs[l];
-                // profile
-                MATRP[role].defineBase({ email, firstName, lastName, userID, role });
-                // role
-                Roles.addUsersToRoles(userID, [role]);
-              }
+        }
+        // reject the first unrecognized role
+        const unknown = json.find( o => (o.role !== "" && o.role !== "doctor" && o.role !== "admin") );
+        if (!!unknown) {
+          // return Promise.reject(new Error(`Unrecognized role: ${unknown.role}!`));
+          throw new Error(`Unrecognized role: ${unknown.role}!`); // rethrow
+        }
+        // create the users
+        const userIDs = [];
+        for (let j = 0; j < LENGTH; j++) {
+          const email = json[j].email;
+          const userID = Accounts.createUser({ username: email, email });
+          console.log(userID)
+          userIDs.push(userID);
+        }
+        // set up the credentials
+        const credentials = JSON.parse(Assets.getText('settings.production.json'));
 
-              return LENGTH;
-            })
-            .catch(error => {
-              // remove the accounts
-              Meteor.users.remove({ _id: { $in: userIDs } });
-              return Promise.reject(error);
-            });
-        })
-        // can't catch csvtojson
-        .catch(error => {
-          throw new Meteor.Error(error.message);
-        });
+        try {
+          // const values = await Promise.all(promises);
+          const values = await sendMail(userIDs, credentials, json);
+          console.log(values)
+          // set up the roles and profiles
+          for (let k = 0; k < LENGTH; k++) {
+            const { email, firstName, lastName } = json[k];
+            // parse role
+            const level = json[k].role || "student";
+            const role = ref[level];
+            const userID = userIDs[k];
+            // profile
+            MATRP[role].defineBase({ email, firstName, lastName, userID, role });
+            // role
+            Roles.addUsersToRoles(userID, [role]);
+          }
+
+          return LENGTH;
+        } catch (error) {
+          // remove the accounts
+          Meteor.users.remove({ _id: { $in: userIDs } });
+          // return Promise.reject(error);
+          throw error; // rethrow
+        }
+
+      } catch (error) {
+        console.log(error);
+        throw new Meteor.Error(error.message);
+      }
     }
     return '';
   },
