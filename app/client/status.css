@@ -33,6 +33,15 @@
   text-align: right;
 }
 
+.status-tab div.warning-div {
+  font-size: 1em;
+  color: rgb(87, 58, 8, 0.87);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 1em 0;
+  width: fit-content;
+}
+
 #status .ui.tabular.menu {
   padding-right: 25%;
 }

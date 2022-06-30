@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
+import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon, Popup, Tab, Message } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -12,7 +12,7 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import DrugStatusRow from './DrugStatusRow';
-import { fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 
 // convert array to dropdown options
@@ -35,7 +35,7 @@ const statusOptions = [
 const currentDate = moment();
 
 // Render the form.
-const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
+const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL, countN }) => {
   const [filteredMedications, setFilteredMedications] = useState([]);
   useEffect(() => {
     setFilteredMedications(drugs);
@@ -47,6 +47,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
   const [locationFilter, setLocationFilter] = useState(0);
   const [statusFilter, setStatusFilter] = useState(0);
   const [maxRecords, setMaxRecords] = useState(25);
+  const [visible, setVisible] = useState(JSON.parse(window.localStorage.getItem("visible")) ?? true);
 
   // handles filtering
   useEffect(() => {
@@ -114,6 +115,11 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
     window.addEventListener('resize', handleMobile);
   });
 
+  const handleDismiss = () => {
+    setVisible(!visible);
+    window.localStorage.setItem("visible", JSON.stringify(!visible));
+  };
+
   if (ready) {
     return (
       <Tab.Pane id={PAGE_IDS.MED_STATUS} className='status-tab'>
@@ -163,6 +169,21 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
           </Grid.Row>
         </Grid>
         <Divider/>
+
+        {
+          (countL + countN) &&
+          (
+            visible ?
+              <Message warning
+                onDismiss={handleDismiss}
+                header="Some drugs are low on stock!"
+                content={`${countL} drugs are low on stock and ${countN} drugs are out of stock.`}
+              />
+              :
+              <div className='warning-div' onClick={handleDismiss}>Expand warning message</div>
+          )
+        }
+
         <div>
             Records per page: {' '}
           <Dropdown inline options={recordOptions}
@@ -238,6 +259,8 @@ DrugStatus.propTypes = {
   brands: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+  countL: PropTypes.number.isRequired,
+  countN: PropTypes.number.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -267,6 +290,7 @@ export default withTracker(() => {
     });
     doc.sum = sum;
   });
+  const [countL, countN] = fetchCounts(drugs);
   return {
     drugs,
     drugTypes,
@@ -274,5 +298,7 @@ export default withTracker(() => {
     brands,
     locations,
     ready,
+    countL,
+    countN,
   };
 })(DrugStatus);

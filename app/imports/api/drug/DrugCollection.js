@@ -10,6 +10,7 @@ export const allowedUnits = ['bottle(s)', 'g', 'mL', 'tab(s)'];
 export const drugPublications = {
   drug: 'Drug',
   drugLots: 'DrugLots',
+  drugStock: 'DrugStock',
 };
 
 class DrugCollection extends BaseCollection {
@@ -141,6 +142,18 @@ class DrugCollection extends BaseCollection {
         }
         return this.ready();
       });
+
+      /**
+       * https://docs.meteor.com/api/pubsub.html#Meteor-subscribe
+       * If multiple publications publish a document with the same _id for the same collection the documents are merged for the client. 
+       * If the values of any of the top level fields conflict, the resulting value will be one of the published values, chosen arbitrarily.
+       */
+      Meteor.publish(drugPublications.drugStock, function publish() {
+        if (this.userId) {
+          return instance._collection.find({}, { fields: { minQuantity: 1, "lotIds.quantity": 1, "lotIds.expire": 1 } });
+        }
+        return this.ready();
+      });
     }
   }
 
@@ -155,12 +168,23 @@ class DrugCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for admin users.
-   * It subscribes to the entire collection.
+   * Subscription method for lots.
+   * It subscribes to the lots.
    */
   subscribeDrugLots() {
     if (Meteor.isClient) {
       return Meteor.subscribe(drugPublications.drugLots);
+    }
+    return null;
+  }
+
+  /**
+   * Subscription method for quantities.
+   * It subscribes to the minimum quantities and the quantities.
+   */
+  subscribeDrugStock() {
+    if (Meteor.isClient) {
+      return Meteor.subscribe(drugPublications.drugStock);
     }
     return null;
   }
