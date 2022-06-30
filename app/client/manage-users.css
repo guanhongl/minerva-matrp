@@ -26,8 +26,25 @@
     margin: 0;
 }
 
-#manage-new-users .ui.input {
+#manage-new-users .manage-user-header .ui.input {
     height: 2em;
+}
+
+#manage-new-users .csv-segment {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+#manage-new-users .csv-segment span {
+    cursor: pointer;
+    text-decoration: underline;
+}
+#manage-new-users .csv-segment > div > span {
+    color: #2185d0;
+}
+#manage-new-users .csv-segment > span {
+    color: #21ba45;
 }
 
 /* Manage Users css */
@@ -56,6 +73,6 @@
     font-weight: initial;
 }
 
-#manage-users .ui.segments .ui.segment:nth-child(2), #manage-new-users .ui.segments .ui.segment:nth-child(2) {
+#manage-users .ui.segments .ui.segment:last-child, #manage-new-users .ui.segments .ui.segment:last-child {
     min-height: 25em;
 }
