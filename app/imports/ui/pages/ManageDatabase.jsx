@@ -3,6 +3,7 @@ import { Container, Header, Loader, Segment, Table, Input, Icon } from 'semantic
 import { ZipZap } from 'meteor/udondan:zipzap';
 import { uploadDatabaseMethod, downloadDatabaseMethod, resetDatabaseMethod, readCSVMethod } from '../../api/ManageDatabase.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
+import moment from 'moment';
 
 const dbs = ["drugs", "vaccines", "supplies"];
 
@@ -58,8 +59,8 @@ const DownloadDB = ({ db }) => {
     downloadDatabaseMethod.callPromise({ db })
       .then(csv => {
         const zip = new ZipZap();
-        const dir = 'matrp-db';
-        const fileName = `${dir}/${db}.csv`;
+        const dir = 'minerva-db';
+        const fileName = `${dir}/${moment().format("YYYY-MM-DD")}-${db}.csv`;
         zip.file(fileName, csv);
         zip.saveAs(`${dir}.zip`);
       })
