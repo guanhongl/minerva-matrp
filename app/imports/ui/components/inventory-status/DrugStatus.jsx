@@ -77,26 +77,15 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
       ) !== -1);
     }
     if (statusFilter) {
-      filter = filter.filter((medication) => {
-        const isExpired = medication.lotIds.map(({ expire }) => {
-          if (expire) {
-            return currentDate > moment(expire);
-          }
-          return false;
-        });
-
-        const totalQuantity = medication.lotIds.length ?
-          _.pluck(medication.lotIds, 'quantity')
-            .reduce((prev, current, index) => (isExpired[index] ? prev : prev + current), 0) 
-          : 0;
+      filter = filter.filter((drug) => {
         if (statusFilter === 'In Stock') {
-          return totalQuantity >= medication.minQuantity;
+          return drug.sum >= drug.minQuantity;
         }
         if (statusFilter === 'Low Stock') {
-          return (totalQuantity > 0 && totalQuantity < medication.minQuantity);
+          return (drug.sum > 0 && drug.sum < drug.minQuantity);
         }
         if (statusFilter === 'Out of Stock') {
-          return totalQuantity === 0;
+          return drug.sum === 0;
         }
         return true;
       });
@@ -266,6 +255,18 @@ export default withTracker(() => {
   const units = fetchField(Units, "unit");
   const brands = fetchField(DrugBrands, "drugBrand");
   const locations = fetchField(Locations, "location");
+  // add is expired and total quantity to drugs
+  drugs.forEach(doc => {
+    let sum = 0;
+    doc.lotIds.forEach(o => {
+      const expire = o.expire;
+      const isExpired = expire ? (currentDate > moment(expire)) : false;
+      if (!isExpired)
+        sum += o.quantity;
+      o.isExpired = isExpired;
+    });
+    doc.sum = sum;
+  });
   return {
     drugs,
     drugTypes,

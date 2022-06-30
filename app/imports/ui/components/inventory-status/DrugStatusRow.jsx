@@ -13,24 +13,12 @@ const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
   
   const handleOpen = () => setExpand(!expand);
 
-  const currentDate = moment();
-  const isExpired = med.lotIds.map(({ expire }) => {
-    if (expire) {
-      return currentDate > moment(expire);
-    }
-    return false;
-  });
-
-  const totalQuantity = med.lotIds.length ?
-    _.pluck(med.lotIds, 'quantity')
-      .reduce((prev, current, index) => (isExpired[index] ? prev : prev + current), 0)
-    : 0;
-  const status = Math.floor((totalQuantity / med.minQuantity) * 100);
+  const status = Math.floor((med.sum / med.minQuantity) * 100);
   const getColor = () => {
     let color;
-    if (totalQuantity >= med.minQuantity) { // range [min, inf)
+    if (med.sum >= med.minQuantity) { // range [min, inf)
       color = 'green';
-    } else if (totalQuantity > 0 && totalQuantity < med.minQuantity) { // range (0, min]
+    } else if (med.sum > 0 && med.sum < med.minQuantity) { // range (0, min]
       color = 'yellow';
     } else { // range (0)
       color = 'red';
@@ -90,13 +78,13 @@ const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
   return (
     <>
       {/* the drug row */}
-      <Table.Row negative={isExpired.includes(true)} id={COMPONENT_IDS.MED_STATUS_ROW}>
+      <Table.Row negative={med.lotIds.some(o => o.isExpired)} id={COMPONENT_IDS.MED_STATUS_ROW}>
         <Table.Cell className='caret' onClick={handleOpen}>
           <Icon name={`caret ${expand ? 'down' : 'up'}`} />
         </Table.Cell>
         <Table.Cell>{med.drug}</Table.Cell>
         <Table.Cell>{med.drugType.join(', ')}</Table.Cell>
-        <Table.Cell>{totalQuantity}</Table.Cell>
+        <Table.Cell>{med.sum}</Table.Cell>
         <Table.Cell>{med.unit}</Table.Cell>
         <Table.Cell>
           <>
@@ -126,8 +114,8 @@ const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
             </Table.Header>
             <Table.Body>
               {
-                med.lotIds.map(({ _id: uuid, lotId, brand, expire, location, quantity, donated }, index) => (
-                  <Table.Row key={lotId} negative={isExpired[index]}>
+                med.lotIds.map(({ _id: uuid, lotId, brand, expire, location, quantity, donated, isExpired }, index) => (
+                  <Table.Row key={lotId} negative={isExpired}>
                     <Table.Cell>{lotId}</Table.Cell>
                     <Table.Cell>{brand}</Table.Cell>
                     <Table.Cell>{expire}</Table.Cell>
