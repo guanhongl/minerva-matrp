@@ -65,22 +65,22 @@
 
 .status-tab div.filters > * {
   flex: 1 1 0;
-}
 
-.status-tab div.filters > * {
   background-color: #1D3E66;
   color: white;
   font-weight: 700;
   padding: 0.5em;
   border-radius: 0.5em;
+
+  display: flex;
+  column-gap: 0.25em;
 }
 
 .status-tab div.filters > * > div {
-  padding-left: 0.25em;
+  flex-grow: 1;
 }
 
 .status-tab div.filters > * > .ui.search.dropdown > input.search {
-  min-width: 5em; /* temp. fix to squashing */
   color: white;
 }
 

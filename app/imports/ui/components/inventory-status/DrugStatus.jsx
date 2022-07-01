@@ -195,22 +195,22 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
 
         <div className='filters'>
           <span>
-            Type:
+            <span>Type:</span>
             <Dropdown inline options={getFilters(drugTypes)} search
               onChange={handleTypeFilter} value={typeFilter} id={COMPONENT_IDS.MEDICATION_TYPE}/>
           </span>
           <span>
-            Brand:
+            <span>Brand:</span>
             <Dropdown inline options={getFilters(brands)} search
               onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.MEDICATION_BRAND}/>
           </span>
           <span>
-            Location:
+            <span>Location:</span>
             <Dropdown inline options={getFilters(locations)} search
               onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION}/>
           </span>
           <span>
-            Status:
+            <span>Status:</span>
             <Dropdown inline options={statusOptions} search
               onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
           </span>
