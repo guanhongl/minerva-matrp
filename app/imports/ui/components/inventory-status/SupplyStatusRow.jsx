@@ -11,14 +11,12 @@ const SupplyStatusRow = ({ supply, supplyTypes, locations }) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(!isOpen);
 
-  const totalQuantity = supply.stock.length ? _.pluck(supply.stock, 'quantity')
-    .reduce((prev, current) => prev + current) : 0;
-  const status = Math.floor((totalQuantity / supply.minQuantity) * 100);
+  const status = Math.floor((supply.sum / supply.minQuantity) * 100);
   const getColor = () => {
     let color;
-    if (totalQuantity >= supply.minQuantity) { // range [min, inf)
+    if (supply.sum >= supply.minQuantity) { // range [min, inf)
       color = 'green';
-    } else if (totalQuantity > 0 && totalQuantity < supply.minQuantity) { // range (0, min]
+    } else if (supply.sum > 0 && supply.sum < supply.minQuantity) { // range (0, min]
       color = 'yellow';
     } else { // range (0)
       color = 'red';
@@ -84,7 +82,7 @@ const SupplyStatusRow = ({ supply, supplyTypes, locations }) => {
         </Table.Cell>
         <Table.Cell>{supply.supply}</Table.Cell>
         <Table.Cell>{supply.supplyType}</Table.Cell>
-        <Table.Cell>{totalQuantity}</Table.Cell>
+        <Table.Cell>{supply.sum}</Table.Cell>
         <Table.Cell>
           <>
             <Icon color={getColor()} name='circle' />

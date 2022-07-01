@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
+import { Header, Table, Divider, Dropdown, Pagination, Input, Loader, Icon, Popup, Tab, Message } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { ZipZap } from 'meteor/udondan:zipzap';
 import { Drugs } from '../../../api/drug/DrugCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { Units } from '../../../api/unit/UnitCollection';
@@ -12,8 +13,9 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import DrugStatusRow from './DrugStatusRow';
-import { fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
+import { downloadDatabaseMethod } from '../../../api/ManageDatabase.methods';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
@@ -34,11 +36,16 @@ const statusOptions = [
 
 const currentDate = moment();
 
+// replace " " with "-" and make lowercase
+const formatQuery = (query) => {
+  return query.replace(/\s+/g, "-").toLowerCase();
+};
+
 // Render the form.
-const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
-  const [filteredMedications, setFilteredMedications] = useState([]);
+const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL, countN }) => {
+  const [filteredDrugs, setFilteredDrugs] = useState([]);
   useEffect(() => {
-    setFilteredMedications(drugs);
+    setFilteredDrugs(drugs);
   }, [drugs]);
   const [searchQuery, setSearchQuery] = useState('');
   const [pageNo, setPageNo] = useState(1);
@@ -47,6 +54,8 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
   const [locationFilter, setLocationFilter] = useState(0);
   const [statusFilter, setStatusFilter] = useState(0);
   const [maxRecords, setMaxRecords] = useState(25);
+  const [visible, setVisible] = useState(JSON.parse(window.localStorage.getItem("visible")) ?? true);
+  const [loading, setLoading] = useState(false); // download loader
 
   // handles filtering
   useEffect(() => {
@@ -55,24 +64,20 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ drug, lotIds }) => (
         drug.toLowerCase().includes(query.toLowerCase()) ||
-          lotIds.findIndex(({ brand }) => brand.toLowerCase().includes(query)) !== -1 ||
-          lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
-          lotIds.findIndex(({ location }) => location.toLowerCase().includes(query)) !== -1 ||
-          lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
+        lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
+        lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
       ));
     }
     if (typeFilter) {
-      filter = filter.filter((medication) => medication.drugType.includes(typeFilter));
+      filter = filter.filter((o) => o.drugType.includes(typeFilter));
     }
     if (brandFilter) {
-      // filter = filter.filter((medication) => medication.brand === brandFilter);
-      filter = filter.filter((medication) => medication.lotIds.findIndex(
+      filter = filter.filter((o) => o.lotIds.findIndex(
         lotId => lotId.brand === brandFilter,
       ) !== -1);
     }
     if (locationFilter) {
-      // filter = filter.filter((medication) => medication.location === locationFilter);
-      filter = filter.filter((medication) => medication.lotIds.findIndex(
+      filter = filter.filter((o) => o.lotIds.findIndex(
         lotId => lotId.location === locationFilter,
       ) !== -1);
     }
@@ -90,7 +95,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
         return true;
       });
     }
-    setFilteredMedications(filter);
+    setFilteredDrugs(filter);
   }, [searchQuery, typeFilter, brandFilter, locationFilter, statusFilter]);
 
   const handleSearch = (event, { value }) => setSearchQuery(value);
@@ -114,60 +119,121 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
     window.addEventListener('resize', handleMobile);
   });
 
+  const handleDismiss = () => {
+    setVisible(!visible);
+    window.localStorage.setItem("visible", JSON.stringify(!visible));
+  };
+
+  // download DB w/ filter
+  const download = () => {
+    setLoading(true);
+    downloadDatabaseMethod.callPromise({ db: "drugs", _ids: _.pluck(filteredDrugs, "_id") })
+      .then(csv => {
+        const zip = new ZipZap();
+        const dir = 'minerva-db';
+        // query, type, brand, location, status
+        let filter = "";
+        if (searchQuery) {
+          filter += `query=${formatQuery(searchQuery)}&`;
+        }
+        if (typeFilter) {
+          filter += `type=${formatQuery(typeFilter)}&`;
+        }
+        if (brandFilter) {
+          filter += `brand=${formatQuery(brandFilter)}&`;
+        }
+        if (locationFilter) {
+          filter += `location=${formatQuery(locationFilter)}&`;
+        }
+        if (statusFilter) {
+          filter += `status=${formatQuery(statusFilter)}&`;
+        }
+        // append "-" and remove the last char
+        if (filter) {
+          filter = `-${filter.slice(0, -1)}`;
+        }
+        const fileName = `${dir}/${moment().format("YYYY-MM-DD")}-drugs${filter}.csv`;
+        zip.file(fileName, csv);
+        zip.saveAs(`${dir}.zip`);
+      })
+      .catch(error => swal("Error", error.message, "error"))
+      .finally(() => setLoading(false));
+  };
+
   if (ready) {
     return (
       <Tab.Pane id={PAGE_IDS.MED_STATUS} className='status-tab'>
         <Header as="h2">
           <Header.Content>
-              Drug Inventory Status
+              Drug Inventory
             <Header.Subheader>
-              <i>Use the search filter to check for a specific drug or
-                  use the dropdown filters.</i>
+              Use the search and dropdown filters to find a specific drug.
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <Grid>
-          <Grid.Column width={4}>
-            <Popup
-              trigger={<Input placeholder='Filter by drug name...' icon='search'
-                onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.STATUS_FILTER}/>}
-              content='This allows you to filter the Inventory by drug, brand, LotID, location, and expiration.'
-              inverted
-            />
-          </Grid.Column>
-        </Grid>
+        <div className='controls'>
+          <Popup
+            trigger={<Input placeholder='Filter by drug name...' icon='search'
+              onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.STATUS_FILTER}/>}
+            content='This allows you to filter drugs by name, lot, and expiration (YYYY-MM-DD).'
+            inverted
+          />
+          {
+            loading ? 
+              <Loader inline active />
+              :
+              <span onClick={download}>
+                <Icon name="download" />
+                Download
+                <Icon name="file excel" />
+              </span>
+          }
+        </div>
+
+        <div className='filters'>
+          <span>
+            <span>Type:</span>
+            <Dropdown inline options={getFilters(drugTypes)} search
+              onChange={handleTypeFilter} value={typeFilter} id={COMPONENT_IDS.MEDICATION_TYPE}/>
+          </span>
+          <span>
+            <span>Brand:</span>
+            <Dropdown inline options={getFilters(brands)} search
+              onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.MEDICATION_BRAND}/>
+          </span>
+          <span>
+            <span>Location:</span>
+            <Dropdown inline options={getFilters(locations)} search
+              onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION}/>
+          </span>
+          <span>
+            <span>Status:</span>
+            <Dropdown inline options={statusOptions} search
+              onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
+          </span>
+        </div>
+        
         <Divider/>
-        <Grid divided columns="equal" style={{ display: 'flex' }}>
-          <Grid.Row textAlign='center'>
-            <Grid.Column>
-                Drug Type: {' '}
-              <Dropdown inline options={getFilters(drugTypes)} search
-                onChange={handleTypeFilter} value={typeFilter} id={COMPONENT_IDS.MEDICATION_TYPE}/>
-            </Grid.Column>
-            <Grid.Column>
-                Drug Brand: {' '}
-              <Dropdown inline options={getFilters(brands)} search
-                onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.MEDICATION_BRAND}/>
-            </Grid.Column>
-            <Grid.Column>
-                Drug Location: {' '}
-              <Dropdown inline options={getFilters(locations)} search
-                onChange={handleLocationFilter} value={locationFilter}
-                id={COMPONENT_IDS.MEDICATION_LOCATION}/>
-            </Grid.Column>
-            <Grid.Column>
-                Inventory Status: {' '}
-              <Dropdown inline options={statusOptions} search
-                onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Divider/>
+
+        {
+          (countL + countN) &&
+          (
+            visible ?
+              <Message warning
+                onDismiss={handleDismiss}
+                header="Some drugs are low on stock!"
+                content={`${countL} drugs are low on stock and ${countN} drugs are out of stock.`}
+              />
+              :
+              <div className='warning-div' onClick={handleDismiss}>Expand warning message</div>
+          )
+        }
+
         <div>
             Records per page: {' '}
           <Dropdown inline options={recordOptions}
             onChange={handleRecordLimit} value={maxRecords} id={COMPONENT_IDS.NUM_OF_RECORDS}/>
-            Total count: {filteredMedications.length}
+            Total count: {filteredDrugs.length}
         </div>
         <Table selectable color='blue' className='status-wrapped' unstackable>
           <Table.Header>
@@ -184,7 +250,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
 
           <Table.Body>
             {
-              filteredMedications.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
+              filteredDrugs.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
                 .map(med => <DrugStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={units} brands={brands} />)
             }
           </Table.Body>
@@ -195,7 +261,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
                 { mobile === false &&
                     <div>
                       <Pagination
-                        totalPages={Math.ceil(filteredMedications.length / maxRecords)}
+                        totalPages={Math.ceil(filteredDrugs.length / maxRecords)}
                         activePage={pageNo}
                         onPageChange={(event, data) => {
                           setPageNo(data.activePage);
@@ -215,7 +281,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations }) => {
         </Table>
         { mobile === true &&
         <Pagination
-          totalPages={Math.ceil(filteredMedications.length / maxRecords)}
+          totalPages={Math.ceil(filteredDrugs.length / maxRecords)}
           activePage={pageNo}
           onPageChange={(event, data) => setPageNo(data.activePage)}
           ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}
@@ -238,6 +304,8 @@ DrugStatus.propTypes = {
   brands: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+  countL: PropTypes.number.isRequired,
+  countN: PropTypes.number.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -267,6 +335,7 @@ export default withTracker(() => {
     });
     doc.sum = sum;
   });
+  const [countL, countN] = fetchCounts(drugs);
   return {
     drugs,
     drugTypes,
@@ -274,5 +343,7 @@ export default withTracker(() => {
     brands,
     locations,
     ready,
+    countL,
+    countN,
   };
 })(DrugStatus);

@@ -16,7 +16,7 @@ export const downloadDatabaseMethod = new ValidatedMethod({
     name: 'downloadDatabase',
     mixins: [CallPromiseMixin],
     validate: null,
-    run({ db }) {
+    run({ db, _ids }) {
         if (!this.userId) {
             throw new Meteor.Error('unauthorized', 'You must be logged in to download the database.');
         } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
@@ -29,7 +29,7 @@ export const downloadDatabaseMethod = new ValidatedMethod({
                 throw new Meteor.Error("empty-database", "The database is empty.");
             }
             // get collection as json
-            const json = _.sortBy(collection.dumpAll(), (entry) => Object.values(entry)[0]);
+            const json = _.sortBy(collection.dumpAll(_ids), (entry) => Object.values(entry)[0]);
             // fields: the csv columns
             // arr: the nested field
             let fields, arr;

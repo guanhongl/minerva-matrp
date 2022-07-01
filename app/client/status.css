@@ -21,7 +21,7 @@
   border-radius: 50%;
 }
 
-.status-tab span {
+.status-tab td span {
   font-size: 12px;
 }
 
@@ -31,6 +31,67 @@
 
 .status-tab table table td.icons {
   text-align: right;
+}
+
+.status-tab div.warning-div {
+  color: rgb(87, 58, 8, 0.87);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 1em 0;
+  width: fit-content;
+}
+
+.status-tab div.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.status-tab div.controls span {
+  color: #21ba45;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.status-tab div.controls .ui.input {
+  width: 50%;
+}
+
+.status-tab div.filters {
+  margin-top: 1em;
+  display: flex;
+  column-gap: 1em;
+}
+.status-tab div.filters.vaccine {
+  width: 75%;
+}
+.status-tab div.filters.supply {
+  width: 50%;
+}
+
+.status-tab div.filters > * {
+  flex: 1 1 0;
+
+  background-color: #1D3E66;
+  color: white;
+  font-weight: 700;
+  padding: 0.5em;
+  border-radius: 0.5em;
+
+  display: flex;
+  column-gap: 0.25em;
+}
+
+.status-tab div.filters > * > div {
+  flex-grow: 1;
+}
+
+.status-tab div.filters > * > .ui.search.dropdown > input.search {
+  color: white;
+}
+
+.status-tab div.sub.header {
+  font-style: italic;
 }
 
 #status .ui.tabular.menu {

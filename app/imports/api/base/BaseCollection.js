@@ -225,12 +225,15 @@ class BaseCollection {
    * Contents is an array of objects suitable for passing to the restore() method.
    * @returns {Object} An object representing the contents of this collection.
    */
-  dumpAll() {
+  dumpAll(_ids) {
     // const dumpObject = {
     //   name: this._collectionName,
     //   contents: this.find().map((docID) => this.dumpOne(docID)),
     // };
-    const dumpObject = this.find().map((docID) => this.dumpOne(docID));
+
+    const selector = _ids ? { _id: { $in: _ids } } : {};
+
+    const dumpObject = this.find(selector).map((docID) => this.dumpOne(docID));
     // If a collection doesn't want to be dumped, it can just return null from dumpOne.
     dumpObject.contents = _.without(dumpObject.contents, null);
     // sort the contents array by slug (if present)

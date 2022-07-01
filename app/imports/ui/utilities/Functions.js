@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
 
 export function fetchField(collection, field, selector = {}) {
   return _.pluck(
@@ -35,4 +36,33 @@ export function printQRCode(png) {
   popup.document.write(`<img src="${png}">`);
   popup.document.close();
   popup.print();
+}
+
+/** 
+ * fetch low stock count and no stock count.
+ * expired stock is counted.
+ */
+export function fetchCounts(records) {
+  let countL = 0, countN = 0;
+  // const currentDate = moment();
+
+  records.forEach(record => {
+    // get list of non expired quantities
+    // const quantities = _.pluck(
+    //   record.lotIds.filter(({ expire }) => ( currentDate < moment(expire) )),
+    //   "quantity",
+    // );
+    // sum
+    // const total = quantities.reduce((p, c) => p + c, 0);
+    const total = record.sum;
+    // if 0
+    if (total === 0) {
+      countN++;
+    // if not 0 and less than min
+    } else if (total < record.minQuantity) {
+      countL++;
+    }
+  });
+
+  return [countL, countN];
 }

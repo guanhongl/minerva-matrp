@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
+import { Header, Table, Divider, Dropdown, Pagination, Message, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { ZipZap } from 'meteor/udondan:zipzap';
 import { Vaccines } from '../../../api/vaccine/VaccineCollection';
 import { VaccineBrands } from '../../../api/vaccineBrand/VaccineBrandCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineStatusRow from './VaccineStatusRow';
-import { fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
+import { downloadDatabaseMethod } from '../../../api/ManageDatabase.methods';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
@@ -32,8 +34,13 @@ const statusOptions = [
 
 const currentDate = moment();
 
+// replace " " with "-" and make lowercase
+const formatQuery = (query) => {
+  return query.replace(/\s+/g, "-").toLowerCase();
+};
+
 // Render the form.
-const VaccineStatus = ({ ready, vaccines, brands, locations }) => {
+const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) => {
   const [filteredVaccines, setFilteredVaccines] = useState([]);
   useEffect(() => {
     setFilteredVaccines(vaccines);
@@ -44,6 +51,8 @@ const VaccineStatus = ({ ready, vaccines, brands, locations }) => {
   const [locationFilter, setLocationFilter] = useState(0);
   const [statusFilter, setStatusFilter] = useState(0);
   const [maxRecords, setMaxRecords] = useState(25);
+  const [visible, setVisible] = useState(JSON.parse(window.localStorage.getItem("visible")) ?? true);
+  const [loading, setLoading] = useState(false); // download loader
 
   // handles filtering
   useEffect(() => {
@@ -52,9 +61,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations }) => {
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ vaccine, brand, lotIds }) => (
         vaccine.toLowerCase().includes(query.toLowerCase()) ||
-        brand.toLowerCase().includes(query.toLowerCase()) ||
         lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
-        lotIds.findIndex(({ location }) => location.toLowerCase().includes(query)) !== -1 ||
         lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
       ));
     }
@@ -68,25 +75,14 @@ const VaccineStatus = ({ ready, vaccines, brands, locations }) => {
     }
     if (statusFilter) {
       filter = filter.filter((vaccine) => {
-        const isExpired = vaccine.lotIds.map(({ expire }) => {
-          if (expire) {
-            return currentDate > moment(expire);
-          }
-          return false;
-        });
-
-        const totalQuantity = vaccine.lotIds.length ?
-          _.pluck(vaccine.lotIds, 'quantity')
-            .reduce((prev, current, index) => (isExpired[index] ? prev : prev + current), 0) 
-          : 0;
         if (statusFilter === 'In Stock') {
-          return totalQuantity >= vaccine.minQuantity;
+          return vaccine.sum >= vaccine.minQuantity;
         }
         if (statusFilter === 'Low Stock') {
-          return (totalQuantity > 0 && totalQuantity < vaccine.minQuantity);
+          return (vaccine.sum > 0 && vaccine.sum < vaccine.minQuantity);
         }
         if (statusFilter === 'Out of Stock') {
-          return totalQuantity === 0;
+          return vaccine.sum === 0;
         }
         return true;
       });
@@ -100,49 +96,108 @@ const VaccineStatus = ({ ready, vaccines, brands, locations }) => {
   const handleStatusFilter = (event, { value }) => setStatusFilter(value);
   const handleRecordLimit = (event, { value }) => setMaxRecords(value);
 
+  const handleDismiss = () => {
+    setVisible(!visible);
+    window.localStorage.setItem("visible", JSON.stringify(!visible));
+  };
+
+  // download DB w/ filter
+  const download = () => {
+    setLoading(true);
+    downloadDatabaseMethod.callPromise({ db: "vaccines", _ids: _.pluck(filteredVaccines, "_id") })
+      .then(csv => {
+        const zip = new ZipZap();
+        const dir = 'minerva-db';
+        // query, brand, location, status
+        let filter = "";
+        if (searchQuery) {
+          filter += `query=${formatQuery(searchQuery)}&`;
+        }
+        if (brandFilter) {
+          filter += `brand=${formatQuery(brandFilter)}&`;
+        }
+        if (locationFilter) {
+          filter += `location=${formatQuery(locationFilter)}&`;
+        }
+        if (statusFilter) {
+          filter += `status=${formatQuery(statusFilter)}&`;
+        }
+        // append "-" and remove the last char
+        if (filter) {
+          filter = `-${filter.slice(0, -1)}`;
+        }
+        const fileName = `${dir}/${moment().format("YYYY-MM-DD")}-vaccines${filter}.csv`;
+        zip.file(fileName, csv);
+        zip.saveAs(`${dir}.zip`);
+      })
+      .catch(error => swal("Error", error.message, "error"))
+      .finally(() => setLoading(false));
+  };
+
   if (ready) {
     return (
       <Tab.Pane id={PAGE_IDS.VACCINE_STATUS} className='status-tab'>
         <Header as="h2">
           <Header.Content>
-            Vaccine Inventory Status
+            Vaccine Inventory
             <Header.Subheader>
-              <i>Use the search filter to check for a specific vaccine or
-                use the dropdown filters.</i>
+              Use the search and dropdown filters to find a specific vaccine.
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <Grid>
-          <Grid.Column width={4}>
-            <Popup
-              trigger={<Input placeholder='Filter by vaccine name...' icon='search'
-                onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.VACCINE_FILTER} />}
-              content='This allows you to filter the Inventory by vaccine, brand, LotID, location, and expiration.'
-              inverted
-            />
-          </Grid.Column>
-        </Grid>
+        <div className='controls'>
+          <Popup
+            trigger={<Input placeholder='Filter by vaccine name...' icon='search'
+              onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.VACCINE_FILTER} />}
+            content='This allows you to filter vaccines by name, lot, and expiration (YYYY-MM-DD).'
+            inverted
+          />
+          {
+            loading ? 
+              <Loader inline active />
+              :
+              <span onClick={download}>
+                <Icon name="download" />
+                Download
+                <Icon name="file excel" />
+              </span>
+          }
+        </div>
+
+        <div className='filters vaccine'>
+          <span>
+            <span>Brand:</span>
+            <Dropdown inline options={getFilters(brands)} search
+              onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.VACCINE_BRAND}/>
+          </span>
+          <span>
+            <span>Location:</span>
+            <Dropdown inline options={getFilters(locations)} search
+              onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION} />
+          </span>
+          <span>
+            <span>Status:</span>
+            <Dropdown inline options={statusOptions} search
+              onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
+          </span>
+        </div>
+
         <Divider/>
-        <Grid divided columns="equal">
-          <Grid.Row textAlign='center'>
-            <Grid.Column>
-              Vaccine Brand: {' '}
-              <Dropdown inline options={getFilters(brands)} search
-                onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.VACCINE_BRAND}/>
-            </Grid.Column>
-            <Grid.Column>
-              Vaccine Location: {' '}
-              <Dropdown inline options={getFilters(locations)} search
-                onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION} />
-            </Grid.Column>
-            <Grid.Column>
-              Inventory Status: {' '}
-              <Dropdown inline options={statusOptions} search
-                onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Divider/>
+
+        {
+          (countL + countN) &&
+          (
+            visible ?
+              <Message warning
+                onDismiss={handleDismiss}
+                header="Some vaccines are low on stock!"
+                content={`${countL} vaccines are low on stock and ${countN} vaccines are out of stock.`}
+              />
+              :
+              <div className='warning-div' onClick={handleDismiss}>Expand warning message</div>
+          )
+        }
+
         <div>
           Records per page: {' '}
           <Dropdown inline options={recordOptions}
@@ -200,6 +255,8 @@ VaccineStatus.propTypes = {
   brands: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+  countL: PropTypes.number.isRequired,
+  countN: PropTypes.number.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -213,10 +270,26 @@ export default withTracker(() => {
   const vaccines = Vaccines.find({}, { sort: { vaccine: 1 } }).fetch();
   const brands = fetchField(VaccineBrands, "vaccineBrand");
   const locations = fetchField(Locations, "location");
+  // add is expired and total quantity to vaccines
+  vaccines.forEach(doc => {
+    // doc.sum = doc.lotIds.reduce((p, c) => p + c.quantity, 0);
+    let sum = 0;
+    doc.lotIds.forEach(o => {
+      const expire = o.expire;
+      const isExpired = expire ? (currentDate > moment(expire)) : false;
+      if (!isExpired)
+        sum += o.quantity;
+      o.isExpired = isExpired;
+    });
+    doc.sum = sum;
+  });
+  const [countL, countN] = fetchCounts(vaccines);
   return {
     vaccines,
     brands,
     locations,
     ready,
+    countL,
+    countN,
   };
 })(VaccineStatus);
