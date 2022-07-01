@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon, Popup, Tab, Message } from 'semantic-ui-react';
+import { Header, Table, Divider, Dropdown, Pagination, Input, Loader, Icon, Popup, Tab, Message } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -192,32 +192,30 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
               </span>
           }
         </div>
-        <Divider/>
-        <Grid divided columns="equal" style={{ display: 'flex' }}>
-          <Grid.Row textAlign='center'>
-            <Grid.Column>
-                Drug Type: {' '}
-              <Dropdown inline options={getFilters(drugTypes)} search
-                onChange={handleTypeFilter} value={typeFilter} id={COMPONENT_IDS.MEDICATION_TYPE}/>
-            </Grid.Column>
-            <Grid.Column>
-                Drug Brand: {' '}
-              <Dropdown inline options={getFilters(brands)} search
-                onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.MEDICATION_BRAND}/>
-            </Grid.Column>
-            <Grid.Column>
-                Drug Location: {' '}
-              <Dropdown inline options={getFilters(locations)} search
-                onChange={handleLocationFilter} value={locationFilter}
-                id={COMPONENT_IDS.MEDICATION_LOCATION}/>
-            </Grid.Column>
-            <Grid.Column>
-                Inventory Status: {' '}
-              <Dropdown inline options={statusOptions} search
-                onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+
+        <div className='filters'>
+          <span>
+            Type:
+            <Dropdown inline options={getFilters(drugTypes)} search
+              onChange={handleTypeFilter} value={typeFilter} id={COMPONENT_IDS.MEDICATION_TYPE}/>
+          </span>
+          <span>
+            Brand:
+            <Dropdown inline options={getFilters(brands)} search
+              onChange={handleBrandFilter} value={brandFilter} id={COMPONENT_IDS.MEDICATION_BRAND}/>
+          </span>
+          <span>
+            Location:
+            <Dropdown inline options={getFilters(locations)} search
+              onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION}/>
+          </span>
+          <span>
+            Status:
+            <Dropdown inline options={statusOptions} search
+              onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
+          </span>
+        </div>
+        
         <Divider/>
 
         {
