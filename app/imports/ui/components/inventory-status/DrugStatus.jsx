@@ -4,6 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { ZipZap } from 'meteor/udondan:zipzap';
 import { Drugs } from '../../../api/drug/DrugCollection';
 import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { Units } from '../../../api/unit/UnitCollection';
@@ -14,6 +15,7 @@ import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import DrugStatusRow from './DrugStatusRow';
 import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
+import { downloadDatabaseMethod } from '../../../api/ManageDatabase.methods';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
@@ -34,11 +36,16 @@ const statusOptions = [
 
 const currentDate = moment();
 
+// replace " " with "-" and make lowercase
+const formatQuery = (query) => {
+  return query.replace(/\s+/g, "-").toLowerCase();
+};
+
 // Render the form.
 const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL, countN }) => {
-  const [filteredMedications, setFilteredMedications] = useState([]);
+  const [filteredDrugs, setFilteredDrugs] = useState([]);
   useEffect(() => {
-    setFilteredMedications(drugs);
+    setFilteredDrugs(drugs);
   }, [drugs]);
   const [searchQuery, setSearchQuery] = useState('');
   const [pageNo, setPageNo] = useState(1);
@@ -48,6 +55,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
   const [statusFilter, setStatusFilter] = useState(0);
   const [maxRecords, setMaxRecords] = useState(25);
   const [visible, setVisible] = useState(JSON.parse(window.localStorage.getItem("visible")) ?? true);
+  const [loading, setLoading] = useState(false); // download loader
 
   // handles filtering
   useEffect(() => {
@@ -63,17 +71,15 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
       ));
     }
     if (typeFilter) {
-      filter = filter.filter((medication) => medication.drugType.includes(typeFilter));
+      filter = filter.filter((o) => o.drugType.includes(typeFilter));
     }
     if (brandFilter) {
-      // filter = filter.filter((medication) => medication.brand === brandFilter);
-      filter = filter.filter((medication) => medication.lotIds.findIndex(
+      filter = filter.filter((o) => o.lotIds.findIndex(
         lotId => lotId.brand === brandFilter,
       ) !== -1);
     }
     if (locationFilter) {
-      // filter = filter.filter((medication) => medication.location === locationFilter);
-      filter = filter.filter((medication) => medication.lotIds.findIndex(
+      filter = filter.filter((o) => o.lotIds.findIndex(
         lotId => lotId.location === locationFilter,
       ) !== -1);
     }
@@ -91,7 +97,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
         return true;
       });
     }
-    setFilteredMedications(filter);
+    setFilteredDrugs(filter);
   }, [searchQuery, typeFilter, brandFilter, locationFilter, statusFilter]);
 
   const handleSearch = (event, { value }) => setSearchQuery(value);
@@ -120,6 +126,42 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
     window.localStorage.setItem("visible", JSON.stringify(!visible));
   };
 
+  // download DB w/ filter
+  const download = () => {
+    setLoading(true);
+    downloadDatabaseMethod.callPromise({ db: "drugs", _ids: _.pluck(filteredDrugs, "_id") })
+      .then(csv => {
+        const zip = new ZipZap();
+        const dir = 'minerva-db';
+        // query, type, brand, location, status
+        let filter = "";
+        if (searchQuery) {
+          filter += `query=${formatQuery(searchQuery)}&`;
+        }
+        if (typeFilter) {
+          filter += `type=${formatQuery(typeFilter)}&`;
+        }
+        if (brandFilter) {
+          filter += `brand=${formatQuery(brandFilter)}&`;
+        }
+        if (locationFilter) {
+          filter += `location=${formatQuery(locationFilter)}&`;
+        }
+        if (statusFilter) {
+          filter += `status=${formatQuery(statusFilter)}&`;
+        }
+        // append "-" and remove the last char
+        if (filter) {
+          filter = `-${filter.slice(0, -1)}`;
+        }
+        const fileName = `${dir}/${moment().format("YYYY-MM-DD")}-drugs${filter}.csv`;
+        zip.file(fileName, csv);
+        zip.saveAs(`${dir}.zip`);
+      })
+      .catch(error => swal("Error", error.message, "error"))
+      .finally(() => setLoading(false));
+  };
+
   if (ready) {
     return (
       <Tab.Pane id={PAGE_IDS.MED_STATUS} className='status-tab'>
@@ -132,16 +174,24 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <Grid>
-          <Grid.Column width={4}>
-            <Popup
-              trigger={<Input placeholder='Filter by drug name...' icon='search'
-                onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.STATUS_FILTER}/>}
-              content='This allows you to filter the Inventory by drug, brand, LotID, location, and expiration.'
-              inverted
-            />
-          </Grid.Column>
-        </Grid>
+        <div className='controls'>
+          <Popup
+            trigger={<Input placeholder='Filter by drug name...' icon='search'
+              onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.STATUS_FILTER}/>}
+            content='This allows you to filter drugs by name, brand, lot, location, and expiration.'
+            inverted
+          />
+          {
+            loading ? 
+              <Loader inline active />
+              :
+              <span onClick={download}>
+                <Icon name="download" />
+                Download
+                <Icon name="file excel" />
+              </span>
+          }
+        </div>
         <Divider/>
         <Grid divided columns="equal" style={{ display: 'flex' }}>
           <Grid.Row textAlign='center'>
@@ -188,7 +238,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
             Records per page: {' '}
           <Dropdown inline options={recordOptions}
             onChange={handleRecordLimit} value={maxRecords} id={COMPONENT_IDS.NUM_OF_RECORDS}/>
-            Total count: {filteredMedications.length}
+            Total count: {filteredDrugs.length}
         </div>
         <Table selectable color='blue' className='status-wrapped' unstackable>
           <Table.Header>
@@ -205,7 +255,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
 
           <Table.Body>
             {
-              filteredMedications.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
+              filteredDrugs.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
                 .map(med => <DrugStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={units} brands={brands} />)
             }
           </Table.Body>
@@ -216,7 +266,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
                 { mobile === false &&
                     <div>
                       <Pagination
-                        totalPages={Math.ceil(filteredMedications.length / maxRecords)}
+                        totalPages={Math.ceil(filteredDrugs.length / maxRecords)}
                         activePage={pageNo}
                         onPageChange={(event, data) => {
                           setPageNo(data.activePage);
@@ -236,7 +286,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
         </Table>
         { mobile === true &&
         <Pagination
-          totalPages={Math.ceil(filteredMedications.length / maxRecords)}
+          totalPages={Math.ceil(filteredDrugs.length / maxRecords)}
           activePage={pageNo}
           onPageChange={(event, data) => setPageNo(data.activePage)}
           ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}

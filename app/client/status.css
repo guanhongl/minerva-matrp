@@ -21,7 +21,7 @@
   border-radius: 50%;
 }
 
-.status-tab span {
+.status-tab td span {
   font-size: 12px;
 }
 
@@ -34,12 +34,27 @@
 }
 
 .status-tab div.warning-div {
-  font-size: 1em;
   color: rgb(87, 58, 8, 0.87);
   cursor: pointer;
   text-decoration: underline;
   padding: 1em 0;
   width: fit-content;
+}
+
+.status-tab div.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.status-tab div.controls span {
+  color: #21ba45;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.status-tab div.controls .ui.input {
+  width: 50%;
 }
 
 #status .ui.tabular.menu {
