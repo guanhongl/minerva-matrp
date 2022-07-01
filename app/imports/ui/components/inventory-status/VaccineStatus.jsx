@@ -59,19 +59,25 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
     let filter = cloneDeep(vaccines);
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filter = filter.filter(({ vaccine, brand, lotIds }) => (
-        vaccine.toLowerCase().includes(query.toLowerCase()) ||
-        lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
-        lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
-      ));
+      filter = filter.filter(o => {
+        // short circuit here
+        if (o.vaccine.toLowerCase().includes(query)) {
+          return true;
+        }
+        o.lotIds = o.lotIds.filter(lot => lot.lotId.toLowerCase().includes(query)); // nested filter
+        if (o.lotIds.length > 0) {
+          return true;
+        }
+      });
     }
     if (brandFilter) {
       filter = filter.filter((vaccine) => vaccine.brand === brandFilter);
     }
     if (locationFilter) {
-      filter = filter.filter((vaccine) => vaccine.lotIds.findIndex(
-        lotId => lotId.location === locationFilter,
-      ) !== -1);
+      filter = filter.filter(o => {
+        o.lotIds = o.lotIds.filter(lot => lot.location === locationFilter); // nested filter
+        return o.lotIds.length > 0;
+      });
     }
     if (statusFilter) {
       filter = filter.filter((vaccine) => {
@@ -202,7 +208,10 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
           Records per page: {' '}
           <Dropdown inline options={recordOptions}
             onChange={handleRecordLimit} value={maxRecords} id={COMPONENT_IDS.NUM_OF_RECORDS}/>
-          Total count: {filteredVaccines.length}
+          <span>
+            {`Total count: ${filteredVaccines.length} vaccines, 
+            ${filteredVaccines.reduce((p, c) => p + c.lotIds.length, 0)} lots`}
+          </span>
         </div>
         <Table selectable color='blue' unstackable>
           <Table.Header>

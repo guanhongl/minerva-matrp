@@ -62,24 +62,36 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
     let filter = cloneDeep(drugs);
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filter = filter.filter(({ drug, lotIds }) => (
-        drug.toLowerCase().includes(query.toLowerCase()) ||
-        lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
-        lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
-      ));
+      filter = filter.filter(o => {
+        // short circuit here
+        if (o.drug.toLowerCase().includes(query)) {
+          return true;
+        }
+        o.lotIds = o.lotIds.filter(lot => lot.lotId.toLowerCase().includes(query)); // nested filter
+        if (o.lotIds.length > 0) {
+          return true;
+        }
+        // replace with date input filter
+        // o.lotIds = o.lotIds.filter(lot => ( lot.expire && lot.expire.includes(query) )) // nested filter
+        // if (o.lotIds.length > 0) {
+        //   return true;
+        // }
+      });
     }
     if (typeFilter) {
       filter = filter.filter((o) => o.drugType.includes(typeFilter));
     }
     if (brandFilter) {
-      filter = filter.filter((o) => o.lotIds.findIndex(
-        lotId => lotId.brand === brandFilter,
-      ) !== -1);
+      filter = filter.filter(o => {
+        o.lotIds = o.lotIds.filter(lot => lot.brand === brandFilter); // nested filter
+        return o.lotIds.length > 0;
+      });
     }
     if (locationFilter) {
-      filter = filter.filter((o) => o.lotIds.findIndex(
-        lotId => lotId.location === locationFilter,
-      ) !== -1);
+      filter = filter.filter(o => {
+        o.lotIds = o.lotIds.filter(lot => lot.location === locationFilter); // nested filter
+        return o.lotIds.length > 0;
+      });
     }
     if (statusFilter) {
       filter = filter.filter((drug) => {
@@ -233,7 +245,10 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
             Records per page: {' '}
           <Dropdown inline options={recordOptions}
             onChange={handleRecordLimit} value={maxRecords} id={COMPONENT_IDS.NUM_OF_RECORDS}/>
-            Total count: {filteredDrugs.length}
+          <span>
+            {`Total count: ${filteredDrugs.length} drugs, 
+            ${filteredDrugs.reduce((p, c) => p + c.lotIds.length, 0)} lots`}
+          </span>
         </div>
         <Table selectable color='blue' className='status-wrapped' unstackable>
           <Table.Header>

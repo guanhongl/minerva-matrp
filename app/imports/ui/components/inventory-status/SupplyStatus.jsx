@@ -56,13 +56,14 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ supply }) => (
-        supply.toLowerCase().includes(query.toLowerCase())
+        supply.toLowerCase().includes(query)
       ));
     }
     if (locationFilter) {
-      filter = filter.filter((supply) => supply.stock.findIndex(
-        stock => stock.location === locationFilter,
-      ) !== -1);
+      filter = filter.filter(o => {
+        o.stock = o.stock.filter(lot => lot.location === locationFilter); // nested filter
+        return o.stock.length > 0;
+      });
     }
     if (statusFilter) {
       filter = filter.filter((supply) => {
@@ -184,7 +185,10 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
           Records per page: {' '}
           <Dropdown inline options={recordOptions}
             onChange={handleRecordLimit} value={maxRecords}/>
-          Total count: {filteredSupplies.length}
+          <span>
+            {`Total count: ${filteredSupplies.length} supplies, 
+            ${filteredSupplies.reduce((p, c) => p + c.stock.length, 0)} lots`}
+          </span>
         </div>
         <Table selectable color='blue' unstackable>
           <Table.Header>
