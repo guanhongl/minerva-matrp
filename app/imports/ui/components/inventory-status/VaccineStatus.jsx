@@ -183,7 +183,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
           </span>
           <span>
             <span>Status:</span>
-            <Dropdown inline options={statusOptions} search
+            <Dropdown inline options={statusOptions} 
               onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
           </span>
         </div>

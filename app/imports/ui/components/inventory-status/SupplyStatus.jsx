@@ -44,6 +44,7 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
   }, [supplies]);
   const [searchQuery, setSearchQuery] = useState('');
   const [pageNo, setPageNo] = useState(1);
+  const [typeFilter, setTypeFilter] = useState(0);
   const [locationFilter, setLocationFilter] = useState(0);
   const [statusFilter, setStatusFilter] = useState(0);
   const [maxRecords, setMaxRecords] = useState(25);
@@ -58,6 +59,9 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
       filter = filter.filter(({ supply }) => (
         supply.toLowerCase().includes(query)
       ));
+    }
+    if (typeFilter) {
+      filter = filter.filter(o => o.supplyType === typeFilter);
     }
     if (locationFilter) {
       filter = filter.filter(o => {
@@ -80,9 +84,10 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
       });
     }
     setFilteredSupplies(filter);
-  }, [searchQuery, locationFilter, statusFilter]);
+  }, [searchQuery, typeFilter, locationFilter, statusFilter]);
 
   const handleSearch = (event, { value }) => setSearchQuery(value);
+  const handleTypeFilter = (event, { value }) => setTypeFilter(value);
   const handleLocationFilter = (event, { value }) => setLocationFilter(value);
   const handleStatusFilter = (event, { value }) => setStatusFilter(value);
   const handleRecordLimit = (event, { value }) => setMaxRecords(value);
@@ -103,6 +108,9 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
         let filter = "";
         if (searchQuery) {
           filter += `query=${formatQuery(searchQuery)}&`;
+        }
+        if (typeFilter) {
+          filter += `type=${formatQuery(typeFilter)}&`;
         }
         if (locationFilter) {
           filter += `location=${formatQuery(locationFilter)}&`;
@@ -154,13 +162,18 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
 
         <div className='filters supply'>
           <span>
+            <span>Type:</span>
+            <Dropdown inline options={getFilters(supplyTypes)} 
+              onChange={handleTypeFilter} value={typeFilter} />
+          </span>
+          <span>
             <span>Location:</span>
             <Dropdown inline options={getFilters(locations)} search
               onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.SUPPLY_LOCATION}/>
           </span>
           <span>
             <span>Status:</span>
-            <Dropdown inline options={statusOptions} search
+            <Dropdown inline options={statusOptions} 
               onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.SUPPLY_INVENTORY}/>
           </span>
         </div>

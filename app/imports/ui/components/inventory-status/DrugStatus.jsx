@@ -220,7 +220,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
           </span>
           <span>
             <span>Status:</span>
-            <Dropdown inline options={statusOptions} search
+            <Dropdown inline options={statusOptions} 
               onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
           </span>
         </div>
