@@ -57,16 +57,14 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
     }
     if (statusFilter) {
       filter = filter.filter((supply) => {
-        const totalQuantity = supply.stock.length ?
-          _.pluck(supply.stock, 'quantity').reduce((prev, current) => prev + current) : 0;
         if (statusFilter === 'In Stock') {
-          return totalQuantity >= supply.minQuantity;
+          return supply.sum >= supply.minQuantity;
         }
         if (statusFilter === 'Low Stock') {
-          return (totalQuantity > 0 && totalQuantity < supply.minQuantity);
+          return (supply.sum > 0 && supply.sum < supply.minQuantity);
         }
         if (statusFilter === 'Out of Stock') {
-          return totalQuantity === 0;
+          return supply.sum === 0;
         }
         return true;
       });
@@ -182,6 +180,10 @@ export default withTracker(() => {
   // Get the Supply documents and sort them by name.
   const supplies = Supplys.find({}, { sort: { supply: 1 } }).fetch();
   const locations = fetchField(Locations, "location");
+  // add total quantity to supplies
+  supplies.forEach(doc => {
+    doc.sum = doc.stock.reduce((p, c) => p + c.quantity, 0);
+  });
   return {
     supplies,
     locations,

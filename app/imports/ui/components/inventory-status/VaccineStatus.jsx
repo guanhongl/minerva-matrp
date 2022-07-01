@@ -68,25 +68,14 @@ const VaccineStatus = ({ ready, vaccines, brands, locations }) => {
     }
     if (statusFilter) {
       filter = filter.filter((vaccine) => {
-        const isExpired = vaccine.lotIds.map(({ expire }) => {
-          if (expire) {
-            return currentDate > moment(expire);
-          }
-          return false;
-        });
-
-        const totalQuantity = vaccine.lotIds.length ?
-          _.pluck(vaccine.lotIds, 'quantity')
-            .reduce((prev, current, index) => (isExpired[index] ? prev : prev + current), 0) 
-          : 0;
         if (statusFilter === 'In Stock') {
-          return totalQuantity >= vaccine.minQuantity;
+          return vaccine.sum >= vaccine.minQuantity;
         }
         if (statusFilter === 'Low Stock') {
-          return (totalQuantity > 0 && totalQuantity < vaccine.minQuantity);
+          return (vaccine.sum > 0 && vaccine.sum < vaccine.minQuantity);
         }
         if (statusFilter === 'Out of Stock') {
-          return totalQuantity === 0;
+          return vaccine.sum === 0;
         }
         return true;
       });
@@ -213,6 +202,19 @@ export default withTracker(() => {
   const vaccines = Vaccines.find({}, { sort: { vaccine: 1 } }).fetch();
   const brands = fetchField(VaccineBrands, "vaccineBrand");
   const locations = fetchField(Locations, "location");
+  // add is expired and total quantity to vaccines
+  vaccines.forEach(doc => {
+    // doc.sum = doc.lotIds.reduce((p, c) => p + c.quantity, 0);
+    let sum = 0;
+    doc.lotIds.forEach(o => {
+      const expire = o.expire;
+      const isExpired = expire ? (currentDate > moment(expire)) : false;
+      if (!isExpired)
+        sum += o.quantity;
+      o.isExpired = isExpired;
+    });
+    doc.sum = sum;
+  });
   return {
     vaccines,
     brands,
