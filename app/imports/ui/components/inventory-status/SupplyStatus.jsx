@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Divider, Dropdown, Pagination, Grid, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
+import { Header, Table, Divider, Dropdown, Pagination, Message, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
+import { ZipZap } from 'meteor/udondan:zipzap';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
-import { fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
 import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import SupplyStatusRow from './SupplyStatusRow';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { cloneDeep } from 'lodash';
+import { downloadDatabaseMethod } from '../../../api/ManageDatabase.methods';
 
 // convert array to dropdown options
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
@@ -28,8 +31,13 @@ const statusOptions = [
   { key: 3, value: 'Out of Stock', text: 'Out of stock' },
 ];
 
+// replace " " with "-" and make lowercase
+const formatQuery = (query) => {
+  return query.replace(/\s+/g, "-").toLowerCase();
+};
+
 // Render the form.
-const SupplyStatus = ({ ready, supplies, locations }) => {
+const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
   const [filteredSupplies, setFilteredSupplies] = useState([]);
   useEffect(() => {
     setFilteredSupplies(supplies);
@@ -39,6 +47,8 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
   const [locationFilter, setLocationFilter] = useState(0);
   const [statusFilter, setStatusFilter] = useState(0);
   const [maxRecords, setMaxRecords] = useState(25);
+  const [visible, setVisible] = useState(JSON.parse(window.localStorage.getItem("visible")) ?? true);
+  const [loading, setLoading] = useState(false); // download loader
 
   // handles filtering
   useEffect(() => {
@@ -77,6 +87,41 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
   const handleStatusFilter = (event, { value }) => setStatusFilter(value);
   const handleRecordLimit = (event, { value }) => setMaxRecords(value);
 
+  const handleDismiss = () => {
+    setVisible(!visible);
+    window.localStorage.setItem("visible", JSON.stringify(!visible));
+  };
+
+  // download DB w/ filter
+  const download = () => {
+    setLoading(true);
+    downloadDatabaseMethod.callPromise({ db: "supplies", _ids: _.pluck(filteredSupplies, "_id") })
+      .then(csv => {
+        const zip = new ZipZap();
+        const dir = 'minerva-db';
+        // query, location, status
+        let filter = "";
+        if (searchQuery) {
+          filter += `query=${formatQuery(searchQuery)}&`;
+        }
+        if (locationFilter) {
+          filter += `location=${formatQuery(locationFilter)}&`;
+        }
+        if (statusFilter) {
+          filter += `status=${formatQuery(statusFilter)}&`;
+        }
+        // append "-" and remove the last char
+        if (filter) {
+          filter = `-${filter.slice(0, -1)}`;
+        }
+        const fileName = `${dir}/${moment().format("YYYY-MM-DD")}-supplies${filter}.csv`;
+        zip.file(fileName, csv);
+        zip.saveAs(`${dir}.zip`);
+      })
+      .catch(error => swal("Error", error.message, "error"))
+      .finally(() => setLoading(false));
+  };
+
   if (ready) {
     return (
       <Tab.Pane id={PAGE_IDS.SUPPLY_STATUS} className='status-tab'>
@@ -88,32 +133,54 @@ const SupplyStatus = ({ ready, supplies, locations }) => {
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <Grid>
-          <Grid.Column width={4}>
-            <Popup
-              trigger={<Input placeholder='Filter by supply name...' icon='search'
-                onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.SUPPLY_FILTER} />}
-              content='This allows you to filter the Inventory by supply name.'
-              inverted
-            />
-          </Grid.Column>
-        </Grid>
+        <div className='controls'>
+          <Popup
+            trigger={<Input placeholder='Filter by supply name...' icon='search'
+              onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.SUPPLY_FILTER} />}
+            content='This allows you to filter supplies by name and location.'
+            inverted
+          />
+          {
+            loading ? 
+              <Loader inline active />
+              :
+              <span onClick={download}>
+                <Icon name="download" />
+                Download
+                <Icon name="file excel" />
+              </span>
+          }
+        </div>
+
+        <div className='filters supply'>
+          <span>
+            <span>Location:</span>
+            <Dropdown inline options={getFilters(locations)} search
+              onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.SUPPLY_LOCATION}/>
+          </span>
+          <span>
+            <span>Status:</span>
+            <Dropdown inline options={statusOptions} search
+              onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.SUPPLY_INVENTORY}/>
+          </span>
+        </div>
+
         <Divider/>
-        <Grid divided columns="equal">
-          <Grid.Row textAlign='center'>
-            <Grid.Column>
-              Supply Location: {' '}
-              <Dropdown inline options={getFilters(locations)} search
-                onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.SUPPLY_LOCATION}/>
-            </Grid.Column>
-            <Grid.Column>
-              Inventory Status: {' '}
-              <Dropdown inline options={statusOptions} search
-                onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.SUPPLY_INVENTORY}/>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Divider/>
+
+        {
+          (countL + countN) &&
+          (
+            visible ?
+              <Message warning
+                onDismiss={handleDismiss}
+                header="Some supplies are low on stock!"
+                content={`${countL} supplies are low on stock and ${countN} supplies are out of stock.`}
+              />
+              :
+              <div className='warning-div' onClick={handleDismiss}>Expand warning message</div>
+          )
+        }
+
         <div>
           Records per page: {' '}
           <Dropdown inline options={recordOptions}
@@ -169,6 +236,8 @@ SupplyStatus.propTypes = {
   supplies: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+  countL: PropTypes.number.isRequired,
+  countN: PropTypes.number.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -184,9 +253,12 @@ export default withTracker(() => {
   supplies.forEach(doc => {
     doc.sum = doc.stock.reduce((p, c) => p + c.quantity, 0);
   });
+  const [countL, countN] = fetchCounts(supplies);
   return {
     supplies,
     locations,
     ready,
+    countL,
+    countN,
   };
 })(SupplyStatus);
