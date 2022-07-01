@@ -55,9 +55,8 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
     let filter = cloneDeep(supplies); // deep clone supplies
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filter = filter.filter(({ supply, stock }) => (
-        supply.toLowerCase().includes(query.toLowerCase()) ||
-        stock.findIndex(({ location }) => location.toLowerCase().includes(query)) !== -1
+      filter = filter.filter(({ supply }) => (
+        supply.toLowerCase().includes(query.toLowerCase())
       ));
     }
     if (locationFilter) {
@@ -127,9 +126,9 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
       <Tab.Pane id={PAGE_IDS.SUPPLY_STATUS} className='status-tab'>
         <Header as="h2">
           <Header.Content>
-            Supply Inventory Status
+            Supply Inventory
             <Header.Subheader>
-              <i>Use the search filter or the dropdown filters to check for a specific supply.</i>
+              Use the search and dropdown filters to find a specific supply.
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -137,7 +136,7 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
           <Popup
             trigger={<Input placeholder='Filter by supply name...' icon='search'
               onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.SUPPLY_FILTER} />}
-            content='This allows you to filter supplies by name and location.'
+            content='This allows you to filter supplies by name.'
             inverted
           />
           {

@@ -64,10 +64,8 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ drug, lotIds }) => (
         drug.toLowerCase().includes(query.toLowerCase()) ||
-          lotIds.findIndex(({ brand }) => brand.toLowerCase().includes(query)) !== -1 ||
-          lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
-          lotIds.findIndex(({ location }) => location.toLowerCase().includes(query)) !== -1 ||
-          lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
+        lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
+        lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
       ));
     }
     if (typeFilter) {
@@ -167,10 +165,9 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
       <Tab.Pane id={PAGE_IDS.MED_STATUS} className='status-tab'>
         <Header as="h2">
           <Header.Content>
-              Drug Inventory Status
+              Drug Inventory
             <Header.Subheader>
-              <i>Use the search filter to check for a specific drug or
-                  use the dropdown filters.</i>
+              Use the search and dropdown filters to find a specific drug.
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -178,7 +175,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
           <Popup
             trigger={<Input placeholder='Filter by drug name...' icon='search'
               onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.STATUS_FILTER}/>}
-            content='This allows you to filter drugs by name, brand, lot, location, and expiration.'
+            content='This allows you to filter drugs by name, lot, and expiration (YYYY-MM-DD).'
             inverted
           />
           {

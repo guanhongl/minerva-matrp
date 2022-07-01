@@ -61,9 +61,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
       const query = searchQuery.toLowerCase();
       filter = filter.filter(({ vaccine, brand, lotIds }) => (
         vaccine.toLowerCase().includes(query.toLowerCase()) ||
-        brand.toLowerCase().includes(query.toLowerCase()) ||
         lotIds.findIndex(({ expire }) => (expire && expire.includes(query))) !== -1 ||
-        lotIds.findIndex(({ location }) => location.toLowerCase().includes(query)) !== -1 ||
         lotIds.findIndex(({ lotId }) => lotId.toLowerCase().includes(query)) !== -1
       ));
     }
@@ -141,10 +139,9 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
       <Tab.Pane id={PAGE_IDS.VACCINE_STATUS} className='status-tab'>
         <Header as="h2">
           <Header.Content>
-            Vaccine Inventory Status
+            Vaccine Inventory
             <Header.Subheader>
-              <i>Use the search filter to check for a specific vaccine or
-                use the dropdown filters.</i>
+              Use the search and dropdown filters to find a specific vaccine.
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -152,7 +149,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
           <Popup
             trigger={<Input placeholder='Filter by vaccine name...' icon='search'
               onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.VACCINE_FILTER} />}
-            content='This allows you to filter vaccines by name, brand, lot, location, and expiration.'
+            content='This allows you to filter vaccines by name, lot, and expiration (YYYY-MM-DD).'
             inverted
           />
           {

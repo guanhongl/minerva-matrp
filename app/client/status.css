@@ -90,6 +90,10 @@
   color: white;
 }
 
+.status-tab div.sub.header {
+  font-style: italic;
+}
+
 #status .ui.tabular.menu {
   padding-right: 25%;
 }
