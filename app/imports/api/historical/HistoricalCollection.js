@@ -72,7 +72,10 @@ Schemas.Vaccine = new SimpleSchema({
   'element.$.name': String,
   'element.$.lotId': String,
   'element.$.brand': String,
-  'element.$.expire': String,
+  'element.$.expire': { // date string "YYYY-MM-DD"
+    type: String,
+    optional: true,
+  },
   'element.$.dose': Number,
   'element.$.quantity': Number,
   'element.$.visDate': String,

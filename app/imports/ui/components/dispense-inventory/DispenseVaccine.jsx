@@ -13,10 +13,11 @@ import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/vaccine/VaccineCollection.methods';
 import { fetchField, fetchLots, getOptions, useQuery } from '../../utilities/Functions';
+import DispenseVaccineSingle from './DispenseVaccineSingle';
 
 /** handle submit for Dispense Vaccine. */
-const submit = (data, callback) => {
-  dispenseMethod.callPromise({ data })
+const submit = (fields, innerFields, callback) => {
+  dispenseMethod.callPromise({ fields, innerFields })
     .then(success => {
       swal('Success', success, 'success', { buttons: false, timer: 3000 });
       callback(); // resets the form
@@ -34,6 +35,9 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
     dateDispensed: moment().format('YYYY-MM-DDTHH:mm'),
     dispensedTo: '',
     site: '',
+    note: '',
+  };
+  const initInnerFields = {
     vaccine: '',
     lotId: '',
     brand: '',
@@ -41,11 +45,12 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
     dose: '', // the dose number
     quantity: '',
     visDate: '',
-    note: '',
+    maxQuantity: 0,
   };
 
   const [fields, setFields] = useState(initFields);
-  const [maxQuantity, setMaxQuantity] = useState(0);
+  const [innerFields, setInnerFields] = useState([initInnerFields]);
+  // const [maxQuantity, setMaxQuantity] = useState(0);
   const patientUse = fields.dispenseType === 'Patient Use';
   const nonPatientUse = fields.dispenseType !== 'Patient Use';
 
@@ -59,9 +64,11 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
           const targetLotId = target.lotIds.find(obj => obj._id === _id);
           const { vaccine, brand, visDate } = target;
           const { expire, lotId, quantity } = targetLotId;
-          const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
-          setFields(autoFields);
-          setMaxQuantity(quantity);
+          // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
+          // setFields(autoFields);
+          // setMaxQuantity(quantity);
+          const autoFields = { ...initInnerFields, vaccine, lotId, brand, expire, visDate, maxQuantity: quantity };
+          setInnerFields([autoFields]);
         });
     }
   }, [ready]);
@@ -78,8 +85,15 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
     setFields({ ...fields, [name]: value });
   };
 
+  const handleChangeInner = (event, { index, name, value }) => {
+    const newInnerFields = [...innerFields];
+    newInnerFields[index] = { ...innerFields[index], [name]: value };
+    setInnerFields(newInnerFields);
+  };
+
   // handle lotId select
-  const onLotIdSelect = (event, { value: lotId }) => {
+  const onLotIdSelect = (event, { index, value: lotId }) => {
+    const newInnerFields = [...innerFields];
     const selector = { lotIds: { $elemMatch: { lotId } } };
     findOneMethod.callPromise({ collectionName, selector })
       .then(target => {
@@ -89,20 +103,39 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
           const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
           const { vaccine, brand, visDate } = target;
           const { expire, quantity } = targetLotId;
-          const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
-          setFields(autoFields);
-          setMaxQuantity(quantity);
+          // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
+          // setFields(autoFields);
+          // setMaxQuantity(quantity);
+          newInnerFields[index] = { ...innerFields[index], vaccine, lotId, brand, expire, visDate, maxQuantity: quantity };
+          setInnerFields(newInnerFields);
         } else {
           // else reset specific lotId info
-          setFields({ ...fields, lotId, vaccine: '', brand: '', visDate: '', expire: '' });
-          setMaxQuantity(0);
+          // setFields({ ...fields, lotId, vaccine: '', brand: '', visDate: '', expire: '' });
+          // setMaxQuantity(0);
+          newInnerFields[index] = { ...innerFields[index], vaccine: '', lotId, brand: '', expire: '', visDate: '', maxQuantity: 0 };
+          setInnerFields(newInnerFields);
         }
       });
   };
 
   const clearForm = () => {
     setFields(initFields);
-    setMaxQuantity(0);
+    // setMaxQuantity(0);
+    setInnerFields([initInnerFields]);
+  };
+
+  // handle add new vaccine to dispense
+  const onAdd = () => {
+    const newInnerFields = [...innerFields];
+    newInnerFields.push(initInnerFields);
+    setInnerFields(newInnerFields);
+  };
+
+  // handle remove vaccine to dispense
+  const onRemove = () => {
+    const newInnerFields = [...innerFields];
+    newInnerFields.pop();
+    setInnerFields(newInnerFields);
   };
 
   if (ready) {
@@ -144,7 +177,25 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
                   onChange={handleChange} value={fields.site} disabled={nonPatientUse}/>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
+
+            {
+              innerFields.map((fields, index) => 
+                <DispenseVaccineSingle key={`FORM_${index}`} names={names} lotIds={lotIds} brands={brands} fields={fields}
+                  handleChange={handleChangeInner} onLotIdSelect={onLotIdSelect} index={index} patientUse={patientUse} nonPatientUse={nonPatientUse} />
+              )
+            }
+
+            <Grid.Row style={{ padding: 0 }}>
+              <Grid.Column style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                {
+                  innerFields.length !== 1 &&
+                  <Button className='remove-item' compact icon='minus' content='Remove Vaccine' size='mini' onClick={onRemove}/>
+                }
+                <Button className='add-item' compact icon='add' content='Add New Vaccine' size='mini' onClick={onAdd} />
+              </Grid.Column>
+            </Grid.Row>
+
+            {/* <Grid.Row>
               <Grid.Column>
                 <Form.Select clearable search label='Lot Number' options={getOptions(lotIds)}
                   placeholder="Z9Z99" name='lotId' value={fields.lotId} onChange={onLotIdSelect} />
@@ -160,7 +211,6 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                {/* expiration date may be null */}
                 <Form.Input type='date' label='Expiration Date' name='expire'
                   onChange={handleChange} value={fields.expire}/>
               </Grid.Column>
@@ -177,7 +227,7 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
                     onChange={handleChange} placeholder='1' disabled={nonPatientUse}/>
                 </Form.Group>
               </Grid.Column>
-            </Grid.Row>
+            </Grid.Row> */}
             <Grid.Row>
               <Grid.Column>
                 <Form.TextArea label='Additional Notes' name='note' onChange={handleChange} value={fields.note}
@@ -188,7 +238,7 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
         </Form>
         <div className='buttons-div'>
           <Button className='clear-button' onClick={clearForm}>Clear Fields</Button>
-          <Button className='submit-button' floated='right' onClick={() => submit(fields, clearForm)}>Submit</Button>
+          <Button className='submit-button' floated='right' onClick={() => submit(fields, innerFields, clearForm)}>Submit</Button>
           {/* <Button className='submit-button' floated='right' onClick={() => alert('Under Maintenance...')}>Submit</Button> */}
         </div>
       </Tab.Pane>

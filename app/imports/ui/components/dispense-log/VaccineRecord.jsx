@@ -64,11 +64,11 @@ const VaccineRecord = ({ open, setOpen, record }) => {
                     </div>
                     <div>
                       <span className='header'>Expiration Date:</span>
-                      {moment(expire).format('LL')}
+                      {expire ? moment(expire).format('LL') : "N/A"}
                     </div>
                     <div>
                       <span className='header'>Dose Number:</span>
-                      {dose > 1 ? dose : 'N/A'}
+                      {dose > 0 ? dose : 'N/A'}
                     </div>
                     <div>
                       <span className='header'>Quantity:</span>

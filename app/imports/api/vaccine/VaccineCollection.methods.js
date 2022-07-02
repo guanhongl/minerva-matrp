@@ -79,29 +79,37 @@ export const dispenseMethod = new ValidatedMethod({
     name: 'vaccine.dispense',
     mixins: [CallPromiseMixin],
     validate: null,
-    run({ data }) {
+    run({ fields, innerFields }) {
         if (Meteor.isServer) {
             const collection = MATRP.vaccines;
             const history = MATRP.history;
             collection.assertValidRoleForMethod(this.userId);
 
-            data.dispensedFrom = Meteor.user().username;
+            fields.dispensedFrom = Meteor.user().username;
             // handle patient use dispense
-            if (data.dispenseType === 'Patient Use') {
-                data.quantity = '1';
+            if (fields.dispenseType === 'Patient Use') {
+                // fields.quantity = '1';
+                innerFields.forEach(o => o.quantity = '1');
             } else {
             // handle non patient use dispense
-                data.dispensedTo = 'N/A';
-                data.site = 'N/A';
-                data.dose = '0';
+                fields.dispensedTo = 'N/A';
+                fields.site = 'N/A';
+                // fields.dose = '0';
+                innerFields.forEach(o => o.dose = '0');
             }
             // validation
             let errorMsg = '';
             // the required String fields
-            const requiredFields = ['dispensedTo', 'site', 'vaccine', 'lotId', 'brand', 'visDate', 'dose', 'quantity'];
+            const requiredFields = ['dispensedTo', 'site'];
+            const requiredInnerFields = ['vaccine', 'lotId', 'brand', 'visDate', 'dose', 'quantity'];
             // if the field is empty, append error message
             requiredFields.forEach(field => {
-                if (!data[field]) {
+                if (!fields[field]) {
+                    errorMsg += `${field} cannot be empty.\n`;
+                }
+            });
+            requiredInnerFields.forEach(field => {
+                if (innerFields.some(o => o[field] === '')) {
                     errorMsg += `${field} cannot be empty.\n`;
                 }
             });
@@ -110,42 +118,64 @@ export const dispenseMethod = new ValidatedMethod({
             }
 
             // submit
-            data.dose = parseInt(data.dose, 10);
-            data.quantity = parseInt(data.quantity, 10);
+            // data.dose = parseInt(data.dose, 10);
+            // data.quantity = parseInt(data.quantity, 10);
+            innerFields.forEach(o => {
+                o.dose = parseInt(o.dose, 10);
+                o.quantity = parseInt(o.quantity, 10);
+            });
 
-            const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, 
-                vaccine, lotId, brand, expire, dose, quantity, visDate, note } = data;
-            const target = collection.findOne({ vaccine, brand }); // find the existing vaccine, brand pair
-            const { _id, lotIds } = target;
-            const copy = cloneDeep({ id: _id, lotIds }); // the copy of the record to update
-            const targetIndex = lotIds.findIndex((o => o.lotId === lotId)); // find the index of existing the lotId
-            const targetQuantity = lotIds[targetIndex].quantity;
-            // if dispense quantity > target quantity:
-            if (quantity > targetQuantity) {
-                throw new Meteor.Error("quantity-cap", `${vaccine}, ${lotId} only has ${targetQuantity} dose(s) remaining.`);
-            } else {
-            // if dispense quantity < target quantity:
-                if (quantity < targetQuantity) {
-                    lotIds[targetIndex].quantity -= quantity; // decrement the quantity
-                } else {
-            // else if dispense quantity === target quantity:
-                    lotIds.splice(targetIndex, 1); // remove the lotId b/c new quantity is 0
+            // const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, 
+            //     vaccine, lotId, brand, expire, dose, quantity, visDate, note } = data;
+            const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note } = fields;
+            const copy = []; // the copy of records to update
+            const update = []; // the records to update
+            const element = []; // the historical record elements
+            let successMsg = '';
+
+            innerFields.forEach(field => {
+                const { vaccine, lotId, brand, expire, dose, quantity, visDate } = field;
+                const target = collection.findOne({ vaccine, brand }); // find the existing vaccine, brand pair
+                const { _id } = target;
+                const match = update.find(o => o._id === _id);
+                const lotIds = !!match ? match.lotIds : target.lotIds; // set reference to match or target
+                if (!!!match) { 
+                    copy.push(cloneDeep( { _id, lotIds } )); // store a copy (we modify lotIds)
                 }
-            }
+                const targetIndex = lotIds.findIndex((o => o.lotId === lotId)); // find the index of existing the lotId
+                const targetQuantity = lotIds[targetIndex].quantity;
+                // if dispense quantity > target quantity:
+                if (quantity > targetQuantity) {
+                    throw new Meteor.Error("quantity-cap", `${vaccine}, ${lotId} only has ${targetQuantity} dose(s) remaining.`);
+                } else {
+                // if dispense quantity < target quantity:
+                    if (quantity < targetQuantity) {
+                        lotIds[targetIndex].quantity -= quantity; // decrement the quantity
+                    } else {
+                // else if dispense quantity === target quantity:
+                        lotIds.splice(targetIndex, 1); // remove the lotId b/c new quantity is 0
+                    }
+                }
+                if (!!!match) {
+                    update.push({ _id, lotIds }); // store the update
+                }
+                element.push({ name: vaccine, lotId, brand, expire, dose, quantity, visDate });
+                successMsg += `${vaccine}, ${lotId} updated successfully.\n`;
+            });
 
-            // const update = { id: _id, lotIds };
-            const element = [{ name: vaccine, lotId, brand, expire, dose, quantity, visDate }];
             const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site,
                 note, element };
             
             try {
-                collection.update(_id, { lotIds });
+                // collection.update(_id, { lotIds });
+                collection.updateMany(update);
                 history.define(definitionData);
 
-                return `${vaccine}, ${lotId} updated successfully`;
+                return successMsg;
             } catch (error) {
             // if update or define fail, restore the copy
-                collection.update(_id, { lotIds: copy.lotIds });
+                // collection.update(_id, { lotIds: copy.lotIds });
+                collection.updateMany(copy);
 
                 throw new Meteor.Error("update-error", error);
             };
