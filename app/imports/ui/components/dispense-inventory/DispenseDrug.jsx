@@ -183,24 +183,11 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites }) => {
               </Grid.Column>
             </Grid.Row>
             {
-              innerFields.map((innerField, index) => {
-                const elements = [];
-                elements.push(
-                  <DispenseDrugSingle names={names} units={units} brands={brands} lotIds={lotIds} fields={innerField}
-                    handleChange={handleChangeInner} handleCheck={handleCheck} onLotIdSelect={onLotIdSelect}
-                    index={index} key={`FORM_${index}`} />,
-                );
-                if (innerFields.length > 1 && index !== innerFields.length - 1) {
-                  elements.push(
-                    <Grid.Row style={{ padding: 0 }} key={`DIVIDER_${index}`}>
-                      <Grid.Column>
-                        <Divider fitted/>
-                      </Grid.Column>
-                    </Grid.Row>,
-                  );
-                }
-                return elements;
-              })
+              innerFields.map((innerField, index) => 
+                <DispenseDrugSingle names={names} units={units} brands={brands} lotIds={lotIds} fields={innerField}
+                  handleChange={handleChangeInner} handleCheck={handleCheck} onLotIdSelect={onLotIdSelect}
+                  index={index} key={`FORM_${index}`} />,
+              )
             }
             <Grid.Row style={{ padding: 0 }}>
               <Grid.Column style={{ display: 'flex', justifyContent: 'flex-end' }}>
