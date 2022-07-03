@@ -135,6 +135,11 @@ export const dispenseMethod = new ValidatedMethod({
                     copy.push(cloneDeep( { _id, stock } )); // store a copy (we modify stock)
                 }
                 const targetIndex = stock.findIndex((o => o.location === location && o.donated === donated)); // find the index of the existing supply
+
+                if (targetIndex == -1) {
+                    throw new Meteor.Error("not-found", `${supply} @ ${location} ${donated ? "(donated) ": ""}not found.`);
+                }
+
                 const targetQuantity = stock[targetIndex].quantity;
                 // if dispense quantity > target quantity:
                 if (quantity > targetQuantity) {
