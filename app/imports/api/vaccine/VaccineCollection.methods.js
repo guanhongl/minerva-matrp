@@ -142,7 +142,7 @@ export const dispenseMethod = new ValidatedMethod({
                 if (!!!match) { 
                     copy.push(cloneDeep( { _id, lotIds } )); // store a copy (we modify lotIds)
                 }
-                const targetIndex = lotIds.findIndex((o => o.lotId === lotId)); // find the index of existing the lotId
+                const targetIndex = lotIds.findIndex((o => o.lotId === lotId)); // find the index of the existing lotId
                 const targetQuantity = lotIds[targetIndex].quantity;
                 // if dispense quantity > target quantity:
                 if (quantity > targetQuantity) {
