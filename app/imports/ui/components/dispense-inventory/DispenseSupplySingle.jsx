@@ -63,7 +63,7 @@ const DispenseSupplySingle = ({ names, locations, types, fields, handleChange, h
 
   return (
     <>
-      <Grid.Row>
+      <Grid.Row className="dispense-single">
         <Grid.Column>
           <Form.Select id={COMPONENT_IDS.DISPENSE_SUP_NAME} clearable search label='Supply Name' options={getOptions(names)}
             placeholder="Wipes & Washables/Test Strips/Brace"
