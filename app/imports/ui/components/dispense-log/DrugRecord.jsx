@@ -64,7 +64,7 @@ const DrugRecord = ({ open, setOpen, record }) => {
                     </div>
                     <div>
                       <span className='header'>Expiration Date:</span>
-                      {moment(expire).format('LL')}
+                      {expire ? moment(expire).format('LL') : "N/A"}
                     </div>
                     <div>
                       <span className='header'>Quantity Dispensed:</span>

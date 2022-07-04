@@ -49,7 +49,7 @@ if (Stuffs.count() === 0) {
 
 if (Meteor.settings.loadAssetsFile && Historicals.count() === 0) {
   console.log('Loading history from private/historicals.json');
-  sampleHistorical.slice(0, 500).map(historical => Historicals.define(historical));
+  sampleHistorical.slice(0, 200).map(historical => Historicals.define(historical));
 }
 
 if (Meteor.settings.loadAssetsFile && DrugNames.count() === 0) {

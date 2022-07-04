@@ -113,6 +113,13 @@
   color: white;
 }
 
+#dispense-form .dispense-single {
+  border-top: 1px solid rgba(34,36,38,.15);
+}
+#dispense-form .ui.grid > div:nth-child(3) {
+  border-top: unset; /* unset for single */
+}
+
 @media only screen and (max-width: 767px) {
   #dispense-form .filler-column {
     display: none;

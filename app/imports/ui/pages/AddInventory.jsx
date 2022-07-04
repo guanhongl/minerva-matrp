@@ -2,13 +2,13 @@ import React from 'react';
 import { Container, Tab, Menu } from 'semantic-ui-react';
 import AddDrug from '../components/add-inventory/AddDrug';
 import AddVaccine from '../components/add-inventory/AddVaccine';
-import AddSupplies from '../components/add-inventory/AddSupplies';
+import AddSupply from '../components/add-inventory/AddSupply';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 const medicationTab = () => <AddDrug/>;
 const vaccinesTab = () => <AddVaccine />;
-const suppliesTab = () => <AddSupplies/>;
+const suppliesTab = () => <AddSupply/>;
 
 const panes = [
   { menuItem: <Menu.Item key={COMPONENT_IDS.TAB_ONE} id={COMPONENT_IDS.TAB_ONE}>Drugs</Menu.Item>, render: medicationTab },

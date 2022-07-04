@@ -8,7 +8,7 @@ const DispenseDrugSingle = ({ names, units, brands, lotIds, fields,
   handleChange, handleCheck, onLotIdSelect, index }) => (
   // return (
   <>
-    <Grid.Row>
+    <Grid.Row className="dispense-single">
       <Grid.Column>
         <Form.Select clearable search label='Lot Number' options={getOptions(lotIds)} placeholder="Z9Z99"
           name='lotId' onChange={onLotIdSelect} value={fields.lotId} id={COMPONENT_IDS.DISPENSE_MED_LOT} index={index}/>

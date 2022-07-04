@@ -15,10 +15,11 @@ import { fetchField, getOptions, useQuery } from '../../utilities/Functions';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
+import DispenseSupplySingle from './DispenseSupplySingle';
 
 /** handle submit for Dispense Supply. */
-const submit = (data, callback) => {
-  dispenseMethod.callPromise({ data })
+const submit = (fields, innerFields, callback) => {
+  dispenseMethod.callPromise({ fields, innerFields })
     .then(success => {
       swal('Success', success, 'success', { buttons: false, timer: 3000 });
       callback(); // resets the form
@@ -27,7 +28,7 @@ const submit = (data, callback) => {
 };
 
 /** Renders the Page for Dispensing Supply. */
-const DispenseSupplies = ({ ready, names, locations, sites }) => {
+const DispenseSupply = ({ ready, names, locations, sites }) => {
   const collectionName = "SupplysCollection";
   const query = useQuery();
   const initFields = {
@@ -36,21 +37,27 @@ const DispenseSupplies = ({ ready, names, locations, sites }) => {
     dateDispensed: moment().format('YYYY-MM-DDTHH:mm'),
     dispensedTo: '',
     site: '',
+    note: '',
+  };
+  const initInnerFields = {
     supply: '',
     supplyType: '',
-    quantity: '',
+    location: '', // to find supply
     donated: false,
     donatedBy: '',
-    note: '',
-    location: '', // to find supply
+    quantity: '',
+    maxQuantity: 0,
   };
 
   const [fields, setFields] = useState(initFields);
-  const [maxQuantity, setMaxQuantity] = useState(0);
-  const [filteredLocations, setFilteredLocations] = useState([]);
-  useEffect(() => {
-    setFilteredLocations(locations);
-  }, [locations]);
+  const [innerFields, setInnerFields] = useState(
+    JSON.parse(sessionStorage.getItem("supplyFields")) ?? [initInnerFields]
+  );
+  // const [maxQuantity, setMaxQuantity] = useState(0);
+  // const [filteredLocations, setFilteredLocations] = useState([]);
+  // useEffect(() => {
+  //   setFilteredLocations(locations);
+  // }, [locations]);
 
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
@@ -66,10 +73,17 @@ const DispenseSupplies = ({ ready, names, locations, sites }) => {
           const targetSupply = target.stock.find(obj => obj._id === _id);
           const { quantity, donated, donatedBy, location } = targetSupply;
 
-          const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
-          setFields(autoFields);
+          // const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
+          // setFields(autoFields);
+          // setMaxQuantity(quantity);
 
-          setMaxQuantity(quantity);
+          const autoFields = { ...initInnerFields, supply, supplyType, location, donated, donatedBy, maxQuantity: quantity };
+          // setInnerFields([autoFields]);
+          // append the first field if its name is not empty
+          const newInnerFields = innerFields[0].supply ?
+            [...innerFields, autoFields] : [autoFields];
+          setInnerFields(newInnerFields);
+          sessionStorage.setItem("supplyFields", JSON.stringify(newInnerFields));
         });
     }
   }, [ready]);
@@ -86,60 +100,90 @@ const DispenseSupplies = ({ ready, names, locations, sites }) => {
     setFields({ ...fields, [name]: value });
   };
 
-  const handleCheck = (event, { name, checked }) => {
+  const handleChangeInner = (event, { index, name, value }) => {
+    const newInnerFields = [...innerFields];
+    newInnerFields[index] = { ...innerFields[index], [name]: value };
+    setInnerFields(newInnerFields);
+  };
+
+  const handleCheck = (event, { index, name, checked }) => {
+    const newInnerFields = [...innerFields];
     if (!checked) {
-      setFields({ ...fields, [name]: checked, donatedBy: '' });
+      newInnerFields[index] = { ...innerFields[index], [name]: checked, donatedBy: '' };
     } else {
-      setFields({ ...fields, [name]: checked });
+      newInnerFields[index] = { ...innerFields[index], [name]: checked };
     }
+    setInnerFields(newInnerFields);
   };
 
   // handle supply select; filter locations
-  const onSupplySelect = (event, { value: supply }) => {
-    findOneMethod.callPromise({ collectionName, selector: { supply } })
-      .then(target => {
-        // if supply is not empty:
-        if (!!target) {
-          setFields({ ...fields, supply });
-          setFilteredLocations(_.uniq(_.pluck(target.stock, 'location')).sort());
-        } else {
-          // else reset specific supply info
-          setFields({ ...fields, supply });
-          setFilteredLocations(locations);
-        }
-      });
-  };
+  // const onSupplySelect = (event, { value: supply }) => {
+  //   findOneMethod.callPromise({ collectionName, selector: { supply } })
+  //     .then(target => {
+  //       // if supply is not empty:
+  //       if (!!target) {
+  //         setFields({ ...fields, supply });
+  //         setFilteredLocations(_.uniq(_.pluck(target.stock, 'location')).sort());
+  //       } else {
+  //         // else reset specific supply info
+  //         setFields({ ...fields, supply });
+  //         setFilteredLocations(locations);
+  //       }
+  //     });
+  // };
 
   // autofill form if supply, location, donated are selected
-  useEffect(() => {
-    if (fields.supply && fields.location) {
-      const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } };
-      findOneMethod.callPromise({ collectionName, selector })
-        .then(target => {
-          // if supply w/ name, location, donated exists:
-          if (!!target) {
-            // autofill the form with specific supply info
-            const { supplyType } = target;
+  // useEffect(() => {
+  //   if (fields.supply && fields.location) {
+  //     const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } };
+  //     findOneMethod.callPromise({ collectionName, selector })
+  //       .then(target => {
+  //         // if supply w/ name, location, donated exists:
+  //         if (!!target) {
+  //           // autofill the form with specific supply info
+  //           const { supplyType } = target;
 
-            targetSupply = target.stock.find(obj => obj.location === fields.location && obj.donated === fields.donated);
-            const { quantity, donatedBy } = targetSupply;
+  //           targetSupply = target.stock.find(obj => obj.location === fields.location && obj.donated === fields.donated);
+  //           const { quantity, donatedBy } = targetSupply;
 
-            const autoFields = { ...fields, supplyType, donatedBy };
-            setFields(autoFields);
+  //           const autoFields = { ...fields, supplyType, donatedBy };
+  //           setFields(autoFields);
 
-            setMaxQuantity(quantity);
-          } else {
-            setFields({ ...fields, supplyType: '', donatedBy: '' });
-            setMaxQuantity(0);
-          }
-        });
-    }
-  }, [fields.supply, fields.location, fields.donated]);
+  //           setMaxQuantity(quantity);
+  //         } else {
+  //           setFields({ ...fields, supplyType: '', donatedBy: '' });
+  //           setMaxQuantity(0);
+  //         }
+  //       });
+  //   }
+  // }, [fields.supply, fields.location, fields.donated]);
+
+  const handleSelect = (obj, index) => {
+    const newInnerFields = [...innerFields];
+    newInnerFields[index] = { ...innerFields[index], ...obj };
+    setInnerFields(newInnerFields);
+  };
 
   const clearForm = () => {
     setFields(initFields);
-    setMaxQuantity(0);
-    setFilteredLocations(locations);
+    setInnerFields([initInnerFields]);
+    // setMaxQuantity(0);
+    // setFilteredLocations(locations);
+    sessionStorage.removeItem("supplyFields");
+  };
+
+  // handle add new vaccine to dispense
+  const onAdd = () => {
+    const newInnerFields = [...innerFields];
+    newInnerFields.push(initInnerFields);
+    setInnerFields(newInnerFields);
+  };
+
+  // handle remove vaccine to dispense
+  const onRemove = () => {
+    const newInnerFields = [...innerFields];
+    newInnerFields.pop();
+    setInnerFields(newInnerFields);
   };
 
   if (ready) {
@@ -181,7 +225,25 @@ const DispenseSupplies = ({ ready, names, locations, sites }) => {
                   onChange={handleChange} value={fields.site} id={COMPONENT_IDS.DISPENSE_SUP_SITE}/>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
+
+            {
+              innerFields.map((fields, index) => 
+                <DispenseSupplySingle key={`FORM_${index}`} names={names} locations={locations} types={supplyTypes} fields={fields}
+                  handleChange={handleChangeInner} handleCheck={handleCheck} handleSelect={handleSelect} index={index} />
+              )
+            }
+
+            <Grid.Row style={{ padding: 0 }}>
+              <Grid.Column style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                {
+                  innerFields.length !== 1 &&
+                  <Button className='remove-item' compact icon='minus' content='Remove Supply' size='mini' onClick={onRemove}/>
+                }
+                <Button className='add-item' compact icon='add' content='Add New Supply' size='mini' onClick={onAdd} />
+              </Grid.Column>
+            </Grid.Row>
+
+            {/* <Grid.Row>
               <Grid.Column>
                 <Form.Select clearable search label='Supply Name' options={getOptions(names)}
                   placeholder="Wipes & Washables/Test Strips/Brace"
@@ -218,7 +280,7 @@ const DispenseSupplies = ({ ready, names, locations, sites }) => {
                 </Form.Field>
               </Grid.Column>
               <Grid.Column className='filler-column' />
-            </Grid.Row>
+            </Grid.Row> */}
             <Grid.Row>
               <Grid.Column>
                 <Form.TextArea label='Additional Notes' name='note' onChange={handleChange} value={fields.note}
@@ -230,7 +292,7 @@ const DispenseSupplies = ({ ready, names, locations, sites }) => {
         </Form>
         <div className='buttons-div'>
           <Button className='clear-button' onClick={clearForm} id={COMPONENT_IDS.DISPENSE_SUP_CLEAR}>Clear Fields</Button>
-          <Button className='submit-button' floated='right' onClick={() => submit(fields, clearForm)}>Submit</Button>
+          <Button className='submit-button' floated='right' onClick={() => submit(fields, innerFields, clearForm)}>Submit</Button>
           {/* <Button className='submit-button' floated='right' onClick={() => alert('Under Maintenance...')}>Submit</Button> */}
         </div>
       </Tab.Pane>
@@ -239,7 +301,7 @@ const DispenseSupplies = ({ ready, names, locations, sites }) => {
   return (<Loader active>Getting data</Loader>);
 };
 
-DispenseSupplies.propTypes = {
+DispenseSupply.propTypes = {
   names: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   sites: PropTypes.array.isRequired,
@@ -258,4 +320,4 @@ export default withTracker(() => {
     sites: fetchField(Sites, "site"),
     ready: nameSub.ready() && locationSub.ready() && siteSub.ready(),
   };
-})(DispenseSupplies);
+})(DispenseSupply);

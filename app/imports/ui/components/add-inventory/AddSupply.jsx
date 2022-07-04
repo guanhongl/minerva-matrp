@@ -29,7 +29,7 @@ const submit = (data, callback) => {
 /** Renders the Page for Add Supplies. */
 // fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note\
 // TODO: filter location on supply select...
-const AddSupplies = ({ names, locations, ready }) => {
+const AddSupply = ({ names, locations, ready }) => {
   const collectionName = "SupplysCollection";
   const initialState = {
     supply: '',
@@ -174,7 +174,7 @@ const AddSupplies = ({ names, locations, ready }) => {
   return (<Loader active>Getting data</Loader>);
 };
 
-AddSupplies.propTypes = {
+AddSupply.propTypes = {
   names: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
@@ -189,4 +189,4 @@ export default withTracker(() => {
     locations: fetchField(Locations, "location"),
     ready: nameSub.ready() && locationSub.ready(),
   };
-})(AddSupplies);
+})(AddSupply);
