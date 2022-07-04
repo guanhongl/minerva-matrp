@@ -50,7 +50,9 @@ const DispenseSupply = ({ ready, names, locations, sites }) => {
   };
 
   const [fields, setFields] = useState(initFields);
-  const [innerFields, setInnerFields] = useState([initInnerFields]);
+  const [innerFields, setInnerFields] = useState(
+    JSON.parse(sessionStorage.getItem("supplyFields")) ?? [initInnerFields]
+  );
   // const [maxQuantity, setMaxQuantity] = useState(0);
   // const [filteredLocations, setFilteredLocations] = useState([]);
   // useEffect(() => {
@@ -74,8 +76,14 @@ const DispenseSupply = ({ ready, names, locations, sites }) => {
           // const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
           // setFields(autoFields);
           // setMaxQuantity(quantity);
+
           const autoFields = { ...initInnerFields, supply, supplyType, location, donated, donatedBy, maxQuantity: quantity };
-          setInnerFields([autoFields]);
+          // setInnerFields([autoFields]);
+          // append the first field if its name is not empty
+          const newInnerFields = innerFields[0].supply ?
+            [...innerFields, autoFields] : [autoFields];
+          setInnerFields(newInnerFields);
+          sessionStorage.setItem("supplyFields", JSON.stringify(newInnerFields));
         });
     }
   }, [ready]);
@@ -161,6 +169,7 @@ const DispenseSupply = ({ ready, names, locations, sites }) => {
     setInnerFields([initInnerFields]);
     // setMaxQuantity(0);
     // setFilteredLocations(locations);
+    sessionStorage.removeItem("supplyFields");
   };
 
   // handle add new vaccine to dispense

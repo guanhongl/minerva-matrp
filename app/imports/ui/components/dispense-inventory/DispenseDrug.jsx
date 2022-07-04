@@ -52,7 +52,9 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites }) => {
   };
 
   const [fields, setFields] = useState(initFields);
-  const [innerFields, setInnerFields] = useState([initInnerFields]);
+  const [innerFields, setInnerFields] = useState(
+    JSON.parse(sessionStorage.getItem("drugFields")) ?? [initInnerFields]
+  );
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
   useEffect(() => {
@@ -65,9 +67,14 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites }) => {
           const targetLotId = target.lotIds.find(obj => obj._id === _id);
           const { drug, unit } = target;
           const { brand, expire, quantity, donated, donatedBy, lotId } = targetLotId;
-          const newInnerFields = { ...initInnerFields, lotId, drug, expire, brand, unit, donated, donatedBy,
+          const newInnerField = { ...initInnerFields, lotId, drug, expire, brand, unit, donated, donatedBy,
             maxQuantity: quantity };
-          setInnerFields([newInnerFields]);
+          // setInnerFields([newInnerField]);
+          // append the first field if its lot is not empty
+          const newInnerFields = innerFields[0].lotId ?
+            [...innerFields, newInnerField] : [newInnerField];
+          setInnerFields(newInnerFields);
+          sessionStorage.setItem("drugFields", JSON.stringify(newInnerFields));
         });
     }
   }, [ready]);
@@ -141,6 +148,7 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites }) => {
   const clearForm = () => {
     setFields(initFields);
     setInnerFields([initInnerFields]);
+    sessionStorage.removeItem("drugFields");
   };
 
   if (ready) {

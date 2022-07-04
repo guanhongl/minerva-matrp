@@ -49,7 +49,9 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
   };
 
   const [fields, setFields] = useState(initFields);
-  const [innerFields, setInnerFields] = useState([initInnerFields]);
+  const [innerFields, setInnerFields] = useState(
+    JSON.parse(sessionStorage.getItem("vaccineFields")) ?? [initInnerFields]
+  );
   // const [maxQuantity, setMaxQuantity] = useState(0);
   const patientUse = fields.dispenseType === 'Patient Use';
   const nonPatientUse = fields.dispenseType !== 'Patient Use';
@@ -67,8 +69,14 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
           // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
           // setFields(autoFields);
           // setMaxQuantity(quantity);
+
           const autoFields = { ...initInnerFields, vaccine, lotId, brand, expire, visDate, maxQuantity: quantity };
-          setInnerFields([autoFields]);
+          // setInnerFields([autoFields]);
+          // append the first field if its lot is not empty
+          const newInnerFields = innerFields[0].lotId ?
+            [...innerFields, autoFields] : [autoFields];
+          setInnerFields(newInnerFields);
+          sessionStorage.setItem("vaccineFields", JSON.stringify(newInnerFields));
         });
     }
   }, [ready]);
@@ -122,6 +130,7 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
     setFields(initFields);
     // setMaxQuantity(0);
     setInnerFields([initInnerFields]);
+    sessionStorage.removeItem("vaccineFields");
   };
 
   // handle add new vaccine to dispense
