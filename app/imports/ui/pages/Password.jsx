@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, Redirect } from 'react-router';
 import { Meteor } from 'meteor/meteor';
-import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
+import { Container, Form, Header, Message, Icon } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { setPasswordMethod } from '../../api/ManageUser.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
@@ -69,55 +69,51 @@ const Password = ({ location }) => {
     return <Redirect to={from} />;
   }
   return (
-    <div id='signin-div'>
-      <Container>
-        <Grid textAlign="center" centered columns={2}>
-          <Grid.Column computer={7} tablet={7} mobile={9}>
-            <Icon name='stethoscope' size='huge' style={{ visibility: 'hidden' }}/>
-            <Header as="h1" textAlign="center" style={{ marginLeft: '10px' }}>
-                MINERVA
-            </Header>
-          </Grid.Column>
-          <Grid.Column width={9}>
-            <Header as="h2" textAlign="center">
-              ALMOST THERE...
-            </Header>
-            <Form onSubmit={submit}>
-              <Form.Input
-                label="Password"
-                // id={COMPONENT_IDS.SIGN_IN_FORM_PASSWORD}
-                icon="lock"
-                iconPosition="left"
-                name="password"
-                placeholder="Password"
-                type="password"
-                onChange={handleChange}
-              />
-              <Form.Input
-                label="Confirm Password"
-                // id={COMPONENT_IDS.SIGN_IN_FORM_PASSWORD}
-                icon="lock"
-                iconPosition="left"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                type="password"
-                onChange={handleChange}
-              />
-              <Form.Button content="Login"/>
-            </Form>
-            {error === '' ? (
-              ''
-            ) : (
-              <Message
-                error
-                header="Login was not successful"
-                content={error}
-              />
-            )}
-          </Grid.Column>
-        </Grid>
-      </Container>
-    </div>
+    <Container id="enroll">
+      <div className='flex-div'>
+        <div>
+          <Icon name='stethoscope' size='huge' />
+          <Header as="h1" textAlign="center" >MINERVA</Header>
+        </div>
+        <div>
+          <Header as="h2" textAlign="center">
+            ALMOST THERE...
+          </Header>
+          <Form onSubmit={submit}>
+            <Form.Input
+              label="Password"
+              // id={COMPONENT_IDS.SIGN_IN_FORM_PASSWORD}
+              icon="lock"
+              iconPosition="left"
+              name="password"
+              placeholder="Password"
+              type="password"
+              onChange={handleChange}
+            />
+            <Form.Input
+              label="Confirm Password"
+              // id={COMPONENT_IDS.SIGN_IN_FORM_PASSWORD}
+              icon="lock"
+              iconPosition="left"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              type="password"
+              onChange={handleChange}
+            />
+            <Form.Button content="Login"/>
+          </Form>
+          {error === '' ? (
+            ''
+          ) : (
+            <Message
+              error
+              header="Login was not successful"
+              content={error}
+            />
+          )}
+        </div>
+      </div>
+    </Container>
   );
 };
 

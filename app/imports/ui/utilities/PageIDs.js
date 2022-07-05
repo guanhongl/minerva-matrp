@@ -12,7 +12,7 @@ export const PAGE_IDS = {
   LIST_USERS: 'list-users',
   MANAGE_DATABASE: 'manage-database',
   NOT_FOUND: 'not-found',
-  SIGN_IN: 'sigin-in',
+  SIGN_IN: 'sign-in',
   SIGN_OUT: 'sign-out',
   SIGN_UP: 'sign-up',
   MED_STATUS: 'med-status',

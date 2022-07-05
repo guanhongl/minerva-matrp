@@ -1,55 +1,42 @@
-@media  screen and (min-width: 320px) {
-  #signOutPage h1{
-    font-size: 2rem;
-  }
-}
-
-@media  screen and (min-width: 375px) {
-  #signOutPage h1{
-    font-size: 2rem;
-  }
-}
-
-@media  screen and (min-width: 768px) {
-  .signOutGrid{
-    font-size: 2rem !important;
-  }
-}
-
-@media  screen and (min-width: 1024px) {
-  #signOutPage h1{
-    font-size: 5rem !important;
-  }
-}
-
-#signOutPage {
+#sign-out {
   background-image: url('../images/logout.png');
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   height: 100vh;
-  margin: 0;
-  font-size: 6rem;
-  color: white;
-  text-shadow: 1px 1px 2px #738169;
+  font-size: 1rem;
 }
 
-#signOutPage h1 {
-  font-size: 5rem;
+#sign-out h1 {
+  font-size: 5em;
   color: white;
   text-shadow: 1px 1px 2px #738169;
-  margin: 0;
-  width: 100% !important;
+  padding-top: 2em;
 }
 
-#signOutPage h2 {
-  font-size: 1.5rem;
+#sign-out h2 {
+  font-size: 2em;
   color: white;
   text-shadow: 1px 1px 2px #738169;
   font-style: italic;
+}
+
+#sign-out .controls {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 5em;
+}
+
+#sign-out .controls > * {
+  flex-grow: 1;
+}
+
+/* phones */
+@media only screen and (max-width: 767px) {
+  #sign-out {
+      font-size: 0.5rem;
+  }
 }

@@ -1,53 +1,52 @@
-#signin-div {
-  background-color: #c2d9b2;
-  padding-top: 200px;
+#sign-in {
+  font-size: 1rem;
+  overflow: auto;
 }
 
-#signin-div h1 {
+#sign-in h1 {
   color: white;
-  text-shadow: 1px 2px black;
-  font-size: 5rem;
+  text-shadow: 1px 1px black;
+  font-size: 5em;
 }
 
-#signin-div h2 {
+#sign-in h2 {
   color: white;
-  margin-bottom: 2rem;
   text-shadow: 1px 1px black;
 }
 
-#signin-div h3 {
+#sign-in h3 {
   color: white;
-  padding: 2rem 2rem 3rem 2rem;
   text-align: center;
 }
 
-#signin-div a {
+#sign-in a {
   color: deepskyblue;
   text-decoration: underline;
 }
 
-#signin-div .stethoscope.icon {
+#sign-in .stethoscope.icon {
   color: white;
-  font-size: 5rem;
+  font-size: 5em;
   margin: 0 auto;
   width: 100%;
+  text-shadow: 1px 1px black;
 }
 
-#signin-div .ui.form {
+#sign-in .ui.form {
   background-color: white;
   border-radius: 20px;
   width: 80%;
   margin: 0 auto;
-  padding: 2rem 2rem 3rem 2rem;
+  padding: 2em;
   box-shadow: 10px 10px #5b825a;
   position: relative;
 }
 
-#signin-div .ui.form input {
+#sign-in .ui.form input {
   background-color: #dde0e8;
 }
 
-#signin-div .ui.form .ui.button {
+#sign-in .ui.form .ui.button {
   position: absolute;
   bottom: -20px;
   right: -10%;
@@ -58,130 +57,24 @@
   padding: 1.2em 3.6em;
 }
 
-#signup-div {
-  background-color: #c2d9b2;
-  padding-top: 200px;
+#sign-in .flex-div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30vh;
 }
 
-#signup-div h1 {
-  color: white;
-  font-size: 5rem;
-  text-shadow: 1px 2px black;
+#sign-in .flex-div > * {
+  flex-basis: 10em;
+  flex-grow: 1;
 }
 
-#signup-div h2 {
-  color: white;
-  margin-bottom: 2rem;
-  text-shadow: 1px 1px black;
-}
-
-#signup-div h3 {
-  color: white;
-  padding: 2rem 2rem 3rem 2rem;
-  text-align: center;
-}
-
-#signup-div a {
-  color: deepskyblue;
-  text-decoration: underline;
-}
-
-#signup-div .stethoscope.icon {
-  color: white;
-  font-size: 5rem;
-  margin: 0 auto;
-  width: 100%;
-}
-
-#signup-div .ui.form {
-  background-color: white;
-  border-radius: 20px;
-  width: 80%;
-  margin: 0 auto;
-  padding: 2rem 2rem 3rem 2rem;
-  box-shadow: 10px 10px #5b825a;
-  position: relative;
-}
-
-#signup-div .ui.form input {
-  background-color: #dde0e8;
-}
-
-#signup-div .ui.form .ui.button {
-  position: absolute;
-  bottom: -20px;
-  right: -10%;
-  border-radius: 500rem;
-  background-color: white;
-  border: 1px solid gray;
-  color: black;
-  padding: 1.2em 3.6em;
-}
-
-.signin-message {
-  padding-top: 20px;
-}
-
-/* Sign in @media */
-@media only screen and (max-width: 700px) {
-  #signin-div .seven.wide.column h1 {
-    display: inline !important;
+/* phones */
+@media only screen and (max-width: 767px) {
+  #sign-in {
+      font-size: 0.5rem;
   }
 
-  #signin-div .nine.wide.column {
-    width: 100% !important;
+  #sign-in .stethoscope.icon {
+    display: none;
   }
-
-  .signin-message {
-    padding-top: 20px;
-  }
-}
-
-@media only screen and (max-width: 650px) {
-  #signin-div h1 {
-    display: inline !important;
-    margin-left: 10%;
- }
-
-  #signin-div {
-    padding: 50px 0;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  #signin-div h1 {
-    display: inline !important;
-    margin-left: 0;
- }
-
- #signin-div {
-  padding-top: 75px;
- }
-}
-
-/* Signup @media */ 
-@media only screen and (max-width: 650px) {
-  #signup-div h1 {
-    display: inline !important;
-    margin-left: 10%;
- }
-
-  #signup-div .nine.wide.column {
-    width: 100% !important;
-  }
-
-  #signup-div {
-    padding: 50px 0;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  #signup-div h1 {
-    display: inline !important;
-    margin-left: 0;
- }
-
- #signup-div {
-  padding-top: 75px;
- }
 }

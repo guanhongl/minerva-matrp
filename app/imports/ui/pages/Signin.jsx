@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { Container, Form, Grid, Header, Message, Icon } from 'semantic-ui-react';
+import { Container, Form, Header, Message, Icon } from 'semantic-ui-react';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
@@ -51,56 +51,50 @@ const Signin = ({ location }) => {
   }
   // Otherwise return the Login form.
   return (
-    <div id='signin-div'>
-      <Container id={PAGE_IDS.SIGN_IN}>
-        <Grid textAlign="center" centered columns={2}>
-          <Grid.Column computer={7} tablet={7} mobile={9}>
-            <Icon name='stethoscope' size='huge' style={{ visibility: 'hidden' }}/>
-            <Header as="h1" textAlign="center" style={{ marginLeft: '10px' }}>
-                MINERVA
-            </Header>
-          </Grid.Column>
-          <Grid.Column width={9}>
-            <Header as="h2" textAlign="center">
-                  NICE TO SEE YOU AGAIN, LOGIN AND GET STARTED!
-            </Header>
-            <Form onSubmit={submit}>
-              <Form.Input
-                label="Email"
-                id={COMPONENT_IDS.SIGN_IN_FORM_EMAIL}
-                icon="user"
-                iconPosition="left"
-                name="email"
-                type="email"
-                placeholder="E-mail address"
-                onChange={handleChange}
-              />
-              <Form.Input
-                label="Password"
-                id={COMPONENT_IDS.SIGN_IN_FORM_PASSWORD}
-                icon="lock"
-                iconPosition="left"
-                name="password"
-                placeholder="Password"
-                type="password"
-                onChange={handleChange}
-              />
-              <Form.Button id={COMPONENT_IDS.SIGN_IN_FORM_SUBMIT} content="Login"/>
-            </Form>
-            <h3>Don&apos;t have an account? <NavLink exact to="/signup" key="signup" id="signUp">REGISTER</NavLink></h3>
-            {error === '' ? (
-              ''
-            ) : (
-              <Message
-                error
-                header="Login was not successful"
-                content={error}
-              />
-            )}
-          </Grid.Column>
-        </Grid>
-      </Container>
-    </div>
+    <Container id={PAGE_IDS.SIGN_IN}>
+      <div className='flex-div'>
+        <div>
+          <Icon name='stethoscope' size='huge'/>
+          <Header as="h1" textAlign="center">MINERVA</Header>
+        </div>
+        <div>
+          <Header as="h2" textAlign="center">NICE TO SEE YOU AGAIN, LOGIN AND GET STARTED!</Header>
+          <Form onSubmit={submit}>
+            <Form.Input
+              label="Email"
+              id={COMPONENT_IDS.SIGN_IN_FORM_EMAIL}
+              icon="user"
+              iconPosition="left"
+              name="email"
+              type="email"
+              placeholder="E-mail address"
+              onChange={handleChange}
+            />
+            <Form.Input
+              label="Password"
+              id={COMPONENT_IDS.SIGN_IN_FORM_PASSWORD}
+              icon="lock"
+              iconPosition="left"
+              name="password"
+              placeholder="Password"
+              type="password"
+              onChange={handleChange}
+            />
+            <Form.Button id={COMPONENT_IDS.SIGN_IN_FORM_SUBMIT} content="Login"/>
+          </Form>
+          <h3>Don&apos;t have an account? <NavLink exact to="/signup" key="signup" id="signUp">REGISTER</NavLink></h3>
+          {error === '' ? (
+            ''
+          ) : (
+            <Message
+              error
+              header="Login was not successful"
+              content={error}
+            />
+          )}
+        </div>
+      </div>
+    </Container>
   );
 };
 

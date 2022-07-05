@@ -1,0 +1,152 @@
+#sign-up {
+  font-size: 1rem;
+  overflow: auto;
+}
+
+#sign-up h1 {
+  color: white;
+  text-shadow: 1px 1px black;
+  font-size: 5em;
+}
+
+#sign-up h2 {
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+#sign-up h3 {
+  color: white;
+  text-align: center;
+}
+
+#sign-up a {
+  color: deepskyblue;
+  text-decoration: underline;
+}
+
+#sign-up .stethoscope.icon {
+  color: white;
+  font-size: 5em;
+  margin: 0 auto;
+  width: 100%;
+  text-shadow: 1px 1px black;
+}
+
+#sign-up .ui.form {
+  background-color: white;
+  border-radius: 20px;
+  width: 80%;
+  margin: 0 auto;
+  padding: 2em;
+  box-shadow: 10px 10px #5b825a;
+  position: relative;
+}
+
+#sign-up .ui.form input {
+  background-color: #dde0e8;
+}
+
+#sign-up .ui.form .ui.button {
+  position: absolute;
+  bottom: -20px;
+  right: -10%;
+  border-radius: 500rem;
+  background-color: white;
+  border: 1px solid gray;
+  color: black;
+  padding: 1.2em 3.6em;
+}
+
+#sign-up .flex-div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30vh;
+}
+
+#sign-up .flex-div > * {
+  flex-basis: 10em;
+  flex-grow: 1;
+}
+
+/* phones */
+@media only screen and (max-width: 767px) {
+  #sign-up {
+      font-size: 0.5rem;
+  }
+
+  #sign-up .stethoscope.icon {
+    display: none;
+  }
+}
+
+/* enrollment */
+#enroll {
+  font-size: 1rem;
+  overflow: hidden;
+}
+
+#enroll h1 {
+  color: white;
+  text-shadow: 1px 1px black;
+  font-size: 5em;
+}
+
+#enroll h2 {
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+#enroll .stethoscope.icon {
+  color: white;
+  font-size: 5em;
+  margin: 0 auto;
+  width: 100%;
+  text-shadow: 1px 1px black;
+}
+
+#enroll .ui.form {
+  background-color: white;
+  border-radius: 20px;
+  width: 80%;
+  margin: 0 auto;
+  padding: 2em;
+  box-shadow: 10px 10px #5b825a;
+  position: relative;
+}
+
+#enroll .ui.form input {
+  background-color: #dde0e8;
+}
+
+#enroll .ui.form .ui.button {
+  position: absolute;
+  bottom: -20px;
+  right: -10%;
+  border-radius: 500rem;
+  background-color: white;
+  border: 1px solid gray;
+  color: black;
+  padding: 1.2em 3.6em;
+}
+
+#enroll .flex-div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30vh;
+}
+
+#enroll .flex-div > * {
+  flex-basis: 10em;
+  flex-grow: 1;
+}
+
+/* phones */
+@media only screen and (max-width: 767px) {
+  #enroll {
+      font-size: 0.5rem;
+  }
+
+  #enroll .stethoscope.icon {
+    display: none;
+  }
+}

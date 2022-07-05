@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Container, Form, Grid, Header, Icon } from 'semantic-ui-react';
+import { Container, Form, Header, Icon } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
@@ -47,44 +47,38 @@ const Signup = () => {
   };
 
   return (
-    <div id='signup-div'>
-      <Container id={PAGE_IDS.SIGN_UP}>
-        <Grid textAlign="center" centered>
-          <Grid.Column computer={7} tablet={7} mobile={9} textAlign='center'>
-            <Icon name='stethoscope' size='huge' style={{ visibility: 'hidden' }}/>
-            <Header as="h1" textAlign="center" style={{ marginLeft: '-15px' }}>
-              MINERVA
-            </Header>
-          </Grid.Column>
-          <Grid.Column width={9}>
-            <Header as="h2" textAlign="center">
-              WELCOME TO MINERVA MEDICAL, REGISTER FOR AN ACCOUNT BELOW!
-            </Header>
-            <Form onSubmit={submit}>
-              <Form.Group widths="equal">
-                <Form.Input label="First Name" name="firstName" placeholder="First name" value={firstName} onChange={handleChange} />
-                <Form.Input label="Last Name" name="lastName" placeholder="Last name" value={lastName} onChange={handleChange} />
-              </Form.Group>
-              <Form.Input
-                label="Email"
-                id={COMPONENT_IDS.SIGN_UP_FORM_EMAIL}
-                icon="user"
-                iconPosition="left"
-                name="email"
-                type="email"
-                placeholder="E-mail address"
-                value={email}
-                onChange={handleChange}
-              />
-              <Form.Button id={COMPONENT_IDS.SIGN_UP_FORM_SUBMIT} content="Submit"/>
-            </Form>
-            <div className='signin-message'>
-              <h3>Already have a registered account? <NavLink exact to="/signin" key="signin" id="signIn">LOG IN</NavLink></h3>
-            </div>
-          </Grid.Column>
-        </Grid>
-      </Container>
-    </div>
+    <Container id={PAGE_IDS.SIGN_UP}>
+      <div className='flex-div'>
+        <div>
+          <Icon name='stethoscope' size='huge'/>
+          <Header as="h1" textAlign="center">MINERVA</Header>
+        </div>
+        <div>
+          <Header as="h2" textAlign="center">
+            WELCOME TO MINERVA MEDICAL, REGISTER FOR AN ACCOUNT BELOW!
+          </Header>
+          <Form onSubmit={submit}>
+            <Form.Group widths="equal">
+              <Form.Input label="First Name" name="firstName" placeholder="First name" value={firstName} onChange={handleChange} />
+              <Form.Input label="Last Name" name="lastName" placeholder="Last name" value={lastName} onChange={handleChange} />
+            </Form.Group>
+            <Form.Input
+              label="Email"
+              id={COMPONENT_IDS.SIGN_UP_FORM_EMAIL}
+              icon="user"
+              iconPosition="left"
+              name="email"
+              type="email"
+              placeholder="E-mail address"
+              value={email}
+              onChange={handleChange}
+            />
+            <Form.Button id={COMPONENT_IDS.SIGN_UP_FORM_SUBMIT} content="Submit"/>
+          </Form>
+          <h3>Already have a registered account? <NavLink exact to="/signin" key="signin" id="signIn">LOG IN</NavLink></h3>
+        </div>
+      </div>
+    </Container>
   );
 };
 
