@@ -29,10 +29,13 @@
 
 #dispense-form .buttons-div {
   padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 #dispense-form .clear-button {
-  min-width: 120px;
+  min-width: 10em;
   border-radius: 500rem;
   padding: 1em 1.5em;
   background-color: rgb(29, 62, 102);
@@ -40,7 +43,7 @@
 }
 
 #dispense-form .submit-button {
-  min-width: 120px;
+  min-width: 10em;
   border-radius: 500rem;
   padding: 1em 1.5em;
   background-color: #C1D9B1;
@@ -86,6 +89,10 @@
   width: 100%;
 }
 
+#dispense {
+  min-height: calc(100vh - 230px);
+}
+
 #dispense .ui.tabular.menu {
   padding-right: 25%;
 }
@@ -124,23 +131,4 @@
   #dispense-form .filler-column {
     display: none;
   }
-}
-
-@media only screen and (max-width: 375px) {
-  #dispense-form .clear-button {
-    min-width: 50px;
-    border-radius: 500rem;
-    padding: 0.8em;
-    background-color: rgb(29, 62, 102);
-    color: white;
-  }
-
-  #dispense-form .submit-button {
-    min-width: 50px;
-    border-radius: 500rem;
-    padding: 0.8em;
-    background-color: #C1D9B1;
-    color: rgb(29, 62, 102);
-  }
-
 }
