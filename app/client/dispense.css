@@ -90,7 +90,6 @@
 }
 
 #dispense {
-  min-height: calc(100vh - 230px);
 }
 
 #dispense .ui.tabular.menu {

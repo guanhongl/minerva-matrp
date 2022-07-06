@@ -8,3 +8,7 @@ body {
 * {
   box-sizing: border-box;
 }
+
+#root > *:nth-child(2) {
+  min-height: calc(100vh - 230px); /* nav + footer = 230 */
+}

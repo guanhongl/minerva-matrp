@@ -19,3 +19,11 @@
 #manage-database .ui.segments .ui.segment:nth-child(2) {
     min-height: 25em;
 }
+
+#manage-database div.flex-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+#manage-database div.flex-div > span {
+    flex-basis: 10em;
+}

@@ -34,6 +34,7 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    flex-wrap: wrap;
 }
 
 #manage-new-users .csv-segment span {
@@ -45,6 +46,12 @@
 }
 #manage-new-users .csv-segment > span {
     color: #21ba45;
+}
+
+#manage-new-users .csv-segment > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
 }
 
 /* Manage Users css */
@@ -75,4 +82,10 @@
 
 #manage-users .ui.segments .ui.segment:last-child, #manage-new-users .ui.segments .ui.segment:last-child {
     min-height: 25em;
+}
+
+#manage-users table tbody,
+#manage-new-users table tbody {
+    max-height: 40em;
+    overflow-y: auto;
 }

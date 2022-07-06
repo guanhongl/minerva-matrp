@@ -90,7 +90,6 @@
 /* add tab */
 
 #add-inventory {
-  min-height: calc(100vh - 230px); /* nav + footer = 230 */
 }
 
 #add-inventory .ui.tabular.menu {
