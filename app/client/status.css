@@ -112,4 +112,15 @@
   .status-tab > .table-wrapper > table .ui.pagination.menu {
     font-size: 0.8em;
   }
+
+  .status-tab div.filters.vaccine,
+  .status-tab div.filters.supply {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .status-tab div.filters > * {
+    flex: 0 0 100%;
+  }
 }

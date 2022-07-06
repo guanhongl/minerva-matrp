@@ -91,6 +91,12 @@
   }
 }
 
+@media only screen and (max-width: 550px) {
+  #dispense-log div.filters > * {
+    flex: 0 0 100%;
+  }
+}
+
 /* modal css */
 /* #dispense-info span.header {
   display: inline-block;
