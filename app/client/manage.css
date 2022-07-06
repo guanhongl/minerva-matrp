@@ -1,5 +1,5 @@
 .manage-tab {
-  min-height: 500px;
+  /* min-height: 500px; */
 }
 
 .manage-tab .ui.list .content {
@@ -24,10 +24,11 @@
 
 .manage-tab .controls {
   display: flex;
+  flex-wrap: wrap;
+  column-gap: 2em;
 }
 
 .manage-tab .controls .ui.input {
-  padding-right: 3rem;
   flex: 4 1 0;
 }
 
@@ -35,6 +36,7 @@
   flex: 1 1 0;
   background-color: rgb(29, 62, 102);
   color: white;
+  margin: 0;
 }
 
 .manage-tab .controls .ui.input input {
@@ -47,4 +49,22 @@
 
 .manage-tab .ui.list {
   margin-top: 2rem;
+  max-height: 40em;
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .manage-tab {
+    font-size: 0.8em;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #manage-dropdowns > .ui.segment .ui.grid > div:first-child {
+    padding: 1px;
+  }
+
+  #manage-dropdowns > .ui.segment .ui.grid > div:first-child > .ui.menu > a {
+    font-size: 0.9em;
+  }
 }

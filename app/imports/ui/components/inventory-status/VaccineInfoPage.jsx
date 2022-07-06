@@ -57,7 +57,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
         <table>
           <tbody>
             <tr>
-              <td style={{ width: '150px' }}>General Info</td>
+              <td>General Info</td>
               <td>
                 <div>
                   <span className='header'>Vaccine:</span>
@@ -65,7 +65,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                     edit ?
                       <Input value={vaccine} disabled />
                       :
-                      <>{vaccine}</>
+                      <span>{vaccine}</span>
                   }
                 </div>
                 <div>
@@ -74,7 +74,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                     edit ?
                       <Input value={brand} disabled />
                       :
-                      <>{brand}</>
+                      <span>{brand}</span>
                   }
                 </div>
                 <div>
@@ -84,7 +84,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                       <Input name='newMinQuantity' type='number' min={1}
                         value={fields.newMinQuantity} onChange={handleChange} />
                       :
-                      <>{minQuantity}</> 
+                      <span>{minQuantity}</span> 
                   }
                 </div>
                 <div>
@@ -93,7 +93,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                     edit ?
                       <Input name='newVisDate' type='date' value={fields.newVisDate} onChange={handleChange} />
                       :
-                      <>{moment(visDate).format('LL')}</>
+                      <span>{moment(visDate).format('LL')}</span>
                   }
                 </div>
               </td>
@@ -107,7 +107,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                     edit ?
                       <Input name='newLotId' value={fields.newLotId} onChange={handleChange} />
                       :
-                      <>{lotId}</>
+                      <span>{lotId}</span>
                   }
                 </div>
                 <div>
@@ -116,7 +116,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                     edit ?
                       <Input name='newExpire' type='date' value={fields.newExpire} onChange={handleChange} />
                       :
-                      <>{expire ? moment(expire).format('LL') : 'N/A'}</>
+                      <span>{expire ? moment(expire).format('LL') : 'N/A'}</span>
                   }
                 </div>
                 <div>
@@ -126,7 +126,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                       <Select name='newLocation' options={getOptions(locations)}
                         value={fields.newLocation} onChange={handleChange} />
                       :
-                      <>{location}</>
+                      <span>{location}</span>
                   }
                 </div>
                 <div>
@@ -136,7 +136,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                       <Input name='newQuantity' type='number' min={1}
                         value={fields.newQuantity} onChange={handleChange} />
                       :
-                      <>{quantity}</>
+                      <span>{quantity}</span>
                   }
                 </div>
                 {/* <div>

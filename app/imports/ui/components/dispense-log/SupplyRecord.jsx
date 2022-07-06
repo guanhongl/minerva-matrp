@@ -10,6 +10,7 @@ const SupplyRecord = ({ open, setOpen, record }) => {
 
   return (
     <Modal
+      closeIcon
       onClose={() => setOpen(false)}
       open={open}
       size='small'
@@ -21,27 +22,27 @@ const SupplyRecord = ({ open, setOpen, record }) => {
         <table>
           <tbody>
             <tr>
-              <td style={{ width: '150px' }}>General Info</td>
+              <td>General Info</td>
               <td>
                 <div>
                   <span className='header'>Dispense Type:</span>
-                  {dispenseType}
+                  <span>{dispenseType}</span>
                 </div>
                 <div>
                   <span className='header'>Date:</span>
-                  {moment(dateDispensed).format('LLLL')}
+                  <span>{moment(dateDispensed).format('LLLL')}</span>
                 </div>
                 <div>
                   <span className='header'>Dispensed By:</span>
-                  {dispensedFrom}
+                  <span>{dispensedFrom}</span>
                 </div>
                 <div>
                   <span className='header'>Patient Number:</span>
-                  {dispensedTo}
+                  <span>{dispensedTo}</span>
                 </div>
                 <div>
                   <span className='header'>Site:</span>
-                  {site}
+                  <span>{site}</span>
                 </div>
               </td>
             </tr>
@@ -52,25 +53,25 @@ const SupplyRecord = ({ open, setOpen, record }) => {
                   <td>
                     <div>
                       <span className='header'>Name:</span>
-                      {name}
+                      <span>{name}</span>
                     </div>
                     <div>
                       <span className='header'>Supply Type:</span>
-                      {supplyType}
+                      <span>{supplyType}</span>
                     </div>
                     <div>
                       <span className='header'>Quantity Dispensed:</span>
-                      {quantity}
+                      <span>{quantity}</span>
                     </div>
                     <div>
                       <span className='header'>Donated:</span>
-                      {donated ? 'Yes': 'No'}
+                      <span>{donated ? 'Yes': 'No'}</span>
                     </div>
                     {
                       donated &&
                       <div>
                         <span className='header'>Donated By:</span>
-                        {donatedBy}
+                        <span>{donatedBy}</span>
                       </div>
                     }
                   </td>
@@ -84,9 +85,9 @@ const SupplyRecord = ({ open, setOpen, record }) => {
           </tbody>
         </table>
       </Modal.Content>
-      <Modal.Actions>
+      {/* <Modal.Actions>
         <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DISPENSE_INFO_CLOSE}> Close</Button>
-      </Modal.Actions>
+      </Modal.Actions> */}
     </Modal>
 
   );

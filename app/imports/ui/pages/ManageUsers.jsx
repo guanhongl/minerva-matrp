@@ -77,7 +77,7 @@ const ManageUsers = ({ ready, userList, roles, waitlist }) => {
             <Input placeholder='Search users...' value={userFilter} onChange={handleFilter} />
           </Segment>
           <Segment>
-            <Table basic='very' columns={5} unstackable>
+            <Table basic='very' columns={5} stackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Name</Table.HeaderCell>

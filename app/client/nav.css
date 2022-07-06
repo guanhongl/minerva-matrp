@@ -1,4 +1,11 @@
 #nav {
-    margin-bottom: 2rem;
+    margin-bottom: 2em;
     background-color: #1D3E66;
+}
+
+/* phones */
+@media only screen and (max-width: 400px) {
+    #nav > a {
+        display: none;
+    }
 }

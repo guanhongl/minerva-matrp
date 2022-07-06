@@ -1,7 +1,16 @@
-.info-modal span.header {
+/* .info-modal span.header {
     display: inline-block;
     width: 200px;
     vertical-align: top;
+} */
+
+.info-modal tbody tr td:last-child > div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.info-modal tbody tr td:last-child > div > * {
+    flex: 1 1 50%;
 }
 
 .info-modal textarea {
@@ -22,10 +31,16 @@
     padding: 10px 0;
 }
 
-.info-modal .ui.input, .ui.selection {
+/* .info-modal .ui.input, .ui.selection {
     width: calc(100% - 200px);
-}
+} */
 
 .info-modal table td div {
     margin-bottom: 1px;
+}
+
+@media only screen and (max-width: 767px) {
+    .info-modal tbody tr td:last-child > div > .ui { /* only target semantic ui inputs */
+        flex-basis: 100%;
+    }
 }

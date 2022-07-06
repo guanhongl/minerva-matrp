@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Header, Container, Table, Segment, Divider, Dropdown, Pagination, Grid, Loader, Icon, Input, Popup,
-} from 'semantic-ui-react';
+import { Header, Container, Table, Segment, Divider, Dropdown, Pagination, Loader, Icon, Input, Popup } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -60,12 +58,14 @@ const DispenseLog = ({ ready, historicals, sites }) => {
         filter = filter.filter(({ site }) => site === siteFilter);
       }
       if (minDateFilter) {
-        const minDate = moment(minDateFilter).utc().format();
-        filter = filter.filter(({ dateDispensed }) => dateDispensed >= minDate);
+        // const minDate = moment(minDateFilter).utc().format();
+        const minDate = moment(minDateFilter);
+        filter = filter.filter(({ dateDispensed }) => moment(dateDispensed) >= minDate);
       }
       if (maxDateFilter) {
-        const maxDate = moment(maxDateFilter).utc().format();
-        filter = filter.filter(({ dateDispensed }) => dateDispensed <= maxDate);
+        // const maxDate = moment(maxDateFilter).utc().format();
+        const maxDate = moment(maxDateFilter);
+        filter = filter.filter(({ dateDispensed }) => moment(dateDispensed) <= maxDate);
       }
       setFilterHistoricals(filter);
     }, [searchQuery, inventoryFilter, dispenseTypeFilter, siteFilter, minDateFilter, maxDateFilter]);
@@ -79,72 +79,71 @@ const DispenseLog = ({ ready, historicals, sites }) => {
     const handleMaxLog = (event, { value }) => setMaxLog(value);
 
     return (
-      <div className='status-wrapped'>
-        <Container id={PAGE_IDS.DISPENSE_LOG}>
-          <Segment className='status-wrapped'>
-            <Header as="h2">
-              <Header.Content>
-                History Dispense Log
-                <Header.Subheader>
-                  <i>Use the search filter to look for a specific Patient Number
-                    or use the dropdown filters.</i>
-                </Header.Subheader>
-              </Header.Content>
-            </Header>
-            <Grid columns="equal" stackable>
-              <Grid.Row>
-                <Grid.Column>
-                  <Popup inverted
-                    trigger={<Input placeholder='Filter by patient...' icon='search' onChange={handleSearch}
-                      id={COMPONENT_IDS.DISPENSE_FILTER}/>}
-                    content='This allows you to filter the Dispense Log table by Patient Number or Inventory Name.'/>
-                </Grid.Column>
-                <Grid.Column>
-                  <Popup inverted
-                    trigger={
-                      <Input type="date" label={{ basic: true, content: 'From' }} labelPosition='left'
-                        onChange={handleMinDateFilter} max={maxDateFilter} />
-                    }
-                    content="This allows you to filter the Dispense Log table
-                  from the selected 'From' date to today's date or the selected 'To' date."/>
-                </Grid.Column>
-                <Grid.Column>
-                  <Input type="date" label={{ basic: true, content: 'To' }} labelPosition='left'
-                    onChange={handleMaxDateFilter} min={minDateFilter} />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-            <Divider/>
-            <Grid divided columns="equal" stackable>
-              <Grid.Row textAlign='center'>
-                <Grid.Column>
-                  Inventory Type: {' '}
-                  <Dropdown
-                    inline
-                    options={getFilters(inventoryTypes)}
-                    search
-                    value={inventoryFilter}
-                    onChange={handleInventoryFilter}
-                    id={COMPONENT_IDS.INVENTORY_TYPE}
-                  />
-                </Grid.Column>
-                <Grid.Column>
-                  Dispense Type: {' '}
-                  <Dropdown inline={true} options={getFilters(dispenseTypes)} search value={dispenseTypeFilter}
-                    onChange={handleDispenseTypeFilter} id={COMPONENT_IDS.DISPENSE_TYPE}/>
-                </Grid.Column>
-                <Grid.Column>
-                Dispense Site: {' '}
-                  <Dropdown inline={true} options={getFilters(sites)} search value={siteFilter}
-                    onChange={handleSiteFilter} id={COMPONENT_IDS.DISPENSE_SITE}/>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-            <Divider/>
+      <Container id={PAGE_IDS.DISPENSE_LOG}>
+        <Segment>
+          <Header as="h2">
+            <Header.Content>
+              Dispense Log
+              <Header.Subheader>
+                Use the search and dropdown filters to find a specific patient.
+              </Header.Subheader>
+            </Header.Content>
+          </Header>
+
+          <div className='controls'>
+            <Popup
+              trigger={<Input placeholder='Filter by patient...' icon='search'
+                onChange={handleSearch} value={searchQuery} id={COMPONENT_IDS.DISPENSE_FILTER}/>}
+              content='This allows you to filter patients by patient number and inventory name.'
+              inverted
+            />
+            {/* {
+              loading ? 
+                <Loader inline active />
+                :
+                <span onClick={download}>
+                  <Icon name="download" />
+                  Download
+                  <Icon name="file excel" />
+                </span>
+            } */}
+          </div>
+
+          <div className='date-controls'>
+            <Input type="date" label={{ basic: true, content: 'From' }} labelPosition='left'
+              onChange={handleMinDateFilter} max={maxDateFilter} />
+            <Input type="date" label={{ basic: true, content: 'To' }} labelPosition='left'
+              onChange={handleMaxDateFilter} min={minDateFilter} />
+          </div>
+
+          <div className='filters'>
+            <span>
+              <span>Inventory Type:</span>
+              <Dropdown inline options={getFilters(inventoryTypes)} search
+                onChange={handleInventoryFilter} value={inventoryFilter} id={COMPONENT_IDS.INVENTORY_TYPE}/>
+            </span>
+            <span>
+              <span>Dispense Type:</span>
+              <Dropdown inline options={getFilters(dispenseTypes)} search
+                onChange={handleDispenseTypeFilter} value={dispenseTypeFilter} id={COMPONENT_IDS.DISPENSE_TYPE}/>
+            </span>
+            <span>
+              <span>Site:</span>
+              <Dropdown inline options={getFilters(sites)} search
+                onChange={handleSiteFilter} value={siteFilter} id={COMPONENT_IDS.DISPENSE_SITE}/>
+            </span>
+          </div>
+
+          <Divider/>
+
+          <div>
             Records per page:{' '}
             <Dropdown inline={true} options={logPerPage} value={maxLog} onChange={handleMaxLog}/>
             Total count: {filterHistoricals.length}
-            <Table striped singleLine columns={7} color='blue' compact collapsing unstackable>
+          </div>
+
+          <div className='table-wrapper'>
+            <Table striped color='blue' unstackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Date & Time</Table.HeaderCell>
@@ -153,7 +152,7 @@ const DispenseLog = ({ ready, historicals, sites }) => {
                   <Table.HeaderCell>Patient Number</Table.HeaderCell>
                   <Table.HeaderCell>Site</Table.HeaderCell>
                   <Table.HeaderCell>Dispensed By</Table.HeaderCell>
-                  <Table.HeaderCell>Information</Table.HeaderCell>
+                  <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -169,7 +168,7 @@ const DispenseLog = ({ ready, historicals, sites }) => {
               </Table.Body>
               <Table.Footer>
                 <Table.Row>
-                  <Table.HeaderCell colSpan="11">
+                  <Table.HeaderCell colSpan="7">
                     <Pagination
                       totalPages={Math.ceil(filterHistoricals.length / maxLog)}
                       activePage={pageNo}
@@ -184,9 +183,9 @@ const DispenseLog = ({ ready, historicals, sites }) => {
                 </Table.Row>
               </Table.Footer>
             </Table>
-          </Segment>
-        </Container>
-      </div>
+          </div>
+        </Segment>
+      </Container>
     );
   }
   return (<Loader active>Getting data</Loader>);

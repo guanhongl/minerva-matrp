@@ -2,6 +2,7 @@
     height: 100vh;
     min-height: 500px;
     overflow: auto;
+    font-size: 1rem;
 
     background: url('../images/logout.png') no-repeat center fixed;
     -webkit-background-size: cover;
@@ -12,19 +13,33 @@
 
 #landing .landing-header{
     font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-size: 8rem;
+    font-size: 8em;
     font-weight: bold;
     text-shadow: 2px 2px 2px darkolivegreen;
     color: white;
     text-align: center;
-    margin-top: calc(50vh - 72px);
+    margin-top: 2em;
 }
 
 #landing .button-group {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 5em;
 }
 
-#landing .button-group >* {
-    width: 200px;
+#landing .button-group > * {
+    flex-basis: 10em;
+    /* flex-grow: 1; */
+}
+
+/* phones */
+@media only screen and (max-width: 767px) {
+    #landing {
+        font-size: 0.5rem;
+    }
+
+    #landing .button-group > * {
+        flex-grow: 1;
+    }
 }

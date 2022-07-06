@@ -1,0 +1,14 @@
+footer {
+    background-color: #1D3E66;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+footer h3.ui.header {
+    margin: 0;
+}
+
+footer a {
+    color: lightblue;
+}

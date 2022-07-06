@@ -11,11 +11,11 @@ import StatusNotification from '../pages/StatusNotification';
 
 /** The NavBar appears at the top of every page. Rendered by the App Layout component. */
 const NavBar = ({ currentUser }) => {
-  const [mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(window.innerWidth < 1000);
 
   const handleMobile = e => {
     // console.log(window.innerWidth)
-    if (window.innerWidth < 720) {
+    if (window.innerWidth < 1000) {
       setMobile(true);
     } else {
       setMobile(false);

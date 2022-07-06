@@ -1,43 +1,14 @@
 /* GLOBAL CSS ONLY */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
-@media  screen and (min-width: 320px) {
- .landing-text {
-   font-size: 6rem;
-   margin-top: 100% !important;
- } 
-}
-
-@media  screen and (min-width: 375px) {
-  .landing-text {
-    font-size: 6rem;
-    margin-top: 80% !important;
-  }
-
-  .button-location {
-    align-items: center;
-    margin: 0;
-  }
-}
-
-@media  screen and (min-width: 768px) {
-  .landing-text {
-    font-size: 6rem !important;
-    margin-top: 45% !important;
-  } 
- }
-
-@media  screen and (min-width: 1024px) {
-  .landing-text {
-    font-size: 5em !important;
-    margin-top: 35% !important;
-  } 
- }
  
-body{
+body {
   background-color: #C1D9B1 !important;
 }
 
 * {
   box-sizing: border-box;
+}
+
+#root > *:nth-child(2) {
+  min-height: calc(100vh - 230px); /* nav + footer = 230 */
 }

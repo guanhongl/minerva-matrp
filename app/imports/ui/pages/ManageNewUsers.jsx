@@ -145,7 +145,7 @@ const ManageNewUsers = ({ ready, users }) => {
             </div>
           </Segment>
           <Segment>
-            <Table basic='very' columns={4} unstackable>
+            <Table basic='very' columns={4} stackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Date added</Table.HeaderCell>

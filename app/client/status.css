@@ -1,5 +1,4 @@
 #status {
-  min-width: 1000px;
 }
 
 .status-tab .lot-row {
@@ -60,7 +59,8 @@
 .status-tab div.filters {
   margin-top: 1em;
   display: flex;
-  column-gap: 1em;
+  flex-wrap: wrap;
+  gap: 1em;
 }
 .status-tab div.filters.vaccine {
   width: 75%;
@@ -103,15 +103,24 @@
   justify-content: center;
 }
 
-@media screen and (max-width: 1024px) {
-  .status-wrapped {
+@media only screen and (max-width: 767px) {
+  .status-tab > .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .status-tab > .table-wrapper > table, 
+  .status-tab > .table-wrapper > table .ui.pagination.menu {
+    font-size: 0.8em;
+  }
+
+  .status-tab div.filters.vaccine,
+  .status-tab div.filters.supply {
     width: 100%;
-    position: relative;
-    overflow: auto;
   }
+}
 
-  #status .ui.attached.tabular.menu .item {
-    flex: 0 0 0;
+@media only screen and (max-width: 550px) {
+  .status-tab div.filters > * {
+    flex: 0 0 100%;
   }
-
 }

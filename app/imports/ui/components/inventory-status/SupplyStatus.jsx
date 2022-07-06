@@ -203,45 +203,48 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
             ${filteredSupplies.reduce((p, c) => p + c.stock.length, 0)} lots`}
           </span>
         </div>
-        <Table selectable color='blue' unstackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell />
-              <Table.HeaderCell>Supply</Table.HeaderCell>
-              <Table.HeaderCell>Type</Table.HeaderCell>
-              <Table.HeaderCell>Total Quantity</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell />
-            </Table.Row>
-          </Table.Header>
 
-          <Table.Body>
-            {
-              filteredSupplies.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(supply => <SupplyStatusRow key={supply._id} supply={supply} supplyTypes={supplyTypes} locations={locations} />)
-            }
-          </Table.Body>
+        <div className='table-wrapper'>
+          <Table selectable color='blue' unstackable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell />
+                <Table.HeaderCell>Supply</Table.HeaderCell>
+                <Table.HeaderCell>Type</Table.HeaderCell>
+                <Table.HeaderCell>Total Quantity</Table.HeaderCell>
+                <Table.HeaderCell>Status</Table.HeaderCell>
+                <Table.HeaderCell />
+              </Table.Row>
+            </Table.Header>
 
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell colSpan="6">
-                <Pagination
-                  totalPages={Math.ceil(filteredSupplies.length / maxRecords)}
-                  activePage={pageNo}
-                  onPageChange={(event, data) => {
-                    setPageNo(data.activePage);
-                    window.scrollTo(0, 0);
-                  }}
-                  ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
-                  firstItem={{ content: <Icon name='angle double left' />, icon: true }}
-                  lastItem={{ content: <Icon name='angle double right' />, icon: true }}
-                  prevItem={{ content: <Icon name='angle left' />, icon: true }}
-                  nextItem={{ content: <Icon name='angle right' />, icon: true }}
-                />
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
-        </Table>
+            <Table.Body>
+              {
+                filteredSupplies.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
+                  .map(supply => <SupplyStatusRow key={supply._id} supply={supply} supplyTypes={supplyTypes} locations={locations} />)
+              }
+            </Table.Body>
+
+            <Table.Footer>
+              <Table.Row>
+                <Table.HeaderCell colSpan="6">
+                  <Pagination
+                    totalPages={Math.ceil(filteredSupplies.length / maxRecords)}
+                    activePage={pageNo}
+                    onPageChange={(event, data) => {
+                      setPageNo(data.activePage);
+                      window.scrollTo(0, 0);
+                    }}
+                    ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                    firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                    lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                    prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                    nextItem={{ content: <Icon name='angle right' />, icon: true }}
+                  />
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Footer>
+          </Table>
+        </div>
       </Tab.Pane>
     );
   }

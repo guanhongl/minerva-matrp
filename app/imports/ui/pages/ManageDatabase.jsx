@@ -36,17 +36,19 @@ const UploadDB = ({ db }) => {
 
   return (
     <Table.Cell>
-      <Input type="file" onChange={readFile} />
-      {
-        loading ?
-          <Loader inline active />
-          :
-          <span onClick={upload}>
-            <Icon name="upload" />
-            {`Upload ${db}`}
-            <Icon name="file excel" />
-          </span>
-      }
+      <div className='flex-div'>
+        <Input type="file" onChange={readFile} />
+        {
+          loading ?
+            <Loader inline active />
+            :
+            <span onClick={upload}>
+              <Icon name="upload" />
+              {`Upload ${db}`}
+              <Icon name="file excel" />
+            </span>
+        }
+      </div>
     </Table.Cell>
   );
 };
@@ -160,7 +162,7 @@ const ManageDatabase = () => {
           </Header>
         </Segment>
         <Segment>
-          <Table basic='very' unstackable>
+          <Table basic='very' stackable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Upload</Table.HeaderCell>

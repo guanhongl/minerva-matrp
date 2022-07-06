@@ -26,11 +26,9 @@ const panes = [
 ];
 
 const Status = () => (
-  <div className='status-wrapped'>
-    <Container id={PAGE_IDS.STATUS}>
-      <Tab panes={panes}/>
-    </Container>
-  </div>
+  <Container id={PAGE_IDS.STATUS}>
+    <Tab panes={panes}/>
+  </Container>
 );
 
 export default Status;

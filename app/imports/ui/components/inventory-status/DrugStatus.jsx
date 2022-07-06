@@ -117,20 +117,6 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
   const handleStatusFilter = (event, { value }) => setStatusFilter(value);
   const handleRecordLimit = (event, { value }) => setMaxRecords(value);
 
-  const [mobile, setMobile] = useState(false);
-
-  const handleMobile = () => {
-    if (window.innerWidth < 7200) {
-      setMobile(true);
-    } else {
-      setMobile(true);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleMobile);
-  });
-
   const handleDismiss = () => {
     setVisible(!visible);
     window.localStorage.setItem("visible", JSON.stringify(!visible));
@@ -250,62 +236,49 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
             ${filteredDrugs.reduce((p, c) => p + c.lotIds.length, 0)} lots`}
           </span>
         </div>
-        <Table selectable color='blue' className='status-wrapped' unstackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell/>
-              <Table.HeaderCell>Drug</Table.HeaderCell>
-              <Table.HeaderCell>Type</Table.HeaderCell>
-              <Table.HeaderCell>Total Quantity</Table.HeaderCell>
-              <Table.HeaderCell>Unit</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell/>
-            </Table.Row>
-          </Table.Header>
 
-          <Table.Body>
-            {
-              filteredDrugs.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(med => <DrugStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={units} brands={brands} />)
-            }
-          </Table.Body>
+        <div className='table-wrapper'>
+          <Table selectable color='blue' unstackable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell/>
+                <Table.HeaderCell>Drug</Table.HeaderCell>
+                <Table.HeaderCell>Type</Table.HeaderCell>
+                <Table.HeaderCell>Total Quantity</Table.HeaderCell>
+                <Table.HeaderCell>Unit</Table.HeaderCell>
+                <Table.HeaderCell>Status</Table.HeaderCell>
+                <Table.HeaderCell/>
+              </Table.Row>
+            </Table.Header>
 
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell colSpan="7">
-                { mobile === false &&
-                    <div>
-                      <Pagination
-                        totalPages={Math.ceil(filteredDrugs.length / maxRecords)}
-                        activePage={pageNo}
-                        onPageChange={(event, data) => {
-                          setPageNo(data.activePage);
-                          window.scrollTo(0, 0);
-                        }}
-                        ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}
-                        firstItem={{ content: <Icon name='angle double left'/>, icon: true }}
-                        lastItem={{ content: <Icon name='angle double right'/>, icon: true }}
-                        prevItem={{ content: <Icon name='angle left'/>, icon: true }}
-                        nextItem={{ content: <Icon name='angle right'/>, icon: true }}
-                      />
-                    </div>
-                }
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
-        </Table>
-        { mobile === true &&
-        <Pagination
-          totalPages={Math.ceil(filteredDrugs.length / maxRecords)}
-          activePage={pageNo}
-          onPageChange={(event, data) => setPageNo(data.activePage)}
-          ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}
-          firstItem={null}
-          lastItem={null}
-          siblingRange={1}
-          boundaryRange={0}
-        />
-        }
+            <Table.Body>
+              {
+                filteredDrugs.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
+                  .map(med => <DrugStatusRow key={med._id} med={med} drugTypes={drugTypes} locations={locations} units={units} brands={brands} />)
+              }
+            </Table.Body>
+
+            <Table.Footer>
+              <Table.Row>
+                <Table.HeaderCell colSpan="7">
+                  <Pagination
+                    totalPages={Math.ceil(filteredDrugs.length / maxRecords)}
+                    activePage={pageNo}
+                    onPageChange={(event, data) => {
+                      setPageNo(data.activePage);
+                      window.scrollTo(0, 0);
+                    }}
+                    ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}
+                    firstItem={{ content: <Icon name='angle double left'/>, icon: true }}
+                    lastItem={{ content: <Icon name='angle double right'/>, icon: true }}
+                    prevItem={{ content: <Icon name='angle left'/>, icon: true }}
+                    nextItem={{ content: <Icon name='angle right'/>, icon: true }}
+                  />
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Footer>
+          </Table>
+        </div>
       </Tab.Pane>
     );
   }
