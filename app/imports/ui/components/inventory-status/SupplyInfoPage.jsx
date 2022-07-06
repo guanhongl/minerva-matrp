@@ -56,7 +56,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
         <table>
           <tbody>
             <tr>
-              <td style={{ width: '150px' }}>General Info</td>
+              <td>General Info</td>
               <td>
                 <div>
                   <span className='header'>Supply:</span>
@@ -64,7 +64,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                     edit ?
                       <Input value={supply} disabled />
                       :
-                      <>{supply}</>
+                      <span>{supply}</span>
                   }
                 </div>
                 <div>
@@ -74,7 +74,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                       <Select name='newSupplyType' options={getOptions(supplyTypes)}
                         value={fields.newSupplyType} onChange={handleChange} />
                       :
-                      <>{supplyType}</>
+                      <span>{supplyType}</span>
                   }
                 </div>
                 <div>
@@ -84,7 +84,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                       <Input name='newMinQuantity' type='number' min={1}
                         value={fields.newMinQuantity} onChange={handleChange} />
                       :
-                      <>{minQuantity}</>
+                      <span>{minQuantity}</span>
                   }
                 </div>
               </td>
@@ -98,7 +98,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                     edit ?
                       <Select name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
                       :
-                      <>{location}</>
+                      <span>{location}</span>
                   }
                 </div>
                 <div>
@@ -108,7 +108,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                       <Input name='newQuantity' type='number' min={1}
                         value={fields.newQuantity} onChange={handleChange} />
                       :
-                      <>{quantity}</>
+                      <span>{quantity}</span>
                   }
                 </div>
                 <div>
@@ -117,7 +117,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                     edit ?
                       <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
                       :
-                      <>{donated ? 'Yes' : 'No'}</>
+                      <span>{donated ? 'Yes' : 'No'}</span>
                   }
                 </div>
                 {
@@ -128,7 +128,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                       edit ?
                         <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
                         :
-                        <>{donatedBy}</>
+                        <span>{donatedBy}</span>
                     }
                   </div>
                 }

@@ -213,46 +213,49 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
             ${filteredVaccines.reduce((p, c) => p + c.lotIds.length, 0)} lots`}
           </span>
         </div>
-        <Table selectable color='blue' unstackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell />
-              <Table.HeaderCell>Vaccine</Table.HeaderCell>
-              <Table.HeaderCell>Manufacturer</Table.HeaderCell>
-              <Table.HeaderCell>Total Quantity</Table.HeaderCell>
-              <Table.HeaderCell>VIS Date</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell />
-            </Table.Row>
-          </Table.Header>
 
-          <Table.Body>
-            {
-              filteredVaccines.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine} locations={locations} />)
-            }
-          </Table.Body>
+        <div className='table-wrapper'>
+          <Table selectable color='blue' unstackable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell />
+                <Table.HeaderCell>Vaccine</Table.HeaderCell>
+                <Table.HeaderCell>Manufacturer</Table.HeaderCell>
+                <Table.HeaderCell>Total Quantity</Table.HeaderCell>
+                <Table.HeaderCell>VIS Date</Table.HeaderCell>
+                <Table.HeaderCell>Status</Table.HeaderCell>
+                <Table.HeaderCell />
+              </Table.Row>
+            </Table.Header>
 
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell colSpan="7">
-                <Pagination
-                  totalPages={Math.ceil(filteredVaccines.length / maxRecords)}
-                  activePage={pageNo}
-                  onPageChange={(event, data) => {
-                    setPageNo(data.activePage);
-                    window.scrollTo(0, 0);
-                  }}
-                  ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
-                  firstItem={{ content: <Icon name='angle double left' />, icon: true }}
-                  lastItem={{ content: <Icon name='angle double right' />, icon: true }}
-                  prevItem={{ content: <Icon name='angle left' />, icon: true }}
-                  nextItem={{ content: <Icon name='angle right' />, icon: true }}
-                />
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
-        </Table>
+            <Table.Body>
+              {
+                filteredVaccines.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
+                  .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine} locations={locations} />)
+              }
+            </Table.Body>
+
+            <Table.Footer>
+              <Table.Row>
+                <Table.HeaderCell colSpan="7">
+                  <Pagination
+                    totalPages={Math.ceil(filteredVaccines.length / maxRecords)}
+                    activePage={pageNo}
+                    onPageChange={(event, data) => {
+                      setPageNo(data.activePage);
+                      window.scrollTo(0, 0);
+                    }}
+                    ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                    firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                    lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                    prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                    nextItem={{ content: <Icon name='angle right' />, icon: true }}
+                  />
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Footer>
+          </Table>
+        </div>
       </Tab.Pane>
     );
   }

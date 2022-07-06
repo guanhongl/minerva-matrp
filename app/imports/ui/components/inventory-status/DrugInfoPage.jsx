@@ -62,7 +62,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
         <table>
           <tbody>
             <tr>
-              <td style={{ width: '150px' }}>General Info</td>
+              <td>General Info</td>
               <td>
                 <div>
                   <span className='header'>Drug:</span>
@@ -70,16 +70,16 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                     edit ?
                       <Input value={drug} disabled />
                       :
-                      <>{drug}</>
+                      <span>{drug}</span>
                   }
                 </div>
                 <div>
                   <span className='header'>Drug Type(s):</span>
                   {
                     edit ?
-                      <Select name='newDrugType' value={fields.newDrugType} options={getOptions(drugTypes)} multiple onChange={handleChange} />
+                      <Select fluid name='newDrugType' value={fields.newDrugType} options={getOptions(drugTypes)} multiple onChange={handleChange} />
                       :
-                      <>{drugType.join(', ')}</>
+                      <span>{drugType.join(', ')}</span>
                   }
                 </div>
                 <div>
@@ -88,16 +88,16 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                     edit ?
                       <Input name='newMinQuantity' value={fields.newMinQuantity} type='number' min={1} onChange={handleChange} />
                       :
-                      <>{minQuantity}</>
+                      <span>{minQuantity}</span>
                   }
                 </div>
                 <div>
                   <span className='header'>Unit:</span>
                   {
                     edit ?
-                      <Select name='newUnit' value={fields.newUnit} options={getOptions(units)} onChange={handleChange} />
+                      <Select fluid name='newUnit' value={fields.newUnit} options={getOptions(units)} onChange={handleChange} />
                       :
-                      <>{unit}</>
+                      <span>{unit}</span>
                   }
                 </div>
               </td>
@@ -111,16 +111,16 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                     edit ?
                       <Input name='newLotId' value={fields.newLotId} onChange={handleChange} />
                       :
-                      <>{lotId}</>
+                      <span>{lotId}</span>
                   }
                 </div>
                 <div>
                   <span className='header'>Brand:</span>
                   {
                     edit ?
-                      <Select name='newBrand' value={fields.newBrand} options={getOptions(brands)} onChange={handleChange} />
+                      <Select fluid name='newBrand' value={fields.newBrand} options={getOptions(brands)} onChange={handleChange} />
                       :
-                      <>{brand}</>
+                      <span>{brand}</span>
                   }
                 </div>
                 <div>
@@ -129,16 +129,16 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                     edit ?
                       <Input name='newExpire' value={fields.newExpire} type='date' onChange={handleChange} />
                       :
-                      <>{expire ? moment(expire).format('LL') : 'N/A'}</>
+                      <span>{expire ? moment(expire).format('LL') : 'N/A'}</span>
                   }
                 </div>
                 <div>
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
+                      <Select fluid name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
                       :
-                      <>{location}</>
+                      <span>{location}</span>
                   }
                 </div>
                 <div>
@@ -147,7 +147,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                     edit ?
                       <Input name='newQuantity' value={fields.newQuantity} type='number' min={1} onChange={handleChange} />
                       :
-                      <>{quantity}</>
+                      <span>{quantity}</span>
                   }
                 </div>
                 <div>
@@ -156,7 +156,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                     edit ?
                       <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
                       :
-                      <>{donated ? 'Yes' : 'No'}</>
+                      <span>{donated ? 'Yes' : 'No'}</span>
                   }
                 </div>
                 {
@@ -167,7 +167,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                       edit ?
                         <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
                         :
-                        <>{donatedBy}</>
+                        <span>{donatedBy}</span>
                     }
                   </div>
                 }
