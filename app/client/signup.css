@@ -68,6 +68,10 @@
   flex-grow: 1;
 }
 
+#sign-up .equal.width.fields > .field {
+  width: 0; /* allow flex to grow */
+}
+
 /* phones */
 @media only screen and (max-width: 767px) {
   #sign-up {
@@ -82,7 +86,7 @@
 /* enrollment */
 #enroll {
   font-size: 1rem;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 #enroll h1 {
@@ -138,6 +142,10 @@
 #enroll .flex-div > * {
   flex-basis: 10em;
   flex-grow: 1;
+}
+
+#enroll .flex-div > div:last-child {
+  min-height: 20rem;
 }
 
 /* phones */

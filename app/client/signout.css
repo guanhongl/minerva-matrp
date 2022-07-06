@@ -26,17 +26,23 @@
 
 #sign-out .controls {
   display: flex;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 0 5em;
 }
 
 #sign-out .controls > * {
-  flex-grow: 1;
+  flex-basis: 10em;
+  /* flex-grow: 1; */
 }
 
 /* phones */
 @media only screen and (max-width: 767px) {
   #sign-out {
       font-size: 0.5rem;
+  }
+
+  #sign-out .controls > * {
+    flex-grow: 1;
   }
 }
