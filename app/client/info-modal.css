@@ -40,7 +40,7 @@
 }
 
 @media only screen and (max-width: 767px) {
-    .info-modal tbody tr td:last-child > div > * {
+    .info-modal tbody tr td:last-child > div > .ui { /* only target semantic ui inputs */
         flex-basis: 100%;
     }
 }

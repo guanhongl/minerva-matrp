@@ -10,6 +10,7 @@ const VaccineRecord = ({ open, setOpen, record }) => {
 
   return (
     <Modal
+      closeIcon
       onClose={() => setOpen(false)}
       open={open}
       size='small'
@@ -21,27 +22,27 @@ const VaccineRecord = ({ open, setOpen, record }) => {
         <table>
           <tbody>
             <tr>
-              <td style={{ width: '150px' }}>General Info</td>
+              <td>General Info</td>
               <td>
                 <div>
                   <span className='header'>Dispense Type:</span>
-                  {dispenseType}
+                  <span>{dispenseType}</span>
                 </div>
                 <div>
                   <span className='header'>Date:</span>
-                  {moment(dateDispensed).format('LLLL')}
+                  <span>{moment(dateDispensed).format('LLLL')}</span>
                 </div>
                 <div>
                   <span className='header'>Dispensed By:</span>
-                  {dispensedFrom}
+                  <span>{dispensedFrom}</span>
                 </div>
                 <div>
                   <span className='header'>Patient Number:</span>
-                  {dispensedTo}
+                  <span>{dispensedTo}</span>
                 </div>
                 <div>
                   <span className='header'>Site:</span>
-                  {site}
+                  <span>{site}</span>
                 </div>
               </td>
             </tr>
@@ -52,31 +53,31 @@ const VaccineRecord = ({ open, setOpen, record }) => {
                   <td>
                     <div>
                       <span className='header'>Name:</span>
-                      {name}
+                      <span>{name}</span>
                     </div>
                     <div>
                       <span className='header'>Lot Number:</span>
-                      {lotId}
+                      <span>{lotId}</span>
                     </div>
                     <div>
                       <span className='header'>Brand:</span>
-                      {brand}
+                      <span>{brand}</span>
                     </div>
                     <div>
                       <span className='header'>Expiration Date:</span>
-                      {expire ? moment(expire).format('LL') : "N/A"}
+                      <span>{expire ? moment(expire).format('LL') : "N/A"}</span>
                     </div>
                     <div>
                       <span className='header'>Dose Number:</span>
-                      {dose > 0 ? dose : 'N/A'}
+                      <span>{dose > 0 ? dose : 'N/A'}</span>
                     </div>
                     <div>
                       <span className='header'>Quantity:</span>
-                      {quantity}
+                      <span>{quantity}</span>
                     </div>
                     <div>
                       <span className='header'>VIS Date:</span>
-                      {moment(visDate).format('LL')}
+                      <span>{moment(visDate).format('LL')}</span>
                     </div>
                   </td>
                 </tr>
@@ -89,9 +90,9 @@ const VaccineRecord = ({ open, setOpen, record }) => {
           </tbody>
         </table>
       </Modal.Content>
-      <Modal.Actions>
+      {/* <Modal.Actions>
         <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DISPENSE_INFO_CLOSE}> Close</Button>
-      </Modal.Actions>
+      </Modal.Actions> */}
     </Modal>
 
   );

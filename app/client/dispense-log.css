@@ -1,3 +1,7 @@
+#dispense-log {
+  min-height: calc(100vh - 230px);
+}
+
 #dispense-log .ui.pagination.menu {
   border: none;
   box-shadow: none;
@@ -13,11 +17,85 @@
   border-radius: 50%;
 }
 
+#dispense-log div.sub.header {
+  font-style: italic;
+}
+
+#dispense-log div.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+#dispense-log div.controls span {
+  color: #21ba45;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#dispense-log div.controls .ui.input {
+  width: 50%;
+}
+
+#dispense-log .date-controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  width: 50%;
+}
+#dispense-log .date-controls > * {
+  flex: 1 1 50%;
+}
+
+#dispense-log div.filters {
+  margin-top: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  width: 75%;
+}
+#dispense-log div.filters > * {
+  flex: 1 1 0;
+
+  background-color: #1D3E66;
+  color: white;
+  font-weight: 700;
+  padding: 0.5em;
+  border-radius: 0.5em;
+
+  display: flex;
+  column-gap: 0.25em;
+}
+#dispense-log div.filters > * > div {
+  flex-grow: 1;
+}
+#dispense-log div.filters > * > .ui.search.dropdown > input.search {
+  color: white;
+}
+
+@media only screen and (max-width: 767px) {
+  #dispense-log > .ui.segment > .table-wrapper {
+    overflow-x: auto;
+  }
+
+  #dispense-log > .ui.segment > .table-wrapper > table, 
+  #dispense-log > .ui.segment > .table-wrapper > table .ui.pagination.menu {
+    font-size: 0.8em;
+  }
+
+  #dispense-log .date-controls,
+  #dispense-log div.filters {
+    width: 100%;
+  }
+}
+
 /* modal css */
-#dispense-info span.header {
+/* #dispense-info span.header {
   display: inline-block;
   width: 200px;
-}
+} */
 
 #dispense-info textarea {
   width: 100%;
@@ -35,4 +113,13 @@
 
 #dispense-info table td {
   padding: 10px 0;
+}
+
+#dispense-info tbody tr td:last-child > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#dispense-info tbody tr td:last-child > div > * {
+  flex: 1 1 50%;
 }

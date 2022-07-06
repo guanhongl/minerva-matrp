@@ -21,13 +21,15 @@ const DispenseLogRow = ({ history }) => {
         <Table.Cell>{history.dispenseType}</Table.Cell>
         <Table.Cell>{history.dispensedTo}</Table.Cell>
         <Table.Cell>{history.site}</Table.Cell>
-        <Table.Cell textAlign='center'>
-          <Popup trigger={<Icon name='user circle' size='large' color='grey'/>}
-            content={history.dispensedFrom} size='small' position='right center' inverted/>
+        <Table.Cell>
+          {/* <Popup trigger={<Icon name='user circle' size='large' color='grey'/>}
+            content={history.dispensedFrom} size='small' position='right center' inverted/> */}
+          {history.dispensedFrom}
         </Table.Cell>
         <Table.Cell textAlign='center'>
-          <Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DISPENSE_INFO_BUTTON}
-            onClick={() => setOpen(true)} />
+          {/* <Button size='mini' circular icon='info' color='linkedin' id={COMPONENT_IDS.DISPENSE_INFO_BUTTON}
+            onClick={() => setOpen(true)} /> */}
+          <Icon name="info" onClick={() => setOpen(true)} />
         </Table.Cell>
       </Table.Row>
       {
