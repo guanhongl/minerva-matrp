@@ -47,6 +47,12 @@ class PendingUserCollection extends BaseCollection {
    * @returns true
    */
   removeIt(name) {
+    if (!this.userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in to remove.');
+    } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to remove.');
+    }
+
     const doc = this.findDoc(name);
     check(doc, Object);
     this._collection.remove(doc._id);

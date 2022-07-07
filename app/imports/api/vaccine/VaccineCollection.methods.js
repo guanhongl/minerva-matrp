@@ -191,7 +191,8 @@ export const updateMethod = new ValidatedMethod({
     run({ _id, uuid, fields }) {
         if (Meteor.isServer) {
             const collection = MATRP.vaccines;
-            collection.assertValidRoleForMethod(this.userId);
+            // collection.assertValidRoleForMethod(this.userId);
+            collection.assertValidRoleForUpdate(this.userId);
             const { newMinQuantity, newVisDate, newLotId, newExpire, newLocation, newQuantity, newNote } = fields;
             
             // validation

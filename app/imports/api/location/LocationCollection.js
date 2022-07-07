@@ -86,7 +86,7 @@ class LocationCollection extends BaseCollection {
    * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
    */
   assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.ADMIN, ROLE.SUPERUSER, ROLE.USER]);
+    this.assertRole(userId, [ROLE.ADMIN]);
   }
 
   /**

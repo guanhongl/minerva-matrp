@@ -60,6 +60,8 @@ export const updateMethod = new ValidatedMethod({
     run({ collectionName, prev, option, instance }) {
         if (Meteor.isServer) {
             const collection = MATRP.getCollection(collectionName);
+            // throw error if user is not authorized
+            collection.assertValidRoleForMethod(this.userId);
             // throw error if option is empty
             if (!option) {
                 throw new Meteor.Error("option-empty", "The option cannot be empty.");

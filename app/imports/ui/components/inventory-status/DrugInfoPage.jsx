@@ -1,8 +1,11 @@
+import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 import { Button, Modal, Input, Checkbox, TextArea, Select, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
+import { Roles } from 'meteor/alanning:roles';
+import { ROLE } from '../../../api/role/Role';
 import { updateMethod } from '../../../api/drug/DrugCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { printQRCode, getOptions } from '../../utilities/Functions';
@@ -17,6 +20,8 @@ const submit = (_id, uuid, fields) => {
 const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit }, 
                        detail: { _id: uuid, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode },
                        drugTypes, locations, units, brands }) => {
+  // A reactive data source.
+  const isAuth = Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN, ROLE.SUPERUSER]);
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -194,21 +199,26 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
             color='black'
           />
         }
-        <Button
-          circular
-          icon={edit ? 'ban' : 'pencil'}
-          color='linkedin'
-          onClick={handleEdit}
-        />
-        <Button
-          // id={COMPONENT_IDS.DRUG_EDIT}
-          circular
-          // content="Save Changes"
-          // labelPosition='right'
-          icon='check'
-          onClick={() => submit(_id, uuid, fields)}
-          color='green'
-        />
+        {
+          isAuth &&
+          <>
+            <Button
+              circular
+              icon={edit ? 'ban' : 'pencil'}
+              color='linkedin'
+              onClick={handleEdit}
+            />
+            <Button
+              // id={COMPONENT_IDS.DRUG_EDIT}
+              circular
+              // content="Save Changes"
+              // labelPosition='right'
+              icon='check'
+              onClick={() => submit(_id, uuid, fields)}
+              color='green'
+            />
+          </>
+        }
         {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.DRUG_CLOSE}>
           Close
         </Button> */}

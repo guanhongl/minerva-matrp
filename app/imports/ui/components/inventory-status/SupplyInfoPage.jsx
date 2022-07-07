@@ -1,7 +1,10 @@
+import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 import { Button, Modal, Input, TextArea, Select, Icon, Checkbox } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import { Roles } from 'meteor/alanning:roles';
+import { ROLE } from '../../../api/role/Role';
 import { updateMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { printQRCode, getOptions } from '../../utilities/Functions';
@@ -15,6 +18,8 @@ const submit = (_id, uuid, fields) => {
 const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, 
                           detail: { _id: uuid, location, quantity, donated, donatedBy, note, QRCode }, 
                           supplyTypes, locations }) => {
+  // A reactive data source.
+  const isAuth = Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN, ROLE.SUPERUSER]);
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -155,21 +160,26 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
             color='black'
           />
         }
-        <Button
-          circular
-          icon={edit ? 'ban' : 'pencil'}
-          onClick={handleEdit}
-          color='linkedin'
-        />
-        <Button
-          circular
-          // id={COMPONENT_IDS.SUPPLY_INFO_EDIT}
-          // content="Save Changes"
-          // labelPosition='right'
-          icon='check'
-          onClick={() => submit(_id, uuid, fields)}
-          color='green'
-        />
+        {
+          isAuth &&
+          <>
+            <Button
+              circular
+              icon={edit ? 'ban' : 'pencil'}
+              onClick={handleEdit}
+              color='linkedin'
+            />
+            <Button
+              circular
+              // id={COMPONENT_IDS.SUPPLY_INFO_EDIT}
+              // content="Save Changes"
+              // labelPosition='right'
+              icon='check'
+              onClick={() => submit(_id, uuid, fields)}
+              color='green'
+            />
+          </>
+        }
         {/* <Button color='black' onClick={() => setOpen(false)} id={COMPONENT_IDS.SUPPLY_INFO_CLOSE}>
           Close
         </Button> */}

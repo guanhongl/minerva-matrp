@@ -23,6 +23,7 @@
 #manage-database div.flex-div {
     display: flex;
     flex-wrap: wrap;
+    align-items: baseline;
 }
 #manage-database div.flex-div > span {
     flex-basis: 10em;
