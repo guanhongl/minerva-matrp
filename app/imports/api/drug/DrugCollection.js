@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
-// import { Roles } from 'meteor/alanning:roles';
+import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
@@ -114,6 +114,10 @@ class DrugCollection extends BaseCollection {
    * @returns true
    */
   removeIt(name) {
+    if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to remove.');
+    }
+
     const doc = this.findDoc(name);
     check(doc, Object);
     this._collection.remove(doc._id);
@@ -195,7 +199,11 @@ class DrugCollection extends BaseCollection {
    * @param userId The userId of the logged in user. Can be null or undefined
    * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
    */
-  assertValidRoleForMethod(userId) {
+  assertValidRoleForMethod(userId, parent = false) {
+    if (parent) {
+      return super.assertValidRoleForMethod(userId);
+    }
+
     this.assertRole(userId, [ROLE.ADMIN, ROLE.USER, ROLE.SUPERUSER]);
   }
 

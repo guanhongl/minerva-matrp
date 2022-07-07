@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
-// import { Roles } from 'meteor/alanning:roles';
+import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
@@ -99,6 +99,10 @@ class SupplyCollection extends BaseCollection {
    * @returns true
    */
   removeIt(name) {
+    if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to remove.');
+    }
+
     const doc = this.findDoc(name);
     check(doc, Object);
     this._collection.remove(doc._id);

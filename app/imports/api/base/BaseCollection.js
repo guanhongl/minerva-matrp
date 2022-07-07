@@ -188,6 +188,14 @@ class BaseCollection {
     }
     return true;
   }
+  assertValidRoleForUpdate(userId) {
+    if (!userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in.');
+    } else if (!Roles.userIsInRole(userId, [ROLE.ADMIN, ROLE.SUPERUSER])) {
+      throw new Meteor.Error('unauthorized', `You must be an admin or doctor.`);
+    }
+    return true;
+  }
 
   /**
    * Verifies that the passed object is one of this collection's instances.

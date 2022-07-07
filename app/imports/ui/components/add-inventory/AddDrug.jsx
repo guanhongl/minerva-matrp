@@ -175,7 +175,6 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
               <Grid.Column className='filler-column' />
             </Grid.Row>
             <Grid.Row>
-              {/* TODO: expand drug type column */}
               <Grid.Column>
                 <Form.Select clearable multiple search label='Drug Type(s)' disabled={disabled}
                   options={getOptions(drugTypes)} placeholder="Allergy & Cold Medicines"

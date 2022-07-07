@@ -35,7 +35,10 @@ export const updateMethod = new ValidatedMethod({
     if (Meteor.isServer) {
       // console.log('updateMethod(%o, %o)', collectionName, updateData);
       const collection = MATRP.getCollection(collectionName);
-      collection.assertValidRoleForMethod(this.userId);
+      // collection.assertValidRoleForMethod(this.userId);
+      // assuming only drug, vaccine, supply call this to remove lot
+      // an alternative solution is to handle in another method
+      collection.assertValidRoleForMethod(this.userId, true);
       collection.update(updateData.id, updateData);
     }
   },
