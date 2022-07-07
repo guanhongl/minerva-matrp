@@ -89,7 +89,13 @@ export const acceptMethod = new ValidatedMethod({
   name: 'acceptMethod',
   mixins: [CallPromiseMixin],
   validate: null,
-  run({ user }) {
+  async run({ user }) {
+    if (!this.userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in to accept.');
+    } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to accept.');
+    }
+
     if (Meteor.isServer) {
       const { firstName, lastName, email, _id } = user;
       console.log("first: ", firstName, "last: ", lastName, "@: ", email);
@@ -97,95 +103,24 @@ export const acceptMethod = new ValidatedMethod({
       console.log("ID: ", userID);
       // set up the credentials
       const credentials = JSON.parse(Assets.getText('settings.production.json'));
-      // set up SMTP
-      let transport = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          type: "OAuth2",
-          user: credentials.user,
-          // clientId: credentials.clientId,
-          // clientSecret: credentials.clientSecret,
-          // refreshToken: credentials.refreshToken,
-          accessToken: ACCESS_TOKEN,
-        }
-      });
-      // set up the enrollment URL
-      const enrollURL = new URL(Meteor.absoluteUrl(`/#/enroll-acct/${userID}`));
-      // set up the email
-      const mailOptions = {
-        from: `Minerva Alert <${credentials.user}>`,
-        to: email,
-        subject: "Welcome to Minerva!",
-        // generateTextFromHTML: true,
-        html: "<p>Congratulations. Your account has been successfully created.</p>"
-            + "<br>"
-            + "<p>To activate your account, simply click the link below:</p>"
-            + `<a href="${enrollURL}" target="_blank" rel="noopener noreferrer">click here</a>`,
-        text: "Congratulations. Your account has been successfully created. "
-            + "To activate your account, simply click the link below: "
-            + enrollURL,
-      };
-      // try the access token
-      return transport.sendMail(mailOptions)
-        // if first attempt error
-        .catch(() => {
-          // set up the POST body
-          const body = {
-            client_id: credentials.clientId,
-            client_secret: credentials.clientSecret,
-            refresh_token: credentials.refreshToken,
-            grant_type: "refresh_token",
-          };
-          // fetch the access token
-          return fetch("https://www.googleapis.com/oauth2/v4/token", {
-            method: 'POST',
-            headers: new Headers({
-              'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify(body),
-          })
-            .then(response => response.json())
-            .then(response => {
-              // throw error if invalid access_token (likely bad refresh token)
-              if (response.error) {
-                // throw new Error(`[${response.error}] ${response.error_description}`);
-                return Promise.reject(new Error(`[${response.error}] ${response.error_description}`));
-              }
-              // else
-              if (response.access_token) {
-                // remember access_token
-                ACCESS_TOKEN = response.access_token;
-                // set up new transport
-                transport = nodemailer.createTransport({
-                  service: "gmail",
-                  auth: {
-                    type: "OAuth2",
-                    user: credentials.user,
-                    accessToken: ACCESS_TOKEN,
-                  }
-                });
-                // send the enrollment email
-                return transport.sendMail(mailOptions);
-              }
-            });
-        })
-        .then(response => {
-          // if success
-          console.log(response)
-          // set up the role and the profile
-          const role = ROLE.USER; // default to USER for now
-          UserProfiles.defineBase({ email, firstName, lastName, userID, role });
-          Roles.addUsersToRoles(userID, [role]);
-          // remove the pending user
-          PendingUsers.removeIt(_id);
 
-          return userID;
-        })
-        .catch(error => {
-          // catch any errors and remove the account
-          Meteor.users.remove({ _id: userID });
-          throw new Meteor.Error(error.message);
-        });
+      try {
+        const values = await sendMail([userID], credentials, [{ email }]);
+        console.log(values)
+        // set up the role and the profile
+        const role = ROLE.USER; // default to USER for now
+        UserProfiles.defineBase({ email, firstName, lastName, userID, role });
+        Roles.addUsersToRoles(userID, [role]);
+        // remove the pending user
+        PendingUsers.removeIt(_id);
+
+        return userID;
+      } catch (error) {
+        // catch any errors and remove the account
+        Meteor.users.remove({ _id: userID });
+        // throw error; // rethrow
+        throw new Meteor.Error(error.message);
+      }
     }
     return '';
   },
@@ -210,6 +145,12 @@ export const removeMethod = new ValidatedMethod({
   mixins: [CallPromiseMixin],
   validate: null,
   run({ collectionName, userID, profileID }) {
+    if (!this.userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in to remove.');
+    } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to remove.');
+    }
+
     if (Meteor.isServer) {
       // remove the account
       Meteor.users.remove({ _id: userID });
@@ -217,7 +158,7 @@ export const removeMethod = new ValidatedMethod({
       Roles.setUserRoles(userID, []);
       // remove the profile
       const collection = MATRP.getCollection(collectionName);
-      collection.assertValidRoleForMethod(this.userId);
+      // collection.assertValidRoleForMethod(this.userId);
       return collection.removeIt(profileID);
     }
     return '';
@@ -229,6 +170,12 @@ export const updateRoleMethod = new ValidatedMethod({
   mixins: [CallPromiseMixin],
   validate: null,
   run({ prev, collectionName, user, newRole }) {
+    if (!this.userId) {
+      throw new Meteor.Error('unauthorized', 'You must be logged in to update.');
+    } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+      throw new Meteor.Error('unauthorized', 'You must be an admin to update.');
+    }
+
     if (Meteor.isServer) {
       const { _id, email, firstName, lastName, userID, role } = user;
       // disallow admin to set their own role
@@ -237,11 +184,11 @@ export const updateRoleMethod = new ValidatedMethod({
       }
       // remove the prev profile
       let collection = MATRP.getCollection(prev);
-      collection.assertValidRoleForMethod(this.userId);
+      // collection.assertValidRoleForMethod(this.userId);
       collection.removeIt(_id);
       // insert the new profile
       collection = MATRP.getCollection(collectionName);
-      collection.assertValidRoleForMethod(this.userId);
+      // collection.assertValidRoleForMethod(this.userId);
       collection.defineBase({ email, firstName, lastName, userID, role: newRole });
       // set role accordingly
       Roles.setUserRoles(userID, [newRole]);

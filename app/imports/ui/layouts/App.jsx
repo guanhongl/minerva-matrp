@@ -40,18 +40,17 @@ const App = () => {
         <UnprotectedRoute exact path="/" component={Landing}/>
         <UnprotectedRoute exact path="/signin" component={Signin}/>
         <UnprotectedRoute exact path="/signup" component={Signup}/>
-        {/* TODO: fix bug where new user is logged out */}
-        <Route exact path="/enroll-acct/:token" component={Password} />
+        <UnprotectedRoute exact path="/enroll-acct/:token" component={Password} />
         <Route exact path="/signout" component={Signout}/>
         <ProtectedRoute exact path="/about" component={About}/>
         <ProtectedRoute exact path="/dispense" component={Dispense}/>
         <ProtectedRoute exact path="/status" component={Status}/>
         <ProtectedRoute exact path="/add" component={AddInventory}/>
         <ProtectedRoute exact path="/dispense-log" component={DispenseLog}/>
-        <ProtectedRoute path="/list" component={ListStuff}/>
-        <ProtectedRoute exact path="/manage-dropdowns" component={ManageDropdowns}/>
-        <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
-        <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
+        {/* <ProtectedRoute path="/list" component={ListStuff}/> */}
+        <AdminProtectedRoute exact path="/manage-dropdowns" component={ManageDropdowns}/>
+        {/* <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/> */}
+        <AdminProtectedRoute exact path="/manage-database" component={ManageDatabase}/>
         <AdminProtectedRoute exact path="/manage-users" component={ManageUsers}/>
         <AdminProtectedRoute exact path="/manage-new-users" component={ManageNewUsers}/>
         <Route component={NotFound}/>
