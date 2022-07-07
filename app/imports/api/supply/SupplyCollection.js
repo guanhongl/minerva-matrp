@@ -161,7 +161,11 @@ class SupplyCollection extends BaseCollection {
    * @param userId The userId of the logged in user. Can be null or undefined
    * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
    */
-  assertValidRoleForMethod(userId) {
+  assertValidRoleForMethod(userId, parent = false) {
+    if (parent) {
+      return super.assertValidRoleForMethod(userId);
+    }
+
     this.assertRole(userId, [ROLE.ADMIN, ROLE.USER, ROLE.SUPERUSER]);
   }
 
