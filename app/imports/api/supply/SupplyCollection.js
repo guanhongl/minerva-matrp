@@ -173,7 +173,8 @@ class SupplyCollection extends BaseCollection {
    * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
    */
    dumpOne(docID) {
-    const doc = this.findDoc(docID);
+    // const doc = this.findDoc(docID);
+    const doc = docID;
     const supply = doc.supply;
     const supplyType = doc.supplyType;
     const minQuantity = doc.minQuantity;

@@ -239,9 +239,17 @@ class BaseCollection {
     //   contents: this.find().map((docID) => this.dumpOne(docID)),
     // };
 
-    const selector = _ids ? { _id: { $in: _ids } } : {};
+    // const selector = _ids ? { _id: { $in: _ids } } : {};
+    const arr = this._type == "Supplys" ? "stock" : "lotIds";
+    // const selector = _ids ? { [arr]: { $elemMatch: { _id: { $in: _ids } } } } : {};
 
-    const dumpObject = this.find(selector).map((docID) => this.dumpOne(docID));
+    const dumpObject = this.find().fetch()
+      .filter(o => {
+        o[arr] = o[arr].filter(e => _ids.includes(e._id));
+        return o[arr].length > 0;
+      })
+      .map(o => this.dumpOne(o));
+      // .map((docID) => this.dumpOne(docID));
     // If a collection doesn't want to be dumped, it can just return null from dumpOne.
     dumpObject.contents = _.without(dumpObject.contents, null);
     // sort the contents array by slug (if present)

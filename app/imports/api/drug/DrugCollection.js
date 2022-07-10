@@ -211,7 +211,8 @@ class DrugCollection extends BaseCollection {
    * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
    */
    dumpOne(docID) {
-    const doc = this.findDoc(docID);
+    // const doc = this.findDoc(docID);
+    const doc = docID;
     const drug = doc.drug;
     const drugType = doc.drugType.join();
     const minQuantity = doc.minQuantity;

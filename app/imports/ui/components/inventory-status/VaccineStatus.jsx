@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Divider, Dropdown, Pagination, Message, Input, Loader, Icon, Popup, Tab } from 'semantic-ui-react';
+import { Header, Table, Divider, Dropdown, Pagination, Message, Input, Loader, Icon, Popup, Tab, Checkbox } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -50,6 +50,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
   const [brandFilter, setBrandFilter] = useState(0);
   const [locationFilter, setLocationFilter] = useState(0);
   const [statusFilter, setStatusFilter] = useState(0);
+  const [expireFilter, setExpireFilter] = useState(false);
   const [maxRecords, setMaxRecords] = useState(25);
   const [visible, setVisible] = useState(JSON.parse(window.localStorage.getItem("visible")) ?? true);
   const [loading, setLoading] = useState(false); // download loader
@@ -93,13 +94,20 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
         return true;
       });
     }
+    if (expireFilter) {
+      filter = filter.filter(o => {
+        o.lotIds = o.lotIds.filter(lot => lot.isExpired);
+        return o.lotIds.length > 0;
+      });
+    }
     setFilteredVaccines(filter);
-  }, [searchQuery, brandFilter, locationFilter, statusFilter]);
+  }, [searchQuery, brandFilter, locationFilter, statusFilter, expireFilter]);
 
   const handleSearch = (event, { value }) => setSearchQuery(value);
   const handleBrandFilter = (event, { value }) => setBrandFilter(value);
   const handleLocationFilter = (event, { value }) => setLocationFilter(value);
   const handleStatusFilter = (event, { value }) => setStatusFilter(value);
+  const handleExpireFilter = (event, { checked }) => setExpireFilter(checked);
   const handleRecordLimit = (event, { value }) => setMaxRecords(value);
 
   const handleDismiss = () => {
@@ -110,7 +118,11 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
   // download DB w/ filter
   const download = () => {
     setLoading(true);
-    downloadDatabaseMethod.callPromise({ db: "vaccines", _ids: _.pluck(filteredVaccines, "_id") })
+    const _ids = _.pluck(
+      _.pluck(filteredVaccines, "lotIds").flat(),
+      "_id",
+    );
+    downloadDatabaseMethod.callPromise({ db: "vaccines", _ids })
       .then(csv => {
         const zip = new ZipZap();
         const dir = 'minerva-db';
@@ -127,6 +139,9 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
         }
         if (statusFilter) {
           filter += `status=${formatQuery(statusFilter)}&`;
+        }
+        if (expireFilter) {
+          filter += `expire=true&`;
         }
         // append "-" and remove the last char
         if (filter) {
@@ -187,6 +202,8 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
               onChange={handleStatusFilter} value={statusFilter} id={COMPONENT_IDS.INVENTORY_STATUS}/>
           </span>
         </div>
+
+        <Checkbox toggle label="Expired" checked={expireFilter} onChange={handleExpireFilter} />
 
         <Divider/>
 

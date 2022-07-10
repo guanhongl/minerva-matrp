@@ -83,7 +83,7 @@ const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
           <Icon name={`caret ${expand ? 'down' : 'up'}`} />
         </Table.Cell>
         <Table.Cell>{med.drug}</Table.Cell>
-        <Table.Cell>{med.drugType.join(', ')}</Table.Cell>
+        <Table.Cell>{med.drugType?.join(', ') ?? ""}</Table.Cell>
         <Table.Cell>{med.sum}</Table.Cell>
         <Table.Cell>{med.unit}</Table.Cell>
         <Table.Cell>

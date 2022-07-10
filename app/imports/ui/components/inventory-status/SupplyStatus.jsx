@@ -100,7 +100,11 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
   // download DB w/ filter
   const download = () => {
     setLoading(true);
-    downloadDatabaseMethod.callPromise({ db: "supplies", _ids: _.pluck(filteredSupplies, "_id") })
+    const _ids = _.pluck(
+      _.pluck(filteredSupplies, "stock").flat(),
+      "_id",
+    );
+    downloadDatabaseMethod.callPromise({ db: "supplies", _ids })
       .then(csv => {
         const zip = new ZipZap();
         const dir = 'minerva-db';
