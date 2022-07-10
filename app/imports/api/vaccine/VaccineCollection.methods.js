@@ -225,3 +225,20 @@ export const updateMethod = new ValidatedMethod({
         return null;
     },
 });
+
+export const brandFilterMethod = new ValidatedMethod({
+    name: 'vaccine.brandFilter',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ brand }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.vaccines;
+            collection.assertValidRoleForMethod(this.userId);
+            return _.pluck(
+                collection.find({ brand }, { sort: { vaccine: 1 }, fields: { vaccine: 1 } }).fetch(),
+                "vaccine",
+            );
+        }
+        return null;
+    },
+});

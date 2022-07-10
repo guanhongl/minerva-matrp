@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
-import moment from 'moment';
 
 export function fetchField(collection, field, selector = {}) {
   return _.pluck(

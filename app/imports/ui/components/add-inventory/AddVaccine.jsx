@@ -11,7 +11,7 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { fetchField, fetchLots, getOptions, printQRCode } from '../../utilities/Functions';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
-import { addMethod } from '../../../api/vaccine/VaccineCollection.methods';
+import { addMethod, brandFilterMethod } from '../../../api/vaccine/VaccineCollection.methods';
 
 /** On submit, insert the data. */
 const submit = (data, callback) => {
@@ -67,7 +67,6 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
       });
   }, [fields.vaccine, fields.brand]);
 
-  // TODO: filter vaccine on brand select and vice versa...
   const [newLotIds, setNewLotIds] = useState([]);
   useEffect(() => {
     setNewLotIds(lotIds);
@@ -76,6 +75,11 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
   useEffect(() => {
     setFilteredLotIds(newLotIds);
   }, [newLotIds]);
+
+  const [filteredNames, setFilteredNames] = useState([]);
+  useEffect(() => {
+    setFilteredNames(names);
+  }, [names])
 
   // handles adding a new lotId; IS NOT case sensitive
   const onAddLotId = (event, { value }) => {
@@ -108,9 +112,24 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
       });
   };
 
+  // handles brand select
+  const onBrandSelect = (event, { value: brand }) => {
+    setFields({ ...fields, brand });
+    brandFilterMethod.callPromise({ brand })
+      .then(filter => {
+        // filter vaccine name
+        if (filter.length && !fields.vaccine) {
+          setFilteredNames(filter);
+        } else {
+          setFilteredNames(names);
+        }
+      });
+  };
+
   const clearForm = () => {
     setFields(initialState);
     setFilteredLotIds(newLotIds);
+    setFilteredNames(names);
   };
 
   if (ready) {
@@ -129,7 +148,7 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
             <Grid.Row>
               <Grid.Column>
                 <Form.Select clearable search label='Vaccine Name'
-                  placeholder="J&J COVID" name='vaccine' options={getOptions(names)}
+                  placeholder="J&J COVID" name='vaccine' options={getOptions(filteredNames)}
                   onChange={handleChange} value={fields.vaccine} id={COMPONENT_IDS.ADD_VACCINATION_VACCINE}/>
               </Grid.Column>
               <Grid.Column className='filler-column' />
@@ -139,7 +158,7 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
               <Grid.Column>
                 <Form.Select clearable search label='Manufacturer Brand'
                   placeholder="ACAM2000 Sanofi Pasteur" options={getOptions(brands)}
-                  name='brand' onChange={handleChange} value={fields.brand} id={COMPONENT_IDS.ADD_VACCINATION_BRAND}/>
+                  name='brand' onChange={onBrandSelect} value={fields.brand} id={COMPONENT_IDS.ADD_VACCINATION_BRAND}/>
               </Grid.Column>
               <Grid.Column>
                 <Form.Input label='Minimum Quantity' type='number' min={1} name='minQuantity' className='quantity'

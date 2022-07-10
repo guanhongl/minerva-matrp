@@ -27,8 +27,7 @@ const submit = (data, callback) => {
 };
 
 /** Renders the Page for Add Supplies. */
-// fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note\
-// TODO: filter location on supply select...
+// fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note
 const AddSupply = ({ names, locations, ready }) => {
   const collectionName = "SupplysCollection";
   const initialState = {
