@@ -199,6 +199,28 @@ class HistoricalCollection extends BaseCollection {
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ADMIN, ROLE.USER, ROLE.SUPERUSER]);
   }
+
+  /**
+   * Returns an object with two fields: name and contents.
+   * Name is the name of this collection.
+   * Contents is an array of objects suitable for passing to the restore() method.
+   * @returns {Object} An object representing the contents of this collection.
+   */
+  dumpAll(_ids) {
+    const selector = { _id: { $in: _ids } };
+    const dumpObject = this.find(selector).map(o => ({
+      dateDispensed: o.dateDispensed,
+      inventoryType: o.inventoryType,
+      dispenseType: o.dispenseType,
+      dispensedFrom: o.dispensedFrom,
+      dispensedTo: o.dispensedTo,
+      site: o.site,
+      note: o.note,
+      element: o.element,
+    }));
+    
+    return dumpObject;
+  }
 }
 
 /**

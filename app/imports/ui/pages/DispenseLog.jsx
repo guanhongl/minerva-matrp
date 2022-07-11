@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Header, Container, Table, Segment, Divider, Dropdown, Pagination, Loader, Icon, Input, Popup } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { ZipZap } from 'meteor/udondan:zipzap';
 import { Historicals, dispenseTypes, inventoryTypes } from '../../api/historical/HistoricalCollection';
 import { Sites } from '../../api/site/SiteCollection';
 import DispenseLogRow from '../components/dispense-log/DispenseLogRow';
@@ -10,6 +12,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { fetchField, getOptions } from '../utilities/Functions';
 import { cloneDeep } from 'lodash';
+import { downloadDatabaseMethod } from '../../api/ManageDatabase.methods';
 
 // Used for the amount of history log rows that appear in each page.
 const logPerPage = [
@@ -20,6 +23,11 @@ const logPerPage = [
 ];
 
 const getFilters = (arr) => [{ key: 'All', value: 0, text: 'All' }, ...getOptions(arr)];
+
+// replace " " with "-" and make lowercase
+const formatQuery = (query) => {
+  return query.replace(/\s+/g, "-").toLowerCase();
+};
 
 /** Renders the Dispense Log Page. */
 const DispenseLog = ({ ready, historicals, sites }) => {
@@ -37,6 +45,7 @@ const DispenseLog = ({ ready, historicals, sites }) => {
     const [dispenseTypeFilter, setDispenseTypeFilter] = useState(0);
     const [siteFilter, setSiteFilter] = useState(0);
     const [maxLog, setMaxLog] = useState(10);
+    const [loading, setLoading] = useState(false);
 
     // handles filtering
     useEffect(() => {
@@ -78,6 +87,46 @@ const DispenseLog = ({ ready, historicals, sites }) => {
     const handleSiteFilter = (event, { value }) => setSiteFilter(value);
     const handleMaxLog = (event, { value }) => setMaxLog(value);
 
+    // download DB w/ filter
+    const download = () => {
+      setLoading(true);
+      const _ids = _.pluck(filterHistoricals, "_id");
+      downloadDatabaseMethod.callPromise({ db: "history", _ids })
+        .then(csv => {
+          const zip = new ZipZap();
+          const dir = 'minerva-db';
+          // query, inventory-type, dispense-type, site, min-date, max-date
+          let filter = "";
+          if (searchQuery) {
+            filter += `query=${formatQuery(searchQuery)}&`;
+          }
+          if (inventoryFilter) {
+            filter += `inventory-type=${formatQuery(inventoryFilter)}&`;
+          }
+          if (dispenseTypeFilter) {
+            filter += `dispense-type=${formatQuery(dispenseTypeFilter)}&`;
+          }
+          if (siteFilter) {
+            filter += `site=${formatQuery(siteFilter)}&`;
+          }
+          if (minDateFilter) {
+            filter += `min-date=${moment(minDateFilter).format("YYYY-MM-DD")}&`;
+          }
+          if (maxDateFilter) {
+            filter += `max-date=${moment(maxDateFilter).format("YYYY-MM-DD")}&`;
+          }
+          // append "-" and remove the last char
+          if (filter) {
+            filter = `-${filter.slice(0, -1)}`;
+          }
+          const fileName = `${dir}/${moment().format("YYYY-MM-DD")}-history${filter}.csv`;
+          zip.file(fileName, csv);
+          zip.saveAs(`${dir}.zip`);
+        })
+        .catch(error => swal("Error", error.message, "error"))
+        .finally(() => setLoading(false));
+    };
+
     return (
       <Container id={PAGE_IDS.DISPENSE_LOG}>
         <Segment>
@@ -97,7 +146,7 @@ const DispenseLog = ({ ready, historicals, sites }) => {
               content='This allows you to filter patients by patient number and inventory name.'
               inverted
             />
-            {/* {
+            {
               loading ? 
                 <Loader inline active />
                 :
@@ -106,7 +155,7 @@ const DispenseLog = ({ ready, historicals, sites }) => {
                   Download
                   <Icon name="file excel" />
                 </span>
-            } */}
+            }
           </div>
 
           <div className='date-controls'>

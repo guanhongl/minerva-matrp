@@ -50,6 +50,17 @@ export const downloadDatabaseMethod = new ValidatedMethod({
                         'stock.location', 'stock.quantity', 'stock.donated', 'stock.donatedBy', 'stock.note', 'stock._id', 'stock.QRCode'];
                     arr = 'stock';
                     break;
+                case 'history':
+                    fields = [
+                        // all shared
+                        'dateDispensed', 'inventoryType', 'dispenseType', 'dispensedFrom', 'dispensedTo', 'site', 'note', 
+                        // some shared
+                        'element.name', 'element.quantity', 'element.lotId', 'element.brand', 'element.expire', 'element.donated', 'element.donatedBy', 
+                        // none shared
+                        'element.unit', 'element.dose', 'element.visDate', 'element.supplyType', 
+                    ];
+                    arr = 'element';
+                    break;
                 default:
                     console.log('No type.');
             };
