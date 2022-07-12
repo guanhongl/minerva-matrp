@@ -11,7 +11,7 @@ import { Drugs } from '../../../api/drug/DrugCollection';
 import { DrugNames } from '../../../api/drugName/DrugNameCollection';
 import { DrugBrands } from '../../../api/drugBrand/DrugBrandCollection';
 import { Units } from '../../../api/unit/UnitCollection';
-import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
+import { DispenseTypes } from '../../../api/dispense-type/DispenseTypeCollection';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/drug/DrugCollection.methods';
 import { fetchField, fetchLots, getOptions, useQuery } from '../../utilities/Functions';
@@ -28,7 +28,7 @@ const submit = (fields, innerFields, callback) => {
 };
 
 /** Renders the Page for Dispensing Medication. */
-const DispenseDrug = ({ ready, names, units, brands, lotIds, sites }) => {
+const DispenseDrug = ({ ready, names, units, brands, lotIds, sites, dispenseTypes }) => {
   const collectionName = Drugs.getCollectionName();
   const query = useQuery();
   const initFields = {
@@ -232,6 +232,7 @@ DispenseDrug.propTypes = {
   brands: PropTypes.array.isRequired,
   lotIds: PropTypes.array.isRequired,
   sites: PropTypes.array.isRequired,
+  dispenseTypes: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -242,12 +243,14 @@ export default withTracker(() => {
   const brandSub = DrugBrands.subscribe();
   const lotSub = Drugs.subscribeDrugLots();
   const siteSub = Sites.subscribe();
+  const dispenseTypeSub = DispenseTypes.subscribe();
   return {
     names: fetchField(DrugNames, "drugName"),
     units: fetchField(Units, "unit"),
     brands: fetchField(DrugBrands, "drugBrand"),
     lotIds: fetchLots(Drugs),
     sites: fetchField(Sites, "site"),
-    ready: nameSub.ready() && unitSub.ready() && brandSub.ready() && lotSub.ready() && siteSub.ready(),
+    dispenseTypes: fetchField(DispenseTypes, "dispenseType"),
+    ready: nameSub.ready() && unitSub.ready() && brandSub.ready() && lotSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),
   };
 })(DispenseDrug);

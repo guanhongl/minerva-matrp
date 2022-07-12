@@ -13,6 +13,7 @@ import { Sites } from '../../api/site/SiteCollection';
 import { Historicals } from '../../api/historical/HistoricalCollection';
 import { Supplys } from '../../api/supply/SupplyCollection';
 import { Vaccines } from '../../api/vaccine/VaccineCollection';
+import { DispenseTypes } from '../../api/dispense-type/DispenseTypeCollection';
 /* eslint-disable no-console */
 
 // Initialize the database with a default data document.
@@ -106,3 +107,8 @@ if (Meteor.settings.loadAssetsFile && Sites.count() === 0) {
 //   console.log('Loading vaccines from private/sample_vaccines.json');
 //   sampleVaccines.map(vaccine => Vaccines.define(vaccine));
 // }
+
+if (Meteor.settings.loadAssetsFile && DispenseTypes.count() === 0) {
+  console.log(`Loading dispense types from private/${assetsFileName}`);
+  jsonData.dispenseTypes.map(o => DispenseTypes.define(o.dispenseType));
+}

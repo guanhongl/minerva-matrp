@@ -75,7 +75,7 @@ export const updateMethod = new ValidatedMethod({
                 return collection.updateMulti(prev, option, instance);
             } catch (error) {
                 console.log(error);
-                throw new Meteor.Error("update-error", error);
+                throw new Meteor.Error("update-error", error.message);
             }
         }
         return null;

@@ -17,6 +17,7 @@ import { Vaccines } from '../vaccine/VaccineCollection';
 import { Historicals } from '../historical/HistoricalCollection';
 import { Supplys } from '../supply/SupplyCollection';
 import { PendingUsers } from '../pending-user/PendingUserCollection';
+import { DispenseTypes } from '../dispense-type/DispenseTypeCollection';
 
 class MATRPClass {
   collections;
@@ -46,6 +47,7 @@ class MATRPClass {
       Historicals,
       Supplys,
       PendingUsers,
+      DispenseTypes,
     ];
 
     /*

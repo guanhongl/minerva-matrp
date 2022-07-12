@@ -171,5 +171,26 @@
     {
       "unit": "bottle(s)"
     }
+  ],
+
+  "dispenseTypes": [
+    {
+      "dispenseType": "Patient Use"
+    },
+    {
+      "dispenseType": "Broken"
+    },
+    {
+      "dispenseType": "Lost"
+    },
+    {
+      "dispenseType": "Contaminated"
+    },
+    {
+      "dispenseType": "Expired"
+    },
+    {
+      "dispenseType": "Inventory"
+    }
   ]
 }

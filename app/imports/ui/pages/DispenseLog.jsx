@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import { ZipZap } from 'meteor/udondan:zipzap';
-import { Historicals, dispenseTypes, inventoryTypes } from '../../api/historical/HistoricalCollection';
+import { Historicals, inventoryTypes } from '../../api/historical/HistoricalCollection';
 import { Sites } from '../../api/site/SiteCollection';
+import { DispenseTypes } from '../../api/dispense-type/DispenseTypeCollection';
 import DispenseLogRow from '../components/dispense-log/DispenseLogRow';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
@@ -30,7 +31,7 @@ const formatQuery = (query) => {
 };
 
 /** Renders the Dispense Log Page. */
-const DispenseLog = ({ ready, historicals, sites }) => {
+const DispenseLog = ({ ready, historicals, sites, dispenseTypes }) => {
   if (ready) {
     const [filterHistoricals, setFilterHistoricals] = useState([]);
     useEffect(() => {
@@ -244,20 +245,24 @@ DispenseLog.propTypes = {
   historicals: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
   sites: PropTypes.array.isRequired,
+  dispenseTypes: PropTypes.array.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const historicalSub = Historicals.subscribeHistorical();
   const siteSub = Sites.subscribe();
+  const dispenseTypeSub = DispenseTypes.subscribe();
   // Determine if the subscription is ready
-  const ready = historicalSub.ready() && siteSub.ready();
+  const ready = historicalSub.ready() && siteSub.ready() && dispenseTypeSub.ready();
   // Get the Historical documents.
   const historicals = Historicals.find({}, { sort: { dateDispensed: -1 } }).fetch();
   const sites = fetchField(Sites, "site");
+  const dispenseTypes = fetchField(DispenseTypes, "dispenseType");
   return {
     historicals,
     ready,
     sites,
+    dispenseTypes,
   };
 })(DispenseLog);

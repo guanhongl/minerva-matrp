@@ -10,7 +10,7 @@ import { SupplyNames } from '../../../api/supplyName/SupplyNameCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { Sites } from '../../../api/site/SiteCollection';
 import { supplyTypes } from '../../../api/supply/SupplyCollection';
-import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
+import { DispenseTypes } from '../../../api/dispense-type/DispenseTypeCollection';
 import { fetchField, getOptions, useQuery } from '../../utilities/Functions';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/supply/SupplyCollection.methods';
@@ -28,7 +28,7 @@ const submit = (fields, innerFields, callback) => {
 };
 
 /** Renders the Page for Dispensing Supply. */
-const DispenseSupply = ({ ready, names, locations, sites }) => {
+const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
   const collectionName = "SupplysCollection";
   const query = useQuery();
   const initFields = {
@@ -305,6 +305,7 @@ DispenseSupply.propTypes = {
   names: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   sites: PropTypes.array.isRequired,
+  dispenseTypes: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -313,11 +314,13 @@ export default withTracker(() => {
   const nameSub = SupplyNames.subscribe();
   const locationSub = Locations.subscribe();
   const siteSub = Sites.subscribe();
+  const dispenseTypeSub = DispenseTypes.subscribe();
 
   return {
     names: fetchField(SupplyNames, "supplyName"),
     locations: fetchField(Locations, "location"),
     sites: fetchField(Sites, "site"),
-    ready: nameSub.ready() && locationSub.ready() && siteSub.ready(),
+    dispenseTypes: fetchField(DispenseTypes, "dispenseType"),
+    ready: nameSub.ready() && locationSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),
   };
 })(DispenseSupply);

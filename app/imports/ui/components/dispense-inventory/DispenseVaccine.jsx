@@ -9,7 +9,7 @@ import { Vaccines } from '../../../api/vaccine/VaccineCollection';
 import { VaccineNames } from '../../../api/vaccineName/VaccineNameCollection';
 import { VaccineBrands } from '../../../api/vaccineBrand/VaccineBrandCollection';
 import { Sites } from '../../../api/site/SiteCollection';
-import { dispenseTypes } from '../../../api/historical/HistoricalCollection';
+import { DispenseTypes } from '../../../api/dispense-type/DispenseTypeCollection';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/vaccine/VaccineCollection.methods';
 import { fetchField, fetchLots, getOptions, useQuery } from '../../utilities/Functions';
@@ -26,7 +26,7 @@ const submit = (fields, innerFields, callback) => {
 };
 
 /** Renders the Page for Dispensing Vaccine. */
-const DispenseVaccine = ({ ready, names, brands, lotIds, sites }) => {
+const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes }) => {
   const collectionName = Vaccines.getCollectionName();
   const query = useQuery();
   const initFields = {
@@ -261,6 +261,7 @@ DispenseVaccine.propTypes = {
   brands: PropTypes.array.isRequired,
   lotIds: PropTypes.array.isRequired,
   sites: PropTypes.array.isRequired,
+  dispenseTypes: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -270,12 +271,14 @@ export default withTracker(() => {
   const brandSub = VaccineBrands.subscribe();
   const lotSub = Vaccines.subscribeVaccineLots();
   const siteSub = Sites.subscribe();
+  const dispenseTypeSub = DispenseTypes.subscribe();
 
   return {
     names: fetchField(VaccineNames, "vaccineName"),
     brands: fetchField(VaccineBrands, "vaccineBrand"),
     lotIds: fetchLots(Vaccines),
     sites: fetchField(Sites, "site"),
-    ready: nameSub.ready() && brandSub.ready() && lotSub.ready() && siteSub.ready(),
+    dispenseTypes: fetchField(DispenseTypes, "dispenseType"),
+    ready: nameSub.ready() && brandSub.ready() && lotSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),
   };
 })(DispenseVaccine);

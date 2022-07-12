@@ -22,7 +22,7 @@ Schemas.Drug = new SimpleSchema({
   },
   dispenseType: {
     type: String,
-    allowedValues: dispenseTypes,
+    // allowedValues: dispenseTypes,
   },
   dateDispensed: Date,
   dispensedFrom: String,
@@ -57,7 +57,7 @@ Schemas.Vaccine = new SimpleSchema({
   },
   dispenseType: {
     type: String,
-    allowedValues: dispenseTypes,
+    // allowedValues: dispenseTypes,
   },
   dateDispensed: Date,
   dispensedFrom: String,
@@ -88,7 +88,7 @@ Schemas.Supply = new SimpleSchema({
   },
   dispenseType: {
     type: String,
-    allowedValues: dispenseTypes,
+    // allowedValues: dispenseTypes,
   },
   dateDispensed: Date,
   dispensedFrom: String,
