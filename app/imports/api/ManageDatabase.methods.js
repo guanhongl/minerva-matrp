@@ -156,3 +156,58 @@ export const readCSVMethod = new ValidatedMethod({
         return null;
     },
 });
+
+/**
+ * export counts of drugs/vaccines/supplies dispensed
+ */
+ export const downloadCountsMethod = new ValidatedMethod({
+    name: 'downloadCounts',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ type, _ids }) {
+        if (!this.userId) {
+            throw new Meteor.Error('unauthorized', 'You must be logged in to download the database.');
+        } else if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+            throw new Meteor.Error('unauthorized', 'You must be an admin to download the database.');
+        }
+        // Don't do the dump except on server side (disable client-side simulation).
+        if (Meteor.isServer) {
+            const collection = MATRP.history;
+            if (collection.count() === 0) {
+                throw new Meteor.Error("empty-database", "The database is empty.");
+            }
+            if (!type) {
+                throw new Meteor.Error("no-type", "Inventory type must be selected.");
+            }
+            // get collection as json; get names and quantities
+            const json = collection.find(
+                { _id: { $in: _ids } },
+                { fields: { "element.name": 1, "element.quantity": 1 } },
+            ).map(e => e.element).flat(); // flatMap
+
+            // maybe sort
+            const counts = {};
+            json.forEach(({ name, quantity }) => {
+                counts[name] = counts[name] ? counts[name] + quantity : quantity;
+            });
+
+            const countsJSON = [];
+            for (const prop in counts) {
+                countsJSON.push({ name: prop, quantity: counts[prop] });
+            }
+
+            // fields: the csv columns
+            const fields = ["name", "quantity"];
+            // json to csv
+            try {
+                const json2csvParser = new Parser({ fields });
+                const csv = json2csvParser.parse(countsJSON);
+
+                return csv;
+            } catch (error) {
+                throw new Meteor.Error(error.message);
+            }
+        }
+        return null;
+    },
+});

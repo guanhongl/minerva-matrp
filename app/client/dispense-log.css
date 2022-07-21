@@ -44,7 +44,7 @@
   width: 50%;
 }
 #dispense-log .date-controls > * {
-  flex: 1 1 50%;
+  flex: 1 1 0;
 }
 
 #dispense-log div.filters {

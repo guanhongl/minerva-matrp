@@ -13,7 +13,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { fetchField, getOptions } from '../utilities/Functions';
 import { cloneDeep } from 'lodash';
-import { downloadDatabaseMethod } from '../../api/ManageDatabase.methods';
+import { downloadDatabaseMethod, downloadCountsMethod } from '../../api/ManageDatabase.methods';
 
 // Used for the amount of history log rows that appear in each page.
 const logPerPage = [
@@ -47,6 +47,7 @@ const DispenseLog = ({ ready, historicals, sites, dispenseTypes }) => {
     const [siteFilter, setSiteFilter] = useState(0);
     const [maxLog, setMaxLog] = useState(10);
     const [loading, setLoading] = useState(false);
+    const [loadingCounts, setLoadingCounts] = useState(false);
 
     // handles filtering
     useEffect(() => {
@@ -128,6 +129,43 @@ const DispenseLog = ({ ready, historicals, sites, dispenseTypes }) => {
         .finally(() => setLoading(false));
     };
 
+    // download counts w/ date filter
+    const downloadCounts = () => {
+      setLoadingCounts(true);
+      const _ids = _.pluck(filterHistoricals, "_id");
+      downloadCountsMethod.callPromise({ type: inventoryFilter, _ids })
+        .then(csv => {
+          const zip = new ZipZap();
+          const dir = 'minerva-db';
+          // query, dispense-type, site, min-date, max-date
+          let filter = "";
+          if (searchQuery) {
+            filter += `query=${formatQuery(searchQuery)}&`;
+          }
+          if (dispenseTypeFilter) {
+            filter += `dispense-type=${formatQuery(dispenseTypeFilter)}&`;
+          }
+          if (siteFilter) {
+            filter += `site=${formatQuery(siteFilter)}&`;
+          }
+          if (minDateFilter) {
+            filter += `min-date=${moment(minDateFilter).format("YYYY-MM-DD")}&`;
+          }
+          if (maxDateFilter) {
+            filter += `max-date=${moment(maxDateFilter).format("YYYY-MM-DD")}&`;
+          }
+          // append "-" and remove the last char
+          if (filter) {
+            filter = `-${filter.slice(0, -1)}`;
+          }
+          const fileName = `${dir}/${moment().format("YYYY-MM-DD")}-${inventoryFilter}-counts${filter}.csv`;
+          zip.file(fileName, csv);
+          zip.saveAs(`${dir}.zip`);
+        })
+        .catch(error => swal("Error", error.message, "error"))
+        .finally(() => setLoadingCounts(false));
+    };
+
     return (
       <Container id={PAGE_IDS.DISPENSE_LOG}>
         <Segment>
@@ -147,6 +185,7 @@ const DispenseLog = ({ ready, historicals, sites, dispenseTypes }) => {
               content='This allows you to filter patients by patient number and inventory name.'
               inverted
             />
+            <div>
             {
               loading ? 
                 <Loader inline active />
@@ -157,6 +196,17 @@ const DispenseLog = ({ ready, historicals, sites, dispenseTypes }) => {
                   <Icon name="file excel" />
                 </span>
             }
+            {
+              loadingCounts ? 
+                <Loader inline active />
+                :
+                <span onClick={downloadCounts}>
+                  <Icon name="download" />
+                  Download Counts
+                  <Icon name="file excel" />
+                </span>
+            }
+            </div>
           </div>
 
           <div className='date-controls'>
