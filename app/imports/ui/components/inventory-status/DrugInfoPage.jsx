@@ -84,7 +84,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                     edit ?
                       <Select fluid name='newDrugType' value={fields.newDrugType} options={getOptions(drugTypes)} multiple onChange={handleChange} />
                       :
-                      <span>{drugType.join(', ')}</span>
+                      <span>{drugType?.join(', ') ?? ""}</span>
                   }
                 </div>
                 <div>

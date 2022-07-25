@@ -71,7 +71,7 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
           const { supplyType, supply } = target;
 
           const targetSupply = target.stock.find(obj => obj._id === _id);
-          const { quantity, donated, donatedBy, location } = targetSupply;
+          const { quantity, donated, donatedBy = "", location } = targetSupply;
 
           // const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
           // setFields(autoFields);

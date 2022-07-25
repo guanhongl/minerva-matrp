@@ -102,7 +102,7 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
           // autofill the form with specific lotId info
           const targetLotIds = target.lotIds.find(obj => obj.lotId === lotId);
           const { vaccine, brand, minQuantity, visDate } = target;
-          const { expire, location, note } = targetLotIds;
+          const { expire = "", location, note = "" } = targetLotIds;
           const autoFields = { ...fields, lotId, vaccine, expire, brand, visDate, minQuantity, location, note };
           setFields(autoFields);
         } else {

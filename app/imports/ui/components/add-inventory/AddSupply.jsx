@@ -73,7 +73,7 @@ const AddSupply = ({ names, locations, ready }) => {
       .then(target => {
         if (!!target) {
           const targetLot = target.stock.find(o => ( o.location === fields.location && o.donated === fields.donated ));
-          const { donatedBy, note } = targetLot;
+          const { donatedBy = "", note = "" } = targetLot;
           setFields({ ...fields, donatedBy, note });
         } else {
           setFields({ ...fields, donatedBy: '', note: '' });

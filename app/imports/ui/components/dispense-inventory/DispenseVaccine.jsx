@@ -65,7 +65,7 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
           // autofill the form with specific lotId info
           const targetLotId = target.lotIds.find(obj => obj._id === _id);
           const { vaccine, brand, visDate } = target;
-          const { expire, lotId, quantity } = targetLotId;
+          const { expire = "", lotId, quantity } = targetLotId;
           // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
           // setFields(autoFields);
           // setMaxQuantity(quantity);
@@ -110,7 +110,7 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
           // autofill the form with specific lotId info
           const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
           const { vaccine, brand, visDate } = target;
-          const { expire, quantity } = targetLotId;
+          const { expire = "", quantity } = targetLotId;
           // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
           // setFields(autoFields);
           // setMaxQuantity(quantity);

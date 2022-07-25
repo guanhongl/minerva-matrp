@@ -120,7 +120,7 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
           // autofill the form with specific lotId info
           const targetLot = target.lotIds.find(obj => obj.lotId === lotId);
           const { drug, drugType, minQuantity, unit } = target;
-          const { brand, expire, location, donated, donatedBy, note } = targetLot;
+          const { brand, expire = "", location, donated, donatedBy = "", note = "" } = targetLot;
           const autoFields = { ...fields, lotId, drug, drugType, expire, brand, minQuantity, unit, location,
             donated, donatedBy, note };
           setFields(autoFields);

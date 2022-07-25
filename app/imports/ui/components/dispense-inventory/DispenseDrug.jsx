@@ -66,7 +66,7 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites, dispenseType
           // autofill the form with specific lotId info
           const targetLotId = target.lotIds.find(obj => obj._id === _id);
           const { drug, unit } = target;
-          const { brand, expire, quantity, donated, donatedBy, lotId } = targetLotId;
+          const { brand, expire = "", quantity, donated, donatedBy = "", lotId } = targetLotId;
           const newInnerField = { ...initInnerFields, lotId, drug, expire, brand, unit, donated, donatedBy,
             maxQuantity: quantity };
           // setInnerFields([newInnerField]);
@@ -118,7 +118,7 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites, dispenseType
           // autofill the form with specific lotId info
           const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
           const { drug, unit } = target;
-          const { brand, expire, quantity, donated, donatedBy } = targetLotId;
+          const { brand, expire = "", quantity, donated, donatedBy = "" } = targetLotId;
           newInnerFields[index] = { ...innerFields[index], lotId, drug, expire, brand, unit, donated, donatedBy,
             maxQuantity: quantity };
           setInnerFields(newInnerFields);

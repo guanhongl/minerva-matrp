@@ -20,10 +20,7 @@ class SupplyCollection extends BaseCollection {
         type: String,
         allowedValues: supplyTypes, // only two supply types.
       },
-      minQuantity: {
-        type: Number,
-        optional: true,
-      },
+      minQuantity: Number,
       stock: Array,
       'stock.$': Object,
       'stock.$._id': String,
