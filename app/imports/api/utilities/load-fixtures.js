@@ -13,24 +13,21 @@ import { Meteor } from 'meteor/meteor'
 export const loadCollectionNewDataOnly = (collection, loadJSON) => {
   const type = collection.getType();
   let count = 0;
-  let tab, name, arr, required;
+  let name, arr, required;
   switch (type) {
     case 'Drugs':
-      tab = '0';
       name = 'drug';
       arr = 'lotIds';
       required = ['drug', 'drugType', 'minQuantity', 'unit', 
         'lotIds.lotId', 'lotIds.brand', 'lotIds.location', 'lotIds.quantity'];
       break;
     case 'Vaccines':
-      tab = '1';
       name = 'vaccine';
       arr = 'lotIds';
       required = ['vaccine', 'brand', 'minQuantity', 'visDate', 
         'lotIds.lotId', 'lotIds.location', 'lotIds.quantity'];
       break;
     case 'Supplys':
-      tab = '2';
       name = 'supply';
       arr = 'stock';
       required = ['supply', 'supplyType', 'minQuantity', 
@@ -60,7 +57,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
       const _id = Random.id();
       _ids.push(_id);
 
-      const url = Meteor.absoluteUrl(`/#/dispense?tab=${tab}&_id=${_id}`);
+      const url = Meteor.absoluteUrl(`/#/dispense/${name}?_id=${_id}`);
       const promise = QRCode.toDataURL(url);
       promises.push(promise);
     };

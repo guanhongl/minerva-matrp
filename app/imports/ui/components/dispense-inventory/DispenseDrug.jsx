@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Header, Form, Button, Tab, Loader, Dropdown, Divider } from 'semantic-ui-react';
+import { Grid, Header, Form, Button, Tab, Loader, Dropdown } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import moment from 'moment';
 import { Meteor } from 'meteor/meteor';

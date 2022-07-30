@@ -46,7 +46,7 @@ export const addMethod = new ValidatedMethod({
             } else {
                 // generate the QRCode and the uuid for the new lot
                 const _id = Random.id();
-                const URL = Meteor.absoluteUrl(`/#/dispense?tab=2&_id=${_id}`);
+                const URL = Meteor.absoluteUrl(`/#/dispense/supply?_id=${_id}`);
                 
                 return QRCode.toDataURL(URL)
                     .then(url => {

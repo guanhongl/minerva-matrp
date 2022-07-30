@@ -43,7 +43,7 @@ const App = () => {
         <UnprotectedRoute exact path="/enroll-acct/:token" component={Password} />
         <Route exact path="/signout" component={Signout}/>
         <ProtectedRoute exact path="/about" component={About}/>
-        <ProtectedRoute exact path="/dispense" component={Dispense}/>
+        <ProtectedRoute path="/dispense" component={Dispense}/>
         <ProtectedRoute exact path="/status" component={Status}/>
         <ProtectedRoute exact path="/add" component={AddInventory}/>
         <ProtectedRoute exact path="/dispense-log" component={DispenseLog}/>

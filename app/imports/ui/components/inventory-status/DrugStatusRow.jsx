@@ -84,7 +84,7 @@ const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
         </Table.Cell>
         <Table.Cell>{med.drug}</Table.Cell>
         <Table.Cell>{med.drugType?.join(', ') ?? ""}</Table.Cell>
-        <Table.Cell>{med.sum}</Table.Cell>
+        <Table.Cell>{med.sum || 0}</Table.Cell>
         <Table.Cell>{med.unit}</Table.Cell>
         <Table.Cell>
           <>
