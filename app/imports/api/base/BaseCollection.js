@@ -234,22 +234,24 @@ class BaseCollection {
    * @returns {Object} An object representing the contents of this collection.
    */
   dumpAll(_ids) {
-    // const dumpObject = {
-    //   name: this._collectionName,
-    //   contents: this.find().map((docID) => this.dumpOne(docID)),
-    // };
+    let dumpObject = {};
 
-    // const selector = _ids ? { _id: { $in: _ids } } : {};
-    const arr = this._type == "Supplys" ? "stock" : "lotIds";
-    // const selector = _ids ? { [arr]: { $elemMatch: { _id: { $in: _ids } } } } : {};
+    if (_ids == undefined) {
+      dumpObject = this.find().map(o => this.dumpOne(o));
+    }
+    else {
+      // const selector = _ids ? { _id: { $in: _ids } } : {};
+      // const selector = _ids ? { [arr]: { $elemMatch: { _id: { $in: _ids } } } } : {};
+      const arr = this._type == "Supplys" ? "stock" : "lotIds";
 
-    const dumpObject = this.find().fetch()
-      .filter(o => {
-        o[arr] = o[arr].filter(e => _ids.includes(e._id));
-        return o[arr].length > 0;
-      })
-      .map(o => this.dumpOne(o));
-      // .map((docID) => this.dumpOne(docID));
+      dumpObject = this.find().fetch()
+        .filter(o => {
+          o[arr] = o[arr].filter(e => _ids.includes(e._id));
+          return o[arr].length > 0;
+        })
+        .map(o => this.dumpOne(o));
+    }
+
     // If a collection doesn't want to be dumped, it can just return null from dumpOne.
     dumpObject.contents = _.without(dumpObject.contents, null);
     // sort the contents array by slug (if present)
