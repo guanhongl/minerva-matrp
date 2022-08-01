@@ -52,7 +52,7 @@ export const removeItMethod = new ValidatedMethod({
     if (Meteor.isServer) {
       const collection = MATRP.getCollection(collectionName);
       collection.assertValidRoleForMethod(this.userId);
-      return collection.removeIt(instance);
+      return collection.removeIt(instance, this.userId);
     }
     return true;
   },

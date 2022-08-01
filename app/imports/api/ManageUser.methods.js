@@ -112,7 +112,7 @@ export const acceptMethod = new ValidatedMethod({
         UserProfiles.defineBase({ email, firstName, lastName, userID, role });
         Roles.addUsersToRoles(userID, [role]);
         // remove the pending user
-        PendingUsers.removeIt(_id);
+        PendingUsers.removeIt(_id, this.userId);
 
         return userID;
       } catch (error) {

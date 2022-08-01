@@ -94,10 +94,13 @@ class VaccineCollection extends BaseCollection {
    * @param { String | Object } name A document or docID in this collection.
    * @returns true
    */
-  removeIt(lotId) {
-    if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
-      throw new Meteor.Error('unauthorized', 'You must be an admin to remove.');
+  removeIt(lotId, userId) {
+    if (userId) {
+      super.assertValidRoleForMethod(userId);
     }
+    // if (!Roles.userIsInRole(this.userId, [ROLE.ADMIN])) {
+    //   throw new Meteor.Error('unauthorized', 'You must be an admin to remove.');
+    // }
 
     const doc = this.findDoc(lotId);
     check(doc, Object);
