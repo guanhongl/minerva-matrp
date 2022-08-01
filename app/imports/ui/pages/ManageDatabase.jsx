@@ -182,6 +182,12 @@ const ManageDatabase = () => {
                   </Table.Row>
                 )
               }
+              <Table.Row key={"history"}>
+                <td />
+                <td />
+                <ResetDB db={"history"} />
+                <td />
+              </Table.Row>
             </Table.Body>
           </Table>
         </Segment>
