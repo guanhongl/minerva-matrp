@@ -19,7 +19,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
       name = 'drug';
       arr = 'lotIds';
       required = ['drug', 'drugType', 'minQuantity', 'unit', 
-        'lotIds.lotId', 'lotIds.brand', 'lotIds.location', 'lotIds.quantity'];
+        'lotIds.lotId', 'lotIds.location', 'lotIds.quantity'];
       break;
     case 'Vaccines':
       name = 'vaccine';

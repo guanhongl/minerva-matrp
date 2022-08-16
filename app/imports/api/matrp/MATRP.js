@@ -83,6 +83,9 @@ class MATRPClass {
     this.SUPERUSER = SuperUserProfiles;
     this.ADMIN = AdminProfiles;
 
+    this.drugNames = DrugNames;
+    this.drugBrands = DrugBrands;
+
     /*
      * An object with keys equal to the collection name and values the associated collection instance.
      */

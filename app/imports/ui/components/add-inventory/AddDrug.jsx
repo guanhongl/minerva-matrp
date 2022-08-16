@@ -11,7 +11,7 @@ import { Units } from '../../../api/unit/UnitCollection';
 import { DrugBrands } from '../../../api/drugBrand/DrugBrandCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
-import { brandFilterMethod, addMethod } from '../../../api/drug/DrugCollection.methods';
+import { addMethod, getGenericNames, getBrandNames } from '../../../api/drug/DrugCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { fetchField, fetchLots, getOptions, printQRCode } from '../../utilities/Functions';
 
@@ -57,10 +57,35 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
       .then(res => setDisabled(!!res));
   }, [fields.drug]);
 
-  const [filteredNames, setFilteredNames] = useState([]);
+  const [genericNames, setGenericNames] = useState([])
+  // get the generic name(s); select w/ brand name(s)
   useEffect(() => {
-    setFilteredNames(names);
-  }, [names]);
+    getOptions()
+
+    async function getOptions() {
+      const options = await getGenericNames.callPromise({ drugBrand: fields.brand })
+      if (options) {
+        setGenericNames(options)
+      } else {
+        setGenericNames(names)
+      }
+    }
+  }, [names, fields.brand])
+
+  const [brandNames, setBrandNames] = useState([])
+  // get the brand name(s); select w/ generic name(s)
+  useEffect(() => {
+    getOptions()
+
+    async function getOptions() {
+      const options = await getBrandNames.callPromise({ genericName: fields.drug })
+      if (options) {
+        setBrandNames(options)
+      } else {
+        setBrandNames(brands)
+      }
+    }
+  }, [brands, fields.drug])
   
   const [newLotIds, setNewLotIds] = useState([]);
   useEffect(() => {
@@ -120,7 +145,7 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
           // autofill the form with specific lotId info
           const targetLot = target.lotIds.find(obj => obj.lotId === lotId);
           const { drug, drugType, minQuantity, unit } = target;
-          const { brand, expire = "", location, donated, donatedBy = "", note = "" } = targetLot;
+          const { brand = "", expire = "", location, donated, donatedBy = "", note = "" } = targetLot;
           const autoFields = { ...fields, lotId, drug, drugType, expire, brand, minQuantity, unit, location,
             donated, donatedBy, note };
           setFields(autoFields);
@@ -131,23 +156,8 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
       });
   };
 
-  // handles brand select
-  const onBrandSelect = (event, { value: brand }) => {
-    setFields({ ...fields, brand });
-    brandFilterMethod.callPromise({ brand })
-      .then(filter => {
-        // filter drug name
-        if (filter.length && !fields.drug) {
-          setFilteredNames(filter);
-        } else {
-          setFilteredNames(names);
-        }
-      });
-  };
-
   const clearForm = () => {
     setFields(initialState);
-    setFilteredNames(names);
     setFilteredLotIds(newLotIds);
   };
 
@@ -162,12 +172,11 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
             </Header.Subheader>
           </Header.Content>
         </Header>
-        {/* Semantic UI Form used for functionality */}
         <Form>
           <Grid columns='equal' stackable>
             <Grid.Row>
               <Grid.Column>
-                <Form.Select clearable search label='Drug Name' options={getOptions(filteredNames)}
+                <Form.Select clearable search label='Drug Name' options={getOptions(genericNames)}
                   placeholder="Benzonatate Capsules" name='drug' onChange={onDrugSelect} value={fields.drug}
                   id={COMPONENT_IDS.ADD_MEDICATION_DRUG_NAME} />
               </Grid.Column>
@@ -199,8 +208,8 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
                   id={COMPONENT_IDS.ADD_MEDICATION_LOT} />
               </Grid.Column>
               <Grid.Column>
-                <Form.Select clearable search label='Brand' options={getOptions(brands)}
-                  placeholder="Zonatuss" name='brand' onChange={onBrandSelect} value={fields.brand}
+                <Form.Select clearable search label='Brand' options={getOptions(brandNames)}
+                  placeholder="Zonatuss" name='brand' onChange={handleChange} value={fields.brand}
                   id={COMPONENT_IDS.ADD_MEDICATION_BRAND} />
               </Grid.Column>
               <Grid.Column>

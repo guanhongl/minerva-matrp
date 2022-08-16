@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Input, Checkbox, TextArea, Select, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
 import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from '../../../api/role/Role';
-import { updateMethod } from '../../../api/drug/DrugCollection.methods';
+import { updateMethod, getBrandNames } from '../../../api/drug/DrugCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { printQRCode, getOptions } from '../../utilities/Functions';
 
@@ -24,6 +24,16 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
   const isAuth = Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN, ROLE.SUPERUSER]);
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+
+  const [brandOptions, setBrandOptions] = useState([])
+  useEffect(() => {
+    getBrandOptions()
+
+    async function getBrandOptions() {
+      const brandNames = await getBrandNames.callPromise({ genericName: drug })
+      setBrandOptions([{ key: 0, text: "", value: "" }, ...getOptions(brandNames)])
+    }
+  }, [brands])
 
   // form fields
   const initialState = {
@@ -123,7 +133,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                   <span className='header'>Brand:</span>
                   {
                     edit ?
-                      <Select fluid name='newBrand' value={fields.newBrand} options={getOptions(brands)} onChange={handleChange} />
+                      <Select fluid name='newBrand' value={fields.newBrand} options={brandOptions} onChange={handleChange} />
                       :
                       <span>{brand}</span>
                   }
