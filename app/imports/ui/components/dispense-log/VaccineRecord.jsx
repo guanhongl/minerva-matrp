@@ -47,7 +47,7 @@ const VaccineRecord = ({ open, setOpen, record }) => {
               </td>
             </tr>
             {
-              element.map(({ lotId, brand, expire, dose, quantity, visDate, name }, index) => 
+              element.map(({ lotId, brand, expire, dose, quantity, visDate, donated, donatedBy, name }, index) => 
                 <tr key={lotId}>
                   <td>{`Vaccine ${index+1}`}</td>
                   <td>
@@ -79,6 +79,17 @@ const VaccineRecord = ({ open, setOpen, record }) => {
                       <span className='header'>VIS Date:</span>
                       <span>{moment(visDate).format('LL')}</span>
                     </div>
+                    <div>
+                      <span className='header'>Donated:</span>
+                      <span>{donated ? 'Yes': 'No'}</span>
+                    </div>
+                    {
+                      donated &&
+                      <div>
+                        <span className='header'>Donated By:</span>
+                        <span>{donatedBy}</span>
+                      </div>
+                    }
                   </td>
                 </tr>
               )

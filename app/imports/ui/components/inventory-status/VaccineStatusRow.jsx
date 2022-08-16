@@ -106,17 +106,24 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
                 <Table.HeaderCell>Expiration</Table.HeaderCell>
                 <Table.HeaderCell>Location</Table.HeaderCell>
                 <Table.HeaderCell>Quantity</Table.HeaderCell>
+                <Table.HeaderCell>Donated</Table.HeaderCell>
                 <Table.HeaderCell/>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {
-                vaccine.lotIds.map(({ _id: uuid, lotId, expire, location, quantity, isExpired }, index) => (
+                vaccine.lotIds.map(({ _id: uuid, lotId, expire, location, quantity, donated, isExpired }, index) => (
                   <Table.Row key={lotId} negative={isExpired}>
                     <Table.Cell>{lotId}</Table.Cell>
                     <Table.Cell>{expire}</Table.Cell>
                     <Table.Cell>{location}</Table.Cell>
                     <Table.Cell>{quantity}</Table.Cell>
+                    <Table.Cell>
+                      {
+                        donated &&
+                        <Icon name='check' color='green'/>
+                      }
+                    </Table.Cell>
                     <Table.Cell className='icons'>
                       <VaccineInfoPage info={vaccine} detail={vaccine.lotIds[index]} locations={locations} />
                       <Icon name='trash alternate' onClick={() => deleteLot(uuid, lotId)} />
