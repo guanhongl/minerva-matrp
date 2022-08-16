@@ -40,6 +40,8 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
     expire: '',
     location: '',
     quantity: '',
+    donated: false,
+    donatedBy: '',
     note: '',
   };
 
@@ -92,6 +94,14 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
     setFields({ ...fields, [name]: value });
   };
 
+  const handleCheck = (event, { name, checked }) => {
+    if (!checked) {
+      setFields({ ...fields, [name]: checked, donatedBy: '' });
+    } else {
+      setFields({ ...fields, [name]: checked });
+    }
+  };
+
   // handles lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
     const selector = { lotIds: { $elemMatch: { lotId } } };
@@ -102,12 +112,12 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
           // autofill the form with specific lotId info
           const targetLotIds = target.lotIds.find(obj => obj.lotId === lotId);
           const { vaccine, brand, minQuantity, visDate } = target;
-          const { expire = "", location, note = "" } = targetLotIds;
-          const autoFields = { ...fields, lotId, vaccine, expire, brand, visDate, minQuantity, location, note };
+          const { expire = "", location, donated, donatedBy = "", note = "" } = targetLotIds;
+          const autoFields = { ...fields, lotId, vaccine, expire, brand, visDate, minQuantity, location, donated, donatedBy, note };
           setFields(autoFields);
         } else {
           // else reset specific lotId info
-          setFields({ ...fields, lotId, expire: '', location: '', note: '' });
+          setFields({ ...fields, lotId, expire: '', location: '', donated: false, donatedBy: '', note: '' });
         }
       });
   };
@@ -194,7 +204,17 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
                   onChange={handleChange} value={fields.quantity} placeholder="200"
                   id={COMPONENT_IDS.ADD_VACCINATION_QUANTITY}/>
               </Grid.Column>
-              <Grid.Column className='filler-column'/>
+              <Grid.Column>
+                <Form.Field>
+                  <label>Donated</label>
+                  <Form.Group>
+                    <Form.Checkbox name='donated' className='donated-field'
+                      onChange={handleCheck} checked={fields.donated}/>
+                    <Form.Input name='donatedBy' className='donated-by-field' placeholder='Donated By'
+                      onChange={handleChange} value={fields.donatedBy} disabled={!fields.donated} />
+                  </Form.Group>
+                </Form.Field>
+              </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>

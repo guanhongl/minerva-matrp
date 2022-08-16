@@ -5,7 +5,7 @@ import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { getOptions } from '../../utilities/Functions';
 
 const DispenseVaccineSingle = ({ names, lotIds, brands, fields, 
-  handleChange, onLotIdSelect, index, patientUse, nonPatientUse }) => (
+  handleChange, handleCheck, onLotIdSelect, index, patientUse, nonPatientUse }) => (
   // return (
   <>
     <Grid.Row className="dispense-single">
@@ -24,12 +24,12 @@ const DispenseVaccineSingle = ({ names, lotIds, brands, fields,
     </Grid.Row>
     <Grid.Row>
       <Grid.Column>
-        <Form.Input type='date' label='Expiration Date' name='expire'
-          onChange={handleChange} value={fields.expire} index={index} />
-      </Grid.Column>
-      <Grid.Column>
-        <Form.Input type="date" label='VIS Date' name='visDate' 
-          onChange={handleChange} value={fields.visDate} index={index} />
+        <Form.Group className="date-group">
+          <Form.Input type='date' label='Exp. Date' name='expire'
+            onChange={handleChange} value={fields.expire} index={index} />
+          <Form.Input type="date" label='VIS Date' name='visDate' 
+            onChange={handleChange} value={fields.visDate} index={index} />
+        </Form.Group>
       </Grid.Column>
       <Grid.Column>
         <Form.Group>
@@ -39,6 +39,17 @@ const DispenseVaccineSingle = ({ names, lotIds, brands, fields,
           <Form.Input label='Dose #' type='number' min={1} name='dose' className='unit'
             onChange={handleChange} placeholder='1' disabled={nonPatientUse} index={index} />
         </Form.Group>
+      </Grid.Column>
+      <Grid.Column>
+        <Form.Field>
+          <label>Donated</label>
+          <Form.Group>
+            <Form.Checkbox name='donated' className='donated-field'
+              onChange={handleCheck} checked={fields.donated} index={index}/>
+            <Form.Input name='donatedBy' className='donated-by-field' placeholder='Donated By'
+              onChange={handleChange} value={fields.donatedBy} disabled={!fields.donated} index={index}/>
+          </Form.Group>
+        </Form.Field>
       </Grid.Column>
     </Grid.Row>
   </>
@@ -51,6 +62,7 @@ DispenseVaccineSingle.propTypes = {
   brands: PropTypes.array.isRequired,
   fields: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleCheck: PropTypes.func.isRequired,
   onLotIdSelect: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
 };

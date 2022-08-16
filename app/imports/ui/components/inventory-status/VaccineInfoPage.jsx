@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
-import { Button, Modal, Input, TextArea, Select, Icon } from 'semantic-ui-react';
+import { Button, Modal, Input, Checkbox, TextArea, Select, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
@@ -17,7 +17,7 @@ const submit = (_id, uuid, fields) => {
 };
 
 const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate }, 
-                           detail: { _id: uuid, lotId, expire, location, quantity, note, QRCode },
+                           detail: { _id: uuid, lotId, expire, location, quantity, donated, donatedBy, note, QRCode },
                            locations }) => {
   // A reactive data source.
   const isAuth = Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN, ROLE.SUPERUSER]);
@@ -32,6 +32,8 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
     newExpire: expire,
     newLocation: location,
     newQuantity: quantity,
+    newDonated: donated,
+    newDonatedBy: donatedBy,
     newNote: note,
   };
 
@@ -42,8 +44,8 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
     setFields(initialState);
   }
 
-  const handleChange = (event, { name, value }) => {
-    setFields({ ...fields, [name]: value });
+  const handleChange = (event, { name, value, checked }) => {
+    setFields({ ...fields, [name]: value ?? checked });
   };
 
   return (
@@ -144,17 +146,27 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                       <span>{quantity}</span>
                   }
                 </div>
-                {/* <div>
+                <div>
                   <span className='header'>Donated:</span>
-                  {donated ? 'Yes' : 'No'}
+                  {
+                    edit ?
+                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
+                      :
+                      <span>{donated ? 'Yes' : 'No'}</span>
+                  }
                 </div>
                 {
-                  donated &&
+                  fields.newDonated &&
                   <div>
                     <span className='header'>Donated By:</span>
-                    {donatedBy}
+                    {
+                      edit ?
+                        <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
+                        :
+                        <span>{donatedBy}</span>
+                    }
                   </div>
-                } */}
+                }
               </td>
             </tr>
             <tr>

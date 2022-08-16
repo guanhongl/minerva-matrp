@@ -34,7 +34,7 @@ export const addMethod = new ValidatedMethod({
             data.minQuantity = parseInt(data.minQuantity, 10);
             data.quantity = parseInt(data.quantity, 10);
 
-            const { vaccine, brand, minQuantity, visDate, lotId, expire, location, quantity, note } = data;
+            const { vaccine, brand, minQuantity, visDate, lotId, expire, location, quantity, donated, donatedBy, note } = data;
             const target = collection.findOne({ vaccine, brand }); // returns the existing vaccine, brand pair or undefined
             const targetLot = target?.lotIds?.find(o => o.lotId === lotId); // returns the existing lot or undefined
             // if lot exists, increment the quantity:
@@ -50,7 +50,7 @@ export const addMethod = new ValidatedMethod({
                 
                 return QRCode.toDataURL(URL)
                     .then(url => {
-                        const newLot = { _id, lotId, expire, location, quantity, note, QRCode: url };
+                        const newLot = { _id, lotId, expire, location, quantity, donated, donatedBy, note, QRCode: url };
                         // if the vaccine, brand pair does not exist:
                         if (!!!target) {
                             // insert the new vaccine, brand pair and lot
@@ -134,7 +134,7 @@ export const dispenseMethod = new ValidatedMethod({
             let successMsg = '';
 
             innerFields.forEach(field => {
-                const { vaccine, lotId, brand, expire, dose, quantity, visDate } = field;
+                const { vaccine, lotId, brand, expire, dose, quantity, visDate, donated, donatedBy } = field;
                 const target = collection.findOne({ vaccine, brand }); // find the existing vaccine, brand pair
                 const { _id } = target;
                 const match = update.find(o => o._id === _id);
@@ -159,7 +159,7 @@ export const dispenseMethod = new ValidatedMethod({
                 if (!!!match) {
                     update.push({ _id, lotIds }); // store the update
                 }
-                element.push({ name: vaccine, lotId, brand, expire, dose, quantity, visDate });
+                element.push({ name: vaccine, lotId, brand, expire, dose, quantity, visDate, donated, donatedBy });
                 successMsg += `${vaccine}, ${lotId} updated successfully.\n`;
             });
 
@@ -193,7 +193,7 @@ export const updateMethod = new ValidatedMethod({
             const collection = MATRP.vaccines;
             // collection.assertValidRoleForMethod(this.userId);
             collection.assertValidRoleForUpdate(this.userId);
-            const { newMinQuantity, newVisDate, newLotId, newExpire, newLocation, newQuantity, newNote } = fields;
+            const { newMinQuantity, newVisDate, newLotId, newExpire, newLocation, newQuantity, newDonated, newDonatedBy, newNote } = fields;
             
             // validation
             const minQuantity = parseInt(newMinQuantity, 10);
@@ -216,6 +216,8 @@ export const updateMethod = new ValidatedMethod({
             targetLot.expire = newExpire;
             targetLot.location = newLocation;
             targetLot.quantity = quantity;
+            targetLot.donated = newDonated;
+            targetLot.donatedBy = newDonated ? newDonatedBy : '';
             targetLot.note = newNote;
             const updateData = { minQuantity, visDate: newVisDate, lotIds: target.lotIds };
             collection.update(_id, updateData);

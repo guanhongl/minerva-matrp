@@ -23,6 +23,11 @@
   height: 2.71428571em;
 }
 
+#dispense-form .date-group > * {
+  width: 0;
+  flex: 1 1 0;
+}
+
 #dispense-form .ui.form .field > .field {
   margin-bottom: 0;
 }

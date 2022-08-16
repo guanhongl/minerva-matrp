@@ -45,6 +45,8 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
     dose: '', // the dose number
     quantity: '',
     visDate: '',
+    donated: false,
+    donatedBy: '',
     maxQuantity: 0,
   };
 
@@ -65,12 +67,12 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
           // autofill the form with specific lotId info
           const targetLotId = target.lotIds.find(obj => obj._id === _id);
           const { vaccine, brand, visDate } = target;
-          const { expire = "", lotId, quantity } = targetLotId;
+          const { expire = "", lotId, quantity, donated, donatedBy = "" } = targetLotId;
           // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
           // setFields(autoFields);
           // setMaxQuantity(quantity);
 
-          const autoFields = { ...initInnerFields, vaccine, lotId, brand, expire, visDate, maxQuantity: quantity };
+          const autoFields = { ...initInnerFields, vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
           // setInnerFields([autoFields]);
           // append the first field if its lot is not empty
           const newInnerFields = innerFields[0].lotId ?
@@ -93,6 +95,16 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
     setFields({ ...fields, [name]: value });
   };
 
+  const handleCheck = (event, { index, name, checked }) => {
+    const newInnerFields = [...innerFields];
+    if (!checked) {
+      newInnerFields[index] = { ...innerFields[index], [name]: checked, donatedBy: '' };
+    } else {
+      newInnerFields[index] = { ...innerFields[index], [name]: checked };
+    }
+    setInnerFields(newInnerFields);
+  };
+
   const handleChangeInner = (event, { index, name, value }) => {
     const newInnerFields = [...innerFields];
     newInnerFields[index] = { ...innerFields[index], [name]: value };
@@ -110,17 +122,18 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
           // autofill the form with specific lotId info
           const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
           const { vaccine, brand, visDate } = target;
-          const { expire = "", quantity } = targetLotId;
+          const { expire = "", quantity, donated, donatedBy = "" } = targetLotId;
           // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
           // setFields(autoFields);
           // setMaxQuantity(quantity);
-          newInnerFields[index] = { ...innerFields[index], vaccine, lotId, brand, expire, visDate, maxQuantity: quantity };
+          newInnerFields[index] = { ...innerFields[index], vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
           setInnerFields(newInnerFields);
         } else {
           // else reset specific lotId info
           // setFields({ ...fields, lotId, vaccine: '', brand: '', visDate: '', expire: '' });
           // setMaxQuantity(0);
-          newInnerFields[index] = { ...innerFields[index], vaccine: '', lotId, brand: '', expire: '', visDate: '', maxQuantity: 0 };
+          newInnerFields[index] = { ...innerFields[index], vaccine: '', lotId, brand: '', expire: '', visDate: '', 
+            donated: false, donatedBy: '', maxQuantity: 0 };
           setInnerFields(newInnerFields);
         }
       });
@@ -190,7 +203,8 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
             {
               innerFields.map((fields, index) => 
                 <DispenseVaccineSingle key={`FORM_${index}`} names={names} lotIds={lotIds} brands={brands} fields={fields}
-                  handleChange={handleChangeInner} onLotIdSelect={onLotIdSelect} index={index} patientUse={patientUse} nonPatientUse={nonPatientUse} />
+                  handleChange={handleChangeInner} handleCheck={handleCheck} onLotIdSelect={onLotIdSelect}
+                  index={index} patientUse={patientUse} nonPatientUse={nonPatientUse} />
               )
             }
 

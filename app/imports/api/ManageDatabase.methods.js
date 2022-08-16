@@ -42,7 +42,8 @@ export const downloadDatabaseMethod = new ValidatedMethod({
                     break;
                 case 'vaccines':
                     fields = ['vaccine', 'brand', 'minQuantity', 'visDate', 
-                        'lotIds.lotId', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
+                        'lotIds.lotId', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 
+                        'lotIds.donated', 'lotIds.donatedBy', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
                     arr = 'lotIds';
                     break;
                 case 'supplies':

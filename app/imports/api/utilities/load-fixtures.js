@@ -67,12 +67,13 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
     .then(urls => {
       loadJSON.forEach((obj, idx) => {
         // parse data
+        obj[arr].donated = !!obj[arr].donated; // parse boolean
+
         switch (type) {
           case 'Drugs':
             obj.drugType = obj.drugType.split(','); // parse type
             // obj.lotIds.expire = moment(obj.lotIds.expire).format('YYYY-MM-DD'); // parse date
             obj.lotIds.expire = format(obj.lotIds.expire); // parse date
-            obj.lotIds.donated = !!obj.lotIds.donated; // parse boolean
 
             break;
           case 'Vaccines':
@@ -81,7 +82,6 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
 
             break;
           case 'Supplys':
-            obj.stock.donated = !!obj.stock.donated; // parse boolean
 
             break;
           default:
