@@ -1,0 +1,118 @@
+[
+  {
+    "inventoryType": "Drug",
+    "dispenseType": "Patient Use",
+    "dispensedFrom": "Austin@hawaii.edu",
+    "site": "JOC",
+    "dateDispensed": "2020-10-24T02:04",
+    "dispensedTo": "25390",
+    "note": "Example note for Acetaminophen 160mg.",
+    "element": [
+      {
+        "unit": "tab(s)",
+        "lotId": "YVWWAW",
+        "brand": "Tylenol",
+        "expire": "2023-08-23",
+        "quantity": 10,
+        "donated": false,
+        "name": "Acetaminophen 160mg"
+      }
+    ]
+  },
+  {
+    "inventoryType": "Drug",
+    "dispenseType": "Patient Use",
+    "dispensedFrom": "Austin@hawaii.edu",
+    "site": "JOC",
+    "dateDispensed": "2020-10-24T02:04",
+    "dispensedTo": "25390",
+    "note": "Example note for Acetaminophen 160mg.",
+    "element": [
+      {
+        "unit": "tab(s)",
+        "lotId": "C62YXK",
+        "expire": "2022-10-25",
+        "quantity": 10,
+        "donated": false,
+        "name": "Acetaminophen 160mg"
+      }
+    ]
+  },
+  {
+    "inventoryType": "Vaccine",
+    "dispenseType": "Patient Use",
+    "dispensedFrom": "Maurice@hawaii.edu",
+    "site": "Kaka'ako",
+    "dateDispensed": "2021-12-04T12:04",
+    "dispensedTo": "12469",
+    "note": "Example note for COVID-19.",
+    "element": [
+      {
+        "lotId": "MEUA19",
+        "brand": "Janssen",
+        "expire": "2023-03-21",
+        "dose": 1,
+        "quantity": 1,
+        "donated": false,
+        "visDate": "2024-12-27",
+        "name": "COVID-19"
+      }
+    ]
+  },
+  {
+    "inventoryType": "Vaccine",
+    "dispenseType": "Patient Use",
+    "dispensedFrom": "Maurice@hawaii.edu",
+    "site": "Kaka'ako",
+    "dateDispensed": "2021-12-04T12:04",
+    "dispensedTo": "12469",
+    "note": "Example note for DTaP.",
+    "element": [
+      {
+        "lotId": "RNLIPN",
+        "brand": "GlaxoSmithKline",
+        "expire": "2023-02-03",
+        "dose": 1,
+        "quantity": 1,
+        "donated": true,
+        "donatedBy": "Foo",
+        "visDate": "2024-12-12",
+        "name": "DTaP"
+      }
+    ]
+  },
+  {
+    "inventoryType": "Supply",
+    "dispenseType": "Patient Use",
+    "dispensedFrom": "John@hawaii.edu",
+    "site": "Waianae",
+    "dateDispensed": "2021-02-16T15:18",
+    "dispensedTo": "15495",
+    "note": "Example note for Hot Packs.",
+    "element": [
+      {
+        "supplyType": "Patient",
+        "quantity": 1,
+        "donated": false,
+        "name": "Hot Packs"
+      }
+    ]
+  },
+  {
+    "inventoryType": "Supply",
+    "dispenseType": "Patient Use",
+    "dispensedFrom": "Jane@hawaii.edu",
+    "site": "Waianae",
+    "dateDispensed": "2021-02-16T15:18",
+    "dispensedTo": "15495",
+    "note": "Example note for ACE wrap 2\".",
+    "element": [
+      {
+        "supplyType": "Patient",
+        "quantity": -1,
+        "donated": false,
+        "name": "ACE wrap 2\""
+      }
+    ]
+  }
+]

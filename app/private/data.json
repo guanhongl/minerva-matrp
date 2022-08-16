@@ -46,76 +46,64 @@
 
   "locations": [
     {
-      "location": "Case 2"
+      "location": "Case 1",
+      "isOverstock": false
     },
     {
-      "location": "Case 1"
+      "location": "Case 2",
+      "isOverstock": false
     },
     {
-      "location": "Case 1/Drawer 2"
+      "location": "Case 3",
+      "isOverstock": false
     },
     {
-      "location": "Refrigerator Closet"
+      "location": "Case 4",
+      "isOverstock": false
     },
     {
-      "location": "Case 6"
+      "location": "Bin 1",
+      "isOverstock": false
     },
     {
-      "location": "Case 3"
+      "location": "Bin 2",
+      "isOverstock": false
     },
     {
-      "location": "Case 4"
+      "location": "Bin 3",
+      "isOverstock": false
     },
     {
-      "location": "Bottom Drawer"
+      "location": "Bin 4",
+      "isOverstock": false
     },
     {
-      "location": "Case 7"
+      "location": "Cabinet 1",
+      "isOverstock": true
     },
     {
-      "location": "Freezer"
+      "location": "Cabinet 2",
+      "isOverstock": true
     },
     {
-      "location": "Freezer-Derm"
+      "location": "Cabinet 3",
+      "isOverstock": true
     },
     {
-      "location": "Drawer 2-2"
+      "location": "Cabinet 4",
+      "isOverstock": true
     },
     {
-      "location": "Drawer 2-3"
+      "location": "Cooler",
+      "isOverstock": false
     },
     {
-      "location": "Case 8"
+      "location": "Fridge",
+      "isOverstock": true
     },
     {
-      "location": "Emergency Kit"
-    },
-    {
-      "location": "Case 5"
-    },
-    {
-      "location": "Refrigerator"
-    },
-    {
-      "location": "Cabinet 1"
-    },
-    {
-      "location": "Cabinet 3"
-    },
-    {
-      "location": "Back Cabinet"
-    },
-    {
-      "location": "Shower Closet"
-    },
-    {
-      "location": "Cabinet 2"
-    },
-    {
-      "location": "Drawer 9"
-    },
-    {
-      "location": "Drawer 6"
+      "location": "Storage",
+      "isOverstock": true
     }
   ],
 

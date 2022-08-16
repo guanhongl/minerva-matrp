@@ -1,0 +1,180 @@
+[
+  {
+    "vaccine": "COVID-19",
+    "minQuantity": 100,
+    "visDate": "2024-12-27",
+    "lotIds": [
+      {
+        "lotId": "MEUA19",
+        "brand": "Janssen",
+        "expire": "2023-03-21",
+        "location": "Cooler",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for Janssen COVID-19.",
+        "_id": "375c0f89-62e2-4342-8b01-e4f8e252386f"
+      },
+      {
+        "lotId": "WE9ERY",
+        "brand": "Moderna",
+        "expire": "2022-08-25",
+        "location": "Cooler",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for Moderna COVID-19.",
+        "_id": "9cbae67c-e159-450b-a95c-1da93aeb6619"
+      },
+      {
+        "lotId": "MEUA19",
+        "brand": "Janssen",
+        "expire": "2023-03-21",
+        "location": "Fridge",
+        "quantity": 50,
+        "donated": false,
+        "note": "Example note for Janssen COVID-19.",
+        "_id": "375c0f89-62e2-4342-8b01-e4f8e252386f"
+      },
+      {
+        "lotId": "WE9ERY",
+        "brand": "Moderna",
+        "expire": "2022-08-25",
+        "location": "Fridge",
+        "quantity": 50,
+        "donated": false,
+        "note": "Example note for Moderna COVID-19.",
+        "_id": "9cbae67c-e159-450b-a95c-1da93aeb6619"
+      }
+    ]
+  },
+  {
+    "vaccine": "DTaP",
+    "minQuantity": 50,
+    "visDate": "2024-12-12",
+    "lotIds": [
+      {
+        "lotId": "DRGJNA",
+        "brand": "Sanofi",
+        "expire": "2023-07-22",
+        "location": "Cooler",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for Sanofi DTaP.",
+        "_id": "57f6f38c-7d3e-4985-a267-a9d03031c986"
+      },
+      {
+        "lotId": "RNLIPN",
+        "brand": "GlaxoSmithKline",
+        "expire": "2023-02-03",
+        "location": "Fridge",
+        "quantity": 10,
+        "donated": true,
+        "donatedBy": "Foo",
+        "note": "Example note for GSK DTaP.",
+        "_id": "53b65a4b-8421-4292-8cd1-76c2b3e5da9a"
+      }
+    ]
+  },
+  {
+    "vaccine": "Hep A",
+    "minQuantity": 20,
+    "visDate": "2023-03-08",
+    "lotIds": [
+      {
+        "lotId": "U8PT40",
+        "brand": "GlaxoSmithKline",
+        "expire": "2024-07-31",
+        "location": "Cooler",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for GlaxoSmithKline Hep A.",
+        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+      },
+      {
+        "lotId": "U8PT40",
+        "brand": "GlaxoSmithKline",
+        "expire": "2024-07-31",
+        "location": "Fridge",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for GlaxoSmithKline Hep A.",
+        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+      }
+    ]
+  },
+  {
+    "vaccine": "Hep B",
+    "minQuantity": 20,
+    "visDate": "2021-11-25",
+    "lotIds": [
+      {
+        "lotId": "V3NIZ1",
+        "brand": "GlaxoSmithKline",
+        "expire": "2024-07-31",
+        "location": "Cooler",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for GlaxoSmithKline Hep B.",
+        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+      },
+      {
+        "lotId": "V3NIZ1",
+        "brand": "GlaxoSmithKline",
+        "expire": "2024-07-31",
+        "location": "Fridge",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for GlaxoSmithKline Hep B.",
+        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+      }
+    ]
+  },
+  {
+    "vaccine": "Influenza",
+    "minQuantity": 100,
+    "visDate": "2023-03-28",
+    "lotIds": [
+      {
+        "lotId": "LD2ET9",
+        "brand": "Seqirus",
+        "expire": "2022-06-01",
+        "location": "Cooler",
+        "quantity": 10,
+        "donated": false,
+        "note": "Example note for Seqirus Influenza.",
+        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+      },
+      {
+        "lotId": "UWAS7O",
+        "brand": "GlaxoSmithKline",
+        "expire": "2023-06-01",
+        "location": "Cooler",
+        "quantity": 10,
+        "donated": true,
+        "donatedBy": "Foo",
+        "note": "Example note for GlaxoSmithKline Influenza.",
+        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+      },
+      {
+        "lotId": "LD2ET9",
+        "brand": "Seqirus",
+        "expire": "2022-06-01",
+        "location": "Fridge",
+        "quantity": 50,
+        "donated": false,
+        "note": "Example note for Seqirus Influenza.",
+        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+      },
+      {
+        "lotId": "UWAS7O",
+        "brand": "GlaxoSmithKline",
+        "expire": "2023-06-01",
+        "location": "Fridge",
+        "quantity": 50,
+        "donated": true,
+        "donatedBy": "Foo",
+        "note": "Example note for GlaxoSmithKline Influenza.",
+        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+      }
+    ]
+  }
+]

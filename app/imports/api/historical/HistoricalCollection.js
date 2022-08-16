@@ -37,7 +37,10 @@ Schemas.Drug = new SimpleSchema({
   'element.$.name': String,
   'element.$.unit': String,
   'element.$.lotId': String,
-  'element.$.brand': String,
+  'element.$.brand': {
+    type: String,
+    optional: true,
+  },
   'element.$.expire': { // date string "YYYY-MM-DD"
     type: String,
     optional: true,
@@ -78,6 +81,11 @@ Schemas.Vaccine = new SimpleSchema({
   },
   'element.$.dose': Number,
   'element.$.quantity': Number,
+  'element.$.donated': Boolean,
+  'element.$.donatedBy': {
+    type: String,
+    optional: true,
+  },
   'element.$.visDate': String,
 });
 // Supply Schema

@@ -18,6 +18,7 @@ class LocationCollection extends BaseCollection {
   constructor() {
     super('Locations', new SimpleSchema({
       location: String,
+      isOverstock: Boolean,
     }));
   }
 
@@ -26,9 +27,10 @@ class LocationCollection extends BaseCollection {
    * @param location.
    * @return {String} the docID of the new document.
    */
-  define(location) {
+  define({ location, isOverstock }) {
     const docID = this._collection.insert({
       location,
+      isOverstock,
     });
     return docID;
   }
@@ -110,9 +112,9 @@ class LocationCollection extends BaseCollection {
   /**
    * Returns the number of matched documents.
    */
-  updateMulti(prev, option, instance) {
+  updateMulti(prev, { location, isOverstock }, instance) {
     // update this location
-    this._collection.update(instance, { $set: { location: option } });
+    this._collection.update(instance, { $set: { location, isOverstock } });
     // find the matching docs
     const drugDocs = Drugs.find(
       { lotIds: { $elemMatch: { location: prev } } }, 
@@ -131,7 +133,7 @@ class LocationCollection extends BaseCollection {
       drugDocs.forEach(doc => {
         doc.lotIds.forEach(o => {
           if (o.location === prev) {
-            o.location = option;
+            o.location = location;
           }
         });
       });
@@ -141,7 +143,7 @@ class LocationCollection extends BaseCollection {
       vaccineDocs.forEach(doc => {
         doc.lotIds.forEach(o => {
           if (o.location === prev) {
-            o.location = option;
+            o.location = location;
           }
         });
       });
@@ -151,7 +153,7 @@ class LocationCollection extends BaseCollection {
       supplyDocs.forEach(doc => {
         doc.stock.forEach(o => {
           if (o.location === prev) {
-            o.location = option;
+            o.location = location;
           }
         });
       });

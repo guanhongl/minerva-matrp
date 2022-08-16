@@ -1,80 +1,14 @@
 [
     {
-      "drugBrand": "Brand F"
+      "drugBrand": "Tylenol",
+      "genericName": "Acetaminophen"
     },
     {
-      "drugBrand": "Brand T"
+      "drugBrand": "Mapap",
+      "genericName": "Acetaminophen"
     },
     {
-      "drugBrand": "Brand Y"
-    },
-    {
-      "drugBrand": "Brand Q"
-    },
-    {
-      "drugBrand": "Brand N"
-    },
-    {
-      "drugBrand": "Brand I"
-    },
-    {
-      "drugBrand": "Brand Z"
-    },
-    {
-      "drugBrand": "Brand R"
-    },
-    {
-      "drugBrand": "Brand H"
-    },
-    {
-      "drugBrand": "Brand O"
-    },
-    {
-      "drugBrand": "Brand G"
-    },
-    {
-      "drugBrand": "Brand W"
-    },
-    {
-      "drugBrand": "Brand D"
-    },
-    {
-      "drugBrand": "Brand M"
-    },
-    {
-      "drugBrand": "Brand E"
-    },
-    {
-      "drugBrand": "Brand L"
-    },
-    {
-      "drugBrand": "Brand V"
-    },
-    {
-      "drugBrand": "Brand A"
-    },
-    {
-      "drugBrand": "Brand P"
-    },
-    {
-      "drugBrand": "Brand K"
-    },
-    {
-      "drugBrand": "Brand J"
-    },
-    {
-      "drugBrand": "Brand S"
-    },
-    {
-      "drugBrand": "Brand U"
-    },
-    {
-      "drugBrand": "Brand X"
-    },
-    {
-      "drugBrand": "Brand C"
-    },
-    {
-      "drugBrand": "Brand B"
+      "drugBrand": "Advil",
+      "genericName": "Ibuprofen"
     }
 ]

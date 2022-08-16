@@ -1,32 +1,26 @@
 [
     {
-      "vaccineBrand": "Barr Labs Inc."
+      "vaccineBrand": "Janssen"
     },
     {
-      "vaccineBrand": "Emergent"
-    },
-    {
-      "vaccineBrand": "BioSolutions"
-    },
-    {
-      "vaccineBrand": "PaxVax"
-    },
-    {
-      "vaccineBrand": "sanofi"
-    },
-    {
-      "vaccineBrand": "GlaxoSmithKline"
+      "vaccineBrand": "JHP"
     },
     {
       "vaccineBrand": "Merck"
     },
     {
-      "vaccineBrand": "Dynavax Technologies"
+      "vaccineBrand": "Moderna"
+    },
+    {
+      "vaccineBrand": "Novartis"
+    },
+    {
+      "vaccineBrand": "GlaxoSmithKline"
+    },
+    {
+      "vaccineBrand": "Sanofi"
     },
     {
       "vaccineBrand": "Seqirus"
-    },
-    {
-      "vaccineBrand": "Medimmune"
     }
 ]

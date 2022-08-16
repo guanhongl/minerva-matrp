@@ -1,0 +1,142 @@
+[
+  {
+    "supply": "Hot Packs",
+    "supplyType": "Patient",
+    "minQuantity": 10,
+    "isDiscrete": true,
+    "stock": [
+      {
+        "location": "Bin 1",
+        "quantity": 5,
+        "donated": false,
+        "note": "Example note for Hot Packs.",
+        "_id": "d5f9ad5b-2277-45ad-9595-9ed9799adae8"
+      },
+      {
+        "location": "Cabinet 1",
+        "quantity": 5,
+        "donated": true,
+        "note": "Example note for Hot Packs.",
+        "_id": "1bbf481e-afae-430c-90a7-0f8abf66ac03"
+      }
+    ]
+  },
+  {
+    "supply": "Cold Packs",
+    "supplyType": "Patient",
+    "minQuantity": 10,
+    "isDiscrete": true,
+    "stock": [
+      {
+        "location": "Bin 2",
+        "quantity": 5,
+        "donated": false,
+        "note": "Example note for Cold Packs.",
+        "_id": "2530deaf-1215-4cd1-bbae-c60520472fa7"
+      },
+      {
+        "location": "Cabinet 2",
+        "quantity": 5,
+        "donated": false,
+        "note": "Example note for Cold Packs.",
+        "_id": "e47a6431-d248-4942-a9ff-6989652c4ef0"
+      }
+    ]
+  },
+  {
+    "supply": "ACE wrap 2\"",
+    "supplyType": "Patient",
+    "minQuantity": -1,
+    "isDiscrete": false,
+    "stock": [
+      {
+        "location": "Bin 3",
+        "quantity": -1,
+        "donated": false,
+        "note": "Example note for ACE wrap 2\".",
+        "_id": "4d9238fc-143a-4b65-bb95-69c79392dea3"
+      },
+      {
+        "location": "Cabinet 3",
+        "quantity": -1,
+        "donated": true,
+        "note": "Example note for ACE wrap 2\".",
+        "_id": "4de30b71-a76a-477c-a505-e64bfc6104ec"
+      }
+    ]
+  },
+  {
+    "supply": "ACE wrap 3\"",
+    "supplyType": "Patient",
+    "minQuantity": -1,
+    "isDiscrete": false,
+    "stock": [
+      {
+        "location": "Bin 3",
+        "quantity": -1,
+        "donated": false,
+        "note": "Example note for ACE wrap 3\".",
+        "_id": "566754a7-189e-4400-b495-c64fb6c1fa83"
+      },
+      {
+        "location": "Cabinet 3",
+        "quantity": -1,
+        "donated": false,
+        "note": "Example note for ACE wrap 3\".",
+        "_id": "0b282a12-8ec4-42ac-9875-f86f4a7689ef"
+      }
+    ]
+  },
+  {
+    "supply": "ACE wrap 4\"",
+    "supplyType": "Patient",
+    "minQuantity": -1,
+    "isDiscrete": false,
+    "stock": [
+      {
+        "location": "Bin 3",
+        "quantity": -1,
+        "donated": false,
+        "note": "Example note for ACE wrap 4\".",
+        "_id": "5efb8134-353c-490c-b257-2c524e8f32d5"
+      },
+      {
+        "location": "Cabinet 3",
+        "quantity": -1,
+        "donated": false,
+        "note": "Example note for ACE wrap 4\".",
+        "_id": "ac913fa1-11ec-4088-9f26-1d6baef364dc"
+      }
+    ]
+  },
+  {
+    "supply": "ACE wrap 6\"",
+    "supplyType": "Patient",
+    "minQuantity": -1,
+    "isDiscrete": false,
+    "stock": [
+      {
+        "location": "Bin 3",
+        "quantity": -1,
+        "donated": false,
+        "note": "Example note for ACE wrap 6\".",
+        "_id": "48466c85-59a3-4bca-9439-62820063900d"
+      },
+      {
+        "location": "Cabinet 3",
+        "quantity": -1,
+        "donated": false,
+        "note": "Example note for ACE wrap 6\".",
+        "_id": "f4a26860-00dd-4cde-8d95-33338256efd4"
+      },
+      {
+        "location": "Cabinet 3",
+        "quantity": -1,
+        "donated": true,
+        "donatedBy": "Foo",
+        "note": "Example note for ACE wrap 6\".",
+        "_id": "fdaff8b9-62a3-49eb-a7fe-734dfdb77ecf"
+      }
+    ]
+  }
+]

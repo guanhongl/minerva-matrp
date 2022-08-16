@@ -16,19 +16,24 @@ class VaccineCollection extends BaseCollection {
     super('Vaccines', new SimpleSchema({
       vaccine: String,
       // is vaccineType needed?
-      brand: String, // the manufacturer (e.g. Pfizer)
       minQuantity: Number,
       visDate: String, // the latest vaccine information statement date
       lotIds: Array,
       'lotIds.$': Object,
       'lotIds.$._id': String,
       'lotIds.$.lotId': String,
+      'lotIds.$.brand': String, // the manufacturer (e.g. Pfizer)
       'lotIds.$.expire': { // date string "YYYY-MM-DD"
         type: String,
         optional: true,
       },
       'lotIds.$.location': String,
       'lotIds.$.quantity': Number, // the number of doses
+      'lotIds.$.donated': Boolean,
+      'lotIds.$.donatedBy': {
+        type: String,
+        optional: true,
+      },
       'lotIds.$.note': {
         type: String,
         optional: true,
@@ -44,9 +49,9 @@ class VaccineCollection extends BaseCollection {
    * Defines a new Vaccine item.
    * @return {String} the docID of the new document.
    */
-  define({ vaccine, brand, minQuantity, visDate, lotIds }) {
+  define({ vaccine, minQuantity, visDate, lotIds }) {
     const docID = this._collection.insert({
-      vaccine, brand, minQuantity, visDate, lotIds,
+      vaccine, minQuantity, visDate, lotIds,
     });
     return docID;
   }
@@ -71,7 +76,6 @@ class VaccineCollection extends BaseCollection {
     }
 
     addString('vaccine');
-    addString('brand');
     addNumber('minQuantity');
     addString('visDate');
     if (Array.isArray(data.lotIds) && 
@@ -79,8 +83,10 @@ class VaccineCollection extends BaseCollection {
         _.isObject(o) &&
         o._id &&
         o.lotId &&
+        o.brand &&
         _.isNumber(o.quantity) &&
-        o.location
+        o.location &&
+        _.isBoolean(o.donated)
       ))
     ) {
       updateData.lotIds = data.lotIds;
@@ -175,11 +181,10 @@ class VaccineCollection extends BaseCollection {
     // const doc = this.findDoc(docID);
     const doc = docID;
     const vaccine = doc.vaccine;
-    const brand = doc.brand;
     const minQuantity = doc.minQuantity;
     const visDate = doc.visDate;
     const lotIds = doc.lotIds;
-    return { vaccine, brand, minQuantity, visDate, lotIds };
+    return { vaccine, minQuantity, visDate, lotIds };
   }
 }
 

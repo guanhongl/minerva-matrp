@@ -21,6 +21,7 @@ class SupplyCollection extends BaseCollection {
         allowedValues: supplyTypes, // only two supply types.
       },
       minQuantity: Number,
+      isDiscrete: Boolean,
       stock: Array,
       'stock.$': Object,
       'stock.$._id': String,
@@ -46,9 +47,9 @@ class SupplyCollection extends BaseCollection {
    * Defines a new Supply supply.
    * @return {String} the docID of the new document.
    */
-  define({ supply, supplyType, minQuantity, stock }) {
+  define({ supply, supplyType, minQuantity, isDiscrete, stock }) {
     const docID = this._collection.insert({
-      supply, supplyType, minQuantity, stock,
+      supply, supplyType, minQuantity, isDiscrete, stock,
     });
     return docID;
   }
@@ -75,6 +76,7 @@ class SupplyCollection extends BaseCollection {
     addString('supply');
     addString('supplyType');
     addNumber('minQuantity');
+    updateData.isDiscrete = data.isDiscrete;
     if (Array.isArray(data.stock) && 
       data.stock.every(o => (
         _.isObject(o) &&
@@ -178,8 +180,9 @@ class SupplyCollection extends BaseCollection {
     const supply = doc.supply;
     const supplyType = doc.supplyType;
     const minQuantity = doc.minQuantity;
+    const isDiscrete = doc.isDiscrete;
     const stock = doc.stock;
-    return { supply, supplyType, minQuantity, stock };
+    return { supply, supplyType, minQuantity, isDiscrete, stock };
   }
 }
 
