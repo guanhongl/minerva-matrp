@@ -12,11 +12,12 @@ import { Locations } from '../../api/location/LocationCollection';
 import { Sites } from '../../api/site/SiteCollection';
 import { DispenseTypes } from '../../api/dispense-type/DispenseTypeCollection';
 import ManageSingle from '../components/manage-dropdowns/ManageSingle';
+import ManageDrugBrand from '../components/manage-dropdowns/ManageDrugBrand';
 
 const drugNamesTab = () => <ManageSingle collection={DrugNames} title={"Drug Names"} name={"drugName"} />;
 const drugTypesTab = () => <ManageSingle collection={DrugTypes} title={"Drug Types"} name={"drugType"} />;
 const unitsTab = () => <ManageSingle collection={Units} title={"Units"} name={"unit"} />;
-const drugBrandsTab = () => <ManageSingle collection={DrugBrands} title={"Drug Brands"} name={"drugBrand"} />;
+const drugBrandsTab = () => <ManageDrugBrand collection={DrugBrands} title={"Drug Brands"} name={"drugBrand"} />;
 const vaccineNamesTab = () => <ManageSingle collection={VaccineNames} title={"Vaccine Names"} name={"vaccineName"} />;
 const vaccineBrandsTab = () => <ManageSingle collection={VaccineBrands} title={"Vaccine Brands"} name={"vaccineBrand"} />;
 const supplyNamesTab = () => <ManageSingle collection={SupplyNames} title={"Supply Names"} name={"supplyName"} />;

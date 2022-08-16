@@ -7,6 +7,13 @@
   width: 100%;
 }
 
+.manage-tab .ui.list .list-header, .manage-tab .ui.list .list-item {
+  display: flex;
+}
+.manage-tab .ui.list .list-header > *, .manage-tab .ui.list .list-item > *:not(i) {
+  width: 47.5%;
+}
+
 .manage-tab .ui.list .content .ui.input {
   width: 95%;
   height: 1em;

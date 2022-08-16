@@ -51,10 +51,10 @@ const DispenseLogRow = ({ history }) => {
 DispenseLogRow.propTypes = {
   history: PropTypes.shape({
     inventoryType: PropTypes.string,
-    dateDispensed: PropTypes.date,
+    dateDispensed: PropTypes.instanceOf(Date),
     dispensedTo: PropTypes.string,
     dispenseType: PropTypes.string,
-    brand: PropTypes.string,
+    site: PropTypes.string,
     dispensedFrom: PropTypes.string,
   }).isRequired,
 };

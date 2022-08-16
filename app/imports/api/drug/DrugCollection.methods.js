@@ -7,17 +7,46 @@ import QRCode from 'qrcode';
 import { Random } from 'meteor/random';
 import { cloneDeep } from 'lodash';
 
-export const brandFilterMethod = new ValidatedMethod({
-    name: 'drug.brandFilter',
+export const getGenericNames = new ValidatedMethod({
+    name: 'drug.getGenericNames',
     mixins: [CallPromiseMixin],
     validate: null,
-    run({ brand }) {
+    run({ drugBrand }) {
         if (Meteor.isServer) {
             const collection = MATRP.drugs;
             collection.assertValidRoleForMethod(this.userId);
+
+            if (!drugBrand) {
+                return false
+            }
+
+            const genericName = MATRP.drugBrands.findOne({ drugBrand }).genericName;
             return _.pluck(
-                collection.find({ lotIds: { $elemMatch: { brand } } }, { sort: { drug: 1 }, fields: { drug: 1 } }).fetch(),
-                "drug",
+                // MATRP.drugNames.find().fetch().filter(o => o.drugName.includes(genericName)),
+                MATRP.drugNames.find({ drugName: { $regex: genericName } }, { sort: { drugName: 1 } }).fetch(),
+                "drugName",
+            );
+        }
+        return null;
+    },
+});
+
+export const getBrandNames = new ValidatedMethod({
+    name: 'drug.getBrandNames',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ genericName }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.drugs;
+            collection.assertValidRoleForMethod(this.userId);
+            
+            if (!genericName) {
+                return false
+            }
+
+            return _.pluck(
+                MATRP.drugBrands.find().fetch().filter(o => genericName.includes(o.genericName)),
+                "drugBrand",
             );
         }
         return null;
@@ -36,7 +65,7 @@ export const addMethod = new ValidatedMethod({
             // validation
             let errorMsg = '';
             // the required String fields
-            const requiredFields = ['drug', 'drugType', 'minQuantity', 'lotId', 'brand', 'location', 'quantity'];
+            const requiredFields = ['drug', 'drugType', 'minQuantity', 'lotId', 'location', 'quantity'];
             // if the field is empty, append error message
             requiredFields.forEach(field => {
                 if (!data[field] || (field === 'drugType' && !data.drugType.length)) {
@@ -111,7 +140,7 @@ export const dispenseMethod = new ValidatedMethod({
             let errorMsg = '';
             // the required String fields
             const requiredFields = ['dispensedTo', 'site'];
-            const requiredInnerFields = ['drug', 'lotId', 'brand', 'quantity'];
+            const requiredInnerFields = ['drug', 'lotId', 'quantity'];
             // if the field is empty, append error message
             requiredFields.forEach(field => {
                 if (!fields[field]) {
