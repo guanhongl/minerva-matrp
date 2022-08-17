@@ -54,12 +54,16 @@ export function fetchCounts(records) {
     // sum
     // const total = quantities.reduce((p, c) => p + c, 0);
     const total = record.sum;
-    // if 0
-    if (total === 0) {
-      countN++;
-    // if not 0 and less than min
-    } else if (total < record.minQuantity) {
-      countL++;
+    if (total > -1) {
+
+      // if 0
+      if (total === 0) {
+        countN++;
+      // if not 0 and less than min
+      } else if (total < record.minQuantity) {
+        countL++;
+      }
+
     }
   });
 

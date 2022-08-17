@@ -82,6 +82,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
 
             break;
           case 'Supplys':
+            obj.isDiscrete = !!obj.isDiscrete;
 
             break;
           default:

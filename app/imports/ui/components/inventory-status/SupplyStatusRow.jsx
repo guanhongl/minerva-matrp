@@ -82,12 +82,17 @@ const SupplyStatusRow = ({ supply, supplyTypes, locations }) => {
         </Table.Cell>
         <Table.Cell>{supply.supply}</Table.Cell>
         <Table.Cell>{supply.supplyType}</Table.Cell>
-        <Table.Cell>{supply.sum}</Table.Cell>
+        <Table.Cell>{supply.isDiscrete ? supply.sum : "N/A"}</Table.Cell>
         <Table.Cell>
-          <>
-            <Icon color={getColor()} name='circle' />
-            <span>{status}%</span>
-          </>
+          {
+            supply.isDiscrete ?
+              <>
+                <Icon color={getColor()} name='circle' />
+                <span>{status}%</span>
+              </>
+              :
+              "N/A"
+          }
         </Table.Cell>
         <Table.Cell>
           <Icon name='trash alternate' onClick={deleteSupply} />
@@ -111,7 +116,7 @@ const SupplyStatusRow = ({ supply, supplyTypes, locations }) => {
                 supply.stock.map(({ _id: uuid, location, quantity, donated, donatedBy }, index) => (
                   <Table.Row key={index}>
                     <Table.Cell>{location}</Table.Cell>
-                    <Table.Cell>{quantity}</Table.Cell>
+                    <Table.Cell>{supply.isDiscrete ? quantity : "N/A"}</Table.Cell>
                     <Table.Cell>
                       {
                         donated &&

@@ -47,7 +47,7 @@ export const downloadDatabaseMethod = new ValidatedMethod({
                     arr = 'lotIds';
                     break;
                 case 'supplies':
-                    fields = ['supply', 'supplyType', 'minQuantity', 
+                    fields = ['supply', 'supplyType', 'minQuantity', 'isDiscrete',
                         'stock.location', 'stock.quantity', 'stock.donated', 'stock.donatedBy', 'stock.note', 'stock._id', 'stock.QRCode'];
                     arr = 'stock';
                     break;
