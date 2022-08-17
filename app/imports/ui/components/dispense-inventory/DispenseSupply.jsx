@@ -47,6 +47,7 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
     donatedBy: '',
     quantity: '',
     maxQuantity: 0,
+    isDiscrete: true,
   };
 
   const [fields, setFields] = useState(initFields);
@@ -68,7 +69,7 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
       findOneMethod.callPromise({ collectionName, selector })
         .then(target => {
           // autofill the form with specific supply info
-          const { supplyType, supply } = target;
+          const { supplyType, supply, isDiscrete } = target;
 
           const targetSupply = target.stock.find(obj => obj._id === _id);
           const { quantity, donated, donatedBy = "", location } = targetSupply;
@@ -77,7 +78,7 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
           // setFields(autoFields);
           // setMaxQuantity(quantity);
 
-          const autoFields = { ...initInnerFields, supply, supplyType, location, donated, donatedBy, maxQuantity: quantity };
+          const autoFields = { ...initInnerFields, supply, supplyType, isDiscrete, location, donated, donatedBy, maxQuantity: quantity };
           // setInnerFields([autoFields]);
           // append the first field if its name is not empty
           const newInnerFields = innerFields[0].supply ?

@@ -77,7 +77,7 @@ const DispenseSupplySingle = ({ names, locations, types, fields, handleChange, h
         <Grid.Column>
           <Form.Group>
             <Form.Input id={COMPONENT_IDS.DISPENSE_SUP_QUANTITY} label={fields.maxQuantity ? `Quantity (${fields.maxQuantity} remaining)` : 'Quantity'}
-              type='number' min={1} name='quantity' className='quantity'
+              type='number' min={1} name='quantity' className='quantity' disabled={!fields.isDiscrete}
               onChange={handleChange} value={fields.quantity} placeholder='30' index={index}/>
           </Form.Group>
         </Grid.Column>

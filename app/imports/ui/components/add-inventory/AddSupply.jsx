@@ -39,6 +39,7 @@ const AddSupply = ({ names, locations, ready }) => {
     note: '',
     donated: false,
     donatedBy: '',
+    isDiscrete: true,
   };
 
   const [fields, setFields] = useState(initialState);
@@ -57,11 +58,11 @@ const AddSupply = ({ names, locations, ready }) => {
         // if the supply exists:
         if (target) {
           // autofill the form with specific supply info
-          const { supplyType, minQuantity } = target;
-          setFields({ ...fields, supply, supplyType, minQuantity });
+          const { supplyType, minQuantity, isDiscrete } = target;
+          setFields({ ...fields, supply, supplyType, minQuantity, isDiscrete });
         } else {
           // else reset specific supply info
-          setFields({ ...fields, supply, supplyType: '', minQuantity: '' });
+          setFields({ ...fields, supply, supplyType: '', minQuantity: '', isDiscrete: true });
         }
       });
   };
@@ -81,8 +82,8 @@ const AddSupply = ({ names, locations, ready }) => {
       });
   }, [fields.supply, fields.location, fields.donated]);
 
-  const handleChange = (event, { name, value }) => {
-    setFields({ ...fields, [name]: value });
+  const handleChange = (event, { name, value, checked }) => {
+    setFields({ ...fields, [name]: value ?? checked });
   };
 
   const handleCheck = (event, { name, checked }) => {
@@ -127,14 +128,19 @@ const AddSupply = ({ names, locations, ready }) => {
               <Grid.Column>
                 <Form.Input label='Minimum Quantity' type='number' min={1} name='minQuantity' className='quantity'
                   onChange={handleChange} value={fields.minQuantity} placeholder="50"
-                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} disabled={disabled} />
+                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} disabled={disabled || !fields.isDiscrete} />
               </Grid.Column>
-              <Grid.Column className='filler-column' />
+              <Grid.Column>
+                <Form.Field>
+                  <label>Has Quantity</label>
+                  <Form.Checkbox name="isDiscrete" onChange={handleChange} checked={fields.isDiscrete} disabled={disabled} />
+                </Form.Field>
+              </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column>
-                <Form.Input label='Quantity' type='number' min={1} name='quantity' placeholder='10'
+                <Form.Input label='Quantity' type='number' min={1} name='quantity' placeholder='10' disabled={!fields.isDiscrete}
                   onChange={handleChange} value={fields.quantity} id={COMPONENT_IDS.ADD_SUPPLY_QUANTITY} />
               </Grid.Column>
               <Grid.Column>
@@ -152,7 +158,6 @@ const AddSupply = ({ names, locations, ready }) => {
                   </Form.Group>
                 </Form.Field>
               </Grid.Column>
-
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>

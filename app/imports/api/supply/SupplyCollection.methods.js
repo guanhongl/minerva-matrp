@@ -16,6 +16,11 @@ export const addMethod = new ValidatedMethod({
             const collection = MATRP.supplies;
             collection.assertValidRoleForMethod(this.userId);
 
+            // set quantities to -1 if isDiscrete is false
+            if (!data.isDiscrete) {
+                data.minQuantity = "-1"
+                data.quantity = "-1"
+            }
             // validation
             let errorMsg = '';
             // the required String fields
@@ -34,11 +39,15 @@ export const addMethod = new ValidatedMethod({
             data.minQuantity = parseInt(data.minQuantity, 10);
             data.quantity = parseInt(data.quantity, 10);
 
-            const { supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note } = data;
+            const { supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note, isDiscrete } = data;
             const target = collection.findOne({ supply }); // returns the existing supply or undefined
             const targetLot = target?.stock?.find(o => ( o.location === location && o.donated === donated )); // returns the existing lot or undefined
             // if lot exists, increment the quantity:
             if (!!targetLot) {
+                if (!data.isDiscrete) {
+                    throw new Meteor.Error("supply-exists", "The supply already exists.")
+                }
+
                 targetLot.quantity += quantity;
                 collection.update(target._id, { stock: target.stock });
 
@@ -54,7 +63,7 @@ export const addMethod = new ValidatedMethod({
                         // if the supply does not exist:
                         if (!!!target) {
                             // insert the new supply and lot
-                            const definitionData = { supply, supplyType, minQuantity, stock: [newLot] };
+                            const definitionData = { supply, supplyType, minQuantity, isDiscrete, stock: [newLot] };
                             collection.define(definitionData);
 
                             return url;
@@ -91,6 +100,12 @@ export const dispenseMethod = new ValidatedMethod({
                 fields.dispensedTo = 'N/A';
                 fields.site = 'N/A';
             }
+            // set quantity(s) to -1 if isDiscrete is false
+            innerFields.forEach(o => {
+                if (!o.isDiscrete) {
+                    o.quantity = "-1"
+                }
+            })
             // validation
             let errorMsg = '';
             // the required String fields
@@ -126,36 +141,43 @@ export const dispenseMethod = new ValidatedMethod({
             let successMsg = '';
 
             innerFields.forEach(field => {
-                const { supply, supplyType, quantity, donated, donatedBy, location } = field;
-                const target = collection.findOne({ supply }); // find the existing supply
-                const { _id } = target;
-                const match = update.find(o => o._id === _id);
-                const stock = !!match ? match.stock : target.stock; // set reference to match or target
-                if (!!!match) { 
-                    copy.push(cloneDeep( { _id, stock } )); // store a copy (we modify stock)
-                }
-                const targetIndex = stock.findIndex((o => o.location === location && o.donated === donated)); // find the index of the existing supply
+                const { supply, supplyType, isDiscrete, quantity, donated, donatedBy, location } = field;
 
-                if (targetIndex == -1) {
-                    throw new Meteor.Error("not-found", `${supply} @ ${location} ${donated ? "(donated) ": ""}not found.`);
-                }
+                if (isDiscrete) {
 
-                const targetQuantity = stock[targetIndex].quantity;
-                // if dispense quantity > target quantity:
-                if (quantity > targetQuantity) {
-                    throw new Meteor.Error("quantity-cap", `${supply} @ ${location} only has ${targetQuantity} remaining.`);
-                } else {
-                // if dispense quantity < supply quantity:
-                    if (quantity < targetQuantity) {
-                        stock[targetIndex].quantity -= quantity; // decrement the quantity
-                    } else {
-                // else if dispense quantity === supply quantity:
-                        stock.splice(targetIndex, 1); // remove the stock
+                    const target = collection.findOne({ supply }); // find the existing supply
+                    const { _id } = target;
+                    const match = update.find(o => o._id === _id);
+                    const stock = !!match ? match.stock : target.stock; // set reference to match or target
+                    if (!!!match) { 
+                        copy.push(cloneDeep( { _id, stock } )); // store a copy (we modify stock)
                     }
+                    const targetIndex = stock.findIndex((o => o.location === location && o.donated === donated)); // find the index of the existing supply
+
+                    if (targetIndex == -1) {
+                        throw new Meteor.Error("not-found", `${supply} @ ${location} ${donated ? "(donated) ": ""}not found.`);
+                    }
+
+                    const targetQuantity = stock[targetIndex].quantity;
+                    // if dispense quantity > target quantity:
+                    if (quantity > targetQuantity) {
+                        throw new Meteor.Error("quantity-cap", `${supply} @ ${location} only has ${targetQuantity} remaining.`);
+                    } else {
+                    // if dispense quantity < supply quantity:
+                        if (quantity < targetQuantity) {
+                            stock[targetIndex].quantity -= quantity; // decrement the quantity
+                        } else {
+                    // else if dispense quantity === supply quantity:
+                            stock.splice(targetIndex, 1); // remove the stock
+                        }
+                    }
+                    if (!!!match) {
+                        update.push({ _id, stock }); // store the update
+                    }
+
                 }
-                if (!!!match) {
-                    update.push({ _id, stock }); // store the update
-                }
+                // if non discrete, simply insert the historical record
+
                 element.push({ name: supply, supplyType, quantity, donated, donatedBy });
                 successMsg += `${supply} @ ${location} updated successfully.\n`;
             });
@@ -189,11 +211,11 @@ export const updateMethod = new ValidatedMethod({
             const collection = MATRP.supplies;
             // collection.assertValidRoleForMethod(this.userId);
             collection.assertValidRoleForUpdate(this.userId);
-            const { newSupplyType, newMinQuantity, newLocation, newQuantity, newDonated, newDonatedBy, newNote } = fields;
+            const { newSupplyType, newMinQuantity, newIsDiscrete, newLocation, newQuantity, newDonated, newDonatedBy, newNote } = fields;
             
             // validation
-            const minQuantity = parseInt(newMinQuantity, 10);
-            const quantity = parseInt(newQuantity, 10);
+            const minQuantity = newIsDiscrete ? parseInt(newMinQuantity, 10) : -1;
+            const quantity = newIsDiscrete ? parseInt(newQuantity, 10) : -1;
             // throw error if (location, donated) is not unique
             const target = collection.findOne({ _id });
             const current = target.stock.find(o => ( o.location === newLocation && o.donated === newDonated ));
@@ -208,7 +230,7 @@ export const updateMethod = new ValidatedMethod({
             targetLot.donated = newDonated;
             targetLot.donatedBy = newDonated ? newDonatedBy : '';
             targetLot.note = newNote;
-            const updateData = { supplyType: newSupplyType, minQuantity, stock: target.stock };
+            const updateData = { supplyType: newSupplyType, minQuantity, isDiscrete: newIsDiscrete, stock: target.stock };
             collection.update(_id, updateData);
 
             return 'Supply updated successfully.';

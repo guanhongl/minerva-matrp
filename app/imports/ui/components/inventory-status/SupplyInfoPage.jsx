@@ -15,7 +15,7 @@ const submit = (_id, uuid, fields) => {
     .catch(error => swal('Error', error.message, 'error'));
 };
 
-const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity }, 
+const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity, isDiscrete }, 
                           detail: { _id: uuid, location, quantity, donated, donatedBy, note, QRCode }, 
                           supplyTypes, locations }) => {
   // A reactive data source.
@@ -27,6 +27,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
   const initialState = {
     newSupplyType: supplyType,
     newMinQuantity: minQuantity,
+    newIsDiscrete: isDiscrete,
     newLocation: location,
     newQuantity: quantity,
     newDonated: donated,
@@ -82,14 +83,26 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                       <span>{supplyType}</span>
                   }
                 </div>
+                {
+                  fields.newIsDiscrete &&
+                  <div>
+                    <span className='header'>Minimum Quantity:</span>
+                    {
+                      edit ?
+                        <Input name='newMinQuantity' type='number' min={1}
+                          value={fields.newMinQuantity} onChange={handleChange} />
+                        :
+                        <span>{minQuantity}</span>
+                    }
+                  </div>
+                }
                 <div>
-                  <span className='header'>Minimum Quantity:</span>
+                  <span className='header'>Has Quantity:</span>
                   {
                     edit ?
-                      <Input name='newMinQuantity' type='number' min={1}
-                        value={fields.newMinQuantity} onChange={handleChange} />
+                      <Checkbox name='newIsDiscrete' checked={fields.newIsDiscrete} onChange={handleChange} />
                       :
-                      <span>{minQuantity}</span>
+                      <span>{isDiscrete ? 'Yes' : 'No'}</span>
                   }
                 </div>
               </td>
@@ -106,16 +119,19 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity },
                       <span>{location}</span>
                   }
                 </div>
-                <div>
-                  <span className='header'>Quantity:</span>
-                  {
-                    edit ?
-                      <Input name='newQuantity' type='number' min={1}
-                        value={fields.newQuantity} onChange={handleChange} />
-                      :
-                      <span>{quantity}</span>
-                  }
-                </div>
+                {
+                  fields.newIsDiscrete &&
+                  <div>
+                    <span className='header'>Quantity:</span>
+                    {
+                      edit ?
+                        <Input name='newQuantity' type='number' min={1}
+                          value={fields.newQuantity} onChange={handleChange} />
+                        :
+                        <span>{quantity}</span>
+                    }
+                  </div>
+                }
                 <div>
                   <span className='header'>Donated:</span>
                   {

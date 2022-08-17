@@ -61,7 +61,7 @@ const SupplyRecord = ({ open, setOpen, record }) => {
                     </div>
                     <div>
                       <span className='header'>Quantity Dispensed:</span>
-                      <span>{quantity}</span>
+                      <span>{quantity > 0 ? quantity : "N/A"}</span>
                     </div>
                     <div>
                       <span className='header'>Donated:</span>

@@ -72,6 +72,10 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
     if (statusFilter) {
       filter = filter.filter((supply) => {
         if (statusFilter === 'In Stock') {
+          if (!supply.isDiscrete) {
+            return true
+          }
+
           return supply.sum >= supply.minQuantity;
         }
         if (statusFilter === 'Low Stock') {
