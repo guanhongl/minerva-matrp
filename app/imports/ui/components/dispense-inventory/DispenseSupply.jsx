@@ -319,7 +319,7 @@ export default withTracker(() => {
 
   return {
     names: fetchField(SupplyNames, "supplyName"),
-    locations: fetchField(Locations, "location"),
+    locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
     sites: fetchField(Sites, "site"),
     dispenseTypes: fetchField(DispenseTypes, "dispenseType"),
     ready: nameSub.ready() && locationSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),

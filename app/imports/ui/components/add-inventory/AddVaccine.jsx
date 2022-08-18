@@ -9,7 +9,7 @@ import { VaccineNames } from '../../../api/vaccineName/VaccineNameCollection';
 import { VaccineBrands } from '../../../api/vaccineBrand/VaccineBrandCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { fetchField, fetchLots, getOptions, printQRCode } from '../../utilities/Functions';
+import { fetchField, fetchLots, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { addMethod, brandFilterMethod } from '../../../api/vaccine/VaccineCollection.methods';
 
@@ -196,7 +196,7 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
             <Grid.Row>
               <Grid.Column>
                 <Form.Select compact clearable search label='Location'
-                  placeholder="Case 2" name='location' options={getOptions(locations)}
+                  placeholder="Case 2" name='location' options={getLocations(locations)}
                   onChange={handleChange} value={fields.location} id={COMPONENT_IDS.ADD_VACCINATION_LOCATION}/>
               </Grid.Column>
               <Grid.Column>
@@ -256,7 +256,7 @@ export default withTracker(() => {
     names: fetchField(VaccineNames, "vaccineName"),
     brands: fetchField(VaccineBrands, "vaccineBrand"),
     lotIds: fetchLots(Vaccines),
-    locations: fetchField(Locations, "location"),
+    locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
     ready: nameSub.ready() && brandSub.ready() && lotSub.ready() && locationSub.ready(), 
   };
 })(AddVaccine);

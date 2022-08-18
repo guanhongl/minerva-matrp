@@ -13,7 +13,7 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { addMethod, getGenericNames, getBrandNames } from '../../../api/drug/DrugCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { fetchField, fetchLots, getOptions, printQRCode } from '../../utilities/Functions';
+import { fetchField, fetchLots, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
 
 /** handles submit for add medication. */
 const submit = (data, callback) => {
@@ -220,7 +220,7 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <Form.Select compact clearable search label='Location' options={getOptions(locations)}
+                <Form.Select compact clearable search label='Location' options={getLocations(locations)}
                   placeholder="Case 2" name='location'
                   onChange={handleChange} value={fields.location} id={COMPONENT_IDS.ADD_MEDICATION_LOCATION}/>
               </Grid.Column>
@@ -287,7 +287,7 @@ export default withTracker(() => {
     units: fetchField(Units, "unit"),
     brands: fetchField(DrugBrands, "drugBrand"),
     lotIds: fetchLots(Drugs),
-    locations: fetchField(Locations, "location"),
+    locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
     ready: nameSub.ready() && typeSub.ready() && unitSub.ready() && 
       brandSub.ready() && lotSub.ready() && locationSub.ready(),
   };

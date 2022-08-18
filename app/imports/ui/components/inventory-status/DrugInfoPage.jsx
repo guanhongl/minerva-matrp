@@ -8,7 +8,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from '../../../api/role/Role';
 import { updateMethod, getBrandNames } from '../../../api/drug/DrugCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { printQRCode, getOptions } from '../../utilities/Functions';
+import { printQRCode, getOptions, getLocations } from '../../utilities/Functions';
 
 // TODO fix bug where submit re-renders
 const submit = (_id, uuid, fields) => {
@@ -151,7 +151,7 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select fluid name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
+                      <Select fluid name='newLocation' value={fields.newLocation} options={getLocations(locations)} onChange={handleChange} />
                       :
                       <span>{location}</span>
                   }

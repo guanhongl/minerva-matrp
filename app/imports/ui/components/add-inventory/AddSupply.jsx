@@ -9,7 +9,7 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { addMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { fetchField, getOptions, printQRCode } from '../../utilities/Functions';
+import { fetchField, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
 
 /** handles submit for add supply. */
 const submit = (data, callback) => {
@@ -144,7 +144,7 @@ const AddSupply = ({ names, locations, ready }) => {
                   onChange={handleChange} value={fields.quantity} id={COMPONENT_IDS.ADD_SUPPLY_QUANTITY} />
               </Grid.Column>
               <Grid.Column>
-                <Form.Select clearable search label='Location' options={getOptions(locations)} placeholder='Cabinet 1'
+                <Form.Select clearable search label='Location' options={getLocations(locations)} placeholder='Cabinet 1'
                   name='location' onChange={handleChange} value={fields.location} id={COMPONENT_IDS.ADD_SUPPLY_LOCATION}/>
               </Grid.Column>
               <Grid.Column>
@@ -190,7 +190,7 @@ export default withTracker(() => {
   const locationSub = Locations.subscribe();
   return {
     names: fetchField(SupplyNames, "supplyName"),
-    locations: fetchField(Locations, "location"),
+    locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
     ready: nameSub.ready() && locationSub.ready(),
   };
 })(AddSupply);

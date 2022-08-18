@@ -21,6 +21,14 @@ export function getOptions(arr) {
   return arr.map(name => ({ key: name, text: name, value: name }));
 }
 
+export function getLocations(arr) {
+  return arr.map(({ _id, location, isOverstock }) => {
+    const text = isOverstock ? `${location} (Overstock)` : location
+
+    return { key: _id, text, value: location }
+  })
+}
+
 // A custom hook that builds on useLocation to parse the query string for you.
 export function useQuery() {
   const { search } = useLocation();
