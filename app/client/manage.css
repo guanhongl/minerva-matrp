@@ -38,6 +38,9 @@
 .manage-tab .controls .ui.input {
   flex: 4 1 0;
 }
+.manage-tab .controls .ui.checkbox {
+  align-self: center;
+}
 
 .manage-tab .controls .ui.button {
   flex: 1 1 0;

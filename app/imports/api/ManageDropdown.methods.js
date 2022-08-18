@@ -134,3 +134,56 @@ export const updateBrandMethod = new ValidatedMethod({
         return null;
     },
 });
+
+export const defineLocationMethod = new ValidatedMethod({
+    name: 'Dropdown.defineLocation',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ collectionName, newOption }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.getCollection(collectionName);
+            // throw error if user is not authorized
+            collection.assertValidRoleForMethod(this.userId);
+            // throw error if option is empty
+            if (!newOption.location) {
+                throw new Meteor.Error("option-empty", "The option cannot be empty.");
+            }
+            // throw error if option exists
+            if (collection.hasOption(null, newOption.location)) {
+                throw new Meteor.Error("option-exists", "The option already exists.");
+            }
+            
+            return collection.define(newOption);
+        }
+        return null;
+    },
+});
+
+export const updateLocationMethod = new ValidatedMethod({
+    name: 'Dropdown.updateLocation',
+    mixins: [CallPromiseMixin],
+    validate: null,
+    run({ collectionName, prev, option, instance }) {
+        if (Meteor.isServer) {
+            const collection = MATRP.getCollection(collectionName);
+            // throw error if user is not authorized
+            collection.assertValidRoleForMethod(this.userId);
+            // throw error if option is empty
+            if (!option.location) {
+                throw new Meteor.Error("option-empty", "The option cannot be empty.");
+            }
+            // throw error if option exists
+            if (collection.hasOption(prev, option.location)) {
+                throw new Meteor.Error("option-exists", "The option already exists.");
+            }
+            // update
+            try {
+                return collection.updateMulti(prev, option, instance);
+            } catch (error) {
+                console.log(error);
+                throw new Meteor.Error("update-error", error.message);
+            }
+        }
+        return null;
+    },
+});

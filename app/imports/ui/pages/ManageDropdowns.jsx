@@ -13,6 +13,7 @@ import { Sites } from '../../api/site/SiteCollection';
 import { DispenseTypes } from '../../api/dispense-type/DispenseTypeCollection';
 import ManageSingle from '../components/manage-dropdowns/ManageSingle';
 import ManageDrugBrand from '../components/manage-dropdowns/ManageDrugBrand';
+import ManageLocation from '../components/manage-dropdowns/ManageLocation';
 
 const drugNamesTab = () => <ManageSingle collection={DrugNames} title={"Drug Names"} name={"drugName"} />;
 const drugTypesTab = () => <ManageSingle collection={DrugTypes} title={"Drug Types"} name={"drugType"} />;
@@ -21,7 +22,7 @@ const drugBrandsTab = () => <ManageDrugBrand collection={DrugBrands} title={"Dru
 const vaccineNamesTab = () => <ManageSingle collection={VaccineNames} title={"Vaccine Names"} name={"vaccineName"} />;
 const vaccineBrandsTab = () => <ManageSingle collection={VaccineBrands} title={"Vaccine Brands"} name={"vaccineBrand"} />;
 const supplyNamesTab = () => <ManageSingle collection={SupplyNames} title={"Supply Names"} name={"supplyName"} />;
-const locationsTab = () => <ManageSingle collection={Locations} title={"Locations"} name={"location"} />;
+const locationsTab = () => <ManageLocation collection={Locations} title={"Locations"} name={"location"} />;
 const sitesTab = () => <ManageSingle collection={Sites} title={"Sites"} name={"site"} />;
 const dispenseTypesTab = () => <ManageSingle collection={DispenseTypes} title={"Dispense Types"} name={"dispenseType"} />;
 

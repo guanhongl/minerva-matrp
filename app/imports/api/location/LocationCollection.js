@@ -95,10 +95,21 @@ class LocationCollection extends BaseCollection {
    * case insensitive query
    * @param {*} option 
    */
-  hasOption(option) {
-    const records = this._collection.find().fetch();
+  hasOption(prev, option) {
+    const curRe = new RegExp(`^${option}$`, "i");
+    const curRecord = this._collection.findOne({ drugBrand: { $regex: curRe } });
 
-    return _.pluck(records, "location").map(record => record.toLowerCase()).includes(option.toLowerCase());
+    if (prev === null) {
+      return !!curRecord;
+    }
+    if (!curRecord) {
+      return false;
+    }
+
+    const prevRe = new RegExp(`^${prev}$`, "i");
+    const prevRecord = this._collection.findOne({ drugBrand: { $regex: prevRe } });
+
+    return prevRecord._id !== curRecord._id;
   }
 
   inUse(option) {
