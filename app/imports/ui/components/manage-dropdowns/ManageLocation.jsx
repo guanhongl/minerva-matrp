@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { Header, Input, Button, List, Loader } from 'semantic-ui-react';
+import { Header, Input, Checkbox, Button, List, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 // import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { defineBrandMethod, removeItMethod, updateBrandMethod } from '../../../api/ManageDropdown.methods';
+import { defineLocationMethod, removeItMethod, updateLocationMethod } from '../../../api/ManageDropdown.methods';
 
 /**
  * inserts the dropdown option
  */
 const insertOption = (collectionName, newOption, callback) => {
-  defineBrandMethod.callPromise({ collectionName, newOption })
+  defineLocationMethod.callPromise({ collectionName, newOption })
     .then(() => {
-      swal('Success', `${newOption.drugBrand} added successfully.`, 'success', { buttons: false, timer: 3000 });
+      swal('Success', `${newOption.location} added successfully.`, 'success', { buttons: false, timer: 3000 });
       callback();
     })
     .catch(error => swal('Error', error.message, 'error'));
@@ -49,7 +49,7 @@ const deleteOption = (collectionName, option, instance) => {
  * updates the dropdown option
  */
 const updateOption = (collectionName, prev, option, instance) => {
-  updateBrandMethod.callPromise({ collectionName, prev, option, instance })
+  updateLocationMethod.callPromise({ collectionName, prev, option, instance })
     .then(count => {
       console.log(count);
       swal('Success', `${prev} updated successfully.`, 'success', { buttons: false, timer: 3000 });
@@ -60,12 +60,12 @@ const updateOption = (collectionName, prev, option, instance) => {
 const ListItem = ({ record, collectionName, name }) => {
   const [edit, setEdit] = useState(false);
   const [editOption, setEditOption] = useState(record[name]);
-  const [genericName, setGenericName] = useState(record["genericName"])
+  const [isOverstock, setIsOverstock] = useState(record["isOverstock"])
 
   const handleEdit = () => {
     setEdit(!edit);
     setEditOption(record[name]);
-    setGenericName(record["genericName"])
+    setIsOverstock(record["isOverstock"])
   };
 
   return (
@@ -81,14 +81,14 @@ const ListItem = ({ record, collectionName, name }) => {
       <List.Content>
         {
           edit ?
-            <Input value={genericName} onChange={(event, { value }) => setGenericName(value)} />
+            <Checkbox checked={isOverstock} onChange={(event, { checked }) => setIsOverstock(checked)} />
             :
-            <>{record["genericName"]}</>
+            <>{record["isOverstock"] ? "Yes" : "No"}</>
         }
       </List.Content>
       {
         edit &&
-        <List.Icon name='check' onClick={() => updateOption(collectionName, record[name], { drugBrand: editOption, genericName }, record._id)} />
+        <List.Icon name='check' onClick={() => updateOption(collectionName, record[name], { location: editOption, isOverstock }, record._id)} />
       }
       <List.Icon name={edit ? 'ban': 'pencil'} onClick={handleEdit} />
       <List.Icon name='trash alternate' onClick={() => deleteOption(collectionName, record[name], record._id)} />
@@ -96,13 +96,13 @@ const ListItem = ({ record, collectionName, name }) => {
   );
 };
 
-const ManageDrugBrand = ({ collection, title, name }) => {
+const ManageLocation = ({ collection, title, name }) => {
   const collectionName = collection.getCollectionName();
   const [newOption, setNewOption] = useState('');
-  const [genericName, setGenericName] = useState('')
+  const [isOverstock, setIsOverstock] = useState(false)
   const clearField = () => {
     setNewOption('')
-    setGenericName('')
+    setIsOverstock(false)
   }
 
   const { records, isLoading } = useTracker(() => {
@@ -123,14 +123,14 @@ const ManageDrugBrand = ({ collection, title, name }) => {
     <div className='manage-tab'>
       <Header as='h2'>{`Manage ${title} (${records.length})`}</Header>
       <div className='controls'>
-        <Input onChange={(event, { value }) => setNewOption(value)} value={newOption} placeholder='Add new brand...' />
-        <Input onChange={(event, { value }) => setGenericName(value)} value={genericName} placeholder='Add new generic...' />
-        <Button content='Add' onClick={() => insertOption(collectionName, { drugBrand: newOption, genericName }, clearField)} />
+        <Input onChange={(event, { value }) => setNewOption(value)} value={newOption} placeholder='Add new location...' />
+        <Checkbox onChange={(event, { checked }) => setIsOverstock(checked)} checked={isOverstock} label='Is Overstock' />
+        <Button content='Add' onClick={() => insertOption(collectionName, { location: newOption, isOverstock }, clearField)} />
       </div>
       <List divided relaxed>
         <List.Item className="list-header">
-          <List.Header>Brand Name</List.Header>
-          <List.Header>Generic Name</List.Header>
+          <List.Header>Location</List.Header>
+          <List.Header>Is Overstock</List.Header>
         </List.Item>
         {
           records.map(record => (
@@ -142,10 +142,10 @@ const ManageDrugBrand = ({ collection, title, name }) => {
   );
 };
 
-ManageDrugBrand.propTypes = {
+ManageLocation.propTypes = {
   // collection: PropTypes.instanceOf().isRequired, 
   title: PropTypes.string.isRequired, 
   name: PropTypes.string.isRequired, 
 };
 
-export default ManageDrugBrand;
+export default ManageLocation;

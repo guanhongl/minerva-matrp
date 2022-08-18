@@ -11,7 +11,7 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineStatusRow from './VaccineStatusRow';
-import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions, getLocations } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 import { downloadDatabaseMethod } from '../../../api/ManageDatabase.methods';
 
@@ -193,7 +193,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
           </span>
           <span>
             <span>Location:</span>
-            <Dropdown inline options={getFilters(locations)} search
+            <Dropdown inline options={[{ key: 'All', value: 0, text: 'All' }, ...getLocations(locations)]} search
               onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION} />
           </span>
           <span>
@@ -298,7 +298,7 @@ export default withTracker(() => {
   // Get the Vaccination documents and sort them by name.
   const vaccines = Vaccines.find({}, { sort: { vaccine: 1 } }).fetch();
   const brands = fetchField(VaccineBrands, "vaccineBrand");
-  const locations = fetchField(Locations, "location");
+  const locations = Locations.find({}, { sort: { location: 1 } }).fetch();
   // add is expired and total quantity to vaccines
   vaccines.forEach(doc => {
     // doc.sum = doc.lotIds.reduce((p, c) => p + c.quantity, 0);

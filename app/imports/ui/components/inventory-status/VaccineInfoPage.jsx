@@ -8,7 +8,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from '../../../api/role/Role';
 import { updateMethod } from '../../../api/vaccine/VaccineCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { printQRCode, getOptions } from '../../utilities/Functions';
+import { printQRCode, getOptions, getLocations } from '../../utilities/Functions';
 
 const submit = (_id, uuid, fields) => {
   updateMethod.callPromise({ _id, uuid, fields })
@@ -130,7 +130,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select name='newLocation' options={getOptions(locations)}
+                      <Select name='newLocation' options={getLocations(locations)}
                         value={fields.newLocation} onChange={handleChange} />
                       :
                       <span>{location}</span>

@@ -7,7 +7,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from '../../../api/role/Role';
 import { updateMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { printQRCode, getOptions } from '../../utilities/Functions';
+import { printQRCode, getOptions, getLocations } from '../../utilities/Functions';
 
 const submit = (_id, uuid, fields) => {
   updateMethod.callPromise({ _id, uuid, fields })
@@ -114,7 +114,7 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity, isDiscre
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select name='newLocation' value={fields.newLocation} options={getOptions(locations)} onChange={handleChange} />
+                      <Select name='newLocation' value={fields.newLocation} options={getLocations(locations)} onChange={handleChange} />
                       :
                       <span>{location}</span>
                   }

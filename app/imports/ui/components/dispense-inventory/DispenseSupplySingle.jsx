@@ -3,7 +3,7 @@ import { Grid, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { getOptions } from '../../utilities/Functions';
+import { getOptions, getLocations } from '../../utilities/Functions';
 import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 
 const DispenseSupplySingle = ({ names, locations, types, fields, handleChange, handleCheck, handleSelect, index }) => {
@@ -70,7 +70,7 @@ const DispenseSupplySingle = ({ names, locations, types, fields, handleChange, h
             name='supply' onChange={onSupplySelect} value={fields.supply} index={index}/>
         </Grid.Column>
         <Grid.Column>
-          <Form.Select id={COMPONENT_IDS.DISPENSE_SUP_LOCATION} clearable search label='Location' options={getOptions(locationFilter)}
+          <Form.Select id={COMPONENT_IDS.DISPENSE_SUP_LOCATION} clearable search label='Location' options={getLocations(locationFilter)}
             placeholder="Case 2" name='location'
             onChange={handleChange} value={fields.location} index={index}/>
         </Grid.Column>
