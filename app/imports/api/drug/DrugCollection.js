@@ -144,7 +144,8 @@ class DrugCollection extends BaseCollection {
 
       Meteor.publish(drugPublications.drugLots, function publish() {
         if (this.userId) {
-          return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
+          // return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
+          return instance._collection.find({}, { fields: { drug: 1, "lotIds.lotId": 1, "lotIds.location": 1, "lotIds._id": 1 } });
         }
         return this.ready();
       });
@@ -212,7 +213,7 @@ class DrugCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
    */
-   dumpOne(docID) {
+  dumpOne(docID) {
     // const doc = this.findDoc(docID);
     const doc = docID;
     const drug = doc.drug;

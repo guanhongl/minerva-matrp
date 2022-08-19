@@ -4,61 +4,59 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { getOptions, getLocations } from '../../utilities/Functions';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 
 const DispenseSupplySingle = ({ names, locations, types, fields, handleChange, handleCheck, handleSelect, index }) => {
-  const collectionName = "SupplysCollection";
   const [locationFilter, setLocationFilter] = useState([]);
   useEffect(() => {
     setLocationFilter(locations);
   }, [locations]);
 
   // handle supply select; filter locations
-  const onSupplySelect = (event, obj) => {
-    findOneMethod.callPromise({ collectionName, selector: { supply: obj.value } })
-      .then(target => {
-        // if supply is not empty:
-        if (!!target) {
-          // setFields({ ...fields, supply });
-          handleChange(event, obj);
-          setLocationFilter(_.uniq(_.pluck(target.stock, 'location')).sort());
-        } else {
-          // else reset specific supply info
-          // setFields({ ...fields, supply });
-          handleChange(event, obj);
-          setLocationFilter(locations);
-        }
-      });
-  };
+  // const onSupplySelect = (event, obj) => {
+  //   findOneMethod.callPromise({ collectionName, selector: { supply: obj.value } })
+  //     .then(target => {
+  //       // if supply is not empty:
+  //       if (!!target) {
+  //         // setFields({ ...fields, supply });
+  //         handleChange(event, obj);
+  //         setLocationFilter(_.uniq(_.pluck(target.stock, 'location')).sort());
+  //       } else {
+  //         // else reset specific supply info
+  //         // setFields({ ...fields, supply });
+  //         handleChange(event, obj);
+  //         setLocationFilter(locations);
+  //       }
+  //     });
+  // };
 
   // autofill form if supply, location, donated are selected
-  useEffect(() => {
-    if (fields.supply && fields.location) {
-      const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } };
-      findOneMethod.callPromise({ collectionName, selector })
-        .then(target => {
-          // if supply w/ name, location, donated exists:
-          if (!!target) {
-            // autofill the form with specific supply info
-            const { supplyType } = target;
+  // useEffect(() => {
+  //   if (fields.supply && fields.location) {
+  //     const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } };
+  //     findOneMethod.callPromise({ collectionName, selector })
+  //       .then(target => {
+  //         // if supply w/ name, location, donated exists:
+  //         if (!!target) {
+  //           // autofill the form with specific supply info
+  //           const { supplyType } = target;
 
-            targetSupply = target.stock.find(obj => obj.location === fields.location && obj.donated === fields.donated);
-            const { quantity, donatedBy = "" } = targetSupply;
+  //           targetSupply = target.stock.find(obj => obj.location === fields.location && obj.donated === fields.donated);
+  //           const { quantity, donatedBy = "" } = targetSupply;
 
-            // const autoFields = { ...fields, supplyType, donatedBy };
-            // setFields(autoFields);
-            // setMaxQuantity(quantity);
-            const autoFields = { ...fields, supplyType, donatedBy, maxQuantity: quantity };
-            handleSelect(autoFields, index);
-          } else {
-            // setFields({ ...fields, supplyType: '', donatedBy: '' });
-            // setMaxQuantity(0);
-            const autoFields = { ...fields, supplyType: '', donatedBy: '', maxQuantity: 0 };
-            handleSelect(autoFields, index);
-          }
-        });
-    }
-  }, [fields.supply, fields.location, fields.donated]);
+  //           // const autoFields = { ...fields, supplyType, donatedBy };
+  //           // setFields(autoFields);
+  //           // setMaxQuantity(quantity);
+  //           const autoFields = { ...fields, supplyType, donatedBy, maxQuantity: quantity };
+  //           handleSelect(autoFields, index);
+  //         } else {
+  //           // setFields({ ...fields, supplyType: '', donatedBy: '' });
+  //           // setMaxQuantity(0);
+  //           const autoFields = { ...fields, supplyType: '', donatedBy: '', maxQuantity: 0 };
+  //           handleSelect(autoFields, index);
+  //         }
+  //       });
+  //   }
+  // }, [fields.supply, fields.location, fields.donated]);
 
 
   return (

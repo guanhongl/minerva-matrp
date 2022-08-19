@@ -10,7 +10,6 @@ import { VaccineNames } from '../../../api/vaccineName/VaccineNameCollection';
 import { VaccineBrands } from '../../../api/vaccineBrand/VaccineBrandCollection';
 import { Sites } from '../../../api/site/SiteCollection';
 import { DispenseTypes } from '../../../api/dispense-type/DispenseTypeCollection';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/vaccine/VaccineCollection.methods';
 import { fetchField, fetchLots, getOptions, useQuery } from '../../utilities/Functions';
 import DispenseVaccineSingle from './DispenseVaccineSingle';
@@ -27,7 +26,6 @@ const submit = (fields, innerFields, callback) => {
 
 /** Renders the Page for Dispensing Vaccine. */
 const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes }) => {
-  const collectionName = Vaccines.getCollectionName();
   const query = useQuery();
   const initFields = {
     inventoryType: 'Vaccine',
@@ -62,24 +60,22 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
     const _id = query.get("_id");
     if (_id && ready) {
       const selector = { lotIds: { $elemMatch: { _id } } };
-      findOneMethod.callPromise({ collectionName, selector })
-        .then(target => {
-          // autofill the form with specific lotId info
-          const targetLotId = target.lotIds.find(obj => obj._id === _id);
-          const { vaccine, brand, visDate } = target;
-          const { expire = "", lotId, quantity, donated, donatedBy = "" } = targetLotId;
-          // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
-          // setFields(autoFields);
-          // setMaxQuantity(quantity);
+      const target = Vaccines.findOne(selector)
+      // autofill the form with specific lotId info
+      const targetLotId = target.lotIds.find(obj => obj._id === _id);
+      const { vaccine, brand, visDate } = target;
+      const { expire = "", lotId, quantity, donated, donatedBy = "" } = targetLotId;
+      // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
+      // setFields(autoFields);
+      // setMaxQuantity(quantity);
 
-          const autoFields = { ...initInnerFields, vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
-          // setInnerFields([autoFields]);
-          // append the first field if its lot is not empty
-          const newInnerFields = innerFields[0].lotId ?
-            [...innerFields, autoFields] : [autoFields];
-          setInnerFields(newInnerFields);
-          sessionStorage.setItem("vaccineFields", JSON.stringify(newInnerFields));
-        });
+      const autoFields = { ...initInnerFields, vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
+      // setInnerFields([autoFields]);
+      // append the first field if its lot is not empty
+      const newInnerFields = innerFields[0].lotId ?
+        [...innerFields, autoFields] : [autoFields];
+      setInnerFields(newInnerFields);
+      sessionStorage.setItem("vaccineFields", JSON.stringify(newInnerFields));
     }
   }, [ready]);
 
@@ -115,28 +111,26 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
   const onLotIdSelect = (event, { index, value: lotId }) => {
     const newInnerFields = [...innerFields];
     const selector = { lotIds: { $elemMatch: { lotId } } };
-    findOneMethod.callPromise({ collectionName, selector })
-      .then(target => {
-        // if lotId is not empty:
-        if (!!target) {
-          // autofill the form with specific lotId info
-          const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
-          const { vaccine, brand, visDate } = target;
-          const { expire = "", quantity, donated, donatedBy = "" } = targetLotId;
-          // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
-          // setFields(autoFields);
-          // setMaxQuantity(quantity);
-          newInnerFields[index] = { ...innerFields[index], vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
-          setInnerFields(newInnerFields);
-        } else {
-          // else reset specific lotId info
-          // setFields({ ...fields, lotId, vaccine: '', brand: '', visDate: '', expire: '' });
-          // setMaxQuantity(0);
-          newInnerFields[index] = { ...innerFields[index], vaccine: '', lotId, brand: '', expire: '', visDate: '', 
-            donated: false, donatedBy: '', maxQuantity: 0 };
-          setInnerFields(newInnerFields);
-        }
-      });
+    const target = Vaccines.findOne(selector)
+    // if lotId is not empty:
+    if (!!target) {
+      // autofill the form with specific lotId info
+      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
+      const { vaccine, brand, visDate } = target;
+      const { expire = "", quantity, donated, donatedBy = "" } = targetLotId;
+      // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
+      // setFields(autoFields);
+      // setMaxQuantity(quantity);
+      newInnerFields[index] = { ...innerFields[index], vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
+      setInnerFields(newInnerFields);
+    } else {
+      // else reset specific lotId info
+      // setFields({ ...fields, lotId, vaccine: '', brand: '', visDate: '', expire: '' });
+      // setMaxQuantity(0);
+      newInnerFields[index] = { ...innerFields[index], vaccine: '', lotId, brand: '', expire: '', visDate: '', 
+        donated: false, donatedBy: '', maxQuantity: 0 };
+      setInnerFields(newInnerFields);
+    }
   };
 
   const clearForm = () => {
@@ -283,9 +277,9 @@ DispenseVaccine.propTypes = {
 export default withTracker(() => {
   const nameSub = VaccineNames.subscribe();
   const brandSub = VaccineBrands.subscribe();
-  const lotSub = Vaccines.subscribeVaccineLots();
   const siteSub = Sites.subscribe();
   const dispenseTypeSub = DispenseTypes.subscribe();
+  const vaccineSub = Vaccines.subscribeVaccineLots()
 
   return {
     names: fetchField(VaccineNames, "vaccineName"),
@@ -293,6 +287,6 @@ export default withTracker(() => {
     lotIds: fetchLots(Vaccines),
     sites: fetchField(Sites, "site"),
     dispenseTypes: fetchField(DispenseTypes, "dispenseType"),
-    ready: nameSub.ready() && brandSub.ready() && lotSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),
+    ready: nameSub.ready() && brandSub.ready() && vaccineSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),
   };
 })(DispenseVaccine);

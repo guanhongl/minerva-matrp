@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { Supplys } from '../../../api/supply/SupplyCollection';
 import { supplyTypes } from '../../../api/supply/SupplyCollection';
 import { SupplyNames } from '../../../api/supplyName/SupplyNameCollection';
 import { Locations } from '../../../api/location/LocationCollection';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { addMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { fetchField, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
@@ -29,7 +29,6 @@ const submit = (data, callback) => {
 /** Renders the Page for Add Supplies. */
 // fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note
 const AddSupply = ({ names, locations, ready }) => {
-  const collectionName = "SupplysCollection";
   const initialState = {
     supply: '',
     supplyType: '',
@@ -45,41 +44,37 @@ const AddSupply = ({ names, locations, ready }) => {
   const [fields, setFields] = useState(initialState);
   // disable supply type and minimum if the supply is populated. 
   // assuming a supply cannot have 1+ types
-  const [disabled, setDisabled] = useState(false);
-  useEffect(() => {
-    findOneMethod.callPromise({ collectionName, selector: { supply: fields.supply } })
-      .then(res => setDisabled(!!res));
-  }, [fields.supply]);
+  const disabled = useMemo(() => {
+    const record = Supplys.findOne({ supply: fields.supply })
+
+    return !!record
+  }, [fields.supply])
 
   // handles supply select
   const onSupplySelect = (event, { value: supply }) => {
-    findOneMethod.callPromise({ collectionName, selector: { supply } })
-      .then(target => {
-        // if the supply exists:
-        if (target) {
-          // autofill the form with specific supply info
-          const { supplyType, minQuantity, isDiscrete } = target;
-          setFields({ ...fields, supply, supplyType, minQuantity, isDiscrete });
-        } else {
-          // else reset specific supply info
-          setFields({ ...fields, supply, supplyType: '', minQuantity: '', isDiscrete: true });
-        }
-      });
+    const target = Supplys.findOne({ supply })
+    // if the supply exists:
+    if (target) {
+      // autofill the form with specific supply info
+      const { supplyType, minQuantity, isDiscrete } = target;
+      setFields({ ...fields, supply, supplyType, minQuantity, isDiscrete });
+    } else {
+      // else reset specific supply info
+      setFields({ ...fields, supply, supplyType: '', minQuantity: '', isDiscrete: true });
+    }
   };
 
   // autofill donated by and note on (supply, location, donated) select
   useEffect(() => {
     const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } }
-    findOneMethod.callPromise({ collectionName, selector })
-      .then(target => {
-        if (!!target) {
-          const targetLot = target.stock.find(o => ( o.location === fields.location && o.donated === fields.donated ));
-          const { donatedBy = "", note = "" } = targetLot;
-          setFields({ ...fields, donatedBy, note });
-        } else {
-          setFields({ ...fields, donatedBy: '', note: '' });
-        }
-      });
+    const target = Supplys.findOne(selector)
+    if (!!target) {
+      const targetLot = target.stock.find(o => ( o.location === fields.location && o.donated === fields.donated ));
+      const { donatedBy = "", note = "" } = targetLot;
+      setFields({ ...fields, donatedBy, note });
+    } else {
+      setFields({ ...fields, donatedBy: '', note: '' });
+    }
   }, [fields.supply, fields.location, fields.donated]);
 
   const handleChange = (event, { name, value, checked }) => {
@@ -188,9 +183,11 @@ AddSupply.propTypes = {
 export default withTracker(() => {
   const nameSub = SupplyNames.subscribe();
   const locationSub = Locations.subscribe();
+  const supplySub = Supplys.subscribeSupplyLots()
+
   return {
     names: fetchField(SupplyNames, "supplyName"),
     locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
-    ready: nameSub.ready() && locationSub.ready(),
+    ready: nameSub.ready() && locationSub.ready() && supplySub.ready(),
   };
 })(AddSupply);

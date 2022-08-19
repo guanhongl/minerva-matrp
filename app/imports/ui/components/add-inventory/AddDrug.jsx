@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -10,7 +10,6 @@ import { DrugTypes } from '../../../api/drugType/DrugTypeCollection';
 import { Units } from '../../../api/unit/UnitCollection';
 import { DrugBrands } from '../../../api/drugBrand/DrugBrandCollection';
 import { Locations } from '../../../api/location/LocationCollection';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { addMethod, getGenericNames, getBrandNames } from '../../../api/drug/DrugCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { fetchField, fetchLots, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
@@ -32,8 +31,6 @@ const submit = (data, callback) => {
 
 /** Renders the Page for Add Medication. */
 const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) => {
-  const collectionName = Drugs.getCollectionName();
-
   const initialState = {
     drug: '',
     drugType: [],
@@ -51,11 +48,11 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
 
   const [fields, setFields] = useState(initialState);
   // disable drug type, minimum, and unit if the drug is populated. 
-  const [disabled, setDisabled] = useState(false);
-  useEffect(() => {
-    findOneMethod.callPromise({ collectionName, selector: { drug: fields.drug } })
-      .then(res => setDisabled(!!res));
-  }, [fields.drug]);
+  const disabled = useMemo(() => {
+    const record = Drugs.findOne({ drug: fields.drug })
+
+    return !!record
+  }, [fields.drug])
 
   const [genericNames, setGenericNames] = useState([])
   // get the generic name(s); select w/ brand name(s)
@@ -117,43 +114,39 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
 
   // handles drug select
   const onDrugSelect = (event, { value: drug }) => {
-    findOneMethod.callPromise({ collectionName, selector: { drug } })
-      .then(target => {
-        // if the drug is populated:
-        if (target) {
-          // autofill the form with specific drug info
-          const { drugType, minQuantity, unit, lotIds } = target;
-          setFields({ ...fields, drug, drugType, minQuantity, unit });
-          // filter lotIds
-          setFilteredLotIds(_.pluck(lotIds, 'lotId').sort());
-        } else {
-          // else reset specific drug info
-          setFields({ ...fields, drug, drugType: [], minQuantity: '', unit: 'tab(s)' });
-          // reset the filters
-          setFilteredLotIds(newLotIds);
-        }
-      });
+    const target = Drugs.findOne({ drug })
+    // if the drug is populated:
+    if (target) {
+      // autofill the form with specific drug info
+      const { drugType, minQuantity, unit, lotIds } = target;
+      setFields({ ...fields, drug, drugType, minQuantity, unit });
+      // filter lotIds
+      setFilteredLotIds(_.pluck(lotIds, 'lotId').sort());
+    } else {
+      // else reset specific drug info
+      setFields({ ...fields, drug, drugType: [], minQuantity: '', unit: 'tab(s)' });
+      // reset the filters
+      setFilteredLotIds(newLotIds);
+    }
   };
 
   // handles lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
     const selector = { lotIds: { $elemMatch: { lotId } } };
-    findOneMethod.callPromise({ collectionName, selector })
-      .then(target => {
-        // if the lotId exists:
-        if (target) {
-          // autofill the form with specific lotId info
-          const targetLot = target.lotIds.find(obj => obj.lotId === lotId);
-          const { drug, drugType, minQuantity, unit } = target;
-          const { brand = "", expire = "", location, donated, donatedBy = "", note = "" } = targetLot;
-          const autoFields = { ...fields, lotId, drug, drugType, expire, brand, minQuantity, unit, location,
-            donated, donatedBy, note };
-          setFields(autoFields);
-        } else {
-          // else reset specific lotId info
-          setFields({ ...fields, lotId, expire: '', brand: '', location: '', donated: false, donatedBy: '', note: '' });
-        }
-      });
+    const target = Drugs.findOne(selector)
+    // if the lotId exists:
+    if (target) {
+      // autofill the form with specific lotId info
+      const targetLot = target.lotIds.find(obj => obj.lotId === lotId);
+      const { drug, drugType, minQuantity, unit } = target;
+      const { brand = "", expire = "", location, donated, donatedBy = "", note = "" } = targetLot;
+      const autoFields = { ...fields, lotId, drug, drugType, expire, brand, minQuantity, unit, location,
+        donated, donatedBy, note };
+      setFields(autoFields);
+    } else {
+      // else reset specific lotId info
+      setFields({ ...fields, lotId, expire: '', brand: '', location: '', donated: false, donatedBy: '', note: '' });
+    }
   };
 
   const clearForm = () => {
@@ -278,8 +271,8 @@ export default withTracker(() => {
   const typeSub = DrugTypes.subscribe();
   const unitSub = Units.subscribe();
   const brandSub = DrugBrands.subscribe();
-  const lotSub = Drugs.subscribeDrugLots();
   const locationSub = Locations.subscribe();
+  const drugSub = Drugs.subscribeDrugLots()
 
   return {
     names: fetchField(DrugNames, "drugName"),
@@ -289,6 +282,6 @@ export default withTracker(() => {
     lotIds: fetchLots(Drugs),
     locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
     ready: nameSub.ready() && typeSub.ready() && unitSub.ready() && 
-      brandSub.ready() && lotSub.ready() && locationSub.ready(),
+      brandSub.ready() && drugSub.ready() && locationSub.ready(),
   };
 })(AddDrug);

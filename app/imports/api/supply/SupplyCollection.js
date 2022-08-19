@@ -9,7 +9,7 @@ import { ROLE } from '../role/Role';
 export const supplyTypes = ['Lab / Testing', 'Patient'];
 export const supplyPublications = {
   supply: 'Supply',
-  supplyAdmin: 'SupplyAdmin',
+  supplyLots: 'SupplyLots',
 };
 
 class SupplyCollection extends BaseCollection {
@@ -127,9 +127,9 @@ class SupplyCollection extends BaseCollection {
         return this.ready();
       });
 
-      Meteor.publish(supplyPublications.supplyAdmin, function publish() {
+      Meteor.publish(supplyPublications.supplyLots, function publish() {
         if (this.userId) {
-          return instance._collection.find();
+          return instance._collection.find({}, { fields: { supply: 1, "stock.location": 1, "stock.donated": 1, "stock._id": 1 } });
         }
         return this.ready();
       });
@@ -150,9 +150,9 @@ class SupplyCollection extends BaseCollection {
    * Subscription method for admin users.
    * It subscribes to the entire collection.
    */
-  subscribeSupplyAdmin() {
+  subscribeSupplyLots() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(supplyPublications.supplyAdmin);
+      return Meteor.subscribe(supplyPublications.supplyLots);
     }
     return null;
   }
@@ -174,7 +174,7 @@ class SupplyCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
    */
-   dumpOne(docID) {
+  dumpOne(docID) {
     // const doc = this.findDoc(docID);
     const doc = docID;
     const supply = doc.supply;

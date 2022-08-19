@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import moment from 'moment';
+import { Supplys } from '../../../api/supply/SupplyCollection';
 import { SupplyNames } from '../../../api/supplyName/SupplyNameCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { Sites } from '../../../api/site/SiteCollection';
 import { supplyTypes } from '../../../api/supply/SupplyCollection';
 import { DispenseTypes } from '../../../api/dispense-type/DispenseTypeCollection';
 import { fetchField, getOptions, useQuery } from '../../utilities/Functions';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import DispenseSupplySingle from './DispenseSupplySingle';
@@ -29,7 +29,6 @@ const submit = (fields, innerFields, callback) => {
 
 /** Renders the Page for Dispensing Supply. */
 const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
-  const collectionName = "SupplysCollection";
   const query = useQuery();
   const initFields = {
     inventoryType: 'Supply',
@@ -66,26 +65,24 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
     const _id = query.get("_id");
     if (_id && ready) {
       const selector = { stock: { $elemMatch: { _id } } };
-      findOneMethod.callPromise({ collectionName, selector })
-        .then(target => {
-          // autofill the form with specific supply info
-          const { supplyType, supply, isDiscrete } = target;
+      const target = Supplys.findOne(selector)
+      // autofill the form with specific supply info
+      const { supplyType, supply, isDiscrete } = target;
 
-          const targetSupply = target.stock.find(obj => obj._id === _id);
-          const { quantity, donated, donatedBy = "", location } = targetSupply;
+      const targetSupply = target.stock.find(obj => obj._id === _id);
+      const { quantity, donated, donatedBy = "", location } = targetSupply;
 
-          // const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
-          // setFields(autoFields);
-          // setMaxQuantity(quantity);
+      // const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
+      // setFields(autoFields);
+      // setMaxQuantity(quantity);
 
-          const autoFields = { ...initInnerFields, supply, supplyType, isDiscrete, location, donated, donatedBy, maxQuantity: quantity };
-          // setInnerFields([autoFields]);
-          // append the first field if its name is not empty
-          const newInnerFields = innerFields[0].supply ?
-            [...innerFields, autoFields] : [autoFields];
-          setInnerFields(newInnerFields);
-          sessionStorage.setItem("supplyFields", JSON.stringify(newInnerFields));
-        });
+      const autoFields = { ...initInnerFields, supply, supplyType, isDiscrete, location, donated, donatedBy, maxQuantity: quantity };
+      // setInnerFields([autoFields]);
+      // append the first field if its name is not empty
+      const newInnerFields = innerFields[0].supply ?
+        [...innerFields, autoFields] : [autoFields];
+      setInnerFields(newInnerFields);
+      sessionStorage.setItem("supplyFields", JSON.stringify(newInnerFields));
     }
   }, [ready]);
 
@@ -316,12 +313,13 @@ export default withTracker(() => {
   const locationSub = Locations.subscribe();
   const siteSub = Sites.subscribe();
   const dispenseTypeSub = DispenseTypes.subscribe();
+  const supplySub = Supplys.subscribeSupplyLots()
 
   return {
     names: fetchField(SupplyNames, "supplyName"),
     locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
     sites: fetchField(Sites, "site"),
     dispenseTypes: fetchField(DispenseTypes, "dispenseType"),
-    ready: nameSub.ready() && locationSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),
+    ready: nameSub.ready() && locationSub.ready() && siteSub.ready() && dispenseTypeSub.ready() && supplySub.ready(),
   };
 })(DispenseSupply);

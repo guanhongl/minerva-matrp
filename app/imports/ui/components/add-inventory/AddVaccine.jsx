@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -10,7 +10,6 @@ import { VaccineBrands } from '../../../api/vaccineBrand/VaccineBrandCollection'
 import { Locations } from '../../../api/location/LocationCollection';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { fetchField, fetchLots, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { addMethod, brandFilterMethod } from '../../../api/vaccine/VaccineCollection.methods';
 
 /** On submit, insert the data. */
@@ -30,7 +29,6 @@ const submit = (data, callback) => {
 
 /** Renders the Page for Add Vaccine */
 const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
-  const collectionName = Vaccines.getCollectionName();
   const initialState = {
     vaccine: '',
     brand: '',
@@ -46,28 +44,28 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
   };
 
   const [fields, setFields] = useState(initialState);
-  const [disabled, setDisabled] = useState(false);
+  // disable minimum and vis date if the vaccine, brand pair is populated. 
+  const disabled = useMemo(() => {
+    const record = Vaccines.findOne({ vaccine: fields.vaccine })
+
+    return !!record
+  }, [fields.vaccine])
   useEffect(() => {
-    const selector = { vaccine: fields.vaccine, brand: fields.brand };
-    findOneMethod.callPromise({ collectionName, selector })
-      .then(target => {
-        // disable minimum and vis date if the vaccine, brand pair is populated. 
-        setDisabled(!!target);
-        // handles vaccine, brand pair select
-        if (target) {
-          // autofill the form with specific vaccine, brand pair info
-          const { minQuantity, visDate, lotIds } = target;
-          setFields({ ...fields, minQuantity, visDate });
-          // filter lotIds
-          setFilteredLotIds(_.pluck(lotIds, 'lotId').sort());
-        } else {
-          // else reset info
-          setFields({ ...fields, minQuantity: '', visDate: '' });
-          // reset the filters
-          setFilteredLotIds(newLotIds);
-        }
-      });
-  }, [fields.vaccine, fields.brand]);
+    const target = Vaccines.findOne({ vaccine: fields.vaccine })
+    // handles vaccine, brand pair select
+    if (target) {
+      // autofill the form with specific vaccine, brand pair info
+      const { minQuantity, visDate, lotIds } = target;
+      setFields({ ...fields, minQuantity, visDate });
+      // filter lotIds
+      setFilteredLotIds(_.pluck(lotIds, 'lotId').sort());
+    } else {
+      // else reset info
+      setFields({ ...fields, minQuantity: '', visDate: '' });
+      // reset the filters
+      setFilteredLotIds(newLotIds);
+    }
+  }, [fields.vaccine]);
 
   const [newLotIds, setNewLotIds] = useState([]);
   useEffect(() => {
@@ -105,21 +103,19 @@ const AddVaccine = ({ ready, names, brands, lotIds, locations }) => {
   // handles lotId select
   const onLotIdSelect = (event, { value: lotId }) => {
     const selector = { lotIds: { $elemMatch: { lotId } } };
-    findOneMethod.callPromise({ collectionName, selector })
-      .then(target => {
-        // if the lotId exists:
-        if (target) {
-          // autofill the form with specific lotId info
-          const targetLotIds = target.lotIds.find(obj => obj.lotId === lotId);
-          const { vaccine, brand, minQuantity, visDate } = target;
-          const { expire = "", location, donated, donatedBy = "", note = "" } = targetLotIds;
-          const autoFields = { ...fields, lotId, vaccine, expire, brand, visDate, minQuantity, location, donated, donatedBy, note };
-          setFields(autoFields);
-        } else {
-          // else reset specific lotId info
-          setFields({ ...fields, lotId, expire: '', location: '', donated: false, donatedBy: '', note: '' });
-        }
-      });
+    const target = Vaccines.findOne(selector)
+    // if the lotId exists:
+    if (target) {
+      // autofill the form with specific lotId info
+      const targetLotIds = target.lotIds.find(obj => obj.lotId === lotId);
+      const { vaccine, brand, minQuantity, visDate } = target;
+      const { expire = "", location, donated, donatedBy = "", note = "" } = targetLotIds;
+      const autoFields = { ...fields, lotId, vaccine, expire, brand, visDate, minQuantity, location, donated, donatedBy, note };
+      setFields(autoFields);
+    } else {
+      // else reset specific lotId info
+      setFields({ ...fields, lotId, expire: '', location: '', donated: false, donatedBy: '', note: '' });
+    }
   };
 
   // handles brand select
@@ -249,14 +245,14 @@ AddVaccine.propTypes = {
 export default withTracker(() => {
   const nameSub = VaccineNames.subscribe();
   const brandSub = VaccineBrands.subscribe();
-  const lotSub = Vaccines.subscribeVaccineLots();
   const locationSub = Locations.subscribe();
+  const vaccineSub = Vaccines.subscribeVaccineLots()
 
   return {
     names: fetchField(VaccineNames, "vaccineName"),
     brands: fetchField(VaccineBrands, "vaccineBrand"),
     lotIds: fetchLots(Vaccines),
     locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
-    ready: nameSub.ready() && brandSub.ready() && lotSub.ready() && locationSub.ready(), 
+    ready: nameSub.ready() && brandSub.ready() && vaccineSub.ready() && locationSub.ready(), 
   };
 })(AddVaccine);
