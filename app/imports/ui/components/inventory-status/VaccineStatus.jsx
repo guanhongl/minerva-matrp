@@ -72,7 +72,10 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
       });
     }
     if (brandFilter) {
-      filter = filter.filter((vaccine) => vaccine.brand === brandFilter);
+      filter = filter.filter(o => {
+        o.lotIds = o.lotIds.filter(lot => lot.brand === brandFilter); // nested filter
+        return o.lotIds.length > 0;
+      });
     }
     if (locationFilter) {
       filter = filter.filter(o => {
@@ -237,7 +240,6 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
               <Table.Row>
                 <Table.HeaderCell />
                 <Table.HeaderCell>Vaccine</Table.HeaderCell>
-                <Table.HeaderCell>Manufacturer</Table.HeaderCell>
                 <Table.HeaderCell>Total Quantity</Table.HeaderCell>
                 <Table.HeaderCell>VIS Date</Table.HeaderCell>
                 <Table.HeaderCell>Status</Table.HeaderCell>
@@ -248,7 +250,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
             <Table.Body>
               {
                 filteredVaccines.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                  .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine} locations={locations} />)
+                  .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine} locations={locations} brands={brands} />)
               }
             </Table.Body>
 

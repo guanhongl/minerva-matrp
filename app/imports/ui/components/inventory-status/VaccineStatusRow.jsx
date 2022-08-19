@@ -8,7 +8,7 @@ import VaccineInfoPage from './VaccineInfoPage';
 import { Vaccines } from '../../../api/vaccine/VaccineCollection';
 import { removeItMethod, updateMethod } from '../../../api/base/BaseCollection.methods';
 
-const VaccineStatusRow = ({ vaccine, locations }) => {
+const VaccineStatusRow = ({ vaccine, locations, brands }) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(!isOpen);
 
@@ -76,13 +76,12 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
 
   return (
     <>
-      {/* the vaccine, brand row */}
+      {/* the vaccine row */}
       <Table.Row negative={vaccine.lotIds.some(o => o.isExpired)} id={COMPONENT_IDS.VACCINE_STATUS_ROW}>
         <Table.Cell className='caret' onClick={handleOpen}>
           <Icon name={`caret ${isOpen ? 'down' : 'up'}`} />
         </Table.Cell>
         <Table.Cell>{vaccine.vaccine}</Table.Cell>
-        <Table.Cell>{vaccine.brand}</Table.Cell>
         <Table.Cell>{vaccine.sum}</Table.Cell>
         <Table.Cell>{vaccine.visDate}</Table.Cell>
         <Table.Cell>
@@ -103,6 +102,7 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Lot Number</Table.HeaderCell>
+                <Table.HeaderCell>Brand</Table.HeaderCell>
                 <Table.HeaderCell>Expiration</Table.HeaderCell>
                 <Table.HeaderCell>Location</Table.HeaderCell>
                 <Table.HeaderCell>Quantity</Table.HeaderCell>
@@ -112,9 +112,10 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
             </Table.Header>
             <Table.Body>
               {
-                vaccine.lotIds.map(({ _id: uuid, lotId, expire, location, quantity, donated, isExpired }, index) => (
-                  <Table.Row key={lotId} negative={isExpired}>
+                vaccine.lotIds.map(({ _id: uuid, lotId, brand, expire, location, quantity, donated, isExpired }, index) => (
+                  <Table.Row key={uuid} negative={isExpired}>
                     <Table.Cell>{lotId}</Table.Cell>
+                    <Table.Cell>{brand}</Table.Cell>
                     <Table.Cell>{expire}</Table.Cell>
                     <Table.Cell>{location}</Table.Cell>
                     <Table.Cell>{quantity}</Table.Cell>
@@ -125,7 +126,7 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
                       }
                     </Table.Cell>
                     <Table.Cell className='icons'>
-                      <VaccineInfoPage info={vaccine} detail={vaccine.lotIds[index]} locations={locations} />
+                      <VaccineInfoPage info={vaccine} detail={vaccine.lotIds[index]} locations={locations} brands={brands} />
                       <Icon name='trash alternate' onClick={() => deleteLot(uuid, lotId)} />
                     </Table.Cell>
                   </Table.Row>
@@ -142,7 +143,6 @@ const VaccineStatusRow = ({ vaccine, locations }) => {
 VaccineStatusRow.propTypes = {
   vaccine: PropTypes.shape({
     vaccine: PropTypes.string,
-    brand: PropTypes.string,
     visDate: PropTypes.string,
     lotIds: PropTypes.array,
     minQuantity: PropTypes.number,

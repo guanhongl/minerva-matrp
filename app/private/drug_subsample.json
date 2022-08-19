@@ -15,7 +15,7 @@
         "quantity": 40,
         "donated": false,
         "note": "Example note for Acetaminophen 160mg",
-        "_id": "69a50f7e-2be3-4cf7-83ac-caf6f148bf13"
+        "_id": "cFtFjyX8zaSdzjJvX"
       },
       {
         "lotId": "C62YXK",
@@ -24,7 +24,7 @@
         "quantity": 40,
         "donated": false,
         "note": "Example note for Acetaminophen 160mg",
-        "_id": "99208474-9e98-4296-90b4-0560674eaaf3"
+        "_id": "tqfgJxzDsCFMtiTDj"
       }
     ]
   },
@@ -44,7 +44,7 @@
         "quantity": 80,
         "donated": false,
         "note": "Example note for Acetaminophen 325mg",
-        "_id": "69a50f7e-2be3-4cf7-83ac-caf6f148bf13"
+        "_id": "Aby4YHNStJeE5A5fH"
       },
       {
         "lotId": "YYGPO2",
@@ -54,7 +54,7 @@
         "quantity": 80,
         "donated": false,
         "note": "Example note for Acetaminophen 325mg",
-        "_id": "99208474-9e98-4296-90b4-0560674eaaf3"
+        "_id": "cDvJDr2Q4bT5CXwrm"
       }
     ]
   },
@@ -73,7 +73,7 @@
         "quantity": 80,
         "donated": false,
         "note": "Example note for Acetaminophen 500mg",
-        "_id": "1dd1996c-09ca-4b57-9e8a-7b694bb0631a"
+        "_id": "iZ57iYm7p9Ln5FiT2"
       },
       {
         "lotId": "WTD63V",
@@ -84,7 +84,7 @@
         "donated": true,
         "donatedBy": "Foo",
         "note": "Example note for Acetaminophen 500mg",
-        "_id": "db857714-e058-432a-9523-046cd0c6b33b"
+        "_id": "NiPbRmswZdgTAeKqG"
       }
     ]
   },
@@ -104,7 +104,7 @@
         "quantity": 200,
         "donated": false,
         "note": "Example note for Ibuprofen 200mg",
-        "_id": "47cfdf6c-6414-432f-814c-5172e2bd06cc"
+        "_id": "qixTETaww4TYjyrkY"
       },
       {
         "lotId": "PINEUA",
@@ -113,7 +113,7 @@
         "quantity": 200,
         "donated": false,
         "note": "Example note for Ibuprofen 200mg",
-        "_id": "769e3afc-39a2-4485-b6f8-dd0d048e0753"
+        "_id": "JPs96TWxT6zSRy7fm"
       }
     ]
   },
@@ -132,7 +132,7 @@
         "quantity": 100,
         "donated": false,
         "note": "Example note for Ibuprofen 800mg",
-        "_id": "80dd7902-4e1c-4310-9da8-48257c6c2a3f"
+        "_id": "HP9ZmsvuCBst5EAc5"
       },
       {
         "lotId": "6TIWYH",
@@ -141,7 +141,7 @@
         "quantity": 300,
         "donated": false,
         "note": "Example note for Ibuprofen 800mg.",
-        "_id": "1c93cc63-284c-42ee-be48-ace406fa32ae"
+        "_id": "kMJqKNbqb3bQDF6hW"
       }
     ]
   }

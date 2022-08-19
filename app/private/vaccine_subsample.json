@@ -12,7 +12,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for Janssen COVID-19.",
-        "_id": "375c0f89-62e2-4342-8b01-e4f8e252386f"
+        "_id": "3sbhfdJbri8TPA6Jz"
       },
       {
         "lotId": "WE9ERY",
@@ -22,7 +22,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for Moderna COVID-19.",
-        "_id": "9cbae67c-e159-450b-a95c-1da93aeb6619"
+        "_id": "txipwA4vr43S8DZaH"
       },
       {
         "lotId": "MEUA19",
@@ -32,7 +32,7 @@
         "quantity": 50,
         "donated": false,
         "note": "Example note for Janssen COVID-19.",
-        "_id": "375c0f89-62e2-4342-8b01-e4f8e252386f"
+        "_id": "qvgMeNw5iFsicbro6"
       },
       {
         "lotId": "WE9ERY",
@@ -42,7 +42,7 @@
         "quantity": 50,
         "donated": false,
         "note": "Example note for Moderna COVID-19.",
-        "_id": "9cbae67c-e159-450b-a95c-1da93aeb6619"
+        "_id": "KKcppm9JKYWFZforz"
       }
     ]
   },
@@ -59,7 +59,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for Sanofi DTaP.",
-        "_id": "57f6f38c-7d3e-4985-a267-a9d03031c986"
+        "_id": "q2jxCftWdtxcHeG68"
       },
       {
         "lotId": "RNLIPN",
@@ -70,7 +70,7 @@
         "donated": true,
         "donatedBy": "Foo",
         "note": "Example note for GSK DTaP.",
-        "_id": "53b65a4b-8421-4292-8cd1-76c2b3e5da9a"
+        "_id": "QjZA2cAF7FnHejbcy"
       }
     ]
   },
@@ -87,7 +87,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for GlaxoSmithKline Hep A.",
-        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+        "_id": "YagRfHBe6do6PYdsS"
       },
       {
         "lotId": "U8PT40",
@@ -97,7 +97,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for GlaxoSmithKline Hep A.",
-        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+        "_id": "w5bpfdBApky73a5LQ"
       }
     ]
   },
@@ -114,7 +114,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for GlaxoSmithKline Hep B.",
-        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+        "_id": "q3cp8BaNPthGbJ3WW"
       },
       {
         "lotId": "V3NIZ1",
@@ -124,7 +124,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for GlaxoSmithKline Hep B.",
-        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+        "_id": "TbpMTKxcAibeDHNyE"
       }
     ]
   },
@@ -141,7 +141,7 @@
         "quantity": 10,
         "donated": false,
         "note": "Example note for Seqirus Influenza.",
-        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+        "_id": "NhQgRY9k4t6rchXci"
       },
       {
         "lotId": "UWAS7O",
@@ -152,7 +152,7 @@
         "donated": true,
         "donatedBy": "Foo",
         "note": "Example note for GlaxoSmithKline Influenza.",
-        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+        "_id": "xiDEYoBsRBayvhRN5"
       },
       {
         "lotId": "LD2ET9",
@@ -162,7 +162,7 @@
         "quantity": 50,
         "donated": false,
         "note": "Example note for Seqirus Influenza.",
-        "_id": "17a5fb42-3498-4a23-a1e7-e9f4b28302bd"
+        "_id": "xRZEsM98Lfqk9dPcs"
       },
       {
         "lotId": "UWAS7O",
@@ -173,7 +173,7 @@
         "donated": true,
         "donatedBy": "Foo",
         "note": "Example note for GlaxoSmithKline Influenza.",
-        "_id": "1853cb19-e6bb-4dd6-b3d2-ce75db8bd2ec"
+        "_id": "bAbL4yhmXjZq6Z8Yp"
       }
     ]
   }

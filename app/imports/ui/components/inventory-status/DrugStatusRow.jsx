@@ -115,7 +115,7 @@ const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
             <Table.Body>
               {
                 med.lotIds.map(({ _id: uuid, lotId, brand, expire, location, quantity, donated, isExpired }, index) => (
-                  <Table.Row key={lotId} negative={isExpired}>
+                  <Table.Row key={uuid} negative={isExpired}>
                     <Table.Cell>{lotId}</Table.Cell>
                     <Table.Cell>{brand}</Table.Cell>
                     <Table.Cell>{expire}</Table.Cell>

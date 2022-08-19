@@ -193,7 +193,7 @@ export const updateMethod = new ValidatedMethod({
             const collection = MATRP.vaccines;
             // collection.assertValidRoleForMethod(this.userId);
             collection.assertValidRoleForUpdate(this.userId);
-            const { newMinQuantity, newVisDate, newLotId, newExpire, newLocation, newQuantity, newDonated, newDonatedBy, newNote } = fields;
+            const { newMinQuantity, newVisDate, newLotId, newBrand, newExpire, newLocation, newQuantity, newDonated, newDonatedBy, newNote } = fields;
             
             // validation
             const minQuantity = parseInt(newMinQuantity, 10);
@@ -213,6 +213,7 @@ export const updateMethod = new ValidatedMethod({
             const targetLot = target.lotIds.find(o => o._id === uuid);
 
             targetLot.lotId = newLotId;
+            targetLot.brand = newBrand;
             targetLot.expire = newExpire;
             targetLot.location = newLocation;
             targetLot.quantity = quantity;

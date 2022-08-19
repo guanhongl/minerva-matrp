@@ -16,9 +16,9 @@ const submit = (_id, uuid, fields) => {
     .catch(error => swal('Error', error.message, 'error'));
 };
 
-const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate }, 
-                           detail: { _id: uuid, lotId, expire, location, quantity, donated, donatedBy, note, QRCode },
-                           locations }) => {
+const VaccineInfoPage = ({ info: { _id, vaccine, minQuantity, visDate }, 
+                           detail: { _id: uuid, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode },
+                           locations, brands }) => {
   // A reactive data source.
   const isAuth = Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN, ROLE.SUPERUSER]);
   const [open, setOpen] = useState(false);
@@ -29,6 +29,7 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
     newMinQuantity: minQuantity,
     newVisDate: visDate,
     newLotId: lotId,
+    newBrand: brand,
     newExpire: expire,
     newLocation: location,
     newQuantity: quantity,
@@ -76,15 +77,6 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   }
                 </div>
                 <div>
-                  <span className='header'>Brand:</span>
-                  {
-                    edit ?
-                      <Input value={brand} disabled />
-                      :
-                      <span>{brand}</span>
-                  }
-                </div>
-                <div>
                   <span className='header'>Minimum Quantity:</span>
                   {
                     edit ?
@@ -115,6 +107,15 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                       <Input name='newLotId' value={fields.newLotId} onChange={handleChange} />
                       :
                       <span>{lotId}</span>
+                  }
+                </div>
+                <div>
+                  <span className='header'>Brand:</span>
+                  {
+                    edit ?
+                      <Select fluid name='newBrand' value={fields.newBrand} options={getOptions(brands)} onChange={handleChange} />
+                      :
+                      <span>{brand}</span>
                   }
                 </div>
                 <div>
