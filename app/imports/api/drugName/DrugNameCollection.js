@@ -92,9 +92,10 @@ class DrugNameCollection extends BaseCollection {
    * @param {*} option 
    */
   hasOption(option) {
-    const records = this._collection.find().fetch();
+    const re = new RegExp(`^${option}$`, "i");
+    const record = this._collection.findOne({ drugName: { $regex: re } });
 
-    return _.pluck(records, "drugName").map(record => record.toLowerCase()).includes(option.toLowerCase());
+    return !!record;
   }
 
   inUse(option) {
