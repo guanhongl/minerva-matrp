@@ -145,7 +145,7 @@ class DrugCollection extends BaseCollection {
       Meteor.publish(drugPublications.drugLots, function publish() {
         if (this.userId) {
           // return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
-          return instance._collection.find({}, { fields: { drug: 1, "lotIds.lotId": 1, "lotIds.location": 1, "lotIds._id": 1 } });
+          return instance._collection.find({}, { fields: { drug: 1, "lotIds.lotId": 1, "lotIds._id": 1 } });
         }
         return this.ready();
       });

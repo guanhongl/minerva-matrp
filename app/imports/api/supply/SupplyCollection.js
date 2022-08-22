@@ -129,7 +129,7 @@ class SupplyCollection extends BaseCollection {
 
       Meteor.publish(supplyPublications.supplyLots, function publish() {
         if (this.userId) {
-          return instance._collection.find({}, { fields: { supply: 1, "stock.location": 1, "stock.donated": 1, "stock._id": 1 } });
+          return instance._collection.find({}, { fields: { supply: 1, "stock.donated": 1, "stock._id": 1 } });
         }
         return this.ready();
       });
