@@ -26,7 +26,8 @@ class SupplyCollection extends BaseCollection {
       'stock.$': Object,
       'stock.$._id': String,
       'stock.$.quantity': Number,
-      'stock.$.location': String,
+      'stock.$.location': Array,
+      'stock.$.location.$': String,
       'stock.$.donated': Boolean,
       'stock.$.donatedBy': {
         type: String,
@@ -82,7 +83,9 @@ class SupplyCollection extends BaseCollection {
         _.isObject(o) &&
         o._id &&
         _.isNumber(o.quantity) &&
-        o.location &&
+        // check if location is array AND every location is not undefined
+        Array.isArray(o.location) &&
+        o.location.every(e => e) &&
         _.isBoolean(o.donated)
       ))
     ) {
