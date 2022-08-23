@@ -176,9 +176,6 @@
     },
     {
       "dispenseType": "Expired"
-    },
-    {
-      "dispenseType": "Inventory"
     }
   ]
 }

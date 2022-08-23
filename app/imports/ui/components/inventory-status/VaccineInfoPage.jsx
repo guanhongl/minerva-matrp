@@ -131,10 +131,10 @@ const VaccineInfoPage = ({ info: { _id, vaccine, minQuantity, visDate },
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select name='newLocation' options={getLocations(locations)}
+                      <Select multiple name='newLocation' options={getLocations(locations)}
                         value={fields.newLocation} onChange={handleChange} />
                       :
-                      <span>{location}</span>
+                      <span>{location?.join(", ") ?? ""}</span>
                   }
                 </div>
                 <div>

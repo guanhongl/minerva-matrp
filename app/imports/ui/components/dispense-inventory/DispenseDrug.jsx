@@ -55,6 +55,7 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites, dispenseType
   );
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
+  // handle qrcode
   useEffect(() => {
     const _id = query.get("_id");
     if (_id && ready) {
@@ -87,43 +88,41 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites, dispenseType
     setFields({ ...fields, [name]: value });
   };
 
-  const handleChangeInner = (event, { index, name, value }) => {
+  const handleChangeInner = (event, { index, name, value, checked }) => {
     const newInnerFields = [...innerFields];
-    newInnerFields[index] = { ...innerFields[index], [name]: value };
+    newInnerFields[index] = { ...innerFields[index], [name]: value ?? checked };
     setInnerFields(newInnerFields);
   };
 
-  const handleCheck = (event, { index, name, checked }) => {
-    const newInnerFields = [...innerFields];
-    if (!checked) {
-      newInnerFields[index] = { ...innerFields[index], [name]: checked, donatedBy: '' };
-    } else {
-      newInnerFields[index] = { ...innerFields[index], [name]: checked };
-    }
-    setInnerFields(newInnerFields);
-  };
+  // handle donated check
+  const setDonatedBy = (index) => {
+    const newInnerFields = [...innerFields]
+    newInnerFields[index] = { ...innerFields[index], donatedBy: '' }
+    setInnerFields(newInnerFields)
+  }
 
   // handle lotId select
-  const onLotIdSelect = (event, { index, value: lotId }) => {
-    const newInnerFields = [...innerFields];
-    const selector = { lotIds: { $elemMatch: { lotId } } };
+  const setLotId = (index) => {
+    const lotId = innerFields[index].lotId
+    const newInnerFields = [...innerFields]
+    const selector = { lotIds: { $elemMatch: { lotId } } }
     const target = Drugs.findOne(selector)
     // if lotId is not empty:
     if (!!target) {
       // autofill the form with specific lotId info
-      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
-      const { drug, unit } = target;
-      const { brand = "", expire = "", quantity, donated, donatedBy = "" } = targetLotId;
-      newInnerFields[index] = { ...innerFields[index], lotId, drug, expire, brand, unit, donated, donatedBy,
-        maxQuantity: quantity };
-      setInnerFields(newInnerFields);
+      const targetLotId = target.lotIds.find(obj => obj.lotId === lotId)
+      const { drug, unit } = target
+      const { brand = "", expire = "", quantity, donated, donatedBy = "" } = targetLotId
+      newInnerFields[index] = { ...innerFields[index], drug, expire, brand, unit, donated, donatedBy,
+        maxQuantity: quantity }
+      setInnerFields(newInnerFields)
     } else {
       // else reset specific lotId info
-      newInnerFields[index] = { ...innerFields[index], lotId, drug: '', expire: '', brand: '', unit: 'tab(s)',
-        donated: false, donatedBy: '', maxQuantity: 0 };
-      setInnerFields(newInnerFields);
+      newInnerFields[index] = { ...innerFields[index], drug: '', expire: '', brand: '', unit: 'tab(s)',
+        donated: false, donatedBy: '', maxQuantity: 0 }
+      setInnerFields(newInnerFields)
     }
-  };
+  }
 
   // handle add new drug to dispense
   const onAddDrug = () => {
@@ -186,7 +185,7 @@ const DispenseDrug = ({ ready, names, units, brands, lotIds, sites, dispenseType
             {
               innerFields.map((innerField, index) => 
                 <DispenseDrugSingle names={names} units={units} brands={brands} lotIds={lotIds} fields={innerField}
-                  handleChange={handleChangeInner} handleCheck={handleCheck} onLotIdSelect={onLotIdSelect}
+                  handleChange={handleChangeInner} setDonatedBy={setDonatedBy} setLotId={setLotId}
                   index={index} key={`FORM_${index}`} />,
               )
             }
@@ -236,7 +235,7 @@ export default withTracker(() => {
   const brandSub = DrugBrands.subscribe();
   const siteSub = Sites.subscribe();
   const dispenseTypeSub = DispenseTypes.subscribe();
-  const drugSub = Drugs.subscribeDrugLots()
+  const drugSub = Drugs.subscribeDrug()
 
   return {
     names: fetchField(DrugNames, "drugName"),

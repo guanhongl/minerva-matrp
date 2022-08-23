@@ -114,9 +114,9 @@ const SupplyInfoPage = ({ info: { _id, supply, supplyType, minQuantity, isDiscre
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select name='newLocation' value={fields.newLocation} options={getLocations(locations)} onChange={handleChange} />
+                      <Select multiple name='newLocation' value={fields.newLocation} options={getLocations(locations)} onChange={handleChange} />
                       :
-                      <span>{location}</span>
+                      <span>{location?.join(", ") ?? ""}</span>
                   }
                 </div>
                 {

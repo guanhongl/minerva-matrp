@@ -27,7 +27,8 @@ class VaccineCollection extends BaseCollection {
         type: String,
         optional: true,
       },
-      'lotIds.$.location': String,
+      'lotIds.$.location': Array,
+      'lotIds.$.location.$': String,
       'lotIds.$.quantity': Number, // the number of doses
       'lotIds.$.donated': Boolean,
       'lotIds.$.donatedBy': {
@@ -85,7 +86,9 @@ class VaccineCollection extends BaseCollection {
         o.lotId &&
         o.brand &&
         _.isNumber(o.quantity) &&
-        o.location &&
+        // check if location is array AND every location is not undefined
+        Array.isArray(o.location) &&
+        o.location.every(e => e) &&
         _.isBoolean(o.donated)
       ))
     ) {
@@ -184,7 +187,10 @@ class VaccineCollection extends BaseCollection {
     const vaccine = doc.vaccine;
     const minQuantity = doc.minQuantity;
     const visDate = doc.visDate;
-    const lotIds = doc.lotIds;
+    const lotIds = doc.lotIds.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
     return { vaccine, minQuantity, visDate, lotIds };
   }
 }

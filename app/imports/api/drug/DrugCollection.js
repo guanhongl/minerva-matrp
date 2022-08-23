@@ -36,7 +36,8 @@ class DrugCollection extends BaseCollection {
         type: String,
         optional: true,
       },
-      'lotIds.$.location': String,
+      'lotIds.$.location': Array,
+      'lotIds.$.location.$': String,
       'lotIds.$.quantity': Number,
       'lotIds.$.donated': Boolean,
       'lotIds.$.donatedBy': {
@@ -97,7 +98,9 @@ class DrugCollection extends BaseCollection {
         o._id &&
         o.lotId &&
         _.isNumber(o.quantity) &&
-        o.location &&
+        // check if location is array AND every location is not undefined
+        Array.isArray(o.location) &&
+        o.location.every(e => e) &&
         _.isBoolean(o.donated)
       ))
     ) {
@@ -220,7 +223,10 @@ class DrugCollection extends BaseCollection {
     const drugType = doc.drugType.join();
     const minQuantity = doc.minQuantity;
     const unit = doc.unit;
-    const lotIds = doc.lotIds;
+    const lotIds = doc.lotIds.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
     return { drug, drugType, minQuantity, unit, lotIds };
   }
 }

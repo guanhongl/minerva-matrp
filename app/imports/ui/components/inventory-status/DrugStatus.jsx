@@ -90,7 +90,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
     }
     if (locationFilter) {
       filter = filter.filter(o => {
-        o.lotIds = o.lotIds.filter(lot => lot.location === locationFilter); // nested filter
+        o.lotIds = o.lotIds.filter(lot => lot.location.includes(locationFilter)); // nested filter
         return o.lotIds.length > 0;
       });
     }
