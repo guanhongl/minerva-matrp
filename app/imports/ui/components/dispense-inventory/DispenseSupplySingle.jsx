@@ -5,7 +5,14 @@ import { _ } from 'meteor/underscore';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { getOptions } from '../../utilities/Functions';
 
-const DispenseSupplySingle = ({ names, types, fields, handleChange, setSupply, index }) => {
+const DispenseSupplySingle = ({ names, types, fields, handleChange, setSupply, setDonatedBy, index }) => {
+  // handle donated check
+  useEffect(() => {
+    if (!fields.donated) {
+      setDonatedBy(index)
+    }
+  }, [fields.donated])
+
   // handle supply, donated select
   useEffect(() => {
     setSupply(index)
@@ -62,6 +69,7 @@ DispenseSupplySingle.propTypes = {
   fields: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   setSupply: PropTypes.func.isRequired,
+  setDonatedBy: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
 };
 

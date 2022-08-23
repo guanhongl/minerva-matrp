@@ -93,6 +93,13 @@ const DispenseSupply = ({ ready, names, sites, dispenseTypes }) => {
     setInnerFields(newInnerFields);
   };
 
+  // handle donated check
+  const setDonatedBy = (index) => {
+    const newInnerFields = [...innerFields]
+    newInnerFields[index] = { ...innerFields[index], donatedBy: '' }
+    setInnerFields(newInnerFields)
+  }
+
   // handle supply, donated select
   const setSupply = (index) => {
     const supply = innerFields[index].supply
@@ -176,7 +183,7 @@ const DispenseSupply = ({ ready, names, sites, dispenseTypes }) => {
             {
               innerFields.map((fields, index) => 
                 <DispenseSupplySingle key={`FORM_${index}`} names={names} types={supplyTypes} fields={fields}
-                  handleChange={handleChangeInner} setSupply={setSupply} index={index} />
+                  handleChange={handleChangeInner} setSupply={setSupply} setDonatedBy={setDonatedBy} index={index} />
               )
             }
 

@@ -71,11 +71,11 @@ const AddSupply = ({ names, locations, ready }) => {
   };
 
   // handle donated check
-  // useEffect(() => {
-  //   if (!fields.donated) {
-  //     setFields({ ...fields, donatedBy: "" })
-  //   }
-  // }, [fields.donated])
+  useEffect(() => {
+    if (!fields.donated) {
+      setFields(prev => ({ ...prev, donatedBy: "" }))
+    }
+  }, [fields.donated])
 
   const clearForm = () => {
     setFields(initialState);
