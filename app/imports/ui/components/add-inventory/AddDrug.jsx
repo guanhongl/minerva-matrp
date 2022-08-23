@@ -40,7 +40,7 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
     brand: '',
     lotId: '',
     expire: '',
-    location: '',
+    location: [],
     donated: false,
     donatedBy: '',
     note: '',
@@ -84,74 +84,69 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
     }
   }, [brands, fields.drug])
   
-  const [newLotIds, setNewLotIds] = useState([]);
-  useEffect(() => {
-    setNewLotIds(lotIds);
-  }, [lotIds]);
   const [filteredLotIds, setFilteredLotIds] = useState([]);
   useEffect(() => {
-    setFilteredLotIds(newLotIds);
-  }, [newLotIds]);
+    setFilteredLotIds(lotIds);
+  }, [lotIds]);
 
-  // handles adding a new lotId; IS NOT case sensitive
-  const onAddLotId = (event, { value }) => {
-    if (!newLotIds.includes(value)) {
-      setNewLotIds([...newLotIds, value]);
+  // handles adding a new lotId
+  // restrictions: new lotId cannot be a subset of another; ignores case
+  const handleSearch = (event, { name, searchQuery }) => {
+    setFields({ ...fields, [name]: searchQuery })
+  }
+  // const handleClose = (event, data) => {
+  // }
+
+  const handleChange = (event, { name, value, checked }) => {
+    setFields({ ...fields, [name]: value ?? checked });
+  };
+
+  // handles donated check
+  useEffect(() => {
+    if (!fields.donated) {
+      setFields({ ...fields, donatedBy: "" });
     }
-  };
-
-  const handleChange = (event, { name, value }) => {
-    setFields({ ...fields, [name]: value });
-  };
-
-  const handleCheck = (event, { name, checked }) => {
-    if (!checked) {
-      setFields({ ...fields, [name]: checked, donatedBy: '' });
-    } else {
-      setFields({ ...fields, [name]: checked });
-    }
-  };
+  }, [fields.donated])
 
   // handles drug select
-  const onDrugSelect = (event, { value: drug }) => {
-    const target = Drugs.findOne({ drug })
+  useEffect(() => {
+    const target = Drugs.findOne({ drug: fields.drug })
     // if the drug is populated:
     if (target) {
       // autofill the form with specific drug info
-      const { drugType, minQuantity, unit, lotIds } = target;
-      setFields({ ...fields, drug, drugType, minQuantity, unit });
+      const { drugType, minQuantity, unit, lotIds } = target
+      setFields({ ...fields, drugType, minQuantity, unit })
       // filter lotIds
-      setFilteredLotIds(_.pluck(lotIds, 'lotId').sort());
+      setFilteredLotIds(_.pluck(lotIds, 'lotId').sort())
     } else {
       // else reset specific drug info
-      setFields({ ...fields, drug, drugType: [], minQuantity: '', unit: 'tab(s)' });
-      // reset the filters
-      setFilteredLotIds(newLotIds);
+      setFields({ ...fields, drugType: [], minQuantity: '', unit: 'tab(s)' })
+      // reset the lotIds
+      setFilteredLotIds(lotIds)
     }
-  };
+  }, [fields.drug])
 
   // handles lotId select
-  const onLotIdSelect = (event, { value: lotId }) => {
-    const selector = { lotIds: { $elemMatch: { lotId } } };
+  useEffect(() => {
+    const selector = { lotIds: { $elemMatch: { lotId: fields.lotId } } }
     const target = Drugs.findOne(selector)
     // if the lotId exists:
     if (target) {
       // autofill the form with specific lotId info
-      const targetLot = target.lotIds.find(obj => obj.lotId === lotId);
-      const { drug, drugType, minQuantity, unit } = target;
-      const { brand = "", expire = "", location, donated, donatedBy = "", note = "" } = targetLot;
-      const autoFields = { ...fields, lotId, drug, drugType, expire, brand, minQuantity, unit, location,
-        donated, donatedBy, note };
-      setFields(autoFields);
+      const targetLot = target.lotIds.find(o => o.lotId === fields.lotId)
+      const { drug, drugType, minQuantity, unit } = target
+      const { brand = "", expire = "", location, donated, donatedBy = "", note = "" } = targetLot
+      const autoFields = { ...fields, drug, drugType, expire, brand, minQuantity, unit, location,
+        donated, donatedBy, note }
+      setFields(autoFields)
     } else {
       // else reset specific lotId info
-      setFields({ ...fields, lotId, expire: '', brand: '', location: '', donated: false, donatedBy: '', note: '' });
+      setFields({ ...fields, expire: '', brand: '', location: [], donated: false, donatedBy: '', note: '' })
     }
-  };
+  }, [fields.lotId])
 
   const clearForm = () => {
     setFields(initialState);
-    setFilteredLotIds(newLotIds);
   };
 
   if (ready) {
@@ -170,7 +165,7 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
             <Grid.Row>
               <Grid.Column>
                 <Form.Select clearable search label='Drug Name' options={getOptions(genericNames)}
-                  placeholder="Benzonatate Capsules" name='drug' onChange={onDrugSelect} value={fields.drug}
+                  placeholder="Acetaminophen 160mg" name='drug' onChange={handleChange} value={fields.drug}
                   id={COMPONENT_IDS.ADD_MEDICATION_DRUG_NAME} />
               </Grid.Column>
               <Grid.Column className='filler-column' />
@@ -179,7 +174,7 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
             <Grid.Row>
               <Grid.Column>
                 <Form.Select clearable multiple search label='Drug Type(s)' disabled={disabled}
-                  options={getOptions(drugTypes)} placeholder="Allergy & Cold Medicines"
+                  options={getOptions(drugTypes)} placeholder="Analgesics"
                   name='drugType' onChange={handleChange} value={fields.drugType} id={COMPONENT_IDS.ADD_MEDICATION_DRUG_TYPE}/>
               </Grid.Column>
               <Grid.Column>
@@ -197,12 +192,12 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
               <Grid.Column>
                 <Form.Select clearable search label='Lot Number' options={getOptions(filteredLotIds)}
                   placeholder="Z9Z99" name='lotId'
-                  onChange={onLotIdSelect} value={fields.lotId} allowAdditions onAddItem={onAddLotId}
+                  onChange={handleChange} value={fields.lotId} onSearchChange={handleSearch} searchQuery={fields.lotId}
                   id={COMPONENT_IDS.ADD_MEDICATION_LOT} />
               </Grid.Column>
               <Grid.Column>
                 <Form.Select clearable search label='Brand' options={getOptions(brandNames)}
-                  placeholder="Zonatuss" name='brand' onChange={handleChange} value={fields.brand}
+                  placeholder="Tylenol" name='brand' onChange={handleChange} value={fields.brand}
                   id={COMPONENT_IDS.ADD_MEDICATION_BRAND} />
               </Grid.Column>
               <Grid.Column>
@@ -213,8 +208,8 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <Form.Select compact clearable search label='Location' options={getLocations(locations)}
-                  placeholder="Case 2" name='location'
+                <Form.Select compact clearable multiple search label='Location' options={getLocations(locations)}
+                  placeholder="Case 1" name='location'
                   onChange={handleChange} value={fields.location} id={COMPONENT_IDS.ADD_MEDICATION_LOCATION}/>
               </Grid.Column>
               <Grid.Column>
@@ -227,7 +222,7 @@ const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) 
                   <label>Donated</label>
                   <Form.Group>
                     <Form.Checkbox name='donated' className='donated-field'
-                      onChange={handleCheck} checked={fields.donated}/>
+                      onChange={handleChange} checked={fields.donated}/>
                     <Form.Input name='donatedBy' className='donated-by-field' placeholder='Donated By'
                       onChange={handleChange} value={fields.donatedBy} disabled={!fields.donated} />
                   </Form.Group>
@@ -272,7 +267,7 @@ export default withTracker(() => {
   const unitSub = Units.subscribe();
   const brandSub = DrugBrands.subscribe();
   const locationSub = Locations.subscribe();
-  const drugSub = Drugs.subscribeDrugLots()
+  const drugSub = Drugs.subscribeDrug()
 
   return {
     names: fetchField(DrugNames, "drugName"),

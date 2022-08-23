@@ -68,7 +68,13 @@ export const addMethod = new ValidatedMethod({
             const requiredFields = ['drug', 'drugType', 'minQuantity', 'lotId', 'location', 'quantity'];
             // if the field is empty, append error message
             requiredFields.forEach(field => {
-                if (!data[field] || (field === 'drugType' && !data.drugType.length)) {
+                if (field === "drugType" || field === "location") {
+                    if (!data[field].length) {
+                        errorMsg += `${field} cannot be empty.\n`;
+                    }
+                }
+
+                if (!data[field]) {
                     errorMsg += `${field} cannot be empty.\n`;
                 }
             });
@@ -86,6 +92,7 @@ export const addMethod = new ValidatedMethod({
             // if lot exists, increment the quantity:
             if (!!targetLot) {
                 targetLot.quantity += quantity;
+                targetLot.location = location;
                 collection.update(target._id, { lotIds: target.lotIds });
 
                 return targetLot.QRCode;
