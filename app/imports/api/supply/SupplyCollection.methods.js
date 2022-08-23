@@ -41,14 +41,17 @@ export const addMethod = new ValidatedMethod({
 
             const { supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note, isDiscrete } = data;
             const target = collection.findOne({ supply }); // returns the existing supply or undefined
-            const targetLot = target?.stock?.find(o => ( o.location === location && o.donated === donated )); // returns the existing lot or undefined
+            const targetLot = target?.stock?.find(o => o.donated === donated); // returns the existing lot or undefined
             // if lot exists, increment the quantity:
             if (!!targetLot) {
                 if (!data.isDiscrete) {
+                    // the location will not update here...
+
                     throw new Meteor.Error("supply-exists", "The supply already exists.")
                 }
 
                 targetLot.quantity += quantity;
+                targetLot.location = location;
                 collection.update(target._id, { stock: target.stock });
 
                 return targetLot.QRCode;
@@ -110,7 +113,7 @@ export const dispenseMethod = new ValidatedMethod({
             let errorMsg = '';
             // the required String fields
             const requiredFields = ['dispensedTo', 'site'];
-            const requiredInnerFields = ['supply', 'supplyType', 'location', 'quantity'];
+            const requiredInnerFields = ['supply', 'supplyType', 'quantity'];
             // if the field is empty, append error message
             requiredFields.forEach(field => {
                 if (!fields[field]) {
@@ -127,13 +130,10 @@ export const dispenseMethod = new ValidatedMethod({
             }
 
             // submit
-            // fields.quantity = parseInt(fields.quantity, 10);
             innerFields.forEach(o => {
                 o.quantity = parseInt(o.quantity, 10);
             });
 
-            // const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, supply, note, 
-            //     supplyType, quantity, donated, donatedBy, location } = data;
             const { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note } = fields;
             const copy = []; // the copy of records to update
             const update = []; // the records to update
@@ -141,7 +141,7 @@ export const dispenseMethod = new ValidatedMethod({
             let successMsg = '';
 
             innerFields.forEach(field => {
-                const { supply, supplyType, isDiscrete, quantity, donated, donatedBy, location } = field;
+                const { supply, supplyType, isDiscrete, quantity, donated, donatedBy } = field;
 
                 if (isDiscrete) {
 
@@ -152,16 +152,16 @@ export const dispenseMethod = new ValidatedMethod({
                     if (!!!match) { 
                         copy.push(cloneDeep( { _id, stock } )); // store a copy (we modify stock)
                     }
-                    const targetIndex = stock.findIndex((o => o.location === location && o.donated === donated)); // find the index of the existing supply
+                    const targetIndex = stock.findIndex(o => o.donated === donated); // find the index of the existing supply
 
                     if (targetIndex == -1) {
-                        throw new Meteor.Error("not-found", `${supply} @ ${location} ${donated ? "(donated) ": ""}not found.`);
+                        throw new Meteor.Error("not-found", `${supply} ${donated ? "(donated) ": ""}not found.`);
                     }
 
                     const targetQuantity = stock[targetIndex].quantity;
                     // if dispense quantity > target quantity:
                     if (quantity > targetQuantity) {
-                        throw new Meteor.Error("quantity-cap", `${supply} @ ${location} only has ${targetQuantity} remaining.`);
+                        throw new Meteor.Error("quantity-cap", `${supply} only has ${targetQuantity} remaining.`);
                     } else {
                     // if dispense quantity < supply quantity:
                         if (quantity < targetQuantity) {
@@ -179,7 +179,7 @@ export const dispenseMethod = new ValidatedMethod({
                 // if non discrete, simply insert the historical record
 
                 element.push({ name: supply, supplyType, quantity, donated, donatedBy });
-                successMsg += `${supply} @ ${location} updated successfully.\n`;
+                successMsg += `${supply} updated successfully.\n`;
             });
 
             const definitionData = { inventoryType, dispenseType, dateDispensed, dispensedFrom, dispensedTo, site, note, element };
