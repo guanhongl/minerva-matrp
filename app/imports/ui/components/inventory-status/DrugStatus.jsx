@@ -13,7 +13,7 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import DrugStatusRow from './DrugStatusRow';
-import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions, getLocations } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 import { downloadDatabaseMethod } from '../../../api/ManageDatabase.methods';
 
@@ -90,7 +90,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
     }
     if (locationFilter) {
       filter = filter.filter(o => {
-        o.lotIds = o.lotIds.filter(lot => lot.location === locationFilter); // nested filter
+        o.lotIds = o.lotIds.filter(lot => lot.location.includes(locationFilter)); // nested filter
         return o.lotIds.length > 0;
       });
     }
@@ -216,7 +216,7 @@ const DrugStatus = ({ ready, drugs, drugTypes, units, brands, locations, countL,
           </span>
           <span>
             <span>Location:</span>
-            <Dropdown inline options={getFilters(locations)} search
+            <Dropdown inline options={[{ key: 'All', value: 0, text: 'All' }, ...getLocations(locations)]} search
               onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION}/>
           </span>
           <span>
@@ -327,7 +327,7 @@ export default withTracker(() => {
   const drugTypes = fetchField(DrugTypes, "drugType");
   const units = fetchField(Units, "unit");
   const brands = fetchField(DrugBrands, "drugBrand");
-  const locations = fetchField(Locations, "location");
+  const locations = Locations.find({}, { sort: { location: 1 } }).fetch();
   // add is expired and total quantity to drugs
   drugs.forEach(doc => {
     let sum = 0;

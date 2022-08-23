@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Grid, Header, Form, Button, Tab, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { Supplys } from '../../../api/supply/SupplyCollection';
 import { supplyTypes } from '../../../api/supply/SupplyCollection';
 import { SupplyNames } from '../../../api/supplyName/SupplyNameCollection';
 import { Locations } from '../../../api/location/LocationCollection';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { addMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { fetchField, getOptions, printQRCode } from '../../utilities/Functions';
+import { fetchField, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
 
 /** handles submit for add supply. */
 const submit = (data, callback) => {
@@ -29,69 +29,53 @@ const submit = (data, callback) => {
 /** Renders the Page for Add Supplies. */
 // fields: supply, supplyType, minQuantity, quantity, location, donated, donatedBy, note
 const AddSupply = ({ names, locations, ready }) => {
-  const collectionName = "SupplysCollection";
   const initialState = {
     supply: '',
     supplyType: '',
     minQuantity: '',
     quantity: '',
-    location: '',
+    location: [],
     note: '',
     donated: false,
     donatedBy: '',
+    isDiscrete: true,
   };
 
   const [fields, setFields] = useState(initialState);
   // disable supply type and minimum if the supply is populated. 
   // assuming a supply cannot have 1+ types
-  const [disabled, setDisabled] = useState(false);
-  useEffect(() => {
-    findOneMethod.callPromise({ collectionName, selector: { supply: fields.supply } })
-      .then(res => setDisabled(!!res));
-  }, [fields.supply]);
+  const disabled = useMemo(() => {
+    const record = Supplys.findOne({ supply: fields.supply })
+
+    return !!record
+  }, [fields.supply])
 
   // handles supply select
-  const onSupplySelect = (event, { value: supply }) => {
-    findOneMethod.callPromise({ collectionName, selector: { supply } })
-      .then(target => {
-        // if the supply exists:
-        if (target) {
-          // autofill the form with specific supply info
-          const { supplyType, minQuantity } = target;
-          setFields({ ...fields, supply, supplyType, minQuantity });
-        } else {
-          // else reset specific supply info
-          setFields({ ...fields, supply, supplyType: '', minQuantity: '' });
-        }
-      });
-  };
-
-  // autofill donated by and note on (supply, location, donated) select
+  // autofill location, donated by, and note on (supply, donated) select
   useEffect(() => {
-    const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } }
-    findOneMethod.callPromise({ collectionName, selector })
-      .then(target => {
-        if (!!target) {
-          const targetLot = target.stock.find(o => ( o.location === fields.location && o.donated === fields.donated ));
-          const { donatedBy = "", note = "" } = targetLot;
-          setFields({ ...fields, donatedBy, note });
-        } else {
-          setFields({ ...fields, donatedBy: '', note: '' });
-        }
-      });
-  }, [fields.supply, fields.location, fields.donated]);
+    const selector = { supply: fields.supply, stock: { $elemMatch: { donated: fields.donated } } }
+    const target = Supplys.findOne(selector)
+    // if the supply exists:
+    if (!!target) {
+      const targetLot = target.stock.find(o => o.donated === fields.donated);
+      // autofill the form with specific supply info
+      const { supplyType, minQuantity, isDiscrete } = target;
+      const { location, donatedBy = "", note = "" } = targetLot;
+      const autoFields = { ...fields, supplyType, minQuantity, isDiscrete, location, donatedBy, note }
+      setFields(autoFields)
+    } 
+  }, [fields.supply, fields.donated]);
 
-  const handleChange = (event, { name, value }) => {
-    setFields({ ...fields, [name]: value });
+  const handleChange = (event, { name, value, checked }) => {
+    setFields({ ...fields, [name]: value ?? checked });
   };
 
-  const handleCheck = (event, { name, checked }) => {
-    if (!checked) {
-      setFields({ ...fields, [name]: checked, donatedBy: '' });
-    } else {
-      setFields({ ...fields, [name]: checked });
+  // handle donated check
+  useEffect(() => {
+    if (!fields.donated) {
+      setFields(prev => ({ ...prev, donatedBy: "" }))
     }
-  };
+  }, [fields.donated])
 
   const clearForm = () => {
     setFields(initialState);
@@ -113,7 +97,7 @@ const AddSupply = ({ names, locations, ready }) => {
             <Grid.Row>
               <Grid.Column>
                 <Form.Select clearable search label='Supply Name' options={getOptions(names)}
-                  placeholder="Hot Packs" name='supply' onChange={onSupplySelect} value={fields.supply} id={COMPONENT_IDS.ADD_SUPPLY_NAME} />
+                  placeholder="Hot Packs" name='supply' onChange={handleChange} value={fields.supply} id={COMPONENT_IDS.ADD_SUPPLY_NAME} />
               </Grid.Column>
               <Grid.Column className='filler-column' />
               <Grid.Column className='filler-column' />
@@ -127,18 +111,23 @@ const AddSupply = ({ names, locations, ready }) => {
               <Grid.Column>
                 <Form.Input label='Minimum Quantity' type='number' min={1} name='minQuantity' className='quantity'
                   onChange={handleChange} value={fields.minQuantity} placeholder="50"
-                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} disabled={disabled} />
+                  id={COMPONENT_IDS.ADD_SUPPLY_MIN_QUANTITY} disabled={disabled || !fields.isDiscrete} />
               </Grid.Column>
-              <Grid.Column className='filler-column' />
+              <Grid.Column>
+                <Form.Field>
+                  <label>Has Quantity</label>
+                  <Form.Checkbox name="isDiscrete" onChange={handleChange} checked={fields.isDiscrete} disabled={disabled} />
+                </Form.Field>
+              </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column>
-                <Form.Input label='Quantity' type='number' min={1} name='quantity' placeholder='10'
+                <Form.Input label='Quantity' type='number' min={1} name='quantity' placeholder='10' disabled={!fields.isDiscrete}
                   onChange={handleChange} value={fields.quantity} id={COMPONENT_IDS.ADD_SUPPLY_QUANTITY} />
               </Grid.Column>
               <Grid.Column>
-                <Form.Select clearable search label='Location' options={getOptions(locations)} placeholder='Cabinet 1'
+                <Form.Select clearable multiple search label='Location' options={getLocations(locations)} placeholder='Cabinet 1'
                   name='location' onChange={handleChange} value={fields.location} id={COMPONENT_IDS.ADD_SUPPLY_LOCATION}/>
               </Grid.Column>
               <Grid.Column>
@@ -146,13 +135,12 @@ const AddSupply = ({ names, locations, ready }) => {
                   <label>Donated</label>
                   <Form.Group>
                     <Form.Checkbox name='donated' className='donated-field'
-                      onChange={handleCheck} checked={fields.donated}/>
+                      onChange={handleChange} checked={fields.donated}/>
                     <Form.Input name='donatedBy' className='donated-by-field' placeholder='Donated By'
                       onChange={handleChange} value={fields.donatedBy} disabled={!fields.donated} />
                   </Form.Group>
                 </Form.Field>
               </Grid.Column>
-
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
@@ -183,9 +171,11 @@ AddSupply.propTypes = {
 export default withTracker(() => {
   const nameSub = SupplyNames.subscribe();
   const locationSub = Locations.subscribe();
+  const supplySub = Supplys.subscribeSupply()
+
   return {
     names: fetchField(SupplyNames, "supplyName"),
-    locations: fetchField(Locations, "location"),
-    ready: nameSub.ready() && locationSub.ready(),
+    locations: Locations.find({}, { sort: { location: 1 } }).fetch(),
+    ready: nameSub.ready() && locationSub.ready() && supplySub.ready(),
   };
 })(AddSupply);

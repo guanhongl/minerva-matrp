@@ -6,13 +6,12 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import moment from 'moment';
+import { Supplys } from '../../../api/supply/SupplyCollection';
 import { SupplyNames } from '../../../api/supplyName/SupplyNameCollection';
-import { Locations } from '../../../api/location/LocationCollection';
 import { Sites } from '../../../api/site/SiteCollection';
 import { supplyTypes } from '../../../api/supply/SupplyCollection';
 import { DispenseTypes } from '../../../api/dispense-type/DispenseTypeCollection';
 import { fetchField, getOptions, useQuery } from '../../utilities/Functions';
-import { findOneMethod } from '../../../api/base/BaseCollection.methods';
 import { dispenseMethod } from '../../../api/supply/SupplyCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import DispenseSupplySingle from './DispenseSupplySingle';
@@ -28,8 +27,7 @@ const submit = (fields, innerFields, callback) => {
 };
 
 /** Renders the Page for Dispensing Supply. */
-const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
-  const collectionName = "SupplysCollection";
+const DispenseSupply = ({ ready, names, sites, dispenseTypes }) => {
   const query = useQuery();
   const initFields = {
     inventoryType: 'Supply',
@@ -42,49 +40,38 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
   const initInnerFields = {
     supply: '',
     supplyType: '',
-    location: '', // to find supply
     donated: false,
     donatedBy: '',
     quantity: '',
     maxQuantity: 0,
+    isDiscrete: true,
   };
 
   const [fields, setFields] = useState(initFields);
   const [innerFields, setInnerFields] = useState(
     JSON.parse(sessionStorage.getItem("supplyFields")) ?? [initInnerFields]
   );
-  // const [maxQuantity, setMaxQuantity] = useState(0);
-  // const [filteredLocations, setFilteredLocations] = useState([]);
-  // useEffect(() => {
-  //   setFilteredLocations(locations);
-  // }, [locations]);
 
   const isDisabled = fields.dispenseType !== 'Patient Use';
 
+  // handle qrcode
   useEffect(() => {
     const _id = query.get("_id");
     if (_id && ready) {
       const selector = { stock: { $elemMatch: { _id } } };
-      findOneMethod.callPromise({ collectionName, selector })
-        .then(target => {
-          // autofill the form with specific supply info
-          const { supplyType, supply } = target;
+      const target = Supplys.findOne(selector)
+      // autofill the form with specific supply info
+      const { supplyType, supply, isDiscrete } = target;
+      const targetSupply = target.stock.find(obj => obj._id === _id);
+      const { quantity, donated, donatedBy = "" } = targetSupply;
 
-          const targetSupply = target.stock.find(obj => obj._id === _id);
-          const { quantity, donated, donatedBy = "", location } = targetSupply;
-
-          // const autoFields = { ...fields, supply, location, supplyType, donated, donatedBy };
-          // setFields(autoFields);
-          // setMaxQuantity(quantity);
-
-          const autoFields = { ...initInnerFields, supply, supplyType, location, donated, donatedBy, maxQuantity: quantity };
-          // setInnerFields([autoFields]);
-          // append the first field if its name is not empty
-          const newInnerFields = innerFields[0].supply ?
-            [...innerFields, autoFields] : [autoFields];
-          setInnerFields(newInnerFields);
-          sessionStorage.setItem("supplyFields", JSON.stringify(newInnerFields));
-        });
+      const autoFields = { ...initInnerFields, supply, supplyType, isDiscrete, donated, donatedBy, maxQuantity: quantity };
+      // setInnerFields([autoFields]);
+      // append the first field if its name is not empty
+      const newInnerFields = innerFields[0].supply ?
+        [...innerFields, autoFields] : [autoFields];
+      setInnerFields(newInnerFields);
+      sessionStorage.setItem("supplyFields", JSON.stringify(newInnerFields));
     }
   }, [ready]);
 
@@ -100,75 +87,42 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
     setFields({ ...fields, [name]: value });
   };
 
-  const handleChangeInner = (event, { index, name, value }) => {
+  const handleChangeInner = (event, { index, name, value, checked }) => {
     const newInnerFields = [...innerFields];
-    newInnerFields[index] = { ...innerFields[index], [name]: value };
+    newInnerFields[index] = { ...innerFields[index], [name]: value ?? checked };
     setInnerFields(newInnerFields);
   };
 
-  const handleCheck = (event, { index, name, checked }) => {
-    const newInnerFields = [...innerFields];
-    if (!checked) {
-      newInnerFields[index] = { ...innerFields[index], [name]: checked, donatedBy: '' };
-    } else {
-      newInnerFields[index] = { ...innerFields[index], [name]: checked };
+  // handle donated check
+  const setDonatedBy = (index) => {
+    const newInnerFields = [...innerFields]
+    newInnerFields[index] = { ...innerFields[index], donatedBy: '' }
+    setInnerFields(newInnerFields)
+  }
+
+  // handle supply, donated select
+  const setSupply = (index) => {
+    const supply = innerFields[index].supply
+    const donated = innerFields[index].donated
+
+    const newInnerFields = [...innerFields]
+    const selector = { supply, stock: { $elemMatch: { donated } } }
+    const target = Supplys.findOne(selector)
+    // if the supply exists:
+    if (!!target) {
+      const targetLot = target.stock.find(o => o.donated === donated);
+      // autofill the form with specific supply info
+      const { supplyType, isDiscrete } = target;
+      const { quantity, donatedBy = "" } = targetLot;
+
+      newInnerFields[index] = { ...innerFields[index], supplyType, isDiscrete, donatedBy, maxQuantity: quantity }
+      setInnerFields(newInnerFields)
     }
-    setInnerFields(newInnerFields);
-  };
-
-  // handle supply select; filter locations
-  // const onSupplySelect = (event, { value: supply }) => {
-  //   findOneMethod.callPromise({ collectionName, selector: { supply } })
-  //     .then(target => {
-  //       // if supply is not empty:
-  //       if (!!target) {
-  //         setFields({ ...fields, supply });
-  //         setFilteredLocations(_.uniq(_.pluck(target.stock, 'location')).sort());
-  //       } else {
-  //         // else reset specific supply info
-  //         setFields({ ...fields, supply });
-  //         setFilteredLocations(locations);
-  //       }
-  //     });
-  // };
-
-  // autofill form if supply, location, donated are selected
-  // useEffect(() => {
-  //   if (fields.supply && fields.location) {
-  //     const selector = { supply: fields.supply, stock: { $elemMatch: { location: fields.location, donated: fields.donated } } };
-  //     findOneMethod.callPromise({ collectionName, selector })
-  //       .then(target => {
-  //         // if supply w/ name, location, donated exists:
-  //         if (!!target) {
-  //           // autofill the form with specific supply info
-  //           const { supplyType } = target;
-
-  //           targetSupply = target.stock.find(obj => obj.location === fields.location && obj.donated === fields.donated);
-  //           const { quantity, donatedBy } = targetSupply;
-
-  //           const autoFields = { ...fields, supplyType, donatedBy };
-  //           setFields(autoFields);
-
-  //           setMaxQuantity(quantity);
-  //         } else {
-  //           setFields({ ...fields, supplyType: '', donatedBy: '' });
-  //           setMaxQuantity(0);
-  //         }
-  //       });
-  //   }
-  // }, [fields.supply, fields.location, fields.donated]);
-
-  const handleSelect = (obj, index) => {
-    const newInnerFields = [...innerFields];
-    newInnerFields[index] = { ...innerFields[index], ...obj };
-    setInnerFields(newInnerFields);
-  };
+  }
 
   const clearForm = () => {
     setFields(initFields);
     setInnerFields([initInnerFields]);
-    // setMaxQuantity(0);
-    // setFilteredLocations(locations);
     sessionStorage.removeItem("supplyFields");
   };
 
@@ -228,8 +182,8 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
 
             {
               innerFields.map((fields, index) => 
-                <DispenseSupplySingle key={`FORM_${index}`} names={names} locations={locations} types={supplyTypes} fields={fields}
-                  handleChange={handleChangeInner} handleCheck={handleCheck} handleSelect={handleSelect} index={index} />
+                <DispenseSupplySingle key={`FORM_${index}`} names={names} types={supplyTypes} fields={fields}
+                  handleChange={handleChangeInner} setSupply={setSupply} setDonatedBy={setDonatedBy} index={index} />
               )
             }
 
@@ -243,44 +197,6 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
               </Grid.Column>
             </Grid.Row>
 
-            {/* <Grid.Row>
-              <Grid.Column>
-                <Form.Select clearable search label='Supply Name' options={getOptions(names)}
-                  placeholder="Wipes & Washables/Test Strips/Brace"
-                  name='supply' onChange={onSupplySelect} value={fields.supply} id={COMPONENT_IDS.DISPENSE_SUP_NAME}/>
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Select clearable search label='Location' options={getOptions(filteredLocations)}
-                  placeholder="Case 2" name='location'
-                  onChange={handleChange} value={fields.location} id={COMPONENT_IDS.DISPENSE_SUP_LOCATION}/>
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Group>
-                  <Form.Input label={maxQuantity ? `Quantity (${maxQuantity} remaining)` : 'Quantity'}
-                    type='number' min={1} name='quantity' className='quantity'
-                    onChange={handleChange} value={fields.quantity} placeholder='30' id={COMPONENT_IDS.DISPENSE_SUP_QUANTITY}/>
-                </Form.Group>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <Form.Select clearable label='Supply Type' options={getOptions(supplyTypes)}
-                    placeholder="Patient" name='supplyType' 
-                    onChange={handleChange} value={fields.supplyType} />
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Field>
-                  <label>Donated</label>
-                  <Form.Group>
-                    <Form.Checkbox name='donated' className='donated-field'
-                      onChange={handleCheck} checked={fields.donated} id={COMPONENT_IDS.DISPENSE_SUP_DONATED}/>
-                    <Form.Input name='donatedBy' className='donated-by-field' placeholder='Donated By'
-                      onChange={handleChange} value={fields.donatedBy} disabled={!fields.donated} id={COMPONENT_IDS.DISPENSE_SUP_DONATED_INPUT}/>
-                  </Form.Group>
-                </Form.Field>
-              </Grid.Column>
-              <Grid.Column className='filler-column' />
-            </Grid.Row> */}
             <Grid.Row>
               <Grid.Column>
                 <Form.TextArea label='Additional Notes' name='note' onChange={handleChange} value={fields.note}
@@ -303,7 +219,6 @@ const DispenseSupply = ({ ready, names, locations, sites, dispenseTypes }) => {
 
 DispenseSupply.propTypes = {
   names: PropTypes.array.isRequired,
-  locations: PropTypes.array.isRequired,
   sites: PropTypes.array.isRequired,
   dispenseTypes: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
@@ -312,15 +227,14 @@ DispenseSupply.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const nameSub = SupplyNames.subscribe();
-  const locationSub = Locations.subscribe();
   const siteSub = Sites.subscribe();
   const dispenseTypeSub = DispenseTypes.subscribe();
+  const supplySub = Supplys.subscribeSupply()
 
   return {
     names: fetchField(SupplyNames, "supplyName"),
-    locations: fetchField(Locations, "location"),
     sites: fetchField(Sites, "site"),
     dispenseTypes: fetchField(DispenseTypes, "dispenseType"),
-    ready: nameSub.ready() && locationSub.ready() && siteSub.ready() && dispenseTypeSub.ready(),
+    ready: nameSub.ready() && siteSub.ready() && dispenseTypeSub.ready() && supplySub.ready(),
   };
 })(DispenseSupply);

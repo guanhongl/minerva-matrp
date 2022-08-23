@@ -24,10 +24,10 @@ function addData(data) {
 
 const assetsFileName = 'data.json';
 const jsonData = JSON.parse(Assets.getText(assetsFileName));
-const sampleMedication = JSON.parse(Assets.getText('sample_drug.json'));
-const sampleSupply = JSON.parse(Assets.getText('sample_supply.json'));
-const sampleHistorical = JSON.parse(Assets.getText('historicals.json'));
-const sampleVaccines = JSON.parse(Assets.getText('sample_vaccines.json'));
+const sampleMedication = JSON.parse(Assets.getText('drug_subsample.json'));
+const sampleSupply = JSON.parse(Assets.getText('supply_subsample.json'));
+const sampleHistorical = JSON.parse(Assets.getText('historical_subsample.json'));
+const sampleVaccines = JSON.parse(Assets.getText('vaccine_subsample.json'));
 const drugNames = JSON.parse(Assets.getText('drug_names.json'));
 const drugBrands = JSON.parse(Assets.getText('drug_brands.json'));
 const vaccineNames = JSON.parse(Assets.getText('vaccine_names.json'));
@@ -42,14 +42,13 @@ if (Stuffs.count() === 0) {
   }
 }
 
-// if (Meteor.settings.loadAssetsFile && Drugs.count() === 0) {
-//   console.log('Loading medications from private/sample_drug.json');
-//   // jsonData.medications.map(medication => Drugs.define(medication));
-//   sampleMedication.map(medication => Drugs.define(medication));
-// }
+if (Meteor.settings.loadAssetsFile && Drugs.count() === 0) {
+  console.log('Loading medications from private/drug_subsample.json');
+  sampleMedication.map(medication => Drugs.define(medication));
+}
 
 if (Meteor.settings.loadAssetsFile && Historicals.count() === 0) {
-  console.log('Loading history from private/historicals.json');
+  console.log('Loading history from private/historical_subsample.json');
   sampleHistorical.slice(0, 200).map(historical => Historicals.define(historical));
 }
 
@@ -70,7 +69,7 @@ if (Meteor.settings.loadAssetsFile && Units.count() === 0) {
 
 if (Meteor.settings.loadAssetsFile && DrugBrands.count() === 0) {
   console.log('Loading DrugBrands...');
-  drugBrands.map(o => DrugBrands.define(o.drugBrand));
+  drugBrands.map(o => DrugBrands.define(o));
 }
 
 if (Meteor.settings.loadAssetsFile && VaccineNames.count() === 0) {
@@ -90,7 +89,7 @@ if (Meteor.settings.loadAssetsFile && SupplyNames.count() === 0) {
 
 if (Meteor.settings.loadAssetsFile && Locations.count() === 0) {
   console.log(`Loading locations from private/${assetsFileName}`);
-  jsonData.locations.map(o => Locations.define(o.location));
+  jsonData.locations.map(o => Locations.define(o));
 }
 
 if (Meteor.settings.loadAssetsFile && Sites.count() === 0) {
@@ -98,15 +97,15 @@ if (Meteor.settings.loadAssetsFile && Sites.count() === 0) {
   jsonData.sites.map(o => Sites.define(o.site));
 }
 
-// if (Meteor.settings.loadAssetsFile && Supplys.count() === 0) {
-//   console.log('Loading supplies from private/sample_supply.json');
-//   sampleSupply.map(supply => Supplys.define(supply));
-// }
+if (Meteor.settings.loadAssetsFile && Supplys.count() === 0) {
+  console.log('Loading supplies from private/supply_subsample.json');
+  sampleSupply.map(supply => Supplys.define(supply));
+}
 
-// if (Meteor.settings.loadAssetsFile && Vaccines.count() === 0) {
-//   console.log('Loading vaccines from private/sample_vaccines.json');
-//   sampleVaccines.map(vaccine => Vaccines.define(vaccine));
-// }
+if (Meteor.settings.loadAssetsFile && Vaccines.count() === 0) {
+  console.log('Loading vaccines from private/vaccine_subsample.json');
+  sampleVaccines.map(vaccine => Vaccines.define(vaccine));
+}
 
 if (Meteor.settings.loadAssetsFile && DispenseTypes.count() === 0) {
   console.log(`Loading dispense types from private/${assetsFileName}`);

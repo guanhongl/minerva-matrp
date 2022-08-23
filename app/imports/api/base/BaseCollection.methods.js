@@ -57,17 +57,3 @@ export const removeItMethod = new ValidatedMethod({
     return true;
   },
 });
-
-export const findOneMethod = new ValidatedMethod({
-  name: 'BaseCollection.findOne',
-  mixins: [CallPromiseMixin],
-  validate: null,
-  run({ collectionName, selector, options }) {
-    if (Meteor.isServer) {
-      const collection = MATRP.getCollection(collectionName);
-      collection.assertValidRoleForMethod(this.userId);
-      return collection.findOne(selector, options);
-    }
-    return null;
-  },
-});

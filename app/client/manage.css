@@ -7,6 +7,13 @@
   width: 100%;
 }
 
+.manage-tab .ui.list .list-header, .manage-tab .ui.list .list-item {
+  display: flex;
+}
+.manage-tab .ui.list .list-header > *, .manage-tab .ui.list .list-item > *:not(i) {
+  width: 47.5%;
+}
+
 .manage-tab .ui.list .content .ui.input {
   width: 95%;
   height: 1em;
@@ -30,6 +37,9 @@
 
 .manage-tab .controls .ui.input {
   flex: 4 1 0;
+}
+.manage-tab .controls .ui.checkbox {
+  align-self: center;
 }
 
 .manage-tab .controls .ui.button {

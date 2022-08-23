@@ -1,10 +1,10 @@
-vaccine,brand,minQuantity,visDate,lotIds.lotId,lotIds.expire,lotIds.location,lotIds.quantity,lotIds.note
-Adenovirus,Barr Labs Inc.,70,12/27/2024,MEUa19,3/21/2023,Refrigerator,128,Example note for Barr Labs Inc. Adenovirus.
-Adenovirus,Barr Labs Inc.,70,12/27/2024,We9ERy,8/25/2022,Refrigerator,65,Example note for Barr Labs Inc. Adenovirus.
-Anthrax,Emergent,20,10/18/2024,dRgjna,7/22/2023,Refrigerator,11,Example note for Emergent Anthrax.
-Anthrax,Emergent,20,10/18/2024,RNLipN,2/3/2023,Refrigerator,11,Example note for Emergent Anthrax.
-Anthrax,BioSolutions,10,3/8/2023,ZBlpaG,7/31/2024,Refrigerator,9,Example note for BioSolutions Anthrax.
-Anthrax,BioSolutions,10,3/8/2023,U8pt40,3/17/2025,Refrigerator,9,Example note for BioSolutions Anthrax.
-Cholera,PaxVax,40,11/25/2021,V3Niz1,4/20/2024,Refrigerator,3,Example note for PaxVax Cholera.
-Cholera,PaxVax,40,11/25/2021,Sb1zCP,8/29/2022,Refrigerator,3,Example note for PaxVax Cholera.
-DT,sanofi,40,8/5/2022,lD2Et9,6/1/2022,Refrigerator,39,Example note for sanofi DT.
+vaccine,minQuantity,visDate,lotIds.lotId,lotIds.brand,lotIds.expire,lotIds.location,lotIds.quantity,lotIds.donated,lotIds.donatedBy,lotIds.note
+COVID-19,100,12/27/2024,MEUA19,Janssen,3/21/2023,"Cooler,Fridge",60,FALSE,,Example note for Janssen COVID-19.
+COVID-19,100,12/27/2024,WE9ERY,Moderna,8/25/2022,"Cooler,Fridge",60,FALSE,,Example note for Moderna COVID-19.
+COVID-19,100,12/27/2024,191919,Janssen,,Fridge,49,TRUE,M,50
+DTaP,50,12/12/2024,DRGJNA,Sanofi,7/22/2023,Cooler,10,FALSE,,Example note for Sanofi DTaP.
+DTaP,50,12/12/2024,RNLIPN,GlaxoSmithKline,2/3/2023,Fridge,10,TRUE,Foo,Example note for GSK DTaP.
+Hep A,20,3/8/2023,U8PT40,GlaxoSmithKline,7/31/2024,"Cooler,Fridge",20,FALSE,,Example note for GlaxoSmithKline Hep A.
+Hep B,20,11/25/2021,V3NIZ1,GlaxoSmithKline,7/31/2024,"Cooler,Fridge",20,FALSE,,Example note for GlaxoSmithKline Hep B.
+Influenza,100,3/28/2023,LD2ET9,Seqirus,6/1/2022,"Cooler,Fridge",60,FALSE,,Example note for Seqirus Influenza.
+Influenza,100,3/28/2023,UWAS7O,GlaxoSmithKline,6/1/2023,"Cooler,Fridge",60,TRUE,Foo,Example note for GlaxoSmithKline Influenza.

@@ -7,7 +7,7 @@ import moment from 'moment';
 import { ZipZap } from 'meteor/udondan:zipzap';
 import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
-import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions, getLocations } from '../../utilities/Functions';
 import { Supplys, supplyTypes } from '../../../api/supply/SupplyCollection';
 import SupplyStatusRow from './SupplyStatusRow';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
@@ -65,13 +65,17 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
     }
     if (locationFilter) {
       filter = filter.filter(o => {
-        o.stock = o.stock.filter(lot => lot.location === locationFilter); // nested filter
+        o.stock = o.stock.filter(lot => lot.location.includes(locationFilter)); // nested filter
         return o.stock.length > 0;
       });
     }
     if (statusFilter) {
       filter = filter.filter((supply) => {
         if (statusFilter === 'In Stock') {
+          if (!supply.isDiscrete) {
+            return true
+          }
+
           return supply.sum >= supply.minQuantity;
         }
         if (statusFilter === 'Low Stock') {
@@ -172,7 +176,7 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
           </span>
           <span>
             <span>Location:</span>
-            <Dropdown inline options={getFilters(locations)} search
+            <Dropdown inline options={[{ key: 'All', value: 0, text: 'All' }, ...getLocations(locations)]} search
               onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.SUPPLY_LOCATION}/>
           </span>
           <span>
@@ -271,7 +275,7 @@ export default withTracker(() => {
   const ready = supplySub.ready() && locationSub.ready();
   // Get the Supply documents and sort them by name.
   const supplies = Supplys.find({}, { sort: { supply: 1 } }).fetch();
-  const locations = fetchField(Locations, "location");
+  const locations = Locations.find({}, { sort: { location: 1 } }).fetch();
   // add total quantity to supplies
   supplies.forEach(doc => {
     doc.sum = doc.stock.reduce((p, c) => p + c.quantity, 0);

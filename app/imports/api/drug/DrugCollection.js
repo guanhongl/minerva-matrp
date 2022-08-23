@@ -6,7 +6,7 @@ import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
-export const allowedUnits = ['bottle(s)', 'g', 'mL', 'tab(s)'];
+// export const allowedUnits = ['bottle(s)', 'g', 'mL', 'tab(s)'];
 export const drugPublications = {
   drug: 'Drug',
   drugLots: 'DrugLots',
@@ -28,12 +28,16 @@ class DrugCollection extends BaseCollection {
       'lotIds.$': Object,
       'lotIds.$._id': String,
       'lotIds.$.lotId': String,
-      'lotIds.$.brand': String,
+      'lotIds.$.brand': {
+        type: String,
+        optional: true,
+      },
       'lotIds.$.expire': { // date string "YYYY-MM-DD"
         type: String,
         optional: true,
       },
-      'lotIds.$.location': String,
+      'lotIds.$.location': Array,
+      'lotIds.$.location.$': String,
       'lotIds.$.quantity': Number,
       'lotIds.$.donated': Boolean,
       'lotIds.$.donatedBy': {
@@ -56,9 +60,6 @@ class DrugCollection extends BaseCollection {
    * @return {String} the docID of the new document.
    */
   define({ drug, drugType, minQuantity, unit, lotIds }) {
-    // const docID = this._collection.insert({
-    //   drug, drugType, brand, lotId, expire, minQuantity, quantity, isTabs, location, donated, note,
-    // });
     const docID = this._collection.insert({
       drug, drugType, minQuantity, unit, lotIds,
     });
@@ -96,9 +97,10 @@ class DrugCollection extends BaseCollection {
         _.isObject(o) &&
         o._id &&
         o.lotId &&
-        o.brand &&
         _.isNumber(o.quantity) &&
-        o.location &&
+        // check if location is array AND every location is not undefined
+        Array.isArray(o.location) &&
+        o.location.every(e => e) &&
         _.isBoolean(o.donated)
       ))
     ) {
@@ -145,7 +147,8 @@ class DrugCollection extends BaseCollection {
 
       Meteor.publish(drugPublications.drugLots, function publish() {
         if (this.userId) {
-          return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
+          // return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
+          return instance._collection.find({}, { fields: { drug: 1, "lotIds.lotId": 1, "lotIds._id": 1 } });
         }
         return this.ready();
       });
@@ -213,14 +216,17 @@ class DrugCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
    */
-   dumpOne(docID) {
+  dumpOne(docID) {
     // const doc = this.findDoc(docID);
     const doc = docID;
     const drug = doc.drug;
     const drugType = doc.drugType.join();
     const minQuantity = doc.minQuantity;
     const unit = doc.unit;
-    const lotIds = doc.lotIds;
+    const lotIds = doc.lotIds.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
     return { drug, drugType, minQuantity, unit, lotIds };
   }
 }

@@ -79,9 +79,10 @@ class DispenseTypeCollection extends BaseCollection {
    * @param {*} option 
    */
   hasOption(option) {
-    const records = this._collection.find().fetch();
+    const re = new RegExp(`^${option}$`, "i");
+    const record = this._collection.findOne({ dispenseType: { $regex: re } });
 
-    return _.pluck(records, "dispenseType").map(record => record.toLowerCase()).includes(option.toLowerCase());
+    return !!record;
   }
 
   inUse(option) {

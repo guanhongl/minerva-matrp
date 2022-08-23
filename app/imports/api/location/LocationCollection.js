@@ -18,6 +18,7 @@ class LocationCollection extends BaseCollection {
   constructor() {
     super('Locations', new SimpleSchema({
       location: String,
+      isOverstock: Boolean,
     }));
   }
 
@@ -26,9 +27,10 @@ class LocationCollection extends BaseCollection {
    * @param location.
    * @return {String} the docID of the new document.
    */
-  define(location) {
+  define({ location, isOverstock }) {
     const docID = this._collection.insert({
       location,
+      isOverstock,
     });
     return docID;
   }
@@ -93,10 +95,21 @@ class LocationCollection extends BaseCollection {
    * case insensitive query
    * @param {*} option 
    */
-  hasOption(option) {
-    const records = this._collection.find().fetch();
+  hasOption(prev, option) {
+    const curRe = new RegExp(`^${option}$`, "i");
+    const curRecord = this._collection.findOne({ drugBrand: { $regex: curRe } });
 
-    return _.pluck(records, "location").map(record => record.toLowerCase()).includes(option.toLowerCase());
+    if (prev === null) {
+      return !!curRecord;
+    }
+    if (!curRecord) {
+      return false;
+    }
+
+    const prevRe = new RegExp(`^${prev}$`, "i");
+    const prevRecord = this._collection.findOne({ drugBrand: { $regex: prevRe } });
+
+    return prevRecord._id !== curRecord._id;
   }
 
   inUse(option) {
@@ -110,9 +123,9 @@ class LocationCollection extends BaseCollection {
   /**
    * Returns the number of matched documents.
    */
-  updateMulti(prev, option, instance) {
+  updateMulti(prev, { location, isOverstock }, instance) {
     // update this location
-    this._collection.update(instance, { $set: { location: option } });
+    this._collection.update(instance, { $set: { location, isOverstock } });
     // find the matching docs
     const drugDocs = Drugs.find(
       { lotIds: { $elemMatch: { location: prev } } }, 
@@ -131,7 +144,7 @@ class LocationCollection extends BaseCollection {
       drugDocs.forEach(doc => {
         doc.lotIds.forEach(o => {
           if (o.location === prev) {
-            o.location = option;
+            o.location = location;
           }
         });
       });
@@ -141,7 +154,7 @@ class LocationCollection extends BaseCollection {
       vaccineDocs.forEach(doc => {
         doc.lotIds.forEach(o => {
           if (o.location === prev) {
-            o.location = option;
+            o.location = location;
           }
         });
       });
@@ -151,7 +164,7 @@ class LocationCollection extends BaseCollection {
       supplyDocs.forEach(doc => {
         doc.stock.forEach(o => {
           if (o.location === prev) {
-            o.location = option;
+            o.location = location;
           }
         });
       });

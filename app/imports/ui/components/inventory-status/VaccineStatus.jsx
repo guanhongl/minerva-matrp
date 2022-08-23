@@ -11,7 +11,7 @@ import { Locations } from '../../../api/location/LocationCollection';
 import { PAGE_IDS } from '../../utilities/PageIDs';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import VaccineStatusRow from './VaccineStatusRow';
-import { fetchCounts, fetchField, getOptions } from '../../utilities/Functions';
+import { fetchCounts, fetchField, getOptions, getLocations } from '../../utilities/Functions';
 import { cloneDeep } from 'lodash';
 import { downloadDatabaseMethod } from '../../../api/ManageDatabase.methods';
 
@@ -72,11 +72,14 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
       });
     }
     if (brandFilter) {
-      filter = filter.filter((vaccine) => vaccine.brand === brandFilter);
+      filter = filter.filter(o => {
+        o.lotIds = o.lotIds.filter(lot => lot.brand === brandFilter); // nested filter
+        return o.lotIds.length > 0;
+      });
     }
     if (locationFilter) {
       filter = filter.filter(o => {
-        o.lotIds = o.lotIds.filter(lot => lot.location === locationFilter); // nested filter
+        o.lotIds = o.lotIds.filter(lot => lot.location.includes(locationFilter)); // nested filter
         return o.lotIds.length > 0;
       });
     }
@@ -193,7 +196,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
           </span>
           <span>
             <span>Location:</span>
-            <Dropdown inline options={getFilters(locations)} search
+            <Dropdown inline options={[{ key: 'All', value: 0, text: 'All' }, ...getLocations(locations)]} search
               onChange={handleLocationFilter} value={locationFilter} id={COMPONENT_IDS.MEDICATION_LOCATION} />
           </span>
           <span>
@@ -237,7 +240,6 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
               <Table.Row>
                 <Table.HeaderCell />
                 <Table.HeaderCell>Vaccine</Table.HeaderCell>
-                <Table.HeaderCell>Manufacturer</Table.HeaderCell>
                 <Table.HeaderCell>Total Quantity</Table.HeaderCell>
                 <Table.HeaderCell>VIS Date</Table.HeaderCell>
                 <Table.HeaderCell>Status</Table.HeaderCell>
@@ -248,7 +250,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
             <Table.Body>
               {
                 filteredVaccines.slice((pageNo - 1) * maxRecords, pageNo * maxRecords)
-                  .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine} locations={locations} />)
+                  .map(vaccine => <VaccineStatusRow key={vaccine._id} vaccine={vaccine} locations={locations} brands={brands} />)
               }
             </Table.Body>
 
@@ -298,7 +300,7 @@ export default withTracker(() => {
   // Get the Vaccination documents and sort them by name.
   const vaccines = Vaccines.find({}, { sort: { vaccine: 1 } }).fetch();
   const brands = fetchField(VaccineBrands, "vaccineBrand");
-  const locations = fetchField(Locations, "location");
+  const locations = Locations.find({}, { sort: { location: 1 } }).fetch();
   // add is expired and total quantity to vaccines
   vaccines.forEach(doc => {
     // doc.sum = doc.lotIds.reduce((p, c) => p + c.quantity, 0);

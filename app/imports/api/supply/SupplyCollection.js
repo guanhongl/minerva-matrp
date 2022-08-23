@@ -9,7 +9,7 @@ import { ROLE } from '../role/Role';
 export const supplyTypes = ['Lab / Testing', 'Patient'];
 export const supplyPublications = {
   supply: 'Supply',
-  supplyAdmin: 'SupplyAdmin',
+  supplyLots: 'SupplyLots',
 };
 
 class SupplyCollection extends BaseCollection {
@@ -21,11 +21,13 @@ class SupplyCollection extends BaseCollection {
         allowedValues: supplyTypes, // only two supply types.
       },
       minQuantity: Number,
+      isDiscrete: Boolean,
       stock: Array,
       'stock.$': Object,
       'stock.$._id': String,
       'stock.$.quantity': Number,
-      'stock.$.location': String,
+      'stock.$.location': Array,
+      'stock.$.location.$': String,
       'stock.$.donated': Boolean,
       'stock.$.donatedBy': {
         type: String,
@@ -46,9 +48,9 @@ class SupplyCollection extends BaseCollection {
    * Defines a new Supply supply.
    * @return {String} the docID of the new document.
    */
-  define({ supply, supplyType, minQuantity, stock }) {
+  define({ supply, supplyType, minQuantity, isDiscrete, stock }) {
     const docID = this._collection.insert({
-      supply, supplyType, minQuantity, stock,
+      supply, supplyType, minQuantity, isDiscrete, stock,
     });
     return docID;
   }
@@ -75,12 +77,15 @@ class SupplyCollection extends BaseCollection {
     addString('supply');
     addString('supplyType');
     addNumber('minQuantity');
+    updateData.isDiscrete = data.isDiscrete;
     if (Array.isArray(data.stock) && 
       data.stock.every(o => (
         _.isObject(o) &&
         o._id &&
         _.isNumber(o.quantity) &&
-        o.location &&
+        // check if location is array AND every location is not undefined
+        Array.isArray(o.location) &&
+        o.location.every(e => e) &&
         _.isBoolean(o.donated)
       ))
     ) {
@@ -125,9 +130,9 @@ class SupplyCollection extends BaseCollection {
         return this.ready();
       });
 
-      Meteor.publish(supplyPublications.supplyAdmin, function publish() {
+      Meteor.publish(supplyPublications.supplyLots, function publish() {
         if (this.userId) {
-          return instance._collection.find();
+          return instance._collection.find({}, { fields: { supply: 1, "stock.donated": 1, "stock._id": 1 } });
         }
         return this.ready();
       });
@@ -148,9 +153,9 @@ class SupplyCollection extends BaseCollection {
    * Subscription method for admin users.
    * It subscribes to the entire collection.
    */
-  subscribeSupplyAdmin() {
+  subscribeSupplyLots() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(supplyPublications.supplyAdmin);
+      return Meteor.subscribe(supplyPublications.supplyLots);
     }
     return null;
   }
@@ -172,14 +177,18 @@ class SupplyCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
    */
-   dumpOne(docID) {
+  dumpOne(docID) {
     // const doc = this.findDoc(docID);
     const doc = docID;
     const supply = doc.supply;
     const supplyType = doc.supplyType;
     const minQuantity = doc.minQuantity;
-    const stock = doc.stock;
-    return { supply, supplyType, minQuantity, stock };
+    const isDiscrete = doc.isDiscrete;
+    const stock = doc.stock.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
+    return { supply, supplyType, minQuantity, isDiscrete, stock };
   }
 }
 

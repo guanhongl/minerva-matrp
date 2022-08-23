@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
-import { Button, Modal, Input, TextArea, Select, Icon } from 'semantic-ui-react';
+import { Button, Modal, Input, Checkbox, TextArea, Select, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import moment from 'moment';
@@ -8,7 +8,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from '../../../api/role/Role';
 import { updateMethod } from '../../../api/vaccine/VaccineCollection.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
-import { printQRCode, getOptions } from '../../utilities/Functions';
+import { printQRCode, getOptions, getLocations } from '../../utilities/Functions';
 
 const submit = (_id, uuid, fields) => {
   updateMethod.callPromise({ _id, uuid, fields })
@@ -16,9 +16,9 @@ const submit = (_id, uuid, fields) => {
     .catch(error => swal('Error', error.message, 'error'));
 };
 
-const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate }, 
-                           detail: { _id: uuid, lotId, expire, location, quantity, note, QRCode },
-                           locations }) => {
+const VaccineInfoPage = ({ info: { _id, vaccine, minQuantity, visDate }, 
+                           detail: { _id: uuid, lotId, brand, expire, location, quantity, donated, donatedBy, note, QRCode },
+                           locations, brands }) => {
   // A reactive data source.
   const isAuth = Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN, ROLE.SUPERUSER]);
   const [open, setOpen] = useState(false);
@@ -29,9 +29,12 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
     newMinQuantity: minQuantity,
     newVisDate: visDate,
     newLotId: lotId,
+    newBrand: brand,
     newExpire: expire,
     newLocation: location,
     newQuantity: quantity,
+    newDonated: donated,
+    newDonatedBy: donatedBy,
     newNote: note,
   };
 
@@ -42,8 +45,8 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
     setFields(initialState);
   }
 
-  const handleChange = (event, { name, value }) => {
-    setFields({ ...fields, [name]: value });
+  const handleChange = (event, { name, value, checked }) => {
+    setFields({ ...fields, [name]: value ?? checked });
   };
 
   return (
@@ -71,15 +74,6 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                       <Input value={vaccine} disabled />
                       :
                       <span>{vaccine}</span>
-                  }
-                </div>
-                <div>
-                  <span className='header'>Brand:</span>
-                  {
-                    edit ?
-                      <Input value={brand} disabled />
-                      :
-                      <span>{brand}</span>
                   }
                 </div>
                 <div>
@@ -116,6 +110,15 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   }
                 </div>
                 <div>
+                  <span className='header'>Brand:</span>
+                  {
+                    edit ?
+                      <Select fluid name='newBrand' value={fields.newBrand} options={getOptions(brands)} onChange={handleChange} />
+                      :
+                      <span>{brand}</span>
+                  }
+                </div>
+                <div>
                   <span className='header'>Expiration Date:</span>
                   {
                     edit ?
@@ -128,10 +131,10 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select name='newLocation' options={getOptions(locations)}
+                      <Select multiple name='newLocation' options={getLocations(locations)}
                         value={fields.newLocation} onChange={handleChange} />
                       :
-                      <span>{location}</span>
+                      <span>{location?.join(", ") ?? ""}</span>
                   }
                 </div>
                 <div>
@@ -144,17 +147,27 @@ const VaccineInfoPage = ({ info: { _id, vaccine, brand, minQuantity, visDate },
                       <span>{quantity}</span>
                   }
                 </div>
-                {/* <div>
+                <div>
                   <span className='header'>Donated:</span>
-                  {donated ? 'Yes' : 'No'}
+                  {
+                    edit ?
+                      <Checkbox name='newDonated' checked={fields.newDonated} onChange={handleChange} />
+                      :
+                      <span>{donated ? 'Yes' : 'No'}</span>
+                  }
                 </div>
                 {
-                  donated &&
+                  fields.newDonated &&
                   <div>
                     <span className='header'>Donated By:</span>
-                    {donatedBy}
+                    {
+                      edit ?
+                        <Input name='newDonatedBy' value={fields.newDonatedBy} onChange={handleChange} />
+                        :
+                        <span>{donatedBy}</span>
+                    }
                   </div>
-                } */}
+                }
               </td>
             </tr>
             <tr>

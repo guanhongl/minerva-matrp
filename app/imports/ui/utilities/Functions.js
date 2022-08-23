@@ -21,6 +21,14 @@ export function getOptions(arr) {
   return arr.map(name => ({ key: name, text: name, value: name }));
 }
 
+export function getLocations(arr) {
+  return arr.map(({ _id, location, isOverstock }) => {
+    const text = isOverstock ? `${location} (Overstock)` : location
+
+    return { key: _id, text, value: location }
+  })
+}
+
 // A custom hook that builds on useLocation to parse the query string for you.
 export function useQuery() {
   const { search } = useLocation();
@@ -54,12 +62,16 @@ export function fetchCounts(records) {
     // sum
     // const total = quantities.reduce((p, c) => p + c, 0);
     const total = record.sum;
-    // if 0
-    if (total === 0) {
-      countN++;
-    // if not 0 and less than min
-    } else if (total < record.minQuantity) {
-      countL++;
+    if (total > -1) {
+
+      // if 0
+      if (total === 0) {
+        countN++;
+      // if not 0 and less than min
+      } else if (total < record.minQuantity) {
+        countL++;
+      }
+
     }
   });
 

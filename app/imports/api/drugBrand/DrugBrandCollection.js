@@ -16,6 +16,7 @@ class DrugBrandCollection extends BaseCollection {
   constructor() {
     super('DrugBrands', new SimpleSchema({
       drugBrand: String,
+      genericName: String,
     }));
   }
 
@@ -24,9 +25,10 @@ class DrugBrandCollection extends BaseCollection {
    * @param drugBrand.
    * @return {String} the docID of the new document.
    */
-  define(drugBrand) {
+  define({ drugBrand, genericName }) {
     const docID = this._collection.insert({
       drugBrand,
+      genericName,
     });
     return docID;
   }
@@ -91,10 +93,21 @@ class DrugBrandCollection extends BaseCollection {
    * case insensitive query
    * @param {*} option 
    */
-  hasOption(option) {
-    const records = this._collection.find().fetch();
+  hasOption(prev, option) {
+    const curRe = new RegExp(`^${option}$`, "i");
+    const curRecord = this._collection.findOne({ drugBrand: { $regex: curRe } });
 
-    return _.pluck(records, "drugBrand").map(record => record.toLowerCase()).includes(option.toLowerCase());
+    if (prev === null) {
+      return !!curRecord;
+    }
+    if (!curRecord) {
+      return false;
+    }
+
+    const prevRe = new RegExp(`^${prev}$`, "i");
+    const prevRecord = this._collection.findOne({ drugBrand: { $regex: prevRe } });
+
+    return prevRecord._id !== curRecord._id;
   }
 
   inUse(option) {
@@ -104,9 +117,9 @@ class DrugBrandCollection extends BaseCollection {
   /**
    * Returns the number of matched documents.
    */
-  updateMulti(prev, option, instance) {
+  updateMulti(prev, { drugBrand, genericName }, instance) {
     // update this drug brand
-    this._collection.update(instance, { $set: { drugBrand: option } });
+    this._collection.update(instance, { $set: { drugBrand, genericName } });
     // find the matching docs
     const docs = Drugs.find(
       { lotIds: { $elemMatch: { brand: prev } } }, 
@@ -118,7 +131,7 @@ class DrugBrandCollection extends BaseCollection {
       docs.forEach(doc => {
         doc.lotIds.forEach(o => {
           if (o.brand === prev) {
-            o.brand = option;
+            o.brand = drugBrand;
           }
         });
       });

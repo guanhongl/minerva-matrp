@@ -1,33 +1,33 @@
 [
     {
-      "vaccineName": "Adenovirus"
+      "vaccineName": "COVID-19"
     },
     {
-      "vaccineName": "Anthrax"
+      "vaccineName": "Gardasil"
     },
     {
-      "vaccineName": "Cholera"
+      "vaccineName": "IPV"
     },
     {
       "vaccineName": "DTaP"
     },
     {
-      "vaccineName": "DT"
+      "vaccineName": "Varicella"
     },
     {
-      "vaccineName": "Hib"
+      "vaccineName": "HiB"
     },
     {
-      "vaccineName": "Hepatitis A"
+      "vaccineName": "Hep A"
     },
     {
-      "vaccineName": "Hepatitis B"
+      "vaccineName": "Hep B"
     },
     {
-      "vaccineName": "Shingles"
+      "vaccineName": "Tdap"
     },
     {
-      "vaccineName": "HPV"
+      "vaccineName": "Rotavirus"
     },
     {
       "vaccineName": "Influenza"

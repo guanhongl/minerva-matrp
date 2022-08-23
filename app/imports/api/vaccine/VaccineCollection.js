@@ -16,19 +16,25 @@ class VaccineCollection extends BaseCollection {
     super('Vaccines', new SimpleSchema({
       vaccine: String,
       // is vaccineType needed?
-      brand: String, // the manufacturer (e.g. Pfizer)
       minQuantity: Number,
       visDate: String, // the latest vaccine information statement date
       lotIds: Array,
       'lotIds.$': Object,
       'lotIds.$._id': String,
       'lotIds.$.lotId': String,
+      'lotIds.$.brand': String, // the manufacturer (e.g. Pfizer)
       'lotIds.$.expire': { // date string "YYYY-MM-DD"
         type: String,
         optional: true,
       },
-      'lotIds.$.location': String,
+      'lotIds.$.location': Array,
+      'lotIds.$.location.$': String,
       'lotIds.$.quantity': Number, // the number of doses
+      'lotIds.$.donated': Boolean,
+      'lotIds.$.donatedBy': {
+        type: String,
+        optional: true,
+      },
       'lotIds.$.note': {
         type: String,
         optional: true,
@@ -44,9 +50,9 @@ class VaccineCollection extends BaseCollection {
    * Defines a new Vaccine item.
    * @return {String} the docID of the new document.
    */
-  define({ vaccine, brand, minQuantity, visDate, lotIds }) {
+  define({ vaccine, minQuantity, visDate, lotIds }) {
     const docID = this._collection.insert({
-      vaccine, brand, minQuantity, visDate, lotIds,
+      vaccine, minQuantity, visDate, lotIds,
     });
     return docID;
   }
@@ -71,7 +77,6 @@ class VaccineCollection extends BaseCollection {
     }
 
     addString('vaccine');
-    addString('brand');
     addNumber('minQuantity');
     addString('visDate');
     if (Array.isArray(data.lotIds) && 
@@ -79,8 +84,12 @@ class VaccineCollection extends BaseCollection {
         _.isObject(o) &&
         o._id &&
         o.lotId &&
+        o.brand &&
         _.isNumber(o.quantity) &&
-        o.location
+        // check if location is array AND every location is not undefined
+        Array.isArray(o.location) &&
+        o.location.every(e => e) &&
+        _.isBoolean(o.donated)
       ))
     ) {
       updateData.lotIds = data.lotIds;
@@ -126,7 +135,8 @@ class VaccineCollection extends BaseCollection {
 
       Meteor.publish(vaccinePublications.vaccineLots, function publish() {
         if (this.userId) {
-          return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
+          // return instance._collection.find({}, { fields: { "lotIds.lotId": 1 } });
+          return instance._collection.find({}, { fields: { vaccine: 1, "lotIds.lotId": 1, "lotIds._id": 1 } });
         }
         return this.ready();
       });
@@ -171,15 +181,17 @@ class VaccineCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID in a format appropriate to the restoreOne or define function.
    */
-   dumpOne(docID) {
+  dumpOne(docID) {
     // const doc = this.findDoc(docID);
     const doc = docID;
     const vaccine = doc.vaccine;
-    const brand = doc.brand;
     const minQuantity = doc.minQuantity;
     const visDate = doc.visDate;
-    const lotIds = doc.lotIds;
-    return { vaccine, brand, minQuantity, visDate, lotIds };
+    const lotIds = doc.lotIds.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
+    return { vaccine, minQuantity, visDate, lotIds };
   }
 }
 

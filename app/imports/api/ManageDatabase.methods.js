@@ -41,21 +41,23 @@ export const downloadDatabaseMethod = new ValidatedMethod({
                     arr = 'lotIds';
                     break;
                 case 'vaccines':
-                    fields = ['vaccine', 'brand', 'minQuantity', 'visDate', 
-                        'lotIds.lotId', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
+                    fields = ['vaccine', 'minQuantity', 'visDate', 
+                        'lotIds.lotId', 'lotIds.brand', 'lotIds.expire', 'lotIds.location', 'lotIds.quantity', 
+                        'lotIds.donated', 'lotIds.donatedBy', 'lotIds.note', 'lotIds._id', 'lotIds.QRCode'];
                     arr = 'lotIds';
                     break;
                 case 'supplies':
-                    fields = ['supply', 'supplyType', 'minQuantity', 
+                    fields = ['supply', 'supplyType', 'minQuantity', 'isDiscrete',
                         'stock.location', 'stock.quantity', 'stock.donated', 'stock.donatedBy', 'stock.note', 'stock._id', 'stock.QRCode'];
                     arr = 'stock';
                     break;
                 case 'history':
                     fields = [
                         // all shared
-                        'dateDispensed', 'inventoryType', 'dispenseType', 'dispensedFrom', 'dispensedTo', 'site', 'note', 
+                        'dateDispensed', 'element.name', 'inventoryType', 'dispenseType', 'dispensedFrom', 'dispensedTo', 'site', 'note', 
+                        'element.donated', 'element.donatedBy', 
                         // some shared
-                        'element.name', 'element.quantity', 'element.lotId', 'element.brand', 'element.expire', 'element.donated', 'element.donatedBy', 
+                        'element.quantity', 'element.lotId', 'element.brand', 'element.expire', 
                         // none shared
                         'element.unit', 'element.dose', 'element.visDate', 'element.supplyType', 
                     ];
