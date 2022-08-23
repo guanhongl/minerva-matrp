@@ -52,10 +52,10 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
   const [innerFields, setInnerFields] = useState(
     JSON.parse(sessionStorage.getItem("vaccineFields")) ?? [initInnerFields]
   );
-  // const [maxQuantity, setMaxQuantity] = useState(0);
   const patientUse = fields.dispenseType === 'Patient Use';
   const nonPatientUse = fields.dispenseType !== 'Patient Use';
 
+  // handle qrcode
   useEffect(() => {
     const _id = query.get("_id");
     if (_id && ready) {
@@ -63,12 +63,8 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
       const target = Vaccines.findOne(selector)
       // autofill the form with specific lotId info
       const targetLotId = target.lotIds.find(obj => obj._id === _id);
-      const { vaccine, brand, visDate } = target;
-      const { expire = "", lotId, quantity, donated, donatedBy = "" } = targetLotId;
-      // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
-      // setFields(autoFields);
-      // setMaxQuantity(quantity);
-
+      const { vaccine, visDate } = target;
+      const { brand, expire = "", lotId, quantity, donated, donatedBy = "" } = targetLotId;
       const autoFields = { ...initInnerFields, vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
       // setInnerFields([autoFields]);
       // append the first field if its lot is not empty
@@ -91,24 +87,22 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
     setFields({ ...fields, [name]: value });
   };
 
-  const handleCheck = (event, { index, name, checked }) => {
+  const handleChangeInner = (event, { index, name, value, checked }) => {
     const newInnerFields = [...innerFields];
-    if (!checked) {
-      newInnerFields[index] = { ...innerFields[index], [name]: checked, donatedBy: '' };
-    } else {
-      newInnerFields[index] = { ...innerFields[index], [name]: checked };
-    }
+    newInnerFields[index] = { ...innerFields[index], [name]: value ?? checked };
     setInnerFields(newInnerFields);
   };
 
-  const handleChangeInner = (event, { index, name, value }) => {
-    const newInnerFields = [...innerFields];
-    newInnerFields[index] = { ...innerFields[index], [name]: value };
-    setInnerFields(newInnerFields);
-  };
+  // handle donated check
+  const setDonatedBy = (index) => {
+    const newInnerFields = [...innerFields]
+    newInnerFields[index] = { ...innerFields[index], donatedBy: '' }
+    setInnerFields(newInnerFields)
+  }
 
   // handle lotId select
-  const onLotIdSelect = (event, { index, value: lotId }) => {
+  const setLotId = (index) => {
+    const lotId = innerFields[index].lotId
     const newInnerFields = [...innerFields];
     const selector = { lotIds: { $elemMatch: { lotId } } };
     const target = Vaccines.findOne(selector)
@@ -116,18 +110,13 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
     if (!!target) {
       // autofill the form with specific lotId info
       const targetLotId = target.lotIds.find(obj => obj.lotId === lotId);
-      const { vaccine, brand, visDate } = target;
-      const { expire = "", quantity, donated, donatedBy = "" } = targetLotId;
-      // const autoFields = { ...fields, lotId, vaccine, brand, visDate, expire };
-      // setFields(autoFields);
-      // setMaxQuantity(quantity);
-      newInnerFields[index] = { ...innerFields[index], vaccine, lotId, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
+      const { vaccine, visDate } = target;
+      const { brand, expire = "", quantity, donated, donatedBy = "" } = targetLotId;
+      newInnerFields[index] = { ...innerFields[index], vaccine, brand, expire, visDate, donated, donatedBy, maxQuantity: quantity };
       setInnerFields(newInnerFields);
     } else {
       // else reset specific lotId info
-      // setFields({ ...fields, lotId, vaccine: '', brand: '', visDate: '', expire: '' });
-      // setMaxQuantity(0);
-      newInnerFields[index] = { ...innerFields[index], vaccine: '', lotId, brand: '', expire: '', visDate: '', 
+      newInnerFields[index] = { ...innerFields[index], vaccine: '', brand: '', expire: '', visDate: '', 
         donated: false, donatedBy: '', maxQuantity: 0 };
       setInnerFields(newInnerFields);
     }
@@ -135,7 +124,6 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
 
   const clearForm = () => {
     setFields(initFields);
-    // setMaxQuantity(0);
     setInnerFields([initInnerFields]);
     sessionStorage.removeItem("vaccineFields");
   };
@@ -197,7 +185,7 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
             {
               innerFields.map((fields, index) => 
                 <DispenseVaccineSingle key={`FORM_${index}`} names={names} lotIds={lotIds} brands={brands} fields={fields}
-                  handleChange={handleChangeInner} handleCheck={handleCheck} onLotIdSelect={onLotIdSelect}
+                  handleChange={handleChangeInner} setDonatedBy={setDonatedBy} setLotId={setLotId}
                   index={index} patientUse={patientUse} nonPatientUse={nonPatientUse} />
               )
             }
@@ -212,39 +200,6 @@ const DispenseVaccine = ({ ready, names, brands, lotIds, sites, dispenseTypes })
               </Grid.Column>
             </Grid.Row>
 
-            {/* <Grid.Row>
-              <Grid.Column>
-                <Form.Select clearable search label='Lot Number' options={getOptions(lotIds)}
-                  placeholder="Z9Z99" name='lotId' value={fields.lotId} onChange={onLotIdSelect} />
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Select clearable search label='Vaccine' options={getOptions(names)}
-                  placeholder="J&J COVID" name='vaccine' value={fields.vaccine} onChange={handleChange} />
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Select clearable search label='Manufacturer' options={getOptions(brands)}
-                  placeholder="ACAM2000 Sanofi Pasteur" name='brand' value={fields.brand} onChange={handleChange}/>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <Form.Input type='date' label='Expiration Date' name='expire'
-                  onChange={handleChange} value={fields.expire}/>
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Input type="date" label='VIS Date' name='visDate' 
-                  onChange={handleChange} value={fields.visDate} />
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Group>
-                  <Form.Input label={maxQuantity ? `Quantity (${maxQuantity} remaining)` : 'Quantity'} 
-                    type='number' min={1} name='quantity' className='quantity'
-                    onChange={handleChange} value={fields.quantity} placeholder='1' disabled={patientUse}/>
-                  <Form.Input label='Dose #' type='number' min={1} name='dose' className='unit'
-                    onChange={handleChange} placeholder='1' disabled={nonPatientUse}/>
-                </Form.Group>
-              </Grid.Column>
-            </Grid.Row> */}
             <Grid.Row>
               <Grid.Column>
                 <Form.TextArea label='Additional Notes' name='note' onChange={handleChange} value={fields.note}
@@ -279,7 +234,7 @@ export default withTracker(() => {
   const brandSub = VaccineBrands.subscribe();
   const siteSub = Sites.subscribe();
   const dispenseTypeSub = DispenseTypes.subscribe();
-  const vaccineSub = Vaccines.subscribeVaccineLots()
+  const vaccineSub = Vaccines.subscribeVaccine()
 
   return {
     names: fetchField(VaccineNames, "vaccineName"),
