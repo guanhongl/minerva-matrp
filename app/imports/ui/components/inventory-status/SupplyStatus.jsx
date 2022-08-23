@@ -65,7 +65,7 @@ const SupplyStatus = ({ ready, supplies, locations, countL, countN }) => {
     }
     if (locationFilter) {
       filter = filter.filter(o => {
-        o.stock = o.stock.filter(lot => lot.location === locationFilter); // nested filter
+        o.stock = o.stock.filter(lot => lot.location.includes(locationFilter)); // nested filter
         return o.stock.length > 0;
       });
     }

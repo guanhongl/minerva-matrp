@@ -216,12 +216,12 @@ export const updateMethod = new ValidatedMethod({
             // validation
             const minQuantity = newIsDiscrete ? parseInt(newMinQuantity, 10) : -1;
             const quantity = newIsDiscrete ? parseInt(newQuantity, 10) : -1;
-            // throw error if (location, donated) is not unique
+            // throw error if donated is not unique
             const target = collection.findOne({ _id });
-            const current = target.stock.find(o => ( o.location === newLocation && o.donated === newDonated ));
+            const current = target.stock.find(o => o.donated === newDonated);
             const notUnique = !!current && (current._id !== uuid);
             if (notUnique) {
-                throw new Meteor.Error("unique-error", "Location, donated pair must be unique.")
+                throw new Meteor.Error("unique-error", "Donated must be unique.")
             }
             // submit
             const targetLot = target.stock.find(o => o._id === uuid);

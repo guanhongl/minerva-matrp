@@ -114,8 +114,8 @@ const SupplyStatusRow = ({ supply, supplyTypes, locations }) => {
             <Table.Body>
               {
                 supply.stock.map(({ _id: uuid, location, quantity, donated, donatedBy }, index) => (
-                  <Table.Row key={index}>
-                    <Table.Cell>{location}</Table.Cell>
+                  <Table.Row key={uuid}>
+                    <Table.Cell>{location?.join(", ") ?? ""}</Table.Cell>
                     <Table.Cell>{supply.isDiscrete ? quantity : "N/A"}</Table.Cell>
                     <Table.Cell>
                       {

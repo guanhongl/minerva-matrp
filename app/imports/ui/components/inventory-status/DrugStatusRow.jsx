@@ -119,7 +119,7 @@ const DrugStatusRow = ({ med, drugTypes, locations, units, brands }) => {
                     <Table.Cell>{lotId}</Table.Cell>
                     <Table.Cell>{brand}</Table.Cell>
                     <Table.Cell>{expire}</Table.Cell>
-                    <Table.Cell>{location}</Table.Cell>
+                    <Table.Cell>{location?.join(", ") ?? ""}</Table.Cell>
                     <Table.Cell>{quantity}</Table.Cell>
                     <Table.Cell>
                       {

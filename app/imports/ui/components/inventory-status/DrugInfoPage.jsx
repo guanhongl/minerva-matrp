@@ -151,9 +151,9 @@ const DrugInfoPage = ({ info: { _id, drug, drugType, minQuantity, unit },
                   <span className='header'>Location:</span>
                   {
                     edit ?
-                      <Select fluid name='newLocation' value={fields.newLocation} options={getLocations(locations)} onChange={handleChange} />
+                      <Select fluid multiple name='newLocation' value={fields.newLocation} options={getLocations(locations)} onChange={handleChange} />
                       :
-                      <span>{location}</span>
+                      <span>{location?.join(", ") ?? ""}</span>
                   }
                 </div>
                 <div>

@@ -79,7 +79,7 @@ const VaccineStatus = ({ ready, vaccines, brands, locations, countL, countN }) =
     }
     if (locationFilter) {
       filter = filter.filter(o => {
-        o.lotIds = o.lotIds.filter(lot => lot.location === locationFilter); // nested filter
+        o.lotIds = o.lotIds.filter(lot => lot.location.includes(locationFilter)); // nested filter
         return o.lotIds.length > 0;
       });
     }
