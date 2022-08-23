@@ -187,7 +187,10 @@ class VaccineCollection extends BaseCollection {
     const vaccine = doc.vaccine;
     const minQuantity = doc.minQuantity;
     const visDate = doc.visDate;
-    const lotIds = doc.lotIds;
+    const lotIds = doc.lotIds.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
     return { vaccine, minQuantity, visDate, lotIds };
   }
 }

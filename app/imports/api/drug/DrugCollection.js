@@ -223,7 +223,10 @@ class DrugCollection extends BaseCollection {
     const drugType = doc.drugType.join();
     const minQuantity = doc.minQuantity;
     const unit = doc.unit;
-    const lotIds = doc.lotIds;
+    const lotIds = doc.lotIds.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
     return { drug, drugType, minQuantity, unit, lotIds };
   }
 }

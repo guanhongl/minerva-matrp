@@ -24,8 +24,8 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
     case 'Vaccines':
       name = 'vaccine';
       arr = 'lotIds';
-      required = ['vaccine', 'brand', 'minQuantity', 'visDate', 
-        'lotIds.lotId', 'lotIds.location', 'lotIds.quantity'];
+      required = ['vaccine', 'minQuantity', 'visDate', 
+        'lotIds.lotId', 'lotIds.brand', 'lotIds.location', 'lotIds.quantity'];
       break;
     case 'Supplys':
       name = 'supply';
@@ -68,6 +68,7 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
       loadJSON.forEach((obj, idx) => {
         // parse data
         obj[arr].donated = !!obj[arr].donated; // parse boolean
+        obj[arr].location = obj[arr].location.split(',') // parse location
 
         switch (type) {
           case 'Drugs':
@@ -94,12 +95,11 @@ export const loadCollectionNewDataOnly = (collection, loadJSON) => {
           obj[arr].QRCode = urls[idx];
         }
   
-        const target = (type !== 'Vaccines') ?
-          collection.findOne({ [name]: obj[name] })
-          :
-          collection.findOne({ [name]: obj[name], brand: obj.brand });
+        const target = collection.findOne({ [name]: obj[name] })
         // merge on array if name exists
         if (target) {
+          // assumes no dup lot number
+          // assumes no dup (supply, donated) pair
           obj[arr] = [ ...target[arr], obj[arr] ];
           const data = { [arr]: obj[arr] };
           collection.update(target._id, data);

@@ -184,7 +184,10 @@ class SupplyCollection extends BaseCollection {
     const supplyType = doc.supplyType;
     const minQuantity = doc.minQuantity;
     const isDiscrete = doc.isDiscrete;
-    const stock = doc.stock;
+    const stock = doc.stock.map(o => {
+      o.location = o.location.join();
+      return o;
+    });
     return { supply, supplyType, minQuantity, isDiscrete, stock };
   }
 }

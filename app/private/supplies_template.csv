@@ -1,10 +1,14 @@
-supply,supplyType,minQuantity,stock.location,stock.quantity,stock.donated,stock.donatedBy,stock.note
-"ACE wrap 2""",Patient,30,Cabinet 1,25,FALSE,,"Example note for ACE wrap 2""."
-"ACE wrap 2""",Patient,30,Cabinet 3,26,TRUE,,"Example note for ACE wrap 2""."
-"ACE wrap 3""",Patient,90,Cabinet 1,65,FALSE,,"Example note for ACE wrap 3""."
-"ACE wrap 3""",Patient,90,Cabinet 3,65,FALSE,,"Example note for ACE wrap 3""."
-"ACE wrap 4""",Patient,10,Cabinet 1,10,FALSE,,"Example note for ACE wrap 4""."
-"ACE wrap 4""",Patient,10,Cabinet 3,10,FALSE,,"Example note for ACE wrap 4""."
-"ACE wrap 6""",Lab / Testing,40,Cabinet 1,39,FALSE,,"Example note for ACE wrap 6""."
-"ACE wrap 6""",Lab / Testing,40,Cabinet 3,39,FALSE,,"Example note for ACE wrap 6""."
-Blood Pressure Monitors - Patient,Lab / Testing,80,Cabinet 1,51,FALSE,,Example note for Blood Pressure Monitors - Patient.
+supply,supplyType,minQuantity,isDiscrete,stock.location,stock.quantity,stock.donated,stock.donatedBy,stock.note
+A,Patient,10,TRUE,"Bin 1,Cabinet 1",40,FALSE,,
+A,Patient,10,TRUE,"Cabinet 1,Bin 1",45,TRUE,J,donated
+"ACE wrap 2""",Patient,-1,FALSE,Bin 3,-1,FALSE,,"Example note for ACE wrap 2""."
+"ACE wrap 2""",Patient,-1,FALSE,Cabinet 3,-1,TRUE,,"Example note for ACE wrap 2""."
+"ACE wrap 3""",Patient,-1,FALSE,"Bin 3,Cabinet 3",-1,FALSE,,"Example note for ACE wrap 3""."
+"ACE wrap 4""",Patient,-1,FALSE,"Bin 3,Cabinet 3",-1,FALSE,,"Example note for ACE wrap 4""."
+"ACE wrap 6""",Patient,-1,FALSE,"Bin 3,Cabinet 3",-1,FALSE,,"Example note for ACE wrap 6""."
+"ACE wrap 6""",Patient,-1,FALSE,Cabinet 3,-1,TRUE,Foo,"Example note for ACE wrap 6""."
+B,Patient,-1,FALSE,Bin 4,-1,FALSE,,
+B,Patient,-1,FALSE,Cabinet 4,-1,TRUE,J,donated
+Cold Packs,Patient,10,TRUE,"Bin 2,Cabinet 2",10,FALSE,,Example note for Cold Packs.
+Hot Packs,Patient,10,TRUE,Bin 1,5,FALSE,,Example note for Hot Packs.
+Hot Packs,Patient,10,TRUE,Cabinet 1,10,TRUE,,Example note for Hot Packs.
