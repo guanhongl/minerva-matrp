@@ -202,7 +202,7 @@ const DispenseLog = ({ ready, historicals, sites, dispenseTypes }) => {
                 :
                 <span onClick={downloadCounts}>
                   <Icon name="download" />
-                  Download Counts
+                  Usage Report
                   <Icon name="file excel" />
                 </span>
             }

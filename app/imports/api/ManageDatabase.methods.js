@@ -181,25 +181,54 @@ export const readCSVMethod = new ValidatedMethod({
             if (!type) {
                 throw new Meteor.Error("no-type", "Inventory type must be selected.");
             }
-            // get collection as json; get names and quantities
+            // get collection as json; get name, quantity, and isDonated
             const json = collection.find(
                 { _id: { $in: _ids } },
-                { fields: { "element.name": 1, "element.quantity": 1 } },
-            ).map(e => e.element).flat(); // flatMap
+                { fields: { "element.name": 1, "element.quantity": 1, "element.donated": 1 } },
+            ).map(e => e.element).flat() // flatMap
 
-            // maybe sort
-            const counts = {};
-            json.forEach(({ name, quantity }) => {
-                counts[name] = counts[name] ? counts[name] + quantity : quantity;
-            });
-
-            const countsJSON = [];
+            const counts = {}
+            // for each name, get the qty, donated qty, and sum
+            json.forEach(({ name, quantity, donated }) => {
+                // omit continuous supplies
+                if (quantity > 0) {
+                    let donated_quantity = 0
+                    let total = quantity
+                    // handle donated_quantity
+                    if (donated) {
+                        donated_quantity = quantity
+                        quantity = 0
+                    }
+                    // update name if it exists
+                    if (counts[name]) {
+                        counts[name].quantity += quantity
+                        counts[name].donated_quantity += donated_quantity
+                        counts[name].total += total
+                    } 
+                    // else add name
+                    else {
+                        counts[name] = {
+                            quantity,
+                            donated_quantity,
+                            total,
+                        }
+                    }
+                }
+            })
+            // to JSON
+            const countsJSON = []
             for (const prop in counts) {
-                countsJSON.push({ name: prop, quantity: counts[prop] });
+                countsJSON.push({ 
+                    name: prop, 
+                    quantity: counts[prop].quantity,
+                    donated_quantity: counts[prop].donated_quantity,
+                    total: counts[prop].total,
+                })
             }
+            // run time is O(n)
 
             // fields: the csv columns
-            const fields = ["name", "quantity"];
+            const fields = ["name", "quantity", "donated_quantity", "total"]
             // json to csv
             try {
                 const json2csvParser = new Parser({ fields });
