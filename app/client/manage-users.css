@@ -10,7 +10,7 @@
     font-weight: bold;
 }
 #manage-new-users .user-controls span:nth-child(1) {
-    color: rgb(29, 62, 102);
+    color: #2f4c58;
 }
 #manage-new-users .user-controls span:nth-child(2) {
     color: rgb(219, 40, 40);

@@ -43,7 +43,7 @@
   min-width: 10em;
   border-radius: 500rem;
   padding: 1em 1.5em;
-  background-color: rgb(29, 62, 102);
+  background-color: #2f4c58;
   color: white;
 }
 
@@ -51,8 +51,8 @@
   min-width: 10em;
   border-radius: 500rem;
   padding: 1em 1.5em;
-  background-color: #C1D9B1;
-  color: rgb(29, 62, 102);
+  background-color: #c1d9b1;
+  color: #2f4c58;
 }
 
 #dispense-form input, #dispense-form .ui.selection.dropdown, #dispense-form textarea {
@@ -85,7 +85,7 @@
 #dispense-form .ui.inline.dropdown {
   margin-right: 10px;
   padding: 0 10px;
-  background-color: rgb(29, 62, 102);
+  background-color: #2f4c58;
   color: white;
   border-radius: 500em;
 }
@@ -116,7 +116,7 @@
 }
 
 #dispense-form .add-item {
-  background-color: rgb(29, 62, 102);
+  background-color: #2f4c58;
   color: white;
 }
 #dispense-form .remove-item {
