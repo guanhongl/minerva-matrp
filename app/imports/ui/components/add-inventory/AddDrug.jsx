@@ -11,6 +11,7 @@ import { Units } from '../../../api/unit/UnitCollection';
 import { DrugBrands } from '../../../api/drugBrand/DrugBrandCollection';
 import { Locations } from '../../../api/location/LocationCollection';
 import { addMethod, getGenericNames, getBrandNames } from '../../../api/drug/DrugCollection.methods';
+import { getListOfMedications, getListOfVaccines, getListOfUnits } from '../../../api/AthenaHealth.methods';
 import { COMPONENT_IDS } from '../../utilities/ComponentIDs';
 import { fetchField, fetchLots, getOptions, getLocations, printQRCode } from '../../utilities/Functions';
 
@@ -31,6 +32,17 @@ const submit = (data, callback) => {
 
 /** Renders the Page for Add Medication. */
 const AddDrug = ({ ready, names, drugTypes, units, brands, lotIds, locations }) => {
+  // tmp
+  useEffect(() => {
+    const tmp = async () => {
+      // const response = await getListOfMedications.callPromise({ searchvalue: "ace" })
+      const response = await getListOfVaccines.callPromise({ searchvalue: "cov" })
+      // const response = await getListOfUnits.callPromise()
+    }
+
+    tmp()
+  }, [])
+
   const initialState = {
     drug: '',
     drugType: [],
